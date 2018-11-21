@@ -163,7 +163,7 @@ discordClient.on('ready', ()=>{
                     break;
                 case "nukethefile":
                     if (commandMessageArray[1] == ADMIN_USERID) {
-                        events = {};
+                        events = [];
                         saveData();
                         msg.reply("Events file reset.");
                     }else{
