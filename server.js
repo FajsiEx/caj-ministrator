@@ -154,7 +154,7 @@ discordClient.on('ready', ()=>{
                     break;
                 case "testread":
                     loadData();
-                    msg.reply("JSON dump of events file:" + JSON.stringify(events));
+                    msg.reply("JSON dump of events file:" + JSON.stringify(events) + "\n**Warning! Event data will load after this message!**");
                     break;
                 case "testwrite":
                     events.push(new Date().getTime());
