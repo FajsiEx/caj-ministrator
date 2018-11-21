@@ -129,7 +129,7 @@ discordClient.on('ready', ()=>{
                     }
                     
 
-                    let dateParameter = commandMessageArray[1].split(" ")[1].split(".").reverse().join(".");
+                    let dateParameter = commandMessageArray[1].split(".").reverse().join(".");
                     let dateObj = new Date(dateParameter + " 12:00:00");
                     if (dateObj == "Invalid Date") {
                         msg.reply("**Nesprávny formát dátumu.** Správny formát: 12.09 / 12.9 / 12.09.2018 / 12.9.2018");
