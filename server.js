@@ -26,7 +26,7 @@ const DATABASE_URI = process.env.DATABASE_URI;
 // Global veriables definition
 let usersObj = {};
 let adminUser;
-let events = {};
+let events = [];
 
 // Function delcarations
 let loadData = ()=>{ // Loads data from the DB to the memory
@@ -122,12 +122,40 @@ discordClient.on('ready', ()=>{
                 case "info":
                     msg.reply("Čaj-ministrátor - Bot ktorý sa stará o adlerákov");
                     break;
+                case "pridat":
+                    if (!commandMessageArray[1] || !commandMessageArray[2]) {
+                        msg.reply("**Nesprávny formát príkazu.** Použitie: !pridat [datum] [nazov eventu]\n[datum] 12.09 / 12.9 / 12.09.2018 / 12.9.2018");
+                        break;
+                    }
+
+                    let dateObj = new Date(commandMessageArray[1] + " 12:00:00");
+                    if (dateObj == "Invalid Date") {
+                        msg.reply("**Nesprávny formát dátumu.** Správny formát: 12.09 / 12.9 / 12.09.2018 / 12.9.2018");
+                        break;
+                    }
+                    if (dateObj.getFullYear() == 2001) {
+                        let currentYear = new Date().getFullYear();
+                        dateObj = new Date(commandMessageArray[1] + currentYear + " 12:00:00");
+                    }
+
+                    // This is ugly. Yes, I know. Don't judge me.
+                    let eventName = commandMessageArray.slice(commandMessageArray.indexOf(commandMessageArray.split(" ", 2)[1]) + commandMessageArray.split(" ", 2)[1].length + 1);
+
+                    events.push({
+                        time: dateObj.getTime(),
+                        content: eventName
+                    });
+
+                    saveData();
+
+                    msg.reply("Event bol pridaný.");
+                    break;
                 case "testread":
                     loadData();
                     msg.reply("JSON dump of events file:" + JSON.stringify(events));
                     break;
                 case "testwrite":
-                    events[new Date().getTime()] = {testwrite: true};
+                    events.push(new Date().getTime());
                     saveData();
                     msg.reply("File written.");
                     break;
