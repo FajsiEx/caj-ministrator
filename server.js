@@ -141,7 +141,7 @@ discordClient.on('ready', ()=>{
                     }
 
                     // This is ugly. Yes, I know. Don't judge me.
-                    let eventName = commandMessageArray.slice(commandMessageArray.indexOf(commandMessageArray.split(" ", 2)[1]) + commandMessageArray.split(" ", 2)[1].length + 1);
+                    let eventName = msg.content.slice(msg.content.indexOf(msg.content.split(" ", 2)[1]) + msg.content.split(" ", 2)[1].length + 1);
 
                     events.push({
                         time: dateObj.getTime(),
