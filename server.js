@@ -129,7 +129,11 @@ discordClient.on('ready', ()=>{
                     msg.reply("Čaj-ministrátor - Bot ktorý sa stará o adlerákov");
                     break;
                 case "alecau":
-                    msg.reply(`AAALLEEE ČAAAAAUUU!!! Dneska je **${WEEK_DAYS[new Date().getDay()]}**`);
+                    if (new Date().getDay() == 3) {
+                        msg.reply(`AAALLEEE ČAAAAAUUU!!! Dneska je **Streda zaMEMOVAŤ TREBA**`);
+                    }else{
+                        msg.reply(`AAALLEEE ČAAAAAUUU!!! Dneska je **${WEEK_DAYS[new Date().getDay()]}**`);
+                    }
                     break;
                 case "pridat":
                     if (!commandMessageArray[1] || !commandMessageArray[2]) {
