@@ -137,7 +137,7 @@ discordClient.on('ready', ()=>{
                     }
                     if (dateObj.getFullYear() == 2001) {
                         let currentYear = new Date().getFullYear();
-                        dateObj = new Date(commandMessageArray[1] + "." + currentYear + " 12:00:00");
+                        dateObj = new Date(dateParameter + "." + currentYear + " 12:00:00");
                     }
 
                     // This is ugly. Yes, I know. Don't judge me.
