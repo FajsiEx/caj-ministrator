@@ -126,7 +126,34 @@ discordClient.on('ready', ()=>{
                     msg.reply("Pong!");
                     break;
                 case "info":
-                    msg.reply("Čaj-ministrátor - Bot ktorý sa stará o adlerákov");
+                    msg.reply(`
+                        Čaj-ministrátor - Bot ktorý sa stará o adlerákov\n
+                        Serverový čas: ${new Date().toString()}
+                    `);
+                    break;
+                case "help":
+                    msg.reply(`
+                        Čaj-ministrátor príkazy:\n\n
+
+                        **Základné príkazy**\n
+                        *!ping* - Odpovie "Pong!" (pre testy či je bot funguje)\n
+                        *!info* - Odpovie základnými údajmi\n\n
+
+                        **Eventy**\n
+                        *!pridat <dátum> <event>* - Pridá event\n
+                        Príklady:\n
+                        !pridat 23.10 Pisomka z matiky z mnozin\n
+                        !pridat 6.4.2018 Adlerka day\n
+                        !pridat 09.08 Ja nevim co\n
+                        *!eventy [deň]* - Vypíše eventy na ten deň. Ak nieje určený deň, vypíše všetky najblizšie eventy ***(TO ESTE NEMFUNGUJE OK)***\n
+                        Príklady:\n
+                        !eventy\n
+                        !eventy zajtra\n
+                        !eventy 6.9\n\n
+                        **Debug** (aka to čo vás nemusí zaujímat pokiaľ nepracujete na čaj-ministrátori)\n
+                        *!testread* - Urobí JSON type data dump do správ. ***POKIAĽ JE TÝCH EVENTOV VEĽA A SPUSTÍTE V HLAVNOM CHATE, ZABIJEM VÁS***\n\n\n
+                        *Pokiaľ máte nápady na príkazy dajte mi vediet cez DM alebo cez #bot-testing*
+                    `);
                     break;
                 case "alecau":
                     if (new Date().getDay() == 3) {
@@ -169,15 +196,15 @@ discordClient.on('ready', ()=>{
                     events.sort(compare);
                     let eventString;
 
-                    events.forEach((e)=>{
-                        let eventDate = new Date(e.time);
+                    setTimeout(()=>{
+                        events.forEach((e)=>{
+                            let eventDate = new Date(e.time);
 
-
-                        eventString+=`**${WEEK_DAYS[eventDate.getDay()]} ${eventDate.getDate()}.${eventDate.getMonth()+1}.${eventDate.getFullYear()}** - ${e.content}\n`;
-                    })
-
-                    msg.reply("**Najblizšie eventy**\n" + eventString);
-                    break;
+                            eventString+=`**${WEEK_DAYS[eventDate.getDay()]} ${eventDate.getDate()}.$   {eventDate.getMonth()+1}.${eventDate.getFullYear()}** - ${e.content}\n`;
+                        })
+                        msg.reply("**Najblizšie eventy**\n" + eventString);
+                        break;
+                    }, 250);
                 case "testread":
                     loadData();
                     msg.reply("JSON dump of events file:" + JSON.stringify(events) + "\n**Warning! Event data will load after this message!**");
