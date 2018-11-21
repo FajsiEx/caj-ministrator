@@ -128,6 +128,9 @@ discordClient.on('ready', ()=>{
                 case "info":
                     msg.reply("Čaj-ministrátor - Bot ktorý sa stará o adlerákov");
                     break;
+                case "alecau":
+                    msg.reply(`AAALLEEE ČAAAAAUUU!!! Dneska je **${WEEK_DAYS[new Date().getDay()]}**`);
+                    break;
                 case "pridat":
                     if (!commandMessageArray[1] || !commandMessageArray[2]) {
                         msg.reply("**Nesprávny formát príkazu.** Použitie: !pridat [datum] [nazov eventu]\n[datum] 12.09 / 12.9 / 12.09.2018 / 12.9.2018");
@@ -162,9 +165,11 @@ discordClient.on('ready', ()=>{
                     events.sort(compare);
                     let eventString;
 
-                    events.forEach((event)=>{
-                        let eventDate = new Date(event.time);
-                        eventString+=`**${WEEK_DAYS[eventDate.getDay()]} ${eventDate.getDate()}.${eventDate.getMonth()}.${eventDate.getFullYear()}** - ${event.content}\n`;
+                    events.forEach((e)=>{
+                        let eventDate = new Date(e.time);
+
+
+                        eventString+=`**${WEEK_DAYS[eventDate.getDay()]} ${eventDate.getDate()}.${eventDate.getMonth()+1}.${eventDate.getFullYear()}** - ${e.content}\n`;
                     })
 
                     msg.reply("**Najblizšie eventy**\n" + eventString);
