@@ -150,10 +150,11 @@ discordClient.on('ready', ()=>{
                         !eventy
                         !eventy zajtra
                         !eventy 6.9
+
                         **Debug** (aka to čo vás nemusí zaujímat pokiaľ nepracujete na čaj-ministrátori)
                         *!testread* - Urobí JSON type data dump do správ. ***POKIAĽ JE TÝCH EVENTOV VEĽA A SPUSTÍTE V HLAVNOM CHATE, ZABIJEM VÁS***
 
-                        
+
                         *Pokiaľ máte nápady na príkazy dajte mi vediet cez DM alebo cez #bot-testing*
                     `);
                     break;
@@ -196,15 +197,26 @@ discordClient.on('ready', ()=>{
                     break;
                 case "eventy":
                     events.sort(compare);
+                    let dateString;
                     let eventString;
 
                     setTimeout(()=>{
                         events.forEach((e)=>{
                             let eventDate = new Date(e.time);
 
-                            eventString+=`**${WEEK_DAYS[eventDate.getDay()]} ${eventDate.getDate()}.$   {eventDate.getMonth()+1}.${eventDate.getFullYear()}** - ${e.content}\n`;
+                            dateString+=`${WEEK_DAYS[eventDate.getDay()]} ${eventDate.getDate()}.$   {eventDate.getMonth()+1}.${eventDate.getFullYear()}\n`
+                            
+                            dateString+=`${e.content}\n`;
                         })
-                        msg.reply("**Najblizšie eventy**\n" + eventString);
+                        msg.reply({embed: {
+                            color: "3447003",
+                            title: "Najblizšie eventy",
+                            fields: [
+                                {name:"Dátum", value:dateString, inline: true},
+                                {name:"Event", value:eventString, inline: true}
+                            ]
+                        }
+                        });
                     }, 250);
                     break;
                 case "testread":
