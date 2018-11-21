@@ -133,25 +133,27 @@ discordClient.on('ready', ()=>{
                     break;
                 case "help":
                     msg.reply(`
-                        Čaj-ministrátor príkazy:\n\n
+                        Čaj-ministrátor príkazy:
 
-                        **Základné príkazy**\n
-                        *!ping* - Odpovie "Pong!" (pre testy či je bot funguje)\n
-                        *!info* - Odpovie základnými údajmi\n\n
+                        **Základné príkazy**
+                        *!ping* - Odpovie "Pong!" (pre testy či je bot funguje)
+                        *!info* - Odpovie základnými údajmi
 
-                        **Eventy**\n
-                        *!pridat <dátum> <event>* - Pridá event\n
-                        Príklady:\n
-                        !pridat 23.10 Pisomka z matiky z mnozin\n
-                        !pridat 6.4.2018 Adlerka day\n
-                        !pridat 09.08 Ja nevim co\n
-                        *!eventy [deň]* - Vypíše eventy na ten deň. Ak nieje určený deň, vypíše všetky najblizšie eventy ***(TO ESTE NEMFUNGUJE OK)***\n
-                        Príklady:\n
-                        !eventy\n
-                        !eventy zajtra\n
-                        !eventy 6.9\n\n
-                        **Debug** (aka to čo vás nemusí zaujímat pokiaľ nepracujete na čaj-ministrátori)\n
-                        *!testread* - Urobí JSON type data dump do správ. ***POKIAĽ JE TÝCH EVENTOV VEĽA A SPUSTÍTE V HLAVNOM CHATE, ZABIJEM VÁS***\n\n\n
+                        **Eventy**
+                        *!pridat <dátum> <event>* - Pridá event
+                        Príklady:
+                        !pridat 23.10 Pisomka z matiky z mnozin
+                        !pridat 6.4.2018 Adlerka day
+                        !pridat 09.08 Ja nevim co
+                        *!eventy [deň]* - Vypíše eventy na ten deň. Ak nieje určený deň, vypíše všetky najblizšie eventy ***(TO ESTE NEMFUNGUJE OK)***
+                        Príklady:
+                        !eventy
+                        !eventy zajtra
+                        !eventy 6.9
+                        **Debug** (aka to čo vás nemusí zaujímat pokiaľ nepracujete na čaj-ministrátori)
+                        *!testread* - Urobí JSON type data dump do správ. ***POKIAĽ JE TÝCH EVENTOV VEĽA A SPUSTÍTE V HLAVNOM CHATE, ZABIJEM VÁS***
+
+                        
                         *Pokiaľ máte nápady na príkazy dajte mi vediet cez DM alebo cez #bot-testing*
                     `);
                     break;
