@@ -27,6 +27,7 @@ const DATABASE_URI = process.env.DATABASE_URI;
 let usersObj = {};
 let adminUser;
 let events = [];
+const WEEK_DAYS = ["Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota"];
 
 // Function delcarations
 let loadData = ()=>{ // Loads data from the DB to the memory
@@ -62,6 +63,11 @@ let saveData = ()=>{
     });
 }
 
+function compare(a,b) {
+    if (a.time < b.time) {return -1;}
+    if (a.time > b.time) {return 1;}
+    return 0;
+}
 
 // Discord client init
 discordClient.on('ready', ()=>{
@@ -151,6 +157,17 @@ discordClient.on('ready', ()=>{
                     saveData();
 
                     msg.reply("Event bol pridaný.");
+                    break;
+                case "eventy":
+                    events.sort(compare);
+                    let eventString;
+
+                    events.forEach((event)=>{
+                        let eventDate = new Date(event.time);
+                        eventString+=`**${WEEK_DAYS[eventDate.getDay()]} ${eventDate.getDate()}.${eventDate.getMonth()}.${eventDate.getFullYear()}** - ${event.content}\n`;
+                    })
+
+                    msg.reply("**Najblizšie eventy**\n" + eventString);
                     break;
                 case "testread":
                     loadData();
