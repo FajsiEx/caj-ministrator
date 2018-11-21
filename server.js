@@ -203,8 +203,8 @@ discordClient.on('ready', ()=>{
                             eventString+=`**${WEEK_DAYS[eventDate.getDay()]} ${eventDate.getDate()}.$   {eventDate.getMonth()+1}.${eventDate.getFullYear()}** - ${e.content}\n`;
                         })
                         msg.reply("**Najblizšie eventy**\n" + eventString);
-                        break;
                     }, 250);
+                    break;
                 case "testread":
                     loadData();
                     msg.reply("JSON dump of events file:" + JSON.stringify(events) + "\n**Warning! Event data will load after this message!**");
