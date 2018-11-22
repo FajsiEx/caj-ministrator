@@ -206,6 +206,8 @@ discordClient.on('ready', ()=>{
 
                     events.push({
                         time: dateObj.getTime(),
+                        user_id: author_id,
+                        user: author,
                         content: eventName
                     });
 
@@ -282,7 +284,7 @@ discordClient.on('ready', ()=>{
                         "embed": {
                             "title": "Nesprávny príkaz",
                             "color": 16720418,
-                            "content": `${discordBotCongig.prefix + command} je nesprávny príkaz\nPre list príkazov **!help**`
+                            "description": `${discordBotCongig.prefix + command} je nesprávny príkaz\nPre list príkazov **!help**`
                         }
                     });
 
