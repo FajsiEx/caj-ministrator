@@ -28,6 +28,7 @@ let usersObj = {};
 let adminUser;
 let events = [];
 const WEEK_DAYS = ["Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota"];
+const WEEK_DAYS_SHORT = ["Ne", "Po", "Ut", "St", "Št", "Pi", "So"];
 
 // Function delcarations
 let loadData = ()=>{ // Loads data from the DB to the memory
@@ -173,14 +174,14 @@ discordClient.on('ready', ()=>{
                     
 
                     let dateParameter = commandMessageArray[1].split(".").reverse().join(".");
-                    let dateObj = new Date(dateParameter + " 12:00:00");
+                    let dateObj = new Date(dateParameter + " 20:00:00");
                     if (dateObj == "Invalid Date") {
                         msg.reply("**Nesprávny formát dátumu.** Správny formát: 12.09 / 12.9 / 12.09.2018 / 12.9.2018");
                         break;
                     }
                     if (dateObj.getFullYear() == 2001) {
                         let currentYear = new Date().getFullYear();
-                        dateObj = new Date(dateParameter + "." + currentYear + " 12:00:00");
+                        dateObj = new Date(dateParameter + "." + currentYear + " 20:00:00");
                     }
 
                     // This is ugly. Yes, I know. Don't judge me.
@@ -197,27 +198,54 @@ discordClient.on('ready', ()=>{
                     break;
                 case "eventy":
                     events.sort(compare);
-                    let dateString;
-                    let eventString;
+                    let eventsTodayString = "";
+                    let eventsTomorrowString = "";
+                    let eventsString = "";
 
-                    setTimeout(()=>{
-                        events.forEach((e)=>{
-                            let eventDate = new Date(e.time);
+                    let todayDateString = `${new Date().getDate()}.${new Date().getMonth()+1}.${new Date().getFullYear()}`;
 
-                            dateString+=`${WEEK_DAYS[eventDate.getDay()]} ${eventDate.getDate()}.$   {eventDate.getMonth()+1}.${eventDate.getFullYear()}\n`
-                            
-                            dateString+=`${e.content}\n`;
-                        })
-                        msg.reply({embed: {
-                            color: "3447003",
-                            title: "Najblizšie eventy",
-                            fields: [
-                                {name:"Dátum", value:dateString, inline: true},
-                                {name:"Event", value:eventString, inline: true}
+                    let tomorrowDateObj = new Date(new Date().getTime() + 86400000);
+                    let tomorrowDateString = `${tomorrowDateObj.getDate()}.${tomorrowDateObj.getMonth()+1}.${tomorrowDateObj.getFullYear()}`;
+
+                    events.forEach((e)=>{
+                        if (e < new Date().getTime()) { // If the event is in the past
+                            delete e;
+                            return;
+                        }
+                        let eventDate = new Date(e.time);
+
+                        let eventDateString = `${eventDate.getDate()}.${eventDate.getMonth()+1}.${eventDate.getFullYear()}`;
+
+                        if (eventDateString == todayDateString) {
+                            eventsTodayString += `**${WEEK_DAYS_SHORT[eventDate.getDay()]} ${eventDate.getDate()}.${eventDate.getMonth()+1}** - ${e.content}\n`;
+                        }else if (eventDateString == tomorrowDateString) {
+                            eventsTomorrowString += `**${WEEK_DAYS_SHORT[eventDate.getDay()]} ${eventDate.getDate()}.${eventDate.getMonth()+1}** - ${e.content}\n`;
+                        }else{
+                            eventsString += `**${WEEK_DAYS_SHORT[eventDate.getDay()]} ${eventDate.getDate()}.${eventDate.getMonth()+1}** - ${e.content}\n`;
+                        }
+                    });
+
+                    msg.reply({
+                        "embed": {
+                            "title": "Nasledujúce eventy",
+                            "color": 1616639,
+                            "fields": [
+                                {
+                                    "name": "Dnes",
+                                    "value": eventsTodayString
+                                },
+                                {
+                                    "name": "Zajtra",
+                                    "value": eventsTomorrowString
+                                },
+                                {
+                                    "name": "Ostatné",
+                                    "value": eventsString
+                                },
                             ]
                         }
-                        });
-                    }, 250);
+                    });
+
                     break;
                 case "testread":
                     loadData();
