@@ -315,10 +315,13 @@ discordClient.on('ready', ()=>{
                     let eventContentToDelete = msg.content.slice(9); // gets rid of the !vymazat
                     let eventIndexToDelete = false;
 
+                    console.log(`[DEBUG] ECTD(${eventContentToDelete})`);
+
                     events.forEach((e)=>{
                         if (eventIndexToDelete) {
                             return; // If the index of the wannabe deleted event is found we just skip past the other events
                         }
+                        console.log(`[DEBUG] EC(${e.content}) i(${i}) EQ(${e.content == eventContentToDelete})`);
                         if (e.content == eventContentToDelete) {
                             eventIndexToDelete = i;
                         }
