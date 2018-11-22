@@ -185,7 +185,14 @@ discordClient.on('ready', ()=>{
                     break;
                 case "pridat":
                     if (!commandMessageArray[1] || !commandMessageArray[2]) {
-                        msg.reply("**Nesprávny formát príkazu.** Použitie: !pridat [datum] [nazov eventu]\n[datum] 12.09 / 12.9 / 12.09.2018 / 12.9.2018");
+                        msg.reply({
+                            "embed": {
+                                "title": "Nesprávny formát príkazu !pridat",
+                                "color": 16720418,
+                                "description": 'Použitie: !pridat [datum] [nazov eventu]\n**Príklady:**\n!pridat 23.10 Pisomka z matiky z mnozin\n!pridat 6.4.2018 Adlerka day\n!pridat 09.08 Ja nevim co'
+                            }
+                        });
+
                         break;
                     }
                     
@@ -193,7 +200,14 @@ discordClient.on('ready', ()=>{
                     let dateParameter = commandMessageArray[1].split(".").reverse().join(".");
                     let dateObj = new Date(dateParameter + " 20:00:00");
                     if (dateObj == "Invalid Date") {
-                        msg.reply("**Nesprávny formát dátumu.** Správny formát: 12.09 / 12.9 / 12.09.2018 / 12.9.2018");
+                        msg.reply({
+                            "embed": {
+                                "title": "Nesprávny formát dátumu",
+                                "color": 16720418,
+                                "description": 'Použitie: !pridat [datum] [nazov eventu]\n**Príklady:**\n!pridat 23.10 Pisomka z matiky z mnozin\n!pridat 6.4.2018 Adlerka day\n!pridat 09.08 Ja nevim co'
+                            }
+                        });
+
                         break;
                     }
                     if (dateObj.getFullYear() == 2001) {
@@ -213,7 +227,13 @@ discordClient.on('ready', ()=>{
 
                     saveData();
 
-                    msg.reply("Event bol pridaný.");
+                    msg.reply({
+                        "embed": {
+                            "title": "Event bol pridaný",
+                            "color": 4521796,
+                            "description": `**${WEEK_DAYS_SHORT[dateObj.getDay()]} ${dateObj.getDate()}.${dateObj.getMonth()+1}** - ${eventName}\n`
+                        }
+                    });
                     break;
                 case "eventy":
                     events.sort(compare);
