@@ -198,9 +198,9 @@ discordClient.on('ready', ()=>{
                     break;
                 case "eventy":
                     events.sort(compare);
-                    let eventsTodayString = "";
-                    let eventsTomorrowString = "";
-                    let eventsString = "";
+                    let eventsTodayString = "Nič";
+                    let eventsTomorrowString = "Nič";
+                    let eventsString = "Nič";
 
                     let todayDateString = `${new Date().getDate()}.${new Date().getMonth()+1}.${new Date().getFullYear()}`;
 
@@ -217,10 +217,19 @@ discordClient.on('ready', ()=>{
                         let eventDateString = `${eventDate.getDate()}.${eventDate.getMonth()+1}.${eventDate.getFullYear()}`;
 
                         if (eventDateString == todayDateString) {
+                            if (eventsTodayString == "Nič") {
+                                eventsTodayString = "";
+                            }
                             eventsTodayString += `**${WEEK_DAYS_SHORT[eventDate.getDay()]} ${eventDate.getDate()}.${eventDate.getMonth()+1}** - ${e.content}\n`;
                         }else if (eventDateString == tomorrowDateString) {
+                            if (eventsTomorrowString == "Nič") {
+                                eventsTomorrowString = "";
+                            }
                             eventsTomorrowString += `**${WEEK_DAYS_SHORT[eventDate.getDay()]} ${eventDate.getDate()}.${eventDate.getMonth()+1}** - ${e.content}\n`;
                         }else{
+                            if (eventsString == "Nič") {
+                                eventsString = "";
+                            }
                             eventsString += `**${WEEK_DAYS_SHORT[eventDate.getDay()]} ${eventDate.getDate()}.${eventDate.getMonth()+1}** - ${e.content}\n`;
                         }
                     });
