@@ -150,31 +150,45 @@ discordClient.on('ready', ()=>{
                     `);
                     break;
                 case "help":
-                    msg.reply(`
-                        Čaj-ministrátor príkazy:
+                    msg.reply({
+                        "embed": {
+                            "title": "Čaj-ministrátor príkazy:",
+                            "color": 1616639,
+                            "fields": [
+                                {
+                                    "name": "**!ping**",
+                                    "value": "Odpovie Pong! (pre testy či je bot funguje)"
+                                },
+                                {
+                                    "name": "**!info**",
+                                    "value": "Odpovie základnými údajmi o sebe"
+                                },
+                                {
+                                    "name": "**!pridat <dátum> <event>**",
+                                    "value": "Pridá event\n*Príklady použitia:*\n!pridat 23.10 Pisomka z matiky z mnozin\n!pridat 6.4.2018 Adlerka day\n!pridat 09.08 Ja nevim co"
+                                },
+                                {
+                                    "name": "**!eventy**",
+                                    "value": "Vypíše nasledujúce eventy\n*Poznámka: Plánujem pridat nieco ako '!eventy zajtra' aby vypisalo eventy len na zajtra ale zatial to funguje ok aj bez toho takžeee....*"
+                                },
+                                {
+                                    "name": "**!<príklad>**",
+                                    "value": "Vypočíta príklad\n*Príklady použitia:*\n!2+2 (4)\n!6*6 (36)\n!33432*63437+53434-16434/22 (2120878471)"
+                                },
+                                {
+                                    "name": "**!alecau**",
+                                    "value": "AAALLEEE ČAAAAAUUU!!!"
+                                },
+                                {
+                                    "name": "**Nejaky další príkaz ktorý chcete**",
+                                    "value": "Napíšte to do #bot-testing"
+                                }
+                            ]
+                        }
+                    });
 
-                        **Základné príkazy**
-                        *!ping* - Odpovie "Pong!" (pre testy či je bot funguje)
-                        *!info* - Odpovie základnými údajmi
-
-                        **Eventy**
-                        *!pridat <dátum> <event>* - Pridá event
-                        Príklady:
-                        !pridat 23.10 Pisomka z matiky z mnozin
-                        !pridat 6.4.2018 Adlerka day
-                        !pridat 09.08 Ja nevim co
-                        *!eventy [deň]* - Vypíše eventy na ten deň. Ak nieje určený deň, vypíše všetky najblizšie eventy ***(TO ESTE NEMFUNGUJE OK)***
-                        Príklady:
-                        !eventy
-                        !eventy zajtra
-                        !eventy 6.9
-
-                        **Debug** (aka to čo vás nemusí zaujímat pokiaľ nepracujete na čaj-ministrátori)
-                        *!testread* - Urobí JSON type data dump do správ. ***POKIAĽ JE TÝCH EVENTOV VEĽA A SPUSTÍTE V HLAVNOM CHATE, ZABIJEM VÁS***
 
 
-                        *Pokiaľ máte nápady na príkazy dajte mi vediet cez DM alebo cez #bot-testing*
-                    `);
                     break;
                 case "alecau":
                     if (new Date().getDay() == 3) {
