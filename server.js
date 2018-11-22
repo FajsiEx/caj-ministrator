@@ -136,6 +136,7 @@ discordClient.on('ready', ()=>{
                         ]
                     }
                 });
+                return; // We don't need anything else.
             }
 
             switch (command) {
@@ -276,19 +277,15 @@ discordClient.on('ready', ()=>{
                     loadData();
                     msg.reply("JSON dump of events file:" + JSON.stringify(events) + "\n**Warning! Event data will load after this message!**");
                     break;
-                case "testwrite":
-                    events.push(new Date().getTime());
-                    saveData();
-                    msg.reply("File written.");
-                    break;
-                case "nukethefile":
-                    if (commandMessageArray[1] == ADMIN_USERID) {
-                        events = [];
-                        saveData();
-                        msg.reply("Events file reset.");
-                    }else{
-                        msg.reply("Not gonna do that.");
-                    }
+                default: // If there is a command sent but it is invalid fall back to this
+                    msg.reply({
+                        "embed": {
+                            "title": "Nesprávny príkaz",
+                            "color": 16720418,
+                            "content": `${discordBotCongig.prefix + command} je nesprávny príkaz\nPre list príkazov **!help**`
+                        }
+                    });
+
                     break;
             }
 
