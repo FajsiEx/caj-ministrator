@@ -310,6 +310,30 @@ discordClient.on('ready', ()=>{
 
                     break;
                 case "vymazat":
+                    let allowed = true;
+                    try{
+                        if (!(msg.channel.name == "admin-commandy")) {
+                            allowed = false;
+                            msg.reply({
+                                "embed": {
+                                    "title": "Tento príkaz sa môže vykonávať len v #admin-commandy",
+                                    "color": 16720418
+                                }
+                            });
+                            return;
+                        }
+                    }catch(e){
+                        allowed = false;
+                        msg.reply({
+                            "embed": {
+                                "title": "Tento príkaz sa môže vykonávať len v #admin-commandy",
+                                "color": 16720418
+                            }
+                        });
+                        return;
+                    }
+                    if (!allowed) {return;} // JIC
+                    
                     loadData();
                     let i=0;
                     let eventContentToDelete = msg.content.slice(9); // gets rid of the !vymazat
@@ -334,10 +358,13 @@ discordClient.on('ready', ()=>{
                         saveData();
                         msg.reply({
                             "embed": {
-                                "title": "Event bol vymazaný",
+                                "title": "Event bol vymazaný. Zmeny sa môžu prejaviť až o pár sekúnd!",
                                 "color": 4521796
                             }
                         });
+                        setTimeout(()=>{
+                            loadData();
+                        }, 2500) // Update data in 5 seconds
                     }else{
                         msg.reply({
                             "embed": {
