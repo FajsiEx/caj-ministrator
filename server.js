@@ -309,6 +309,40 @@ discordClient.on('ready', ()=>{
                     });
 
                     break;
+                case "vymazat":
+                    loadData();
+                    let i=0;
+                    let eventContentToDelete = msg.content.slice(9); // gets rid of the !vymazat
+                    let eventIndexToDelete = false;
+
+                    events.forEach((e)=>{
+                        if (eventIndexToDelete) {
+                            return; // If the index of the wannabe deleted event is found we just skip past the other events
+                        }
+                        if (e.content == eventContentToDelete) {
+                            eventIndexToDelete = i;
+                        }
+                        i++;
+                    });
+
+                    if (eventIndexToDelete) { // If the index was found
+                        events.splice(eventIndexToDelete,1);
+                        saveData();
+                        msg.reply({
+                            "embed": {
+                                "title": "Event bol vymazaný",
+                                "color": 4521796
+                            }
+                        });
+                    }else{
+                        msg.reply({
+                            "embed": {
+                                "title": "Event sa nenašiel",
+                                "color": 16720418
+                            }
+                        });
+                    }
+                    break;
                 case "testread":
                     loadData();
                     msg.reply("JSON dump of events file:" + JSON.stringify(events) + "\n**Warning! Event data will load after this message!**");
