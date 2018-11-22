@@ -121,7 +121,23 @@ discordClient.on('ready', ()=>{
 
             let command = commandMessageArray[0].slice(1); // Extracts the command from the message
 
-            console.log(`[COMMAND] Recieved command COMMAND(${command}) ARRAY(${JSON.stringify(commandMessageArray)})`)
+            console.log(`[COMMAND] Recieved command COMMAND(${command}) ARRAY(${JSON.stringify(commandMessageArray)})`);
+
+            if (msg.content.slice(1).match(/^\d/)) { // If the command is: !(0123456789) take it as a math problem
+                msg.reply({
+                    "embed": {
+                        "title": "Vypočítaný príkad",
+                        "color": 1616639,
+                        "fields": [
+                            {
+                                "name": "Príklad: " + msg.content.slice(1),
+                                "value": "Výsledok: **" + eval(msg.content.slice(1)) + "**"
+                            }
+                        ]
+                    }
+                });
+            }
+
             switch (command) {
                 case "ping":
                     msg.reply("Pong!");
@@ -240,15 +256,15 @@ discordClient.on('ready', ()=>{
                             "color": 1616639,
                             "fields": [
                                 {
-                                    "name": "Dnes",
+                                    "name": "***Dnes***",
                                     "value": eventsTodayString
                                 },
                                 {
-                                    "name": "Zajtra",
+                                    "name": "***Zajtra***",
                                     "value": eventsTomorrowString
                                 },
                                 {
-                                    "name": "Ostatné",
+                                    "name": "***Ostatné***",
                                     "value": eventsString
                                 },
                             ]
