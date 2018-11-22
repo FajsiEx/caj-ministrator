@@ -329,7 +329,7 @@ discordClient.on('ready', ()=>{
                     });
 
                     console.log(`[DEBUG] EITD${eventIndexToDelete})`);
-                    if (!eventIndexToDelete === false) { // If the index was not not found
+                    if (!(eventIndexToDelete === false)) { // If the index was not not found
                         events.splice(eventIndexToDelete,1);
                         saveData();
                         msg.reply({
