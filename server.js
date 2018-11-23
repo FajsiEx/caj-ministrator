@@ -383,7 +383,7 @@ discordClient.on('ready', ()=>{
                         "embed": {
                             "title": "Nesprávny príkaz",
                             "color": 16720418,
-                            "description": `${discordBotCongig.prefix + command} je nesprávny príkaz\nPre list príkazov **!help**`
+                            "description": `${discordBotCongig.prefix + command} je niečo ako správny príkaz, ale nie.\nPre list príkazov **!help**`
                         }
                     });
 
