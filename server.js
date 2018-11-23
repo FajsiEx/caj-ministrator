@@ -144,6 +144,7 @@ discordClient.on('ready', ()=>{
                     msg.reply("Pong!");
                     break;
                 case "info":
+                case "about":
                     msg.reply(`
                         Čaj-ministrátor - Bot ktorý sa stará o adlerákov\n
                         Serverový čas: ${new Date().toString()}
@@ -159,6 +160,8 @@ discordClient.on('ready', ()=>{
                     });
                     break;
                 case "help":
+                case "pomoc":
+                case "prikazy":
                     msg.reply({
                         "embed": {
                             "title": "Čaj-ministrátor príkazy:",
@@ -173,11 +176,19 @@ discordClient.on('ready', ()=>{
                                     "value": "Odpovie základnými údajmi o sebe"
                                 },
                                 {
-                                    "name": "**!pridat <dátum> <event>**",
+                                    "name": "**!help** / **!pomoc** / **!prikazy**",
+                                    "value": "Odpovie základnými údajmi o sebe"
+                                },
+                                {
+                                    "name": "**!pridat** / **!add** <dátum> <event>**",
                                     "value": "Pridá event\n*Príklady použitia:*\n!pridat 23.10 Pisomka z matiky z mnozin\n!pridat 6.4.2018 Adlerka day\n!pridat 09.08 Ja nevim co"
                                 },
                                 {
-                                    "name": "**!eventy**",
+                                    "name": "**!vymazat** / **!remove** / **!delete** <event>**",
+                                    "value": "Vymaže/odstráni event. *Zatiaľ ho môžu používať len admini. Plánujem to umožniť aj autorom eventu...*\n*Príklady použitia:*\n!vymazat Pisomka z matiky z mnozin\n!remove Adlerka day\n!delete Ja nevim co"
+                                },
+                                {
+                                    "name": "**!eventy** / **!events**",
                                     "value": "Vypíše nasledujúce eventy\n*Poznámka: Plánujem pridat nieco ako '!eventy zajtra' aby vypisalo eventy len na zajtra ale zatial to funguje ok aj bez toho takžeee....*"
                                 },
                                 {
@@ -207,6 +218,7 @@ discordClient.on('ready', ()=>{
                     }
                     break;
                 case "pridat":
+                case "add":
                     if (!commandMessageArray[1] || !commandMessageArray[2]) {
                         msg.reply({
                             "embed": {
@@ -259,6 +271,7 @@ discordClient.on('ready', ()=>{
                     });
                     break;
                 case "eventy":
+                case "events":
                     events.sort(compare);
                     let eventsTodayString = "Nič";
                     let eventsTomorrowString = "Nič";
@@ -270,13 +283,13 @@ discordClient.on('ready', ()=>{
                     let tomorrowDateObj = new Date(new Date().getTime() + 86400000);
                     let tomorrowDateString = `${tomorrowDateObj.getDate()}.${tomorrowDateObj.getMonth()+1}.${tomorrowDateObj.getFullYear()}`;
                     
-                    let eventsFields = [
+                    let eventsData = [
                         {
-                            name: `Dnes (${todayDateString})`,
+                            name: `***Dnes (${todayDateString})***`,
                             value: ""
                         },
                         {
-                            name: `Zajtra (${tomorrowDateString})`,
+                            name: `***Zajtra (${tomorrowDateString})***`,
                             value: ""
                         }
                     ];
@@ -331,6 +344,8 @@ discordClient.on('ready', ()=>{
 
                     break;
                 case "vymazat":
+                case "remove":
+                case "delete":
                     let allowed = true;
                     try{
                         if (!(msg.channel.name == "admin-commandy")) {
