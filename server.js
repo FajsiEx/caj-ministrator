@@ -149,6 +149,14 @@ discordClient.on('ready', ()=>{
                         Serverový čas: ${new Date().toString()}
                     `);
                     break;
+                case "spravnyprikaz":
+                    msg.reply({
+                        "embed": {
+                            "title": "Si myslíš, že si múdry, čo?",
+                            "color": 16720418,
+                            "description": 'Hahahahahahahahahahahahaha...strašne vtipné normálne sa smejem XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD'
+                        }
+                    });
                 case "help":
                     msg.reply({
                         "embed": {
@@ -255,10 +263,22 @@ discordClient.on('ready', ()=>{
                     let eventsTomorrowString = "Nič";
                     let eventsString = "Nič";
 
+                    
                     let todayDateString = `${new Date().getDate()}.${new Date().getMonth()+1}.${new Date().getFullYear()}`;
-
+                    
                     let tomorrowDateObj = new Date(new Date().getTime() + 86400000);
                     let tomorrowDateString = `${tomorrowDateObj.getDate()}.${tomorrowDateObj.getMonth()+1}.${tomorrowDateObj.getFullYear()}`;
+                    
+                    let eventsFields = [
+                        {
+                            name: `Dnes (${todayDateString})`,
+                            value: ""
+                        },
+                        {
+                            name: `Zajtra (${tomorrowDateString})`,
+                            value: ""
+                        }
+                    ];
 
                     events.forEach((e)=>{
                         if (e < new Date().getTime()) { // If the event is in the past
