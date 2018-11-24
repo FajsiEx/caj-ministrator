@@ -32,6 +32,7 @@ let usersObj = {};
 let adminUser;
 let events = [];
 let recievedCommandInTheLastMinute = false;
+let starting = true;
 const WEEK_DAYS = ["Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota"];
 const WEEK_DAYS_SHORT = ["Ne", "Po", "Ut", "St", "Št", "Pi", "So"];
 const RED = 16720418;
@@ -449,8 +450,9 @@ discordClient.on('ready', ()=>{
     discordClient.user.setActivity('nothing because I\'m restarting...', { type: 'WATCHING' });
 
     setTimeout(()=>{
+        starting = false;
         discordClient.user.setStatus('online');
-        discordClient.user.setActivity('every message', { type: 'WATCHING' });
+        discordClient.user.setActivity('your every message', { type: 'WATCHING' });
     }, 15000)
 
     setInterval(()=>{ // Does this every second
@@ -498,16 +500,18 @@ discordClient.on('ready', ()=>{
         }
     
         console.log("[INTERVAL_MINUTE] Setting activity...");
-        if (recievedCommandInTheLastMinute) {
-            discordClient.user.setStatus('online');
-            recievedCommandInTheLastMinute = false;
-        }else{
-            discordClient.user.setStatus('idle');
-        }
-        if (Math.random() < 0.05) {
-            discordClient.user.setActivity('every move', { type: 'WATCHING' });
-        }else{
-            discordClient.user.setActivity('every message', { type: 'WATCHING' });
+        if (!starting) {
+            if (recievedCommandInTheLastMinute) {
+                discordClient.user.setStatus('online');
+                recievedCommandInTheLastMinute = false;
+            }else{
+                discordClient.user.setStatus('idle');
+            }
+            if (Math.random() < 0.05) {
+                discordClient.user.setActivity('your every move', { type: 'WATCHING' });
+            }else{
+                discordClient.user.setActivity('your every message', { type: 'WATCHING' });
+            }
         }
 
         console.log("[INTERVAL_MINUTE] Complete.");
