@@ -190,12 +190,11 @@ discordClient.on('ready', ()=>{
                 case "about":
                     msg.reply({
                         "embed": {
-                            "title": "Si myslíš, že si múdry, čo?",
-                            "color": RED,
-                            "description": 'Hahahahahahahahahahahahaha...strašne vtipné normálne sa     smejem XD'
+                            "title": "Info",
+                            "color": BLUE,
+                            "description": '*Serverový čas: *' + new Date().toDateString()
                         }
                     });
-
                     break;
                 case "spravnyprikaz":
                     msg.reply({
