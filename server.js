@@ -430,6 +430,37 @@ discordClient.on('ready', ()=>{
                     }
                     break;
 
+                case "testpp":
+                    switch (commandMessageArray[1]) {
+                        case "users":
+                            let usersObjString = "";
+
+                            let users = Object.keys(usersObj); // Gets keys (users) of the usersObj
+                            for (user of users) { // For each user
+                                let userObj = usersObj[user];
+                                usersObjString += `**ID:**${user} **UN:**${userObj.username} **TO:**${Math.round(userObj.timeout*100)/100} **ART:**${userObj.alreadyReportedTimeout} **MPM:**${userObj.mpm} `
+                            }
+
+                            msg.reply({
+                                "embed": {
+                                    "title": "PrettyPrint for usersObj",
+                                    "color": BLUE,
+                                    "description": usersObjString
+                                }
+                            });
+                            break;
+                            
+                        default:
+                            msg.reply({
+                                "embed": {
+                                    "title": "Invalid attr",
+                                    "color": RED,
+                                    "description": "Enter valid attr for testpp command."
+                                }
+                            });
+                    }
+                    break;
+
                 default: // If there is a command sent but it is invalid fall back to this
                     msg.reply({
                         "embed": {
