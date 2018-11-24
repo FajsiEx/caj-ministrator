@@ -445,7 +445,13 @@ discordClient.on('ready', ()=>{
     });
 
     console.log("[BOT] Setting activity...");
-    discordClient.user.setActivity('your every message', { type: 'WATCHING' });
+    discordClient.user.setStatus('dnd');
+    discordClient.user.setActivity('nothing because I\'m restarting...', { type: 'WATCHING' });
+
+    setTimeout(()=>{
+        discordClient.user.setStatus('online');
+        discordClient.user.setActivity('every message', { type: 'WATCHING' });
+    })
 
     setInterval(()=>{ // Does this every second
         let users = Object.keys(usersObj); // Gets keys (users) of the usersObj
@@ -497,6 +503,11 @@ discordClient.on('ready', ()=>{
             recievedCommandInTheLastMinute = false;
         }else{
             discordClient.user.setStatus('idle');
+        }
+        if (Math.random() < 0.05) {
+            discordClient.user.setActivity('every move', { type: 'WATCHING' });
+        }else{
+            discordClient.user.setActivity('every message', { type: 'WATCHING' });
         }
 
         console.log("[INTERVAL_MINUTE] Complete.");
