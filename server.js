@@ -3,9 +3,12 @@ console.log("[BOT] Starting...");
 // Import modules
 const discord = require('discord.js');
 const discordClient = new discord.Client();
+
 const mongo = require('mongodb');
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectID;
+
+const math = require('mathjs');
 
 // Configuration
 const discordBotCongig = {
@@ -124,18 +127,30 @@ discordClient.on('ready', ()=>{
             console.log(`[COMMAND] Recieved command COMMAND(${command}) ARRAY(${JSON.stringify(commandMessageArray)})`);
 
             if (msg.content.slice(1).match(/^\d/)) { // If the command is: !(0123456789) take it as a math problem
-                msg.reply({
-                    "embed": {
-                        "title": "Vypočítaný príkad",
-                        "color": 1616639,
-                        "fields": [
-                            {
-                                "name": "Príklad: " + msg.content.slice(1),
-                                "value": "Výsledok: **" + eval(msg.content.slice(1)) + "**"
-                            }
-                        ]
-                    }
-                });
+                try {
+                    let problem = msg.content.slice(1);
+                    let result = math.eval(problem);
+                    msg.reply({
+                        "embed": {
+                            "title": "Vypočítaný príkad",
+                            "color": 1616639,
+                            "fields": [
+                                {
+                                    "name": "Príklad: " + problem,
+                                    "value": "Výsledok: **" + result + "**"
+                                }
+                            ]
+                        }
+                    });
+                }catch(e){
+                    msg.reply({
+                        "embed": {
+                            "title": "Nesprávny príklad",
+                            "color": 16720418,
+                            "description": 'Neviem vypočítať tento príklad :('
+                        }
+                    });
+                }
                 return; // We don't need anything else.
             }
 
@@ -159,57 +174,20 @@ discordClient.on('ready', ()=>{
                         }
                     });
                     break;
+                case "excuse":
+                case "excuseme":
+                case "excusewtf":
+                case "wtf":
+                    msg.reply({
+                        "files": ["https://i.kym-cdn.com/entries/icons/original/000/026/913/excuse.jpg"]
+                    });
+                    break;
                 case "help":
                 case "pomoc":
                 case "prikazy":
-                    msg.reply({
-                        "embed": {
-                            "title": "Čaj-ministrátor príkazy:",
-                            "color": 1616639,
-                            "fields": [
-                                {
-                                    "name": "**!ping**",
-                                    "value": "Odpovie Pong! (pre testy či je bot funguje)"
-                                },
-                                {
-                                    "name": "**!info**",
-                                    "value": "Odpovie základnými údajmi o sebe"
-                                },
-                                {
-                                    "name": "**!help** / **!pomoc** / **!prikazy**",
-                                    "value": "Odpovie základnými údajmi o sebe"
-                                },
-                                {
-                                    "name": "**!pridat** / **!add** <dátum> <event>**",
-                                    "value": "Pridá event\n*Príklady použitia:*\n!pridat 23.10 Pisomka z matiky z mnozin\n!pridat 6.4.2018 Adlerka day\n!pridat 09.08 Ja nevim co"
-                                },
-                                {
-                                    "name": "**!vymazat** / **!remove** / **!delete** <event>**",
-                                    "value": "Vymaže/odstráni event. *Zatiaľ ho môžu používať len admini. Plánujem to umožniť aj autorom eventu...*\n*Príklady použitia:*\n!vymazat Pisomka z matiky z mnozin\n!remove Adlerka day\n!delete Ja nevim co"
-                                },
-                                {
-                                    "name": "**!eventy** / **!events**",
-                                    "value": "Vypíše nasledujúce eventy\n*Poznámka: Plánujem pridat nieco ako '!eventy zajtra' aby vypisalo eventy len na zajtra ale zatial to funguje ok aj bez toho takžeee....*"
-                                },
-                                {
-                                    "name": "**!<príklad>**",
-                                    "value": "Vypočíta príklad\n*Príklady použitia:*\n!2+2 (4)\n!6*6 (36)\n!33432*63437+53434-16434/22 (2120878471)"
-                                },
-                                {
-                                    "name": "**!alecau**",
-                                    "value": "AAALLEEE ČAAAAAUUU!!!"
-                                },
-                                {
-                                    "name": "**Nejaky další príkaz ktorý chcete**",
-                                    "value": "Napíšte to do #bot-testing"
-                                }
-                            ]
-                        }
-                    });
-
-
-
+                    helpCommand(commandMessageArray);
                     break;
+
                 case "alecau":
                     if (new Date().getDay() == 3) {
                         msg.reply(`AAALLEEE ČAAAAAUUU!!! Dneska je **Streda zaMEMOVAŤ TREBA**`);
@@ -283,14 +261,14 @@ discordClient.on('ready', ()=>{
                     let tomorrowDateObj = new Date(new Date().getTime() + 86400000);
                     let tomorrowDateString = `${tomorrowDateObj.getDate()}.${tomorrowDateObj.getMonth()+1}.${tomorrowDateObj.getFullYear()}`;
                     
-                    let eventsData = [
+                    let eventsFields = [
                         {
                             name: `***Dnes (${todayDateString})***`,
-                            value: ""
+                            value: "Nič"
                         },
                         {
                             name: `***Zajtra (${tomorrowDateString})***`,
-                            value: ""
+                            value: "Nič"
                         }
                     ];
 
@@ -304,20 +282,30 @@ discordClient.on('ready', ()=>{
                         let eventDateString = `${eventDate.getDate()}.${eventDate.getMonth()+1}.${eventDate.getFullYear()}`;
 
                         if (eventDateString == todayDateString) {
-                            if (eventsTodayString == "Nič") {
-                                eventsTodayString = "";
+                            if (eventsFields[0].value == "Nič") {
+                                eventsFields[0].value = "";
                             }
-                            eventsTodayString += `**${WEEK_DAYS_SHORT[eventDate.getDay()]} ${eventDate.getDate()}.${eventDate.getMonth()+1}** - ${e.content}\n`;
+                            eventsFields[0].value += `• ${e.content}\n`;
+
                         }else if (eventDateString == tomorrowDateString) {
-                            if (eventsTomorrowString == "Nič") {
-                                eventsTomorrowString = "";
+                            if (eventsFields[1].value == "Nič") {
+                                eventsFields[1].value = "";
                             }
-                            eventsTomorrowString += `**${WEEK_DAYS_SHORT[eventDate.getDay()]} ${eventDate.getDate()}.${eventDate.getMonth()+1}** - ${e.content}\n`;
+                            eventsFields[1].value += `• ${e.content}\n`;
+
                         }else{
-                            if (eventsString == "Nič") {
-                                eventsString = "";
+                            let eventFieldDate = `***${WEEK_DAYS[eventDate.getDay()]} ${eventDateString}***`;
+
+                            let eventField = eventsFields.find(obj => obj.name == eventFieldDate);
+
+                            if (eventField) {
+                                eventField.value += `• ${e.content}\n`;
+                            }else{
+                                eventsFields.push({
+                                    name: eventFieldDate,
+                                    value: "• " + e.content + "\n"
+                                })
                             }
-                            eventsString += `**${WEEK_DAYS_SHORT[eventDate.getDay()]} ${eventDate.getDate()}.${eventDate.getMonth()+1}** - ${e.content}\n`;
                         }
                     });
 
@@ -325,20 +313,7 @@ discordClient.on('ready', ()=>{
                         "embed": {
                             "title": "Nasledujúce eventy",
                             "color": 1616639,
-                            "fields": [
-                                {
-                                    "name": "***Dnes***",
-                                    "value": eventsTodayString
-                                },
-                                {
-                                    "name": "***Zajtra***",
-                                    "value": eventsTomorrowString
-                                },
-                                {
-                                    "name": "***Ostatné***",
-                                    "value": eventsString
-                                },
-                            ]
+                            "fields": eventsFields
                         }
                     });
 
@@ -479,6 +454,97 @@ discordClient.on('ready', ()=>{
         console.log("[INTERVAL_MINUTE] Complete.");
     }, 60000);
 });
+
+let helpCommand = (commandMessageArray)=> {
+    if (commandMessageArray[1]) {
+        switch (commandMessageArray[1]) {
+            case "ping":
+                msg.reply({
+                    "embed": {
+                        "title": "!ping",
+                        "color": 1616639,
+                        "description": "Odpovie Pong!\nNemá žiadny iný účel ako len testovať či bot funguje a príjma príkazy."
+                    }
+                });
+                break;
+                
+            case "info":
+                msg.reply({
+                    "embed": {
+                        "title": "!info",
+                        "color": 1616639,
+                        "description": "Odpovie základnými údajmi o sebe."
+                    }
+                });
+                break;
+
+            case "help":
+            case "pomoc":
+            case "prikazy":
+                msg.reply({
+                    "embed": {
+                        "title": "!help/pomoc/prikazy [príkaz]",
+                        "color": 1616639,
+                        "description": "Zobrazí príkazy ktoré bot príjma.\nPokiaľ sa použije *!help [príkaz]* tak sa zobrazia informácie o tom príkaze\n\n**Príklady**\n*!help pridat*\n*!help eventy*\n*!help ping*"
+                    }
+                });
+                break;
+
+            case "pridat":
+            case "add":
+                msg.reply({
+                    "embed": {
+                        "title": "!pridat/add <dátum> <event>",
+                        "color": 1616639,
+                        "description": "Pridá event na dátum.\n\n**Príklady**\n*!pridat 23.10  Pisomka z matiky z mnozin*\n*!pridat 6.4.2018 Adlerka day*\n*!pridat 09.08 Ja nevim co*"
+                    }
+                });
+                break;
+
+            case "vymazat":
+            case "remove":
+            case "delete":
+                msg.reply({
+                    "embed": {
+                        "title": "!vymazat/remove/delete <event>",
+                        "color": 1616639,
+                        "description": "Vymaže daný event.\n*Zatiaľ ho môžu používať len admini ale plánujem pridať možnosť vymazať svoj vlastný event.*\n\n**Príklady**\n*!vymazat Pisomka z matiky z mnozin*\n*!remove Adlerka day*\n*!delete Ja nevim co*"
+                    }
+                });
+                break;
+
+            case "eventy":
+            case "events":
+                msg.reply({
+                    "embed": {
+                        "title": "!eventy/events",
+                        "color": 1616639,
+                        "description": "Zobrazí následujúce eventy.\n*Plánujem pridat nieco ako !eventy zajtra' aby vypísalo eventy len na zajtra ale zatial to funguje ok aj bez toho takžeee....*"
+                    }
+                });
+                break;
+        }
+    }else{
+        msg.reply({
+            "embed": {
+                "title": "Čaj-ministrátor príkazy:",
+                "color": 1616639,
+                "description": `
+                    **!ping** - Odpovie Pong!
+                    **!info** - Odpovie základnými údajmi o sebe
+                    **!help [príkaz]** - Zobrazí príkazy ktoré bot príjma
+                    **!pridat/add <dátum> <event>** - Pridá event
+                    **!vymazat/remove/delete** - Odstráni event
+                    **!eventy/events** - Vypíše nasledujúce eventy
+                    **!<príklad>** - Vpočíta príklad
+
+                    *Pre viac informácií o príkaze napíšte napr.: !help eventy*
+                    *Ak chcete niečo pridať/zmeniť napíšte do bot-testing*
+                `
+            }
+        });
+    }
+}
 
 // ED
 discordClient.login(discordBotCongig.token);
