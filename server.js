@@ -185,7 +185,7 @@ discordClient.on('ready', ()=>{
                 case "help":
                 case "pomoc":
                 case "prikazy":
-                    helpCommand(commandMessageArray);
+                    helpCommand(msg, commandMessageArray);
                     break;
 
                 case "alecau":
@@ -251,10 +251,6 @@ discordClient.on('ready', ()=>{
                 case "eventy":
                 case "events":
                     events.sort(compare);
-                    let eventsTodayString = "Nič";
-                    let eventsTomorrowString = "Nič";
-                    let eventsString = "Nič";
-
                     
                     let todayDateString = `${new Date().getDate()}.${new Date().getMonth()+1}.${new Date().getFullYear()}`;
                     
@@ -273,7 +269,7 @@ discordClient.on('ready', ()=>{
                     ];
 
                     events.forEach((e)=>{
-                        if (e < new Date().getTime()) { // If the event is in the past
+                        if (e.time < new Date().getTime()) { // If the event is in the past
                             delete e;
                             return;
                         }
@@ -455,7 +451,7 @@ discordClient.on('ready', ()=>{
     }, 60000);
 });
 
-let helpCommand = (commandMessageArray)=> {
+let helpCommand = (msg, commandMessageArray)=> {
     if (commandMessageArray[1]) {
         switch (commandMessageArray[1]) {
             case "ping":
@@ -467,11 +463,12 @@ let helpCommand = (commandMessageArray)=> {
                     }
                 });
                 break;
-                
+
             case "info":
+            case "about":
                 msg.reply({
                     "embed": {
-                        "title": "!info",
+                        "title": "!info/about",
                         "color": 1616639,
                         "description": "Odpovie základnými údajmi o sebe."
                     }
