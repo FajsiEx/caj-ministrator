@@ -99,7 +99,7 @@ discordClient.on('ready', ()=>{
         let channel = member.guild.channels.find(ch => ch.name === 'talk');
         if (!channel) {return;}
         channel.send(`Vítaj, ${member}! Nezabudni si dať svoje IRL meno ako nickname.`);
-      });
+    });
 
 
     discordClient.on('message', (msg)=> { // When there is any message the bot can see
@@ -192,7 +192,7 @@ discordClient.on('ready', ()=>{
                         "embed": {
                             "title": "Info",
                             "color": BLUE,
-                            "description": '*Serverový čas: *' + new Date().toDateString()
+                            "description": '*Serverový čas:* ' + new Date().toDateString()
                         }
                     });
                     break;
