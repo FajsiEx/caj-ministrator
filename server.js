@@ -703,9 +703,9 @@ let helpCommand = (msg, commandMessageArray)=> {
             case "events":
                 msg.reply({
                     "embed": {
-                        "title": "!eventy/events",
+                        "title": "!eventy/events [dnes/zajtra]",
                         "color": BLUE,
-                        "description": "Zobrazí následujúce eventy.\n*Plánujem pridat nieco ako !eventy zajtra' aby vypísalo eventy len na zajtra ale zatial to funguje ok aj bez toho takžeee....*"
+                        "description": "Zobrazí následujúce eventy (ak sa pridá dnes/zajtra zobrazí eventy len pre ten deň).\n\n**Príklady**\n*!eventy*\n*!events dnes*\n*!eventy zajtra*"
                     }
                 });
                 break;
