@@ -137,6 +137,7 @@ discordClient.on('ready', ()=>{
         
         console.log(`[MESSAGE] Recieved message. AUTHOR(${author} ### ${author_id}) CONTENT(${message}) TIMEOUT(${usersObj[author_id].timeout})`);
         
+        /* Good night wish comm */
         if (((message.indexOf('idem spat') > -1) || (message.indexOf('idem spať') > -1)) && usersObj[author_id].alreadyWishedGN < 1) {
             msg.reply("Dobrú noc! ZZZZzzzzzzzzz");
             usersObj[author_id].alreadyWishedGN = 15
