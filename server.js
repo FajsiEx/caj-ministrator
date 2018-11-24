@@ -438,7 +438,7 @@ discordClient.on('ready', ()=>{
                             let users = Object.keys(usersObj); // Gets keys (users) of the usersObj
                             for (user of users) { // For each user
                                 let userObj = usersObj[user];
-                                usersObjString += `**ID:**${user} **UN:**${userObj.username} **TO:**${Math.round(userObj.timeout*100)/100} **ART:**${userObj.alreadyReportedTimeout} **MPM:**${userObj.mpm} `
+                                usersObjString += `**ID:**${user} **UN:**${userObj.username} **TO:**${Math.round(userObj.timeout*100)/100} **ART:**${userObj.alreadyReportedTimeout} **MPM:**${userObj.mpm}\n`
                             }
 
                             msg.reply({
@@ -449,7 +449,7 @@ discordClient.on('ready', ()=>{
                                 }
                             });
                             break;
-                            
+
                         default:
                             msg.reply({
                                 "embed": {
