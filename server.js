@@ -254,7 +254,8 @@ discordClient.on('ready', ()=>{
                 case "eventy":
                 case "events":
                     events.sort(compare);
-                    
+                    eventContentToDelete = false;
+
                     let todayDateString = `${new Date().getDate()}.${new Date().getMonth()+1}.${new Date().getFullYear()}`;
                     
                     let tomorrowDateObj = new Date(new Date().getTime() + 86400000);
@@ -273,7 +274,7 @@ discordClient.on('ready', ()=>{
 
                     events.forEach((e)=>{
                         if (e.time < new Date().getTime()) { // If the event is in the past
-                            delete e;
+                            eventContentToDelete = e.content
                             return;
                         }
                         let eventDate = new Date(e.time);
@@ -307,7 +308,7 @@ discordClient.on('ready', ()=>{
                             }
                         }
                     });
-
+                    
                     msg.reply({
                         "embed": {
                             "title": "Nasledujúce eventy",
@@ -315,6 +316,13 @@ discordClient.on('ready', ()=>{
                             "fields": eventsFields
                         }
                     });
+
+                    if (eventContentToDelete) {
+                        events = events.filter((obj)=>{
+                            return obj.content !== eventContentToDelete
+                        });
+                        saveData();
+                    }
 
                     break;
                 case "vymazat":
@@ -405,8 +413,17 @@ discordClient.on('ready', ()=>{
                                 }
                             });
                             break;
+                        default:
+                            msg.reply({
+                                "embed": {
+                                    "title": "Invalid attr",
+                                    "color": RED,
+                                    "description": "Enter valid attr for testread command."
+                                }
+                            });
                     }
                     break;
+
                 default: // If there is a command sent but it is invalid fall back to this
                     msg.reply({
                         "embed": {
