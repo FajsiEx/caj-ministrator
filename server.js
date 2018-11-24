@@ -21,6 +21,8 @@ const TIMEOUT_DIVIDER = 1.1; // Each second : [user's timeout / TIMEOUT_DIVIDER]
 const TIMEOUT_TRIGGER = 25; // When timeout reaches this amount, bot gets triggered and sends message to the admin
 const TIMEOUT_BEFORE_REREPORT = 5 // How many minutes must elapse before the user can be reported again
 const ADMIN_USERID = process.env.ADMIN_USERID; // User id of the admin user...
+const DEV_USERID = 342227744513327107;
+
 const EVENT_FILENAME = "events.json";
 
 const DATABASE_URI = process.env.DATABASE_URI;
@@ -31,7 +33,7 @@ const DATABASE_URI = process.env.DATABASE_URI;
 let usersObj = {};
 let adminUser;
 let events = [];
-let recievedCommandInTheLastMinute = false;
+let recievedCommandsTimeout = 30;
 let starting = true;
 const WEEK_DAYS = ["Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota"];
 const WEEK_DAYS_SHORT = ["Ne", "Po", "Ut", "St", "Št", "Pi", "So"];
@@ -91,6 +93,15 @@ discordClient.on('ready', ()=>{
         console.log("[BOT] Fetched the admin user");
     });
 
+
+    // GREETING
+    discordClient.on('guildMemberAdd', member => {
+        let channel = member.guild.channels.find(ch => ch.name === 'talk');
+        if (!channel) {return;}
+        channel.send(`Vítaj, ${member}! Nezabudni si dať svoje IRL meno ako nickname.`);
+      });
+
+
     discordClient.on('message', (msg)=> { // When there is any message the bot can see
         if (msg.author.bot) { // We check if the author of the message isn't a bot
             console.log("[IGNORE] Bot message has been ignored.");
@@ -118,15 +129,23 @@ discordClient.on('ready', ()=>{
                 mpm: 1, // Messages per minute
                 timeOfFirstMinuteMessage: 0,
                 timeout: TIMEOUT_INCREMENT, // And increment their timeout
-                alreadyReportedTimeout: 0 // 0=not reported yet.
+                alreadyReportedTimeout: 0, // 0=not reported yet.
+                alreadyWishedGN: 0 // 0=not wished GN yet.
             };
         }
 
+        
         console.log(`[MESSAGE] Recieved message. AUTHOR(${author} ### ${author_id}) CONTENT(${message}) TIMEOUT(${usersObj[author_id].timeout})`);
+        
+        if (((message.indexOf('idem spat') > -1) || (message.indexOf('idem spať') > -1)) && usersObj[author_id].alreadyWishedGN < 1) {
+            msg.reply("Dobrú noc! ZZZZzzzzzzzzz");
+            usersObj[author_id].alreadyWishedGN = 15
+            return;
+        }
 
         // Detect if the message is a bot command
         if (message.startsWith(discordBotCongig.prefix)) {
-            recievedCommandInTheLastMinute = true;
+            recievedCommandsTimeout = 30;
 
             let commandMessageArray = msg.content.split(" "); // Split words of the message into an array
 
@@ -162,16 +181,21 @@ discordClient.on('ready', ()=>{
                 return; // We don't need anything else.
             }
 
+            /* Normal commands */
             switch (command) {
                 case "ping":
                     msg.reply("Pong!");
                     break;
                 case "info":
                 case "about":
-                    msg.reply(`
-                        Čaj-ministrátor - Bot ktorý sa stará o adlerákov\n
-                        Serverový čas: ${new Date().toString()}
-                    `);
+                    msg.reply({
+                        "embed": {
+                            "title": "Si myslíš, že si múdry, čo?",
+                            "color": RED,
+                            "description": 'Hahahahahahahahahahahahaha...strašne vtipné normálne sa     smejem XD'
+                        }
+                    });
+
                     break;
                 case "spravnyprikaz":
                     msg.reply({
@@ -182,11 +206,12 @@ discordClient.on('ready', ()=>{
                         }
                     });
                     break;
+
                 case "excuse":
                 case "excuseme":
                 case "excusewtf":
                 case "wtf":
-                    msg.reply({
+                    msg.channel.send({
                         "files": ["https://i.kym-cdn.com/entries/icons/original/000/026/913/excuse.jpg"]
                     });
                     break;
@@ -266,16 +291,36 @@ discordClient.on('ready', ()=>{
                     let tomorrowDateObj = new Date(new Date().getTime() + 86400000);
                     let tomorrowDateString = `${tomorrowDateObj.getDate()}.${tomorrowDateObj.getMonth()+1}.${tomorrowDateObj.getFullYear()}`;
                     
-                    let eventsFields = [
-                        {
-                            name: `***Dnes (${todayDateString})***`,
-                            value: "Nič"
-                        },
-                        {
-                            name: `***Zajtra (${tomorrowDateString})***`,
-                            value: "Nič"
-                        }
-                    ];
+                    let eventsFields = [];
+                    let embedTitle = "Nasledujúce eventy";
+                    if (commandMessageArray[1] == 'dnes') {
+                        embedTitle = "Eventy na dnes"
+                        eventsFields = [
+                            {
+                                name: `***${todayDateString}***`,
+                                value: "Nič"
+                            }
+                        ];
+                    }else if (commandMessageArray[1] == 'zajtra') {
+                        embedTitle = "Eventy na zajtra"
+                        eventsFields = [
+                            {
+                                name: `***${tomorrowDateString}***`,
+                                value: "Nič"
+                            }
+                        ];
+                    }else{
+                        eventsFields = [
+                            {
+                                name: `***Dnes (${todayDateString})***`,
+                                value: "Nič"
+                            },
+                            {
+                                name: `***Zajtra (${tomorrowDateString})***`,
+                                value: "Nič"
+                            }
+                        ];
+                    }
 
                     events.forEach((e)=>{
                         if (e.time < new Date().getTime()) { // If the event is in the past
@@ -287,18 +332,29 @@ discordClient.on('ready', ()=>{
                         let eventDateString = `${eventDate.getDate()}.${eventDate.getMonth()+1}.${eventDate.getFullYear()}`;
 
                         if (eventDateString == todayDateString) {
+                            if (commandMessageArray[1] == 'zajtra') {return;}
+
                             if (eventsFields[0].value == "Nič") {
                                 eventsFields[0].value = "";
                             }
                             eventsFields[0].value += `• ${e.content}\n`;
 
                         }else if (eventDateString == tomorrowDateString) {
-                            if (eventsFields[1].value == "Nič") {
-                                eventsFields[1].value = "";
+                            if (commandMessageArray[1] == 'dnes') {return;}
+                            
+                            if (commandMessageArray[1] == 'zajtra') {
+                                if (eventsFields[0].value == "Nič") {
+                                    eventsFields[0].value = "";
+                                }
+                                eventsFields[0].value += `• ${e.content}\n`;
+                            }else{
+                                if (eventsFields[1].value == "Nič") {
+                                    eventsFields[1].value = "";
+                                }
+                                eventsFields[1].value += `• ${e.content}\n`;
                             }
-                            eventsFields[1].value += `• ${e.content}\n`;
-
                         }else{
+                            if (commandMessageArray[1] == 'dnes' || commandMessageArray[1] == 'zajtra') {return;}
                             let eventFieldDate = `***${WEEK_DAYS[eventDate.getDay()]} ${eventDateString}***`;
 
                             let eventField = eventsFields.find(obj => obj.name == eventFieldDate);
@@ -316,7 +372,7 @@ discordClient.on('ready', ()=>{
                     
                     msg.reply({
                         "embed": {
-                            "title": "Nasledujúce eventy",
+                            "title": embedTitle,
                             "color": BLUE,
                             "fields": eventsFields
                         }
@@ -399,6 +455,16 @@ discordClient.on('ready', ()=>{
                     break;
 
                 case "testread":
+                    if (msg.author.id != DEV_USERID) {
+                        msg.reply({
+                            "embed": {
+                                "title": "Tento príkaz môžu vykonavať len developeri z dôvodu redukcie spamu. sry :/",
+                                "color": RED
+                            }
+                        });
+                        return;
+                    }
+
                     switch (commandMessageArray[1]) {
                         case "events":
                             loadData();
@@ -431,6 +497,16 @@ discordClient.on('ready', ()=>{
                     break;
 
                 case "testpp":
+                    if (msg.author.id != DEV_USERID) {
+                        msg.reply({
+                            "embed": {
+                                "title": "Tento príkaz môžu vykonavať len developeri z dôvodu redukcie  spamu. sry :/",
+                                "color": RED
+                            }
+                        });
+                        return;
+                    }
+
                     switch (commandMessageArray[1]) {
                         case "users":
                             let usersObjString = "";
@@ -438,7 +514,7 @@ discordClient.on('ready', ()=>{
                             let users = Object.keys(usersObj); // Gets keys (users) of the usersObj
                             for (user of users) { // For each user
                                 let userObj = usersObj[user];
-                                usersObjString += `**ID:**${user} **UN:**${userObj.username} **TO:**${Math.round(userObj.timeout*100)/100} **ART:**${userObj.alreadyReportedTimeout} **MPM:**${userObj.mpm}\n`
+                                usersObjString += `**ID:**${user} **UN:**${userObj.username} **TO:**${Math.round(userObj.timeout*100)/100} **ART:**${userObj.alreadyReportedTimeout} **MPM:**${userObj.mpm} **GNT:**${userObj.alreadyWishedGN}\n`
                             }
 
                             msg.reply({
@@ -529,12 +605,27 @@ discordClient.on('ready', ()=>{
                 console.log(`[INTERVAL_MINUTE] Report timeout expired for user (${username}).`);
             }
         }
+
+        console.log("[INTERVAL_MINUTE] Decrementing already wished GN timeouts...");
+        // Decrement the timeout of each user in alreadyReported. Remove if < 1
+        for (user of users) { // For each user
+            if (usersObj[user].alreadyWishedGN < 1) {continue;}
+            let username = usersObj[user].username;
+    
+            console.log(`[INTERVAL_MINUTE] Decreased GN timeout for user (${username}) from (${usersObj[user].alreadyWishedGN}).`);
+    
+            usersObj[user].alreadyWishedGN--; // Decrement report timeout
+    
+            if (usersObj[user].alreadyWishedGN < 1) {
+                console.log(`[INTERVAL_MINUTE] GN timeout expired for user (${username}).`);
+            }
+        }
     
         console.log("[INTERVAL_MINUTE] Setting activity...");
         if (!starting) {
-            if (recievedCommandInTheLastMinute) {
+            if (recievedCommandsTimeout <= 30) {
                 discordClient.user.setStatus('online');
-                recievedCommandInTheLastMinute = false;
+                recievedCommandsTimeout--;
             }else{
                 discordClient.user.setStatus('idle');
             }
