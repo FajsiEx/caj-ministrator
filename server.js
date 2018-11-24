@@ -9,6 +9,7 @@ const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectID;
 
 const math = require('mathjs');
+const ytdl = require('ytdl-core');
 
 // Configuration
 const discordBotCongig = {
@@ -30,6 +31,7 @@ const DATABASE_URI = process.env.DATABASE_URI;
 let usersObj = {};
 let adminUser;
 let events = [];
+let recievedCommandInTheLastMinute = false;
 const WEEK_DAYS = ["Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota"];
 const WEEK_DAYS_SHORT = ["Ne", "Po", "Ut", "St", "Št", "Pi", "So"];
 const RED = 16720418;
@@ -102,7 +104,7 @@ discordClient.on('ready', ()=>{
         let userObj = usersObj[author_id]; // Get the author from the usersObj
 
         if (userObj) { // If the author is already in the usersObj
-            usersObj[author_id].author = author; // Set the username jic it changed...
+            usersObj[author_id].username = author; // Set the username jic it changed...
             usersObj[author_id].timeout += TIMEOUT_INCREMENT; // We just increment the timeout
             usersObj[author_id].mpm++; // and also increment the messages per minute
 
@@ -123,6 +125,8 @@ discordClient.on('ready', ()=>{
 
         // Detect if the message is a bot command
         if (message.startsWith(discordBotCongig.prefix)) {
+            recievedCommandInTheLastMinute = true;
+
             let commandMessageArray = msg.content.split(" "); // Split words of the message into an array
 
             let command = commandMessageArray[0].slice(1); // Extracts the command from the message
@@ -254,7 +258,7 @@ discordClient.on('ready', ()=>{
                 case "eventy":
                 case "events":
                     events.sort(compare);
-                    eventContentToDelete = false;
+                    let oldEventContentToDelete = false;
 
                     let todayDateString = `${new Date().getDate()}.${new Date().getMonth()+1}.${new Date().getFullYear()}`;
                     
@@ -274,7 +278,7 @@ discordClient.on('ready', ()=>{
 
                     events.forEach((e)=>{
                         if (e.time < new Date().getTime()) { // If the event is in the past
-                            eventContentToDelete = e.content
+                            oldEventContentToDelete = e.content
                             return;
                         }
                         let eventDate = new Date(e.time);
@@ -317,9 +321,9 @@ discordClient.on('ready', ()=>{
                         }
                     });
 
-                    if (eventContentToDelete) {
+                    if (oldEventContentToDelete) {
                         events = events.filter((obj)=>{
-                            return obj.content !== eventContentToDelete
+                            return obj.content !== oldEventContentToDelete
                         });
                         saveData();
                     }
@@ -392,6 +396,7 @@ discordClient.on('ready', ()=>{
                         });
                     }
                     break;
+
                 case "testread":
                     switch (commandMessageArray[1]) {
                         case "events":
@@ -486,6 +491,14 @@ discordClient.on('ready', ()=>{
             }
         }
     
+        console.log("[INTERVAL_MINUTE] Setting activity...");
+        if (recievedCommandInTheLastMinute) {
+            discordClient.user.setStatus('online');
+            recievedCommandInTheLastMinute = false;
+        }else{
+            discordClient.user.setStatus('idle');
+        }
+
         console.log("[INTERVAL_MINUTE] Complete.");
     }, 60000);
 });
