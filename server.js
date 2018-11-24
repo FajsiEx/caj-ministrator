@@ -32,6 +32,9 @@ let adminUser;
 let events = [];
 const WEEK_DAYS = ["Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota"];
 const WEEK_DAYS_SHORT = ["Ne", "Po", "Ut", "St", "Št", "Pi", "So"];
+const RED = 16720418;
+const BLUE = 1616639;
+const GREEN = 4521796;
 
 // Function delcarations
 let loadData = ()=>{ // Loads data from the DB to the memory
@@ -133,7 +136,7 @@ discordClient.on('ready', ()=>{
                     msg.reply({
                         "embed": {
                             "title": "Vypočítaný príkad",
-                            "color": 1616639,
+                            "color": BLUE,
                             "fields": [
                                 {
                                     "name": "Príklad: " + problem,
@@ -146,7 +149,7 @@ discordClient.on('ready', ()=>{
                     msg.reply({
                         "embed": {
                             "title": "Nesprávny príklad",
-                            "color": 16720418,
+                            "color": RED,
                             "description": 'Neviem vypočítať tento príklad :('
                         }
                     });
@@ -169,7 +172,7 @@ discordClient.on('ready', ()=>{
                     msg.reply({
                         "embed": {
                             "title": "Si myslíš, že si múdry, čo?",
-                            "color": 16720418,
+                            "color": RED,
                             "description": 'Hahahahahahahahahahahahaha...strašne vtipné normálne sa smejem XD'
                         }
                     });
@@ -201,7 +204,7 @@ discordClient.on('ready', ()=>{
                         msg.reply({
                             "embed": {
                                 "title": "Nesprávny formát príkazu !pridat",
-                                "color": 16720418,
+                                "color": RED,
                                 "description": 'Použitie: !pridat [datum] [nazov eventu]\n**Príklady:**\n!pridat 23.10 Pisomka z matiky z mnozin\n!pridat 6.4.2018 Adlerka day\n!pridat 09.08 Ja nevim co'
                             }
                         });
@@ -216,7 +219,7 @@ discordClient.on('ready', ()=>{
                         msg.reply({
                             "embed": {
                                 "title": "Nesprávny formát dátumu",
-                                "color": 16720418,
+                                "color": RED,
                                 "description": 'Použitie: !pridat [datum] [nazov eventu]\n**Príklady:**\n!pridat 23.10 Pisomka z matiky z mnozin\n!pridat 6.4.2018 Adlerka day\n!pridat 09.08 Ja nevim co'
                             }
                         });
@@ -243,7 +246,7 @@ discordClient.on('ready', ()=>{
                     msg.reply({
                         "embed": {
                             "title": "Event bol pridaný",
-                            "color": 4521796,
+                            "color": GREEN,
                             "description": `**${WEEK_DAYS_SHORT[dateObj.getDay()]} ${dateObj.getDate()}.${dateObj.getMonth()+1}** - ${eventName}\n`
                         }
                     });
@@ -308,7 +311,7 @@ discordClient.on('ready', ()=>{
                     msg.reply({
                         "embed": {
                             "title": "Nasledujúce eventy",
-                            "color": 1616639,
+                            "color": BLUE,
                             "fields": eventsFields
                         }
                     });
@@ -324,7 +327,7 @@ discordClient.on('ready', ()=>{
                             msg.reply({
                                 "embed": {
                                     "title": "Tento príkaz sa môže vykonávať len v #admin-commandy",
-                                    "color": 16720418
+                                    "color": RED
                                 }
                             });
                             return;
@@ -334,7 +337,7 @@ discordClient.on('ready', ()=>{
                         msg.reply({
                             "embed": {
                                 "title": "Tento príkaz sa môže vykonávať len v #admin-commandy",
-                                "color": 16720418
+                                "color": RED
                             }
                         });
                         return;
@@ -366,7 +369,7 @@ discordClient.on('ready', ()=>{
                         msg.reply({
                             "embed": {
                                 "title": "Event bol vymazaný. Zmeny sa môžu prejaviť až o pár sekúnd!",
-                                "color": 4521796
+                                "color": GREEN
                             }
                         });
                         setTimeout(()=>{
@@ -376,20 +379,39 @@ discordClient.on('ready', ()=>{
                         msg.reply({
                             "embed": {
                                 "title": "Event sa nenašiel",
-                                "color": 16720418
+                                "color": RED
                             }
                         });
                     }
                     break;
                 case "testread":
-                    loadData();
-                    msg.reply("JSON dump of events file:" + JSON.stringify(events) + "\n**Warning! Event data will load after this message!**");
+                    switch (commandMessageArray[1]) {
+                        case "events":
+                            loadData();
+                            msg.reply({
+                                "embed": {
+                                    "title": "JSON dump of events object",
+                                    "color": BLUE,
+                                    "description": JSON.stringify(events) + "\n**Warning! Event data will load after this message!**"
+                                }
+                            });
+                            break;
+                        case "users":
+                            msg.reply({
+                                "embed": {
+                                    "title": "JSON dump of users object",
+                                    "color": BLUE,
+                                    "description": JSON.stringify(usersObj)
+                                }
+                            });
+                            break;
+                    }
                     break;
                 default: // If there is a command sent but it is invalid fall back to this
                     msg.reply({
                         "embed": {
                             "title": "Nesprávny príkaz",
-                            "color": 16720418,
+                            "color": RED,
                             "description": `${discordBotCongig.prefix + command} je niečo ako správny príkaz, ale nie.\nPre list príkazov **!help**`
                         }
                     });
@@ -458,7 +480,7 @@ let helpCommand = (msg, commandMessageArray)=> {
                 msg.reply({
                     "embed": {
                         "title": "!ping",
-                        "color": 1616639,
+                        "color": BLUE,
                         "description": "Odpovie Pong!\nNemá žiadny iný účel ako len testovať či bot funguje a príjma príkazy."
                     }
                 });
@@ -469,7 +491,7 @@ let helpCommand = (msg, commandMessageArray)=> {
                 msg.reply({
                     "embed": {
                         "title": "!info/about",
-                        "color": 1616639,
+                        "color": BLUE,
                         "description": "Odpovie základnými údajmi o sebe."
                     }
                 });
@@ -481,7 +503,7 @@ let helpCommand = (msg, commandMessageArray)=> {
                 msg.reply({
                     "embed": {
                         "title": "!help/pomoc/prikazy [príkaz]",
-                        "color": 1616639,
+                        "color": BLUE,
                         "description": "Zobrazí príkazy ktoré bot príjma.\nPokiaľ sa použije *!help [príkaz]* tak sa zobrazia informácie o tom príkaze\n\n**Príklady**\n*!help pridat*\n*!help eventy*\n*!help ping*"
                     }
                 });
@@ -492,7 +514,7 @@ let helpCommand = (msg, commandMessageArray)=> {
                 msg.reply({
                     "embed": {
                         "title": "!pridat/add <dátum> <event>",
-                        "color": 1616639,
+                        "color": BLUE,
                         "description": "Pridá event na dátum.\n\n**Príklady**\n*!pridat 23.10  Pisomka z matiky z mnozin*\n*!pridat 6.4.2018 Adlerka day*\n*!pridat 09.08 Ja nevim co*"
                     }
                 });
@@ -504,7 +526,7 @@ let helpCommand = (msg, commandMessageArray)=> {
                 msg.reply({
                     "embed": {
                         "title": "!vymazat/remove/delete <event>",
-                        "color": 1616639,
+                        "color": BLUE,
                         "description": "Vymaže daný event.\n*Zatiaľ ho môžu používať len admini ale plánujem pridať možnosť vymazať svoj vlastný event.*\n\n**Príklady**\n*!vymazat Pisomka z matiky z mnozin*\n*!remove Adlerka day*\n*!delete Ja nevim co*"
                     }
                 });
@@ -515,7 +537,7 @@ let helpCommand = (msg, commandMessageArray)=> {
                 msg.reply({
                     "embed": {
                         "title": "!eventy/events",
-                        "color": 1616639,
+                        "color": BLUE,
                         "description": "Zobrazí následujúce eventy.\n*Plánujem pridat nieco ako !eventy zajtra' aby vypísalo eventy len na zajtra ale zatial to funguje ok aj bez toho takžeee....*"
                     }
                 });
@@ -525,7 +547,7 @@ let helpCommand = (msg, commandMessageArray)=> {
         msg.reply({
             "embed": {
                 "title": "Čaj-ministrátor príkazy:",
-                "color": 1616639,
+                "color": BLUE,
                 "description": `
                     **!ping** - Odpovie Pong!
                     **!info** - Odpovie základnými údajmi o sebe
