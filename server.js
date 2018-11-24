@@ -451,7 +451,7 @@ discordClient.on('ready', ()=>{
     setTimeout(()=>{
         discordClient.user.setStatus('online');
         discordClient.user.setActivity('every message', { type: 'WATCHING' });
-    })
+    }, 15000)
 
     setInterval(()=>{ // Does this every second
         let users = Object.keys(usersObj); // Gets keys (users) of the usersObj
