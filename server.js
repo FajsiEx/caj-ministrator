@@ -164,6 +164,7 @@ discordClient.on('ready', ()=>{
                         "files": ["https://i.kym-cdn.com/entries/icons/original/000/026/913/excuse.jpg"]
                     });
                     break;
+
                 case "ahoj": //robil Dan Valnicek
                     ahojCommand(msg);
                     break;
@@ -660,6 +661,12 @@ let spamProtect = (msg, author_id, author)=>{ // On message recieved
 
 let solveMathProblem = (msg, problem)=>{
     try {
+        if (Math.random() < 0.01) {
+            msg.channel.send({
+                "files": ["https://cdn.discordapp.com/attachments/515142390022012932/516288545711718420/Expanding-Brain.png"]
+            });
+        }
+
         let result = math.eval(problem);
         msg.reply({
             "embed": {
