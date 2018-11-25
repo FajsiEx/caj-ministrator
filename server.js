@@ -185,6 +185,12 @@ discordClient.on('ready', ()=>{
                     });
                     break;
 
+                case "tsj":
+                    msg.channel.send({
+                        "files": ["https://i.imgur.com/8y9Uji5.jpg"]
+                    });
+                    break;
+
                 case "ahoj": //robil Dan Valnicek
                     ahojCommand(msg);
                     break;
