@@ -164,7 +164,10 @@ discordClient.on('ready', ()=>{
                         "files": ["https://i.kym-cdn.com/entries/icons/original/000/026/913/excuse.jpg"]
                     });
                     break;
-
+                case "ahoj": //robil Dan Valnicek
+                    ahojCommand(msg);
+                    break;
+                    
                 case "help":
                 case "pomoc":
                 case "prikazy":
@@ -596,6 +599,9 @@ let goodNightWisher = (message, author_id)=>{
     }
 }
 
+let ahojCommand = (msg)=> {
+    msg.reply("Ahoj");
+}
 
 let spamProtect = (msg, author_id, author)=>{ // On message recieved
     let userObj = usersObj[author_id]; // Get the author from the usersObj
