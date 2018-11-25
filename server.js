@@ -437,6 +437,7 @@ discordClient.on('ready', ()=>{
                     break;
 
                 case "snap":
+                case "thanos":
                     if (msg.author.id != DEV_USERID) {
                         msg.reply({
                             "embed": {
@@ -476,7 +477,7 @@ discordClient.on('ready', ()=>{
                                 "embed": {
                                     "title": "Invalid attr",
                                     "color": RED,
-                                    "description": "Enter valid attr for !snap command."
+                                    "description": "Enter valid attr for !snap/thanos command."
                                 }
                             });
                     }
