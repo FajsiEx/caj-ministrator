@@ -165,6 +165,26 @@ discordClient.on('ready', ()=>{
                     });
                     break;
 
+                case "tmyk":
+                case "themoreyouknow":
+                    msg.channel.send({
+                        "files": ["https://i.ytimg.com/vi/GD6qtc2_AQA/maxresdefault.jpg"]
+                    });
+                    break;
+
+                case "commit":
+                case "gocommit":
+                    msg.channel.send({
+                        "files": ["https://i.kym-cdn.com/photos/images/newsfeed/001/394/620/475.png"]
+                    });
+                    break;
+
+                case "oof":
+                    msg.channel.send({
+                        "files": ["https://i.imgur.com/RPaDdQf.png"]
+                    });
+                    break;
+
                 case "ahoj": //robil Dan Valnicek
                     ahojCommand(msg);
                     break;
@@ -663,7 +683,7 @@ let solveMathProblem = (msg, problem)=>{
     try {
         if (Math.random() < 0.01) {
             msg.channel.send({
-                "files": ["https://cdn.discordapp.com/attachments/515142390022012932/516288545711718420/Expanding-Brain.png"]
+                "files": ["https://i.imgur.com/IBopYGD.png"]
             });
         }
 
