@@ -38,6 +38,7 @@ let starting = true;
 const WEEK_DAYS = ["Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota"];
 const WEEK_DAYS_SHORT = ["Ne", "Po", "Ut", "St", "Št", "Pi", "So"];
 const RED = 16720418;
+const YELLOW = 14540032;
 const BLUE = 1616639;
 const GREEN = 4521796;
 
@@ -75,10 +76,14 @@ let saveData = ()=>{
     });
 }
 
-function compare(a,b) {
-    if (a.time < b.time) {return -1;}
-    if (a.time > b.time) {return 1;}
-    return 0;
+let compare = (a,b)=>{
+    if (a.time < b.time) {
+        return -1;
+    }else if (a.time > b.time) {
+        return 1;
+    }else{
+        return 0;
+    }
 }
 
 // Discord client init
@@ -109,40 +114,17 @@ discordClient.on('ready', ()=>{
         }
 
         // Get some shit from the msg object
-        let author_id = msg.author.id;
-        let author = msg.author.username + "#" + msg.author.discriminator;
+        let author_id = msg.author.id; // 45656489754512344
+        let author = msg.author.username + "#" + msg.author.discriminator; // User#1337
         let message = msg.content;
 
-        let userObj = usersObj[author_id]; // Get the author from the usersObj
+        /* Things for the spam protection */
+        spamProtect(msg, author_id, author);
 
-        if (userObj) { // If the author is already in the usersObj
-            usersObj[author_id].username = author; // Set the username jic it changed...
-            usersObj[author_id].timeout += TIMEOUT_INCREMENT; // We just increment the timeout
-            usersObj[author_id].mpm++; // and also increment the messages per minute
-
-            if (usersObj[author_id].timeOfFirstMinuteMessage < 1) {
-                usersObj[author_id].timeOfFirstMinuteMessage = new Date().getTime();
-            }
-        }else{ // If not we create an object with author's id inside the usersObj
-            usersObj[author_id] = {
-                username: author,
-                mpm: 1, // Messages per minute
-                timeOfFirstMinuteMessage: 0,
-                timeout: TIMEOUT_INCREMENT, // And increment their timeout
-                alreadyReportedTimeout: 0, // 0=not reported yet.
-                alreadyWishedGN: 0 // 0=not wished GN yet.
-            };
-        }
-
-        
         console.log(`[MESSAGE] Recieved message. AUTHOR(${author} ### ${author_id}) CONTENT(${message}) TIMEOUT(${usersObj[author_id].timeout})`);
         
-        /* Good night wish comm */
-        if (((message.indexOf('idem spat') > -1) || (message.indexOf('idem spať') > -1)) && usersObj[author_id].alreadyWishedGN < 1) {
-            msg.reply("Dobrú noc! ZZZZzzzzzzzzz");
-            usersObj[author_id].alreadyWishedGN = 15
-            return;
-        }
+        /* Good night wishing thing */
+        goodNightWisher(message, author_id);
 
         // Detect if the message is a bot command
         if (message.startsWith(discordBotCongig.prefix)) {
@@ -154,31 +136,8 @@ discordClient.on('ready', ()=>{
 
             console.log(`[COMMAND] Recieved command COMMAND(${command}) ARRAY(${JSON.stringify(commandMessageArray)})`);
 
-            if (msg.content.slice(1).match(/^\d/)) { // If the command is: !(0123456789) take it as a math problem
-                try {
-                    let problem = msg.content.slice(1);
-                    let result = math.eval(problem);
-                    msg.reply({
-                        "embed": {
-                            "title": "Vypočítaný príkad",
-                            "color": BLUE,
-                            "fields": [
-                                {
-                                    "name": "Príklad: " + problem,
-                                    "value": "Výsledok: **" + result + "**"
-                                }
-                            ]
-                        }
-                    });
-                }catch(e){
-                    msg.reply({
-                        "embed": {
-                            "title": "Nesprávny príklad",
-                            "color": RED,
-                            "description": 'Neviem vypočítať tento príklad :('
-                        }
-                    });
-                }
+            if (startsWithNumber(message.slice(1))) { // If the command is: !(0123456789) take it as a math problem
+                solveMathProblem(msg, message.slice(1));
                 return; // We don't need anything else.
             }
 
@@ -187,24 +146,14 @@ discordClient.on('ready', ()=>{
                 case "ping":
                     msg.reply("Pong!");
                     break;
+
                 case "info":
                 case "about":
-                    msg.reply({
-                        "embed": {
-                            "title": "Info",
-                            "color": BLUE,
-                            "description": '*Serverový čas:* ' + new Date().toDateString()
-                        }
-                    });
+                    infoCommand(msg);
                     break;
+
                 case "spravnyprikaz":
-                    msg.reply({
-                        "embed": {
-                            "title": "Si myslíš, že si múdry, čo?",
-                            "color": RED,
-                            "description": 'Hahahahahahahahahahahahaha...strašne vtipné normálne sa smejem XD'
-                        }
-                    });
+                    spravnyPrikazCommand(msg);
                     break;
 
                 case "excuse":
@@ -215,6 +164,7 @@ discordClient.on('ready', ()=>{
                         "files": ["https://i.kym-cdn.com/entries/icons/original/000/026/913/excuse.jpg"]
                     });
                     break;
+
                 case "help":
                 case "pomoc":
                 case "prikazy":
@@ -222,65 +172,14 @@ discordClient.on('ready', ()=>{
                     break;
 
                 case "alecau":
-                    if (new Date().getDay() == 3) {
-                        msg.reply(`AAALLEEE ČAAAAAUUU!!! Dneska je **Streda zaMEMOVAŤ TREBA**`);
-                    }else{
-                        msg.reply(`AAALLEEE ČAAAAAUUU!!! Dneska je **${WEEK_DAYS[new Date().getDay()]}**`);
-                    }
+                    aleCauCommand(msg);
                     break;
+
                 case "pridat":
                 case "add":
-                    if (!commandMessageArray[1] || !commandMessageArray[2]) {
-                        msg.reply({
-                            "embed": {
-                                "title": "Nesprávny formát príkazu !pridat",
-                                "color": RED,
-                                "description": 'Použitie: !pridat [datum] [nazov eventu]\n**Príklady:**\n!pridat 23.10 Pisomka z matiky z mnozin\n!pridat 6.4.2018 Adlerka day\n!pridat 09.08 Ja nevim co'
-                            }
-                        });
-
-                        break;
-                    }
-                    
-
-                    let dateParameter = commandMessageArray[1].split(".").reverse().join(".");
-                    let dateObj = new Date(dateParameter + " 20:00:00");
-                    if (dateObj == "Invalid Date") {
-                        msg.reply({
-                            "embed": {
-                                "title": "Nesprávny formát dátumu",
-                                "color": RED,
-                                "description": 'Použitie: !pridat [datum] [nazov eventu]\n**Príklady:**\n!pridat 23.10 Pisomka z matiky z mnozin\n!pridat 6.4.2018 Adlerka day\n!pridat 09.08 Ja nevim co'
-                            }
-                        });
-
-                        break;
-                    }
-                    if (dateObj.getFullYear() == 2001) {
-                        let currentYear = new Date().getFullYear();
-                        dateObj = new Date(dateParameter + "." + currentYear + " 20:00:00");
-                    }
-
-                    // This is ugly. Yes, I know. Don't judge me.
-                    let eventName = msg.content.slice(msg.content.indexOf(msg.content.split(" ", 2)[1]) + msg.content.split(" ", 2)[1].length + 1);
-
-                    events.push({
-                        time: dateObj.getTime(),
-                        user_id: author_id,
-                        user: author,
-                        content: eventName
-                    });
-
-                    saveData();
-
-                    msg.reply({
-                        "embed": {
-                            "title": "Event bol pridaný",
-                            "color": GREEN,
-                            "description": `**${WEEK_DAYS_SHORT[dateObj.getDay()]} ${dateObj.getDate()}.${dateObj.getMonth()+1}** - ${eventName}\n`
-                        }
-                    });
+                    addEvent.add(msg, commandMessageArray, message);
                     break;
+
                 case "eventy":
                 case "events":
                     events.sort(compare);
@@ -514,7 +413,7 @@ discordClient.on('ready', ()=>{
                             let users = Object.keys(usersObj); // Gets keys (users) of the usersObj
                             for (user of users) { // For each user
                                 let userObj = usersObj[user];
-                                usersObjString += `**ID:**${user} **UN:**${userObj.username} **TO:**${Math.round(userObj.timeout*100)/100} **ART:**${userObj.alreadyReportedTimeout} **MPM:**${userObj.mpm} **GNT:**${userObj.alreadyWishedGN}\n`
+                                usersObjString += `**ID:**${user} **UN:**${userObj.username} **TO:**${Math.round(userObj.timeout*100)/100} **ART:**${userObj.alreadyReportedTimeout} **MPM:**${userObj.mpm} **GNT:**${userObj.alreadyWishedGN} **WD:**${userObj.warned}\n`
                             }
 
                             msg.reply({
@@ -532,6 +431,52 @@ discordClient.on('ready', ()=>{
                                     "title": "Invalid attr",
                                     "color": RED,
                                     "description": "Enter valid attr for testpp command."
+                                }
+                            });
+                    }
+                    break;
+
+                case "snap":
+                    if (msg.author.id != DEV_USERID) {
+                        msg.reply({
+                            "embed": {
+                                "title": "Not today m9.",
+                                "description": "Tento príkaz môžu vykonavať len developeri z dôvodu aby ho niekto nepoužíval na také neškodné veci ako je napríklad ***VYMAZANIE VŠETKYCH EVENTOV Z DATABÁZY*** alebo ja neviem ***RESETOVANIE VŠETKÝCH SPAM INFORMÁCIÍ O UŽIVATEĽOCH*** a také príjemné veci. **TLDR:** Nemáš všetkých 6 infinity stonov. sry :)",
+                                "color": RED
+                            }
+                        });
+                        return;
+                    }
+
+                    switch (commandMessageArray[1]) {
+                        case "events":
+                            events = [];
+                            msg.reply({
+                                "embed": {
+                                    "title": "*snap*",
+                                    "color": GREEN,
+                                    "description": "All event data was deleted. Save has not happened yet."
+                                }
+                            });
+                            break;
+
+                        case "users":
+                            usersObj = {};
+                            msg.reply({
+                                "embed": {
+                                    "title": "*snap*",
+                                    "color": GREEN,
+                                    "description": "All user data was deleted."
+                                }
+                            });
+                            break;
+
+                        default:
+                            msg.reply({
+                                "embed": {
+                                    "title": "Invalid attr",
+                                    "color": RED,
+                                    "description": "Enter valid attr for !snap command."
                                 }
                             });
                     }
@@ -565,16 +510,6 @@ discordClient.on('ready', ()=>{
     setInterval(()=>{ // Does this every second
         let users = Object.keys(usersObj); // Gets keys (users) of the usersObj
         for (user of users) { // For each user
-            if (usersObj[user].timeout > TIMEOUT_TRIGGER) {
-                if(!usersObj[user].alreadyReportedTimeout > 0) { // If the user is not already to be reported AND is not already reported
-                    let username = usersObj[user].username;
-    
-                    console.log(`[ADMIN_SEND] Reported user (${username}).`);
-                    adminUser.send(`U **${username}** bolo detekované spamovanie. Odoslal **${usersObj[user].mpm}** správ za posledných ${Math.floor((new Date().getTime() - usersObj[user].timeOfFirstMinuteMessage) / 1000)} sekúnd.`);
-    
-                    usersObj[user].alreadyReportedTimeout = TIMEOUT_BEFORE_REREPORT;
-                }
-            }
             usersObj[user].timeout = usersObj[user].timeout / TIMEOUT_DIVIDER // Divides their timeout by const TIMEOUT_DIVIDER
         }
     }, 1000);
@@ -623,16 +558,22 @@ discordClient.on('ready', ()=>{
     
         console.log("[INTERVAL_MINUTE] Setting activity...");
         if (!starting) {
-            if (recievedCommandsTimeout <= 30) {
-                discordClient.user.setStatus('online');
-                recievedCommandsTimeout--;
+            let hours = new Date().getHours();
+            let day = new Date().getDay();
+            let isWorkDay = false;
+
+            if (day==1||day==2||day==3||day==4||day==5) {isWorkDay = true;}
+
+            if ( (hours <= 3 && isWorkDay) || (hours >= 22 && (day==0||day==1||day==2||day==3||day==4)) ) { // in our time (+1GMT) 23h-4h
+                discordClient.user.setActivity('you sleep. BTW Čo robíš hore zajtra je škola lol.', { type: 'WATCHING' });
+            }else if ((hours >= 7 && hours <= 13) && isWorkDay) { // in our time (+1GMT) 8h-14h
+                discordClient.user.setActivity('to the teachers.', { type: 'LISTENING' });
             }else{
-                discordClient.user.setStatus('idle');
-            }
-            if (Math.random() < 0.05) {
-                discordClient.user.setActivity('your every move', { type: 'WATCHING' });
-            }else{
-                discordClient.user.setActivity('your every message', { type: 'WATCHING' });
+                if (Math.random() < 0.05) { // Small chance (1/20 minutes)
+                    discordClient.user.setActivity('your every move', { type: 'WATCHING' });
+                }else{
+                    discordClient.user.setActivity('your every message', { type: 'WATCHING' });
+                }
             }
         }
 
@@ -640,7 +581,103 @@ discordClient.on('ready', ()=>{
     }, 60000);
 });
 
-let helpCommand = (msg, commandMessageArray)=> {
+
+
+let startsWithNumber = (str)=>{
+    return str.match(/^\d/);
+}
+
+let goodNightWisher = (message, author_id)=>{
+    if (((message.indexOf('idem spat') > -1) || (message.indexOf('idem spať') > -1)) && usersObj[author_id].alreadyWishedGN < 1) {
+        msg.reply("Dobrú noc! ZZZZzzzzzzzzz");
+        usersObj[author_id].alreadyWishedGN = 15
+        return;
+    }
+}
+
+
+let spamProtect = (msg, author_id, author)=>{ // On message recieved
+    let userObj = usersObj[author_id]; // Get the author from the usersObj
+
+    if (userObj) { // If the author is already in the usersObj
+        usersObj[author_id].username = author; // Set the username jic it changed...
+        usersObj[author_id].timeout += TIMEOUT_INCREMENT; // We just increment the timeout
+        usersObj[author_id].mpm++; // and also increment the messages per minute
+
+        if (usersObj[author_id].timeOfFirstMinuteMessage < 1) {
+            usersObj[author_id].timeOfFirstMinuteMessage = new Date().getTime();
+        }
+
+        if (usersObj[author_id].timeout > TIMEOUT_TRIGGER) {
+            if(!usersObj[author_id].alreadyReportedTimeout > 0) { // If the user is not already to be reported AND is not already reported
+                let username = usersObj[author_id].username;
+                if (usersObj[author_id].warned == 0) {
+                    msg.reply({
+                        "embed": {
+                            "title": "Spam",
+                            "color": YELLOW,
+                            "description": `Hej ${msg.author} sa ukludni sa do piče. Odoslal si **${usersObj[author_id].mpm}** skurvených správ za posledných ${Math.floor((new Date().getTime() - usersObj[author_id].timeOfFirstMinuteMessage) / 1000)} prijebaných sekúnd! Máš štastie že ťa len varujem. Nabudúce keď budeš spamovať ťa reportnem. Fuck.`
+                        }
+                    });
+                    usersObj[author_id].timeout = -25;
+                    usersObj[author_id].warned = 90;
+                }else{
+                    msg.reply({
+                        "embed": {
+                            "title": "Spam",
+                            "color": YELLOW,
+                            "description": `Hej ${msg.author} ty pičus si ma nepočul či čo. Odoslal si **${usersObj[author_id].mpm}** správ za posledných ${Math.floor((new Date().getTime() - usersObj[author_id].timeOfFirstMinuteMessage) / 1000)} sekúnd. Ale ja už toho mám skurvene dosť! Report.`
+                        }
+                    });
+                    console.log(`[ADMIN_SEND] Reported user (${username}).`);
+                    //adminUser.send(`U **${username}** bolo detekované spamovanie. Odoslal **${usersObj[author_id].mpm}** správ za posledných ${Math.floor((new Date().getTime() - usersObj[author_id].timeOfFirstMinuteMessage) / 1000)} sekúnd.`);
+    
+                    usersObj[author_id].alreadyReportedTimeout = TIMEOUT_BEFORE_REREPORT;
+                }
+
+                
+            }
+        }
+    }else{ // If not we create an object with author's id inside the usersObj
+        usersObj[author_id] = {
+            username: author,
+            mpm: 1, // Messages per minute
+            timeOfFirstMinuteMessage: 0,
+            warned: 0, // And increment their timeout
+            timeout: TIMEOUT_INCREMENT, // And increment their timeout
+            alreadyReportedTimeout: 0, // 0=not reported yet.
+            alreadyWishedGN: 0 // 0=not wished GN yet.
+        };
+    }
+}
+
+let solveMathProblem = (msg, problem)=>{
+    try {
+        let result = math.eval(problem);
+        msg.reply({
+            "embed": {
+                "title": "Vypočítaný príkad",
+                "color": BLUE,
+                "fields": [
+                    {
+                        "name": "Príklad: " + problem,
+                        "value": "Výsledok: **" + result + "**"
+                    }
+                ]
+            }
+        });
+    }catch(e){
+        msg.reply({
+            "embed": {
+                "title": "Nesprávny príklad",
+                "color": RED,
+                "description": 'Neviem vypočítať tento príklad :('
+            }
+        });
+    }
+}
+
+let helpCommand = (msg, commandMessageArray)=>{
     if (commandMessageArray[1]) {
         switch (commandMessageArray[1]) {
             case "ping":
@@ -727,6 +764,103 @@ let helpCommand = (msg, commandMessageArray)=> {
                     *Pre viac informácií o príkaze napíšte napr.: !help eventy*
                     *Ak chcete niečo pridať/zmeniť napíšte do bot-testing*
                 `
+            }
+        });
+    }
+}
+
+let infoCommand = (msg)=>{
+    msg.reply({
+        "embed": {
+            "title": "Info",
+            "color": BLUE,
+            "description": '*Serverový čas:* ' + new Date().toString()
+        }
+    });
+}
+
+let spravnyPrikazCommand = (msg)=>{
+    msg.reply({
+        "embed": {
+            "title": "Si myslíš, že si múdry, čo?",
+            "color": RED,
+            "description": 'Hahahahahahahahahahahahaha...strašne vtipné normálne sa smejem XD'
+        }
+    });
+}
+
+let aleCauCommand = (msg)=>{
+    if (new Date().getDay() == 3) {
+        msg.reply(`AAALLEEE ČAAAAAUUU!!! Dneska je **Streda zaMEMOVAŤ TREBA**`);
+    }else{
+        msg.reply(`AAALLEEE ČAAAAAUUU!!! Dneska je **${WEEK_DAYS[new Date().getDay()]}**`);
+    }
+}
+
+
+let addEvent = {
+    add: (msg, commandMessageArray, message)=>{
+        if (!commandMessageArray[1] || !commandMessageArray[2]) { // If there are missing parameters
+            addEvent.missingParametersReply(msg); // Tell them
+            return; // Don't continue
+        }
+        
+        let dateParameter = commandMessageArray[1].split(".").reverse().join(".");
+        let dateObj = new Date(dateParameter + " 20:00:00");
+        if (dateObj == "Invalid Date") { // If the date function can't parse the date string we
+            addEvent.invalidDateFormatReply(msg); // Tell the user right format and
+            return; // Don't continue
+        }
+        
+        if (dateObj.getFullYear() == 2001) { // When the user doesn't specify the year the Date constructor will add it as 2001
+            let currentYear = new Date().getFullYear(); // So we overwrite it with our own year
+            dateObj = new Date(dateParameter + "." + currentYear + " 20:00:00");
+        }
+
+        // This is ugly. Yes, I know. Don't judge me. Who reads this code anyways...right?
+        let eventName = message.slice(message.indexOf(message.split(" ", 2)[1]) + message.split(" ", 2)[1].length + 1); // This just extracts the rest of the message (!add 21.12 bla bla bla) => (bla bla bla)... I don't even know how it works or how I came up with this but it works so I won't touch it.
+
+        // We push the event as an object to the events arrat
+        events.push({
+            time: dateObj.getTime(),
+            user_id: author_id,
+            user: author,
+            content: eventName
+        });
+
+        saveData(); // And request save of our data
+
+        addEvent.successReply(msg); // And finally we reply the user.
+    },
+
+    missingParametersReply: (msg)=>{
+        msg.reply({
+            "embed": {
+                "title": "Nesprávny formát príkazu !pridat",
+                "color": RED,
+                "description": 'Použitie: !pridat [datum] [nazov eventu]\n**Príklady:**\n!pridat 23.10 Pisomka z matiky z mnozin\n!pridat 6.4.2018 Adlerka day\n!pridat 09.08 Ja nevim co'
+            }
+        });
+        return;
+    },
+
+    invalidDateFormatReply: (msg)=> {
+        msg.reply({
+            "embed": {
+                "title": "Nesprávny formát dátumu",
+                "color": RED,
+                "description": 'Použitie: !pridat [datum] [nazov eventu]\n**Príklady:**\n!pridat 23.10 Pisomka z matiky z mnozin\n!pridat 6.4.2018 Adlerka day\n!pridat 09.08 Ja nevim co'
+            }
+        });
+        return;
+    },
+
+    successReply: (msg)=>{
+        msg.reply({
+            "embed": {
+                "title": "Event bol pridaný",
+                "color": GREEN,
+                "description": `**${WEEK_DAYS_SHORT[dateObj.getDay()]} ${dateObj.getDate()}.${dateObj.getMonth()+1}** - ${eventName}\n`
             }
         });
     }
