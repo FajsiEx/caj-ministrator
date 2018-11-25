@@ -1,0 +1,30 @@
+{
+  "name": "caj-ministrator",
+  "version": "1.0.0",
+  "description": "Stará sa o pokoj na adleráckom discord serveri",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FajsiEx/caj-ministrator.git"
+  },
+  "keywords": [
+    "caj",
+    "ministrator"
+  ],
+  "author": "FajsiEx",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FajsiEx/caj-ministrator/issues"
+  },
+  "homepage": "https://github.com/FajsiEx/caj-ministrator#readme",
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "mathjs": "^5.2.3",
+    "mongodb": "^3.1.10",
+    "ytdl-core": "^0.28.0"
+  }
+}
