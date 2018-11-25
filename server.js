@@ -620,7 +620,7 @@ let startsWithNumber = (str)=>{
 
 let goodNightWisher = (message, author_id)=>{
     if (((message.indexOf('idem spat') > -1) || (message.indexOf('idem spať') > -1)) && usersObj[author_id].alreadyWishedGN < 1) {
-        msg.reply("Dobrú noc! ZZZZzzzzzzzzz");
+        msg.reply("Dobrú noc! :Sleeper: :Sleeper: :Sleeper: :Sleeper: :Sleeper: ");
         usersObj[author_id].alreadyWishedGN = 15
         return;
     }
