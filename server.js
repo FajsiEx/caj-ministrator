@@ -270,109 +270,19 @@ discordClient.on('ready', ()=>{
 
                 case "eventy":
                 case "events":
-                    events.sort(compare);
-                    let oldEventContentToDelete = false;
-
-                    let todayDateString = `${new Date().getDate()}.${new Date().getMonth()+1}.${new Date().getFullYear()}`;
-                    
-                    let tomorrowDateObj = new Date(new Date().getTime() + 86400000);
-                    let tomorrowDateString = `${tomorrowDateObj.getDate()}.${tomorrowDateObj.getMonth()+1}.${tomorrowDateObj.getFullYear()}`;
-                    
-                    let eventsFields = [];
-                    let embedTitle = "Nasledujúce eventy";
-                    if (commandMessageArray[1] == 'dnes') {
-                        embedTitle = "Eventy na dnes"
-                        eventsFields = [
-                            {
-                                name: `***${todayDateString}***`,
-                                value: "Nič"
-                            }
-                        ];
-                    }else if (commandMessageArray[1] == 'zajtra') {
-                        embedTitle = "Eventy na zajtra"
-                        eventsFields = [
-                            {
-                                name: `***${tomorrowDateString}***`,
-                                value: "Nič"
-                            }
-                        ];
-                    }else{
-                        eventsFields = [
-                            {
-                                name: `***Dnes (${todayDateString})***`,
-                                value: "Nič"
-                            },
-                            {
-                                name: `***Zajtra (${tomorrowDateString})***`,
-                                value: "Nič"
-                            }
-                        ];
-                    }
-
-                    events.forEach((e)=>{
-                        if (e.time < new Date().getTime()) { // If the event is in the past
-                            oldEventContentToDelete = e.content
-                            return;
-                        }
-                        let eventDate = new Date(e.time);
-
-                        let eventDateString = `${eventDate.getDate()}.${eventDate.getMonth()+1}.${eventDate.getFullYear()}`;
-
-                        if (eventDateString == todayDateString) {
-                            if (commandMessageArray[1] == 'zajtra') {return;}
-
-                            if (eventsFields[0].value == "Nič") {
-                                eventsFields[0].value = "";
-                            }
-                            eventsFields[0].value += `• ${e.content}\n`;
-
-                        }else if (eventDateString == tomorrowDateString) {
-                            if (commandMessageArray[1] == 'dnes') {return;}
-                            
-                            if (commandMessageArray[1] == 'zajtra') {
-                                if (eventsFields[0].value == "Nič") {
-                                    eventsFields[0].value = "";
-                                }
-                                eventsFields[0].value += `• ${e.content}\n`;
-                            }else{
-                                if (eventsFields[1].value == "Nič") {
-                                    eventsFields[1].value = "";
-                                }
-                                eventsFields[1].value += `• ${e.content}\n`;
-                            }
-                        }else{
-                            if (commandMessageArray[1] == 'dnes' || commandMessageArray[1] == 'zajtra') {return;}
-                            let eventFieldDate = `***${WEEK_DAYS[eventDate.getDay()]} ${eventDateString}***`;
-
-                            let eventField = eventsFields.find(obj => obj.name == eventFieldDate);
-
-                            if (eventField) {
-                                eventField.value += `• ${e.content}\n`;
-                            }else{
-                                eventsFields.push({
-                                    name: eventFieldDate,
-                                    value: "• " + e.content + "\n"
-                                })
-                            }
-                        }
-                    });
-                    
-                    msg.reply({
-                        "embed": {
-                            "title": embedTitle,
-                            "color": BLUE,
-                            "fields": eventsFields
-                        }
-                    });
-
-                    if (oldEventContentToDelete) {
-                        events = events.filter((obj)=>{
-                            return obj.content !== oldEventContentToDelete
-                        });
-                        saveData();
-                    }
-
+                    eventsCommand(null, msg, commandMessageArray);
                     break;
+
+                case "dnes":
+                case "today":
+                    eventsCommand("dnes", msg, commandMessageArray);
+                    break;
+
+                case "zajtra":
+                case "tomorrow":
+                    eventsCommand("zajtra", msg, commandMessageArray);
+                    break;
+
                 case "vymazat":
                 case "remove":
                 case "delete":
@@ -856,7 +766,7 @@ let helpCommand = (msg, commandMessageArray)=>{
                     "embed": {
                         "title": "!eventy/events [dnes/zajtra]",
                         "color": BLUE,
-                        "description": "Zobrazí následujúce eventy (ak sa pridá dnes/zajtra zobrazí eventy len pre ten deň).\n\n**Príklady**\n*!eventy*\n*!events dnes*\n*!eventy zajtra*"
+                        "description": "Zobrazí následujúce eventy pre najblizších 14 dní (ak sa pridá dnes/zajtra zobrazí eventy len pre ten deň).\n\n**Príklady**\n*!eventy*\n*!events dnes*\n*!eventy zajtra*"
                     }
                 });
                 break;
@@ -873,6 +783,7 @@ let helpCommand = (msg, commandMessageArray)=>{
                     **!pridat/add <dátum> <event>** - Pridá event
                     **!vymazat/remove/delete** - Odstráni event
                     **!eventy/events** - Vypíše nasledujúce eventy
+                    **!dnes/zajtra** - To isté ako !eventy dnes/zajtra
                     **!<príklad>** - Vpočíta príklad
 
                     *Pre viac informácií o príkaze napíšte napr.: !help eventy*
@@ -980,6 +891,118 @@ let addEvent = {
                 "description": `**${WEEK_DAYS_SHORT[dateObj.getDay()]} ${dateObj.getDate()}.${dateObj.getMonth()+1}** - ${eventName}\n`
             }
         });
+    }
+}
+
+let eventsCommand = (type, msg, commandMessageArray)=>{
+    events.sort(compare);
+    let oldEventContentToDelete = false;
+
+    let todayDateString = `${new Date().getDate()}.${new Date().getMonth()+1}.${new Date().getFullYear()}`;
+    
+    let tomorrowDateObj = new Date(new Date().getTime() + 86400000);
+    let tomorrowDateString = `${tomorrowDateObj.getDate()}.${tomorrowDateObj.getMonth()+1}.${tomorrowDateObj.getFullYear()}`;
+    
+    let eventsFields = [];
+    let embedTitle = "Nasledujúce eventy";
+
+    let isToday = ((commandMessageArray[1] == 'dnes') || (type == "dnes"));
+    let isTomorrow = ((commandMessageArray[1] == 'zajtra') || (type == "zajtra"));
+
+    if (isToday) {
+        embedTitle = "Eventy na dnes"
+        eventsFields = [
+            {
+                name: `***${todayDateString}***`,
+                value: "Nič"
+            }
+        ];
+    }else if (isTomorrow) {
+        embedTitle = "Eventy na zajtra"
+        eventsFields = [
+            {
+                name: `***${tomorrowDateString}***`,
+                value: "Nič"
+            }
+        ];
+    }else{
+        eventsFields = [
+            {
+                name: `***Dnes (${todayDateString})***`,
+                value: "Nič"
+            },
+            {
+                name: `***Zajtra (${tomorrowDateString})***`,
+                value: "Nič"
+            }
+        ];
+    }
+
+    events.forEach((e)=>{
+        if (e.time < new Date().getTime()) { // If the event is in the past
+            oldEventContentToDelete = e.content
+            return;
+        }
+        if (e.time > new Date().getTime() + 1209600000) { // If the event is older than 14 days
+            return;
+        }
+
+        let eventDate = new Date(e.time);
+
+        let eventDateString = `${eventDate.getDate()}.${eventDate.getMonth()+1}.${eventDate.getFullYear()}`;
+
+        if (eventDateString == todayDateString) {
+            if (isTomorrow) {return;}
+
+            if (eventsFields[0].value == "Nič") {
+                eventsFields[0].value = "";
+            }
+            eventsFields[0].value += `• ${e.content}\n`;
+
+        }else if (eventDateString == tomorrowDateString) {
+            if (isToday) {return;}
+            
+            if (commandMessageArray[1] == 'zajtra') {
+                if (eventsFields[0].value == "Nič") {
+                    eventsFields[0].value = "";
+                }
+                eventsFields[0].value += `• ${e.content}\n`;
+            }else{
+                if (eventsFields[1].value == "Nič") {
+                    eventsFields[1].value = "";
+                }
+                eventsFields[1].value += `• ${e.content}\n`;
+            }
+        }else{
+            if (isToday || isTomorrow) {return;}
+            let eventFieldDate = `***${WEEK_DAYS[eventDate.getDay()]} ${eventDateString}***`;
+
+            let eventField = eventsFields.find(obj => obj.name == eventFieldDate);
+
+            if (eventField) {
+                eventField.value += `• ${e.content}\n`;
+            }else{
+                eventsFields.push({
+                    name: eventFieldDate,
+                    value: "• " + e.content + "\n"
+                })
+            }
+        }
+    });
+    
+    msg.reply({
+        "embed": {
+            "title": embedTitle,
+            "color": BLUE,
+            "fields": eventsFields
+        }
+    });
+
+    if (oldEventContentToDelete) {
+        events = events.filter((obj)=>{
+            return obj.content !== oldEventContentToDelete
+        });
+        saveData();
     }
 }
 
