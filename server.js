@@ -254,7 +254,7 @@ discordClient.on('ready', ()=>{
 
                 case "joke":
                 case "haha":
-                    msg.reply({
+                    msg.channel.send({
                         "embed": {
                             "title": "Haha, vtip",
                             "color": BLUE,
@@ -303,7 +303,7 @@ discordClient.on('ready', ()=>{
                     try{
                         if (!(msg.channel.name == "admin-commandy")) {
                             allowed = false;
-                            msg.reply({
+                            msg.channel.send({
                                 "embed": {
                                     "title": "Tento príkaz sa môže vykonávať len v #admin-commandy",
                                     "color": RED
@@ -313,7 +313,7 @@ discordClient.on('ready', ()=>{
                         }
                     }catch(e){
                         allowed = false;
-                        msg.reply({
+                        msg.channel.send({
                             "embed": {
                                 "title": "Tento príkaz sa môže vykonávať len v #admin-commandy",
                                 "color": RED
@@ -345,7 +345,7 @@ discordClient.on('ready', ()=>{
                     if (!(eventIndexToDelete === false)) { // If the index was not not found
                         events.splice(eventIndexToDelete,1);
                         saveData();
-                        msg.reply({
+                        msg.channel.send({
                             "embed": {
                                 "title": "Event bol vymazaný. Zmeny sa môžu prejaviť až o pár sekúnd!",
                                 "color": GREEN
@@ -355,7 +355,7 @@ discordClient.on('ready', ()=>{
                             loadData();
                         }, 2500) // Update data in 5 seconds
                     }else{
-                        msg.reply({
+                        msg.channel.send({
                             "embed": {
                                 "title": "Event sa nenašiel",
                                 "color": RED
@@ -366,7 +366,7 @@ discordClient.on('ready', ()=>{
 
                 case "testread":
                     if (msg.author.id != DEV_USERID) {
-                        msg.reply({
+                        msg.channel.send({
                             "embed": {
                                 "title": "Tento príkaz môžu vykonavať len developeri z dôvodu redukcie spamu. sry :/",
                                 "color": RED
@@ -378,7 +378,7 @@ discordClient.on('ready', ()=>{
                     switch (commandMessageArray[1]) {
                         case "events":
                             loadData();
-                            msg.reply({
+                            msg.channel.send({
                                 "embed": {
                                     "title": "JSON dump of events object",
                                     "color": BLUE,
@@ -387,7 +387,7 @@ discordClient.on('ready', ()=>{
                             });
                             break;
                         case "users":
-                            msg.reply({
+                            msg.channel.send({
                                 "embed": {
                                     "title": "JSON dump of users object",
                                     "color": BLUE,
@@ -396,7 +396,7 @@ discordClient.on('ready', ()=>{
                             });
                             break;
                         default:
-                            msg.reply({
+                            msg.channel.send({
                                 "embed": {
                                     "title": "Invalid attr",
                                     "color": RED,
@@ -408,7 +408,7 @@ discordClient.on('ready', ()=>{
 
                 case "testpp":
                     if (msg.author.id != DEV_USERID) {
-                        msg.reply({
+                        msg.channel.send({
                             "embed": {
                                 "title": "Tento príkaz môžu vykonavať len developeri z dôvodu redukcie  spamu. sry :/",
                                 "color": RED
@@ -427,7 +427,7 @@ discordClient.on('ready', ()=>{
                                 usersObjString += `**ID:**${user} **UN:**${userObj.username} **TO:**${Math.round(userObj.timeout*100)/100} **ART:**${userObj.alreadyReportedTimeout} **MPM:**${userObj.mpm} **GNT:**${userObj.alreadyWishedGN} **WD:**${userObj.warned}\n`
                             }
 
-                            msg.reply({
+                            msg.channel.send({
                                 "embed": {
                                     "title": "PrettyPrint for usersObj",
                                     "color": BLUE,
@@ -437,7 +437,7 @@ discordClient.on('ready', ()=>{
                             break;
 
                         default:
-                            msg.reply({
+                            msg.channel.send({
                                 "embed": {
                                     "title": "Invalid attr",
                                     "color": RED,
@@ -450,7 +450,7 @@ discordClient.on('ready', ()=>{
                 case "snap":
                 case "thanos":
                     if (msg.author.id != DEV_USERID) {
-                        msg.reply({
+                        msg.channel.send({
                             "embed": {
                                 "title": "Not today m9.",
                                 "description": "Tento príkaz môžu vykonavať len developeri z dôvodu aby ho niekto nepoužíval na také neškodné veci ako je napríklad ***VYMAZANIE VŠETKYCH EVENTOV Z DATABÁZY*** alebo ja neviem ***RESETOVANIE VŠETKÝCH SPAM INFORMÁCIÍ O UŽIVATEĽOCH*** a také príjemné veci. **TLDR:** Nemáš všetkých 6 infinity stonov. sry :)",
@@ -463,7 +463,7 @@ discordClient.on('ready', ()=>{
                     switch (commandMessageArray[1]) {
                         case "events":
                             events = [];
-                            msg.reply({
+                            msg.channel.send({
                                 "embed": {
                                     "title": "*snap*",
                                     "color": GREEN,
@@ -474,7 +474,7 @@ discordClient.on('ready', ()=>{
 
                         case "users":
                             usersObj = {};
-                            msg.reply({
+                            msg.channel.send({
                                 "embed": {
                                     "title": "*snap*",
                                     "color": GREEN,
@@ -484,7 +484,7 @@ discordClient.on('ready', ()=>{
                             break;
 
                         default:
-                            msg.reply({
+                            msg.channel.send({
                                 "embed": {
                                     "title": "Invalid attr",
                                     "color": RED,
@@ -495,7 +495,7 @@ discordClient.on('ready', ()=>{
                     break;
 
                 default: // If there is a command sent but it is invalid fall back to this
-                    msg.reply({
+                    msg.channel.send({
                         "embed": {
                             "title": "Nesprávny príkaz",
                             "color": RED,
@@ -604,10 +604,10 @@ let startsWithNumber = (str)=>{
 
 let owoReplier = (msg, message)=>{
     if (message.toLocaleLowerCase() == "owo" || message.toLocaleLowerCase() == "!owo") {
-        msg.reply("UwU");
+        msg.channel.send("UwU");
         return true; // dont continue executing the code
     }else if (message.toLocaleLowerCase() == "uwu" || message.toLocaleLowerCase() == "!uwu") {
-        msg.reply("^w^");
+        msg.channel.send("^w^");
         return true; // dont continue executing the code
     }else{
         return false; // continue executing the code
@@ -643,7 +643,7 @@ let spamProtect = (msg, author_id, author)=>{ // On message recieved
             if(!usersObj[author_id].alreadyReportedTimeout > 0) { // If the user is not already to be reported AND is not already reported
                 let username = usersObj[author_id].username;
                 if (usersObj[author_id].warned == 0) {
-                    msg.reply({
+                    msg.channel.send({
                         "embed": {
                             "title": "Spam",
                             "color": YELLOW,
@@ -653,7 +653,7 @@ let spamProtect = (msg, author_id, author)=>{ // On message recieved
                     usersObj[author_id].timeout = -25;
                     usersObj[author_id].warned = 90;
                 }else{
-                    msg.reply({
+                    msg.channel.send({
                         "embed": {
                             "title": "Spam",
                             "color": YELLOW,
@@ -691,7 +691,7 @@ let solveMathProblem = (msg, problem)=>{
         }
 
         let result = math.eval(problem);
-        msg.reply({
+        msg.channel.send({
             "embed": {
                 "title": "Vypočítaný príkad",
                 "color": BLUE,
@@ -704,7 +704,7 @@ let solveMathProblem = (msg, problem)=>{
             }
         });
     }catch(e){
-        msg.reply({
+        msg.channel.send({
             "embed": {
                 "title": "Nesprávny príklad",
                 "color": RED,
@@ -718,7 +718,7 @@ let helpCommand = (msg, commandMessageArray)=>{
     if (commandMessageArray[1]) {
         switch (commandMessageArray[1]) {
             case "ping":
-                msg.reply({
+                msg.channel.send({
                     "embed": {
                         "title": "!ping",
                         "color": BLUE,
@@ -729,7 +729,7 @@ let helpCommand = (msg, commandMessageArray)=>{
 
             case "info":
             case "about":
-                msg.reply({
+                msg.channel.send({
                     "embed": {
                         "title": "!info/about",
                         "color": BLUE,
@@ -741,7 +741,7 @@ let helpCommand = (msg, commandMessageArray)=>{
             case "help":
             case "pomoc":
             case "prikazy":
-                msg.reply({
+                msg.channel.send({
                     "embed": {
                         "title": "!help/pomoc/prikazy [príkaz]",
                         "color": BLUE,
@@ -752,7 +752,7 @@ let helpCommand = (msg, commandMessageArray)=>{
 
             case "pridat":
             case "add":
-                msg.reply({
+                msg.channel.send({
                     "embed": {
                         "title": "!pridat/add <dátum> <event>",
                         "color": BLUE,
@@ -764,7 +764,7 @@ let helpCommand = (msg, commandMessageArray)=>{
             case "vymazat":
             case "remove":
             case "delete":
-                msg.reply({
+                msg.channel.send({
                     "embed": {
                         "title": "!vymazat/remove/delete <event>",
                         "color": BLUE,
@@ -775,7 +775,7 @@ let helpCommand = (msg, commandMessageArray)=>{
 
             case "eventy":
             case "events":
-                msg.reply({
+                msg.channel.send({
                     "embed": {
                         "title": "!eventy/events [dnes/zajtra]",
                         "color": BLUE,
@@ -785,7 +785,7 @@ let helpCommand = (msg, commandMessageArray)=>{
                 break;
         }
     }else{
-        msg.reply({
+        msg.channel.send({
             "embed": {
                 "title": "Čaj-ministrátor príkazy:",
                 "color": BLUE,
@@ -806,7 +806,7 @@ let helpCommand = (msg, commandMessageArray)=>{
 }
 
 let infoCommand = (msg)=>{
-    msg.reply({
+    msg.channel.send({
         "embed": {
             "title": "Info",
             "color": BLUE,
@@ -816,7 +816,7 @@ let infoCommand = (msg)=>{
 }
 
 let spravnyPrikazCommand = (msg)=>{
-    msg.reply({
+    msg.channel.send({
         "embed": {
             "title": "Si myslíš, že si múdry, čo?",
             "color": RED,
@@ -873,7 +873,7 @@ let addEvent = {
     },
 
     missingParametersReply: (msg)=>{
-        msg.reply({
+        msg.channel.send({
             "embed": {
                 "title": "Nesprávny formát príkazu !pridat",
                 "color": RED,
@@ -884,7 +884,7 @@ let addEvent = {
     },
 
     invalidDateFormatReply: (msg)=> {
-        msg.reply({
+        msg.channel.send({
             "embed": {
                 "title": "Nesprávny formát dátumu",
                 "color": RED,
@@ -895,7 +895,7 @@ let addEvent = {
     },
 
     successReply: (msg, dateObj, eventName)=>{
-        msg.reply({
+        msg.channel.send({
             "embed": {
                 "title": "Event bol pridaný",
                 "color": GREEN,
@@ -1001,7 +1001,7 @@ let eventsCommand = (type, msg, commandMessageArray)=>{
         }
     });
     
-    msg.reply({
+    msg.channel.send({
         "embed": {
             "title": embedTitle,
             "color": BLUE,
