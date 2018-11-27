@@ -178,7 +178,20 @@ discordClient.on('ready', ()=>{
             /* Normal commands */
             switch (command) {
                 case "ping":
-                    msg.reply("Pong!");
+                    msg.channel.send({
+                        "embed": {
+                            "title": "Ping",
+                            "color": BLUE,
+                            "description": "Bot is up and running!",
+                            "fields": [
+                                {
+                                    "name": "Ping:",
+                                    "value": new Date().getTime() - msg.createdTimestamp + "ms"
+                                }
+                            ]
+                        }
+                    });
+
                     break;
 
                 case "info":
@@ -777,8 +790,6 @@ let helpCommand = (msg, commandMessageArray)=>{
                 "title": "Čaj-ministrátor príkazy:",
                 "color": BLUE,
                 "description": `
-                    **!ping** - Odpovie Pong!
-                    **!info** - Odpovie základnými údajmi o sebe
                     **!help [príkaz]** - Zobrazí príkazy ktoré bot príjma
                     **!pridat/add <dátum> <event>** - Pridá event
                     **!vymazat/remove/delete** - Odstráni event
