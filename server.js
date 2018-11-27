@@ -798,7 +798,7 @@ let helpCommand = (msg, commandMessageArray)=>{
                     **!<príklad>** - Vpočíta príklad
 
                     *Pre viac informácií o príkaze napíšte napr.: !help eventy*
-                    *Ak chcete niečo pridať/zmeniť napíšte do bot-testing*
+                    *Ak chcete niečo pridať/zmeniť napíšte do bot-chat*
                 `
             }
         });
