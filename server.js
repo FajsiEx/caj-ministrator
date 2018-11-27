@@ -225,6 +225,16 @@ discordClient.on('ready', ()=>{
                     });
                     break;
 
+                case "yeet":
+                    msg.channel.send({
+                        "files": ["https://ih0.redbubble.net/image.562324831.7631/flat,550x550,075,f.u3.jpg"]
+                    });
+                    break;
+
+                case "rip":
+                    msg.channel.send("Rest in piss, forever miss...");
+                    break;
+
                 case "ahoj": //robil Dan Valnicek
                     ahojCommand(msg);
                     break;
