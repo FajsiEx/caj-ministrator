@@ -153,7 +153,7 @@ discordClient.on('ready', ()=>{
         console.log(`[MESSAGE] Recieved message. AUTHOR(${author} ### ${author_id}) CONTENT(${message}) TIMEOUT(${usersObj[author_id].timeout})`);
         
         /* Good night wishing thing */
-        goodNightWisher(message, author_id);
+        goodNightWisher(msg, message, author_id);
 
         // Detect if the message is a bot command
         if (message.startsWith(discordBotCongig.prefix)) {
@@ -561,7 +561,10 @@ discordClient.on('ready', ()=>{
                         "embed": {
                             "title": "Nesprávny príkaz",
                             "color": RED,
-                            "description": `${discordBotCongig.prefix + command} je niečo ako správny príkaz, ale nie.\nPre list príkazov **!help**`
+                            "description": `${discordBotCongig.prefix + command} je niečo ako správny príkaz, ale nie.\nPre list príkazov **!help**`,
+                            "footer": {
+                                "text": "Pôvodne som si myslel že to je meme pre všetkých, ako za starého dobrého komunizmu. Ale mílil som sa. Článok 13 Európskej únie mi prikazuje creditovat autora tohto memu (Davida Magyerku) od ktorého som tento meme bezočividne ukradol. Týmto by som sa chcel osobne a úprimne ospravedlniť Davidovi Magyerkovi za moju sebeckosť a idiotskosť pri používaní tohto memu bez jeho autorskeho súhlasu. Ďakujem. #saveTheInternet #article13"
+                            }
                         }
                     });
 
@@ -661,9 +664,10 @@ let startsWithNumber = (str)=>{
     return str.match(/^\d/);
 }
 
-let goodNightWisher = (message, author_id)=>{
+let goodNightWisher = (msg, message, author_id)=>{
     if (((message.indexOf('idem spat') > -1) || (message.indexOf('idem spať') > -1)) && usersObj[author_id].alreadyWishedGN < 1) {
-        msg.reply("Dobrú noc! :Sleeper: :Sleeper: :Sleeper: :Sleeper: :Sleeper: ");
+        let sleeperEmoji = discordClient.emojis.find(emoji => emoji.name == "Sleeper")
+        msg.reply(`Dobrú noc! ${sleeperEmoji} ${sleeperEmoji} ${sleeperEmoji} ${sleeperEmoji} ${sleeperEmoji}`);
         usersObj[author_id].alreadyWishedGN = 15
         return;
     }
@@ -888,6 +892,9 @@ let addEvent = {
             return; // Don't continue
         }
         
+        let author = msg.author.username + "#" + msg.author.discriminator; // User#1337
+        let author_id = msg.author.id; // 45656489754512344
+
         let dateParameter = commandMessageArray[1].split(".").reverse().join(".");
         let dateObj = new Date(dateParameter + " 20:00:00");
         if (dateObj == "Invalid Date") { // If the date function can't parse the date string we
@@ -913,7 +920,7 @@ let addEvent = {
 
         saveData(); // And request save of our data
 
-        addEvent.successReply(msg); // And finally we reply the user.
+        addEvent.successReply(msg, dateObj, eventName); // And finally we reply the user.
     },
 
     missingParametersReply: (msg)=>{
@@ -938,7 +945,7 @@ let addEvent = {
         return;
     },
 
-    successReply: (msg)=>{
+    successReply: (msg, dateObj, eventName)=>{
         msg.reply({
             "embed": {
                 "title": "Event bol pridaný",
