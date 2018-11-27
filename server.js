@@ -215,7 +215,7 @@ discordClient.on('ready', ()=>{
 
                 case "oof":
                     msg.channel.send({
-                        "files": ["https://i.imgur.com/RPaDdQf.png"]
+                        "files": ["https://i.imgur.com/p7yQqZ8.png"]
                     });
                     break;
 
@@ -962,7 +962,7 @@ let eventsCommand = (type, msg, commandMessageArray)=>{
         }else if (eventDateString == tomorrowDateString) {
             if (isToday) {return;}
             
-            if (commandMessageArray[1] == 'zajtra') {
+            if (isTomorrow) {
                 if (eventsFields[0].value == "Nič") {
                     eventsFields[0].value = "";
                 }
