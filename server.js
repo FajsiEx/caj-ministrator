@@ -649,7 +649,7 @@ discordClient.on('ready', ()=>{
             if ( (hours <= 3 && isWorkDay) || (hours >= 22 && (day==0||day==1||day==2||day==3||day==4)) ) { // in our time (+1GMT) 23h-4h
                 discordClient.user.setActivity('you sleep. BTW Čo robíš hore zajtra je škola lol.', { type: 'WATCHING' });
             }else if ((hours >= 7 && hours <= 13) && isWorkDay) { // in our time (+1GMT) 8h-14h
-                discordClient.user.setActivity('to the teachers.', { type: 'LISTENING' });
+                discordClient.user.setActivity('the teachers.', { type: 'LISTENING' });
             }else{
                 if (Math.random() < 0.05) { // Small chance (1/20 minutes)
                     discordClient.user.setActivity('your every move', { type: 'WATCHING' });
