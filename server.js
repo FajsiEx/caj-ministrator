@@ -673,6 +673,9 @@ let owoReplier = (msg, message)=>{
     if (message.toLocaleLowerCase() == "owo" || message.toLocaleLowerCase() == "!owo") {
         msg.reply("UwU");
         return true; // dont continue executing the code
+    }else if (message.toLocaleLowerCase() == "uwu" || message.toLocaleLowerCase() == "!uwu") {
+        msg.reply("^w^");
+        return true; // dont continue executing the code
     }else{
         return false; // continue executing the code
     }
