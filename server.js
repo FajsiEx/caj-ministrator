@@ -155,6 +155,11 @@ discordClient.on('ready', ()=>{
         /* Good night wishing thing */
         goodNightWisher(msg, message, author_id);
 
+        /* OwO what's this (may have God mercy on this world) */
+        if(owoReplier(msg, message)) {
+            return; // if the function returned true, go commit return lol.
+        }
+
         // Detect if the message is a bot command
         if (message.startsWith(discordBotCongig.prefix)) {
             recievedCommandsTimeout = 30;
@@ -662,6 +667,15 @@ discordClient.on('ready', ()=>{
 
 let startsWithNumber = (str)=>{
     return str.match(/^\d/);
+}
+
+let owoReplier = (msg, message)=>{
+    if (message.toLocaleLowerCase() == "owo" || message.toLocaleLowerCase() == "!owo") {
+        msg.reply("UwU");
+        return true; // dont continue executing the code
+    }else{
+        return false; // continue executing the code
+    }
 }
 
 let goodNightWisher = (msg, message, author_id)=>{
