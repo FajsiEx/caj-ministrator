@@ -57,6 +57,13 @@ const JOKES = [ // Credits to Dan Valnicek
     - Že gratulujem k peknému okrúhlemu výročiu...`,
 ]
 
+const TIMETABLE = [
+    ['Stn', 'Mat', 'Aj / Tsv', 'Zeq', 'ProP / Aj', 'Fyz', 'Sjl'],
+    ['Dej', 'Inf', 'Inf', 'Stn(K) / Aj', 'ZeqC / Mat', 'Obn', 'Aj / Zeq(C)'],
+    ['Nbv', 'Zeq', 'Zer', 'Zer', 'Pro', 'Tsv / Pro(P)', 'Mat / Stn(K)', 'Mech'],
+    ['Prax', 'Prax', 'Prax', 'Mat / Sjl', 'Sjl / Mat', 'Sjl'],
+    ['Stn', 'Zeq', 'Fyz / Tsv', 'Aj', 'Mat', 'Tsv / Fyz', 'Etv'],
+]
 
 // Global veriables definition
 let usersObj = {};
@@ -64,6 +71,7 @@ let adminUser;
 let events = [];
 let recievedCommandsTimeout = 30;
 let starting = true;
+let onlineMsgSent = false;
 const WEEK_DAYS = ["Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota"];
 const WEEK_DAYS_SHORT = ["Ne", "Po", "Ut", "St", "Št", "Pi", "So"];
 const RED = 16720418;
@@ -364,6 +372,70 @@ discordClient.on('ready', ()=>{
                     }
                     break;
 
+                case "mute":
+                case "silence":
+                    // 517295713747599371
+                    if(msg.member.roles.some(r=>["admin", "Owner"].includes(r.name))) {
+                        let minutes = parseInt(commandMessageArray[1]);
+                        if(!minutes) {
+                            msg.channel.send({
+                                "embed": {
+                                    "title": "Boi tomu nechápem. Šak !mute/silence <minuty> @niekto  [Chýbajú minúty]",
+                                    "color": RED
+                                }
+                            });
+                            return;
+                        }
+
+                        if(minutes > 60) {
+                            msg.channel.send({
+                                "embed": {
+                                    "title": "Boi to je až mooooc minút...max je 60.",
+                                    "color": RED
+                                }
+                            });
+                            return;
+                        }
+
+                        let mentionList = msg.mentions.users;
+                        console.log("[DEBUG] Silence, ML(" + JSON.stringify(mentionList))
+                        if(mentionList.array().length == 0) {
+                            msg.channel.send({
+                                "embed": {
+                                    "title": "Boi tomu nechápem. Šak !mute/silence <minuty> @niekto [Nemám koho mutnút]",
+                                    "color": RED
+                                }
+                            });
+                            return;
+                        }
+
+                        let role = msg.guild.roles.find(r => r.name == "Muted");
+                        let user = msg.mentions.members.first();
+                        user.addRole(role).catch(console.error);
+
+                        setTimeout(()=>{
+                            console.log("[MUTE] Unmuted "+ user.name + ".");
+                            user.removeRole(role).catch(console.error);
+                        }, minutes*60000);
+
+                        console.log("[MUTE] Muted "+ user.name + " for " + minutes + " minutes.");
+                        msg.channel.send({
+                            "embed": {
+                                "title": ``,
+                                "color": GREEN
+                            }
+                        });
+                        return;
+                    }else{
+                        msg.channel.send({
+                            "embed": {
+                                "title": "Tento príkaz môžu vykonávať len admini lol",
+                                "color": RED
+                            }
+                        });
+                        return;
+                    }
+
                 case "testread":
                     if (msg.author.id != DEV_USERID) {
                         msg.channel.send({
@@ -592,6 +664,11 @@ discordClient.on('ready', ()=>{
             }
         }
 
+        if(!onlineMsgSent) {
+            onlineMsgSent = true;
+            console.log("[INTERVAL_MINUTE] Sending online msg...");
+            discordClient.channels.get('514873440159793167').send('Čaj-ministrátor je online.');
+        }
         console.log("[INTERVAL_MINUTE] Complete.");
     }, 60000);
 });
@@ -920,12 +997,18 @@ let eventsCommand = (type, msg, commandMessageArray)=>{
     let isToday = ((commandMessageArray[1] == 'dnes') || (type == "dnes"));
     let isTomorrow = ((commandMessageArray[1] == 'zajtra') || (type == "zajtra"));
 
+    let timetableTodayArray = TIMETABLE[new Date().getDay() - 1];
+    let timetableTomorrowArray = TIMETABLE[tomorrowDateObj.getDay() - 1];
+
+    let timetableTodayString = timetableTodayArray.join(' | ');
+    let timetableTomorrowString = timetableTomorrowArray.join(' | ');
+
     if (isToday) {
         embedTitle = "Eventy na dnes"
         eventsFields = [
             {
                 name: `***${todayDateString}***`,
-                value: "Nič"
+                value: "**Rozvrh: **" + timetableTodayString + "\nNič"
             }
         ];
     }else if (isTomorrow) {
@@ -933,18 +1016,18 @@ let eventsCommand = (type, msg, commandMessageArray)=>{
         eventsFields = [
             {
                 name: `***${tomorrowDateString}***`,
-                value: "Nič"
+                value: "**Rozvrh: **" + timetableTomorrowString + "\nNič"
             }
         ];
     }else{
         eventsFields = [
             {
                 name: `***Dnes (${todayDateString})***`,
-                value: "Nič"
+                value: "**Rozvrh: **" + timetableTodayString + "\nNič"
             },
             {
                 name: `***Zajtra (${tomorrowDateString})***`,
-                value: "Nič"
+                value: "**Rozvrh: **" + timetableTomorrowString + "\nNič"
             }
         ];
     }
@@ -965,8 +1048,8 @@ let eventsCommand = (type, msg, commandMessageArray)=>{
         if (eventDateString == todayDateString) {
             if (isTomorrow) {return;}
 
-            if (eventsFields[0].value == "Nič") {
-                eventsFields[0].value = "";
+            if (eventsFields[0].value.endsWith('Nič')) {
+                eventsFields[0].value = "**Rozvrh: **" + timetableTodayString + "\n";
             }
             eventsFields[0].value += `• ${e.content}\n`;
 
@@ -974,13 +1057,13 @@ let eventsCommand = (type, msg, commandMessageArray)=>{
             if (isToday) {return;}
             
             if (isTomorrow) {
-                if (eventsFields[0].value == "Nič") {
-                    eventsFields[0].value = "";
+                if (eventsFields[0].value.endsWith('Nič')) {
+                    eventsFields[0].value = "**Rozvrh: **" + timetableTomorrowString + "\n";
                 }
                 eventsFields[0].value += `• ${e.content}\n`;
             }else{
-                if (eventsFields[1].value == "Nič") {
-                    eventsFields[1].value = "";
+                if (eventsFields[1].value.endsWith('Nič')) {
+                    eventsFields[1].value = "**Rozvrh: **" + timetableTomorrowString + "\n";
                 }
                 eventsFields[1].value += `• ${e.content}\n`;
             }
