@@ -242,6 +242,12 @@ discordClient.on('ready', ()=>{
                     });
                     break;
 
+                case "pika":
+                    msg.channel.send({
+                        "files": ["https://i.imgur.com/sohWhy9.jpg"]
+                    });
+                    break;
+
                 case "tsj":
                     msg.channel.send({
                         "files": ["https://i.imgur.com/8y9Uji5.jpg"]
