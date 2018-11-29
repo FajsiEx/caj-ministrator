@@ -686,6 +686,27 @@ let owoReplier = (msg, message)=>{
     }else if (message.toLocaleLowerCase() == "uwu" || message.toLocaleLowerCase() == "!uwu") {
         msg.channel.send("^w^");
         return true; // dont continue executing the code
+    }else if (message.toLocaleLowerCase() == "^w^" || message.toLocaleLowerCase() == "!^w^") {
+        msg.channel.send("O.o");
+        return true; // dont continue executing the code
+    }else if (message.toLocaleLowerCase() == "o.o" || message.toLocaleLowerCase() == "!o.o") {
+        msg.channel.send("=_=");
+        return true; // dont continue executing the code
+    }else if (message.toLocaleLowerCase() == "=_=" || message.toLocaleLowerCase() == "!=_=") {
+        msg.channel.send("EwE");
+        return true; // dont continue executing the code
+    }else if (message.toLocaleLowerCase() == "ewe" || message.toLocaleLowerCase() == "!ewe") {
+        msg.channel.send("XwX");
+        return true; // dont continue executing the code
+    }else if (message.toLocaleLowerCase() == "xwx" || message.toLocaleLowerCase() == "!xwx") {
+        let author_id = msg.author.id;
+        if (author_id == 305705560966430721) { // To protect the innocent.
+            msg.channel.send("E621");
+        }else{
+            msg.reply("***YOU DON'T WANT TO GO DEEPER DOWN THIS RABBIT HOLE.*** Trust me, I'm protecting you. Please, listen to me. *Please.*");
+        }
+        
+        return true; // dont continue executing the code
     }else{
         return false; // continue executing the code
     }
