@@ -249,7 +249,7 @@ discordClient.on('ready', ()=>{
 
                 case "killmeme":
                 case "memereview":
-                    msg.channel.send({
+                    msg.channel.send("Meme review", {
                         "files": ["https://thumbs.gfycat.com/HilariousEagerArmednylonshrimp-max-1mb.gif"]
                     });
                     break;
