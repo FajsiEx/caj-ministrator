@@ -276,7 +276,6 @@ discordClient.on('ready', ()=>{
                     let max = parseInt(commandMessageArray[1]);
                     if(!max) {
                         max = 100;
-                        return;
                     }
 
                     msg.reply("hodil " + Math.floor(Math.random() * (max + 1) ) + ".");
