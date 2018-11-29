@@ -176,6 +176,7 @@ discordClient.on('ready', ()=>{
 
             let command = commandMessageArray[0].slice(1); // Extracts the command from the message
             command = command.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Get rid of shit in Slovak lang
+            command = command.toLocaleLowerCase(); // Ignore the case by converting it to lower
 
             console.log(`[COMMAND] Recieved command COMMAND(${command}) ARRAY(${JSON.stringify(commandMessageArray)})`);
 
