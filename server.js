@@ -271,6 +271,17 @@ discordClient.on('ready', ()=>{
                     msg.channel.send("Rest in piss, forever miss...");
                     break;
 
+                case "roll":
+                case "hod":
+                    let max = parseInt(commandMessageArray[1]);
+                    if(!max) {
+                        max = 100;
+                        return;
+                    }
+
+                    msg.reply("hodil " + Math.floor(Math.random() * (max + 1) ) + ".");
+                    break;
+
                 case "ahoj": //robil Dan Valnicek
                     ahojCommand(msg);
                     break;
