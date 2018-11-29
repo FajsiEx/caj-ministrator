@@ -176,7 +176,7 @@ discordClient.on('ready', ()=>{
 
             let command = commandMessageArray[0].slice(1); // Extracts the command from the message
             command = command.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Get rid of shit in Slovak lang
-            
+
             console.log(`[COMMAND] Recieved command COMMAND(${command}) ARRAY(${JSON.stringify(commandMessageArray)})`);
 
             if (startsWithNumber(message.slice(1))) { // If the command is: !(0123456789) take it as a math problem
@@ -244,6 +244,13 @@ discordClient.on('ready', ()=>{
                 case "tsj":
                     msg.channel.send({
                         "files": ["https://i.imgur.com/8y9Uji5.jpg"]
+                    });
+                    break;
+
+                case "killmeme":
+                case "memereview":
+                    msg.channel.send({
+                        "files": ["https://thumbs.gfycat.com/HilariousEagerArmednylonshrimp-max-1mb.gif"]
                     });
                     break;
 
