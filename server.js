@@ -688,14 +688,14 @@ discordClient.on('ready', ()=>{
                 }
             }
         }
-
-        if(!onlineMsgSent) {
-            onlineMsgSent = true;
-            console.log("[INTERVAL_MINUTE] Sending online msg...");
-            discordClient.channels.get('514873440159793167').send('Čaj-ministrátor je online.');
-        }
         console.log("[INTERVAL_MINUTE] Complete.");
     }, 60000);
+
+    if(!onlineMsgSent) {
+        onlineMsgSent = true;
+        console.log("[BOT] Sending online msg...");
+        discordClient.channels.get('514873440159793167').send('Čaj-ministrátor je online.');
+    }
 });
 
 
