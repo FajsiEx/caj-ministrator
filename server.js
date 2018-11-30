@@ -653,6 +653,20 @@ discordClient.on('ready', ()=>{
             }
         }
 
+        console.log("[INTERVAL_MINUTE] Decrementing spam warning timeouts...");
+        for (user of users) { // For each user
+            if (usersObj[user].warned < 1) {continue;}
+            let username = usersObj[user].username;
+    
+            console.log(`[INTERVAL_MINUTE] Decreased warn timeout for user (${username}) from (${usersObj[user].warned}).`);
+    
+            usersObj[user].warned--; // Decrement report timeout
+    
+            if (usersObj[user].warned < 1) {
+                console.log(`[INTERVAL_MINUTE] Warn timeout expired for user (${username}).`);
+            }
+        }
+
         console.log("[INTERVAL_MINUTE] Decrementing already wished GN timeouts...");
         // Decrement the timeout of each user in alreadyReported. Remove if < 1
         for (user of users) { // For each user
@@ -751,11 +765,19 @@ let ahojCommand = (msg)=> {
 }
 
 let spamProtect = (msg, author_id, author)=>{ // On message recieved
-    let userObj = usersObj[author_id]; // Get the author from the usersObj
+    let userObj = usersObj[author_id]; // Get the author from the usersObj 
+
+    let timeout = TIMEOUT_INCREMENT;
+    if (msg.attachments.size > 0 && msg.content.length < 128) { // If there is a file attached to the msg and the message is short
+        timeout = TIMEOUT_INCREMENT / 2.5; // give less of a shit
+    }else{
+        timeout = TIMEOUT_INCREMENT + (msg.content.length * 0.065); // normal message
+    }
 
     if (userObj) { // If the author is already in the usersObj
         usersObj[author_id].username = author; // Set the username jic it changed...
-        usersObj[author_id].timeout += TIMEOUT_INCREMENT; // We just increment the timeout
+
+        usersObj[author_id].timeout += timeout;
         usersObj[author_id].mpm++; // and also increment the messages per minute
 
         if (usersObj[author_id].timeOfFirstMinuteMessage < 1) {
@@ -770,7 +792,7 @@ let spamProtect = (msg, author_id, author)=>{ // On message recieved
                         "embed": {
                             "title": "Spam",
                             "color": YELLOW,
-                            "description": `Hej ${msg.author} sa ukludni sa do piče. Odoslal si **${usersObj[author_id].mpm}** skurvených správ za posledných ${Math.floor((new Date().getTime() - usersObj[author_id].timeOfFirstMinuteMessage) / 1000)} prijebaných sekúnd! Máš štastie že ťa len varujem. Nabudúce keď budeš spamovať ťa reportnem. Fuck.`
+                            "description": `Do piče s tebou ${msg.author} ty jebko. Čo si pridrbaný keď posielaš **${usersObj[author_id].mpm}** vyjebaných správ za posledných ${Math.floor((new Date().getTime() - usersObj[author_id].timeOfFirstMinuteMessage) / 1000)} pojebaných sekúnd! Mne sa zdáš že si mentálne retardovaný ffs. Choď sa liečit a ne tu spamovať do piče.`
                         }
                     });
                     usersObj[author_id].timeout = -25;
@@ -780,7 +802,7 @@ let spamProtect = (msg, author_id, author)=>{ // On message recieved
                         "embed": {
                             "title": "Spam",
                             "color": YELLOW,
-                            "description": `Hej ${msg.author} ty pičus si ma nepočul či čo. Odoslal si **${usersObj[author_id].mpm}** správ za posledných ${Math.floor((new Date().getTime() - usersObj[author_id].timeOfFirstMinuteMessage) / 1000)} sekúnd. Ale ja už toho mám skurvene dosť! Report.`
+                            "description": `Ty pridrbanec ${msg.author} si ma nepočul či čo? Zasa s poslal **${usersObj[author_id].mpm}** správ za posledných ${Math.floor((new Date().getTime() - usersObj[author_id].timeOfFirstMinuteMessage) / 1000)} sekúnd. Počúvaj ma, máš také skurvené štastie že ťa nemožem !kicknúť IRL lebo by si to neprežil. Choď do piče ok?! Btw máš report.`
                         }
                     });
                     console.log(`[ADMIN_SEND] Reported user (${username}).`);
@@ -798,7 +820,7 @@ let spamProtect = (msg, author_id, author)=>{ // On message recieved
             mpm: 1, // Messages per minute
             timeOfFirstMinuteMessage: 0,
             warned: 0, // And increment their timeout
-            timeout: TIMEOUT_INCREMENT, // And increment their timeout
+            timeout: timeout, // And set their timeout
             alreadyReportedTimeout: 0, // 0=not reported yet.
             alreadyWishedGN: 0 // 0=not wished GN yet.
         };
