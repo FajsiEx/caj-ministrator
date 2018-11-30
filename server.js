@@ -16,7 +16,7 @@ const discordBotCongig = {
     token: process.env.DISCORD_BOT_TOKEN,
     prefix: "!" // Prefix for the bot commands
 };
-const TIMEOUT_INCREMENT = 6.5; // Amount to increment by when the user sends a message
+const TIMEOUT_INCREMENT = 12.5; // Amount to increment by when the user sends a message
 const TIMEOUT_DIVIDER = 1.1; // Each second : [user's timeout / TIMEOUT_DIVIDER]
 const TIMEOUT_TRIGGER = 25; // When timeout reaches this amount, bot gets triggered and sends message to the admin
 const TIMEOUT_BEFORE_REREPORT = 5 // How many minutes must elapse before the user can be reported again
@@ -278,7 +278,13 @@ discordClient.on('ready', ()=>{
                         max = 100;
                     }
 
-                    msg.reply("hodil " + Math.floor(Math.random() * (max + 1) ) + ".");
+                    let rolled = Math.floor(Math.random() * (max + 1));
+/*
+                    if(rigTheRoll(msg)) {
+
+                    }
+*/
+                    msg.reply("hodil " + rolled + ".");
                     break;
 
                 case "ahoj": //robil Dan Valnicek
@@ -764,7 +770,7 @@ let ahojCommand = (msg)=> {
     msg.reply("Ahoj");
 }
 
-let spamProtect = (msg, author_id, author)=>{ // On message recieved
+let spamProtect = (msg, author_id, author, mode)=>{ // On message recieved
     let userObj = usersObj[author_id]; // Get the author from the usersObj 
 
     let timeout = TIMEOUT_INCREMENT;
@@ -775,12 +781,67 @@ let spamProtect = (msg, author_id, author)=>{ // On message recieved
             return a.indexOf(e) === i;
         }).join('');
 
-        let charCount = 1;
+        let charNerf = 1;
         if (messageChars.length > 6) {
-            charCount = messageChars.length;
+            charNerf = messageChars.length;
+        }else{
+            switch(messageChars.length) {
+                case 1:
+                    charNerf = 0.25;
+                    break;
+                case 2:
+                    charNerf = 0.3;
+                    break;
+                case 3:
+                    charNerf = 0.4;
+                    break;
+                case 4:
+                    charNerf = 0.5;
+                    break;
+                case 5:
+                    charNerf = 0.65;
+                    break;
+                case 5:
+                    charNerf = 0.75;
+                    break;
+            }
+        }
+        if (msg.content.length < 6) {
+            charNerf = 7; // for lol lels and xds
+        }
+        if (charNerf > 12) {
+            charNerf = 12; // for lol lels and xds
         }
 
-        timeout = TIMEOUT_INCREMENT + ((msg.content.length * 0.065) / charCount); // normal message
+        let words = msg.content.split(" ").length
+        let wordNerf;
+        if (messageChars.length > 6) {
+            wordNerf = words * 0.75;
+        }else{
+            switch(words) {
+                case 1:
+                    wordNerf = 0.5;
+                    break;
+                case 2:
+                    wordNerf = 0.6;
+                    break;
+                case 3:
+                    wordNerf = 0.7;
+                    break;
+                case 4:
+                    wordNerf = 0.8;
+                    break;
+                case 5:
+                    wordNerf = 0.85;
+                    break;
+                case 5:
+                    wordNerf = 0.9;
+                    break;
+            }
+        }
+        
+
+        timeout = (TIMEOUT_INCREMENT + ((msg.content.length * 0.25) / wordNerf)) / charNerf; // normal message
     }
 
     if (userObj) { // If the author is already in the usersObj
@@ -825,7 +886,7 @@ let spamProtect = (msg, author_id, author)=>{ // On message recieved
                     "embed": {
                         "title": "Spam",
                         "color": YELLOW,
-                        "description": `Ty pridrbanec ${msg.author} si ma nepočul či čo? Zasa s poslal **${usersObj[author_id].mpm}** správ za posledných ${Math.floor((new Date().getTime() - usersObj[author_id].timeOfFirstMinuteMessage) / 1000)} sekúnd. Počúvaj ma, máš také skurvené štastie že ťa nemožem !kicknúť IRL lebo by si to neprežil. Choď do piče ok?! Btw máš report.`
+                        "description": `Ty pridrbanec ${msg.author} si ma nepočul či čo? Zasa si poslal **${usersObj[author_id].mpm}** správ za posledných ${Math.floor((new Date().getTime() - usersObj[author_id].timeOfFirstMinuteMessage) / 1000)} sekúnd. Počúvaj ma, máš také skurvené štastie že ťa nemožem !kicknúť IRL lebo by si to neprežil. Choď do piče ok?! Btw máš report.`
                     }
                 });
                 console.log(`[ADMIN_SEND] Reported user (${username}).`);
