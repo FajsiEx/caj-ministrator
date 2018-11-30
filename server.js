@@ -779,41 +779,6 @@ let spamProtect = (msg, author_id, author)=>{ // On message recieved
 
         usersObj[author_id].timeout += timeout;
         usersObj[author_id].mpm++; // and also increment the messages per minute
-
-        if (usersObj[author_id].timeOfFirstMinuteMessage < 1) {
-            usersObj[author_id].timeOfFirstMinuteMessage = new Date().getTime();
-        }
-
-        if (usersObj[author_id].timeout > TIMEOUT_TRIGGER) {
-            if(!usersObj[author_id].alreadyReportedTimeout > 0) { // If the user is not already to be reported AND is not already reported
-                let username = usersObj[author_id].username;
-                if (usersObj[author_id].warned == 0) {
-                    msg.channel.send({
-                        "embed": {
-                            "title": "Spam",
-                            "color": YELLOW,
-                            "description": `Do piče s tebou ${msg.author} ty jebko. Čo si pridrbaný keď posielaš **${usersObj[author_id].mpm}** vyjebaných správ za posledných ${Math.floor((new Date().getTime() - usersObj[author_id].timeOfFirstMinuteMessage) / 1000)} pojebaných sekúnd! Mne sa zdáš že si mentálne retardovaný ffs. Choď sa liečit a ne tu spamovať do piče.`
-                        }
-                    });
-                    usersObj[author_id].timeout = -25;
-                    usersObj[author_id].warned = 90;
-                }else{
-                    msg.channel.send({
-                        "embed": {
-                            "title": "Spam",
-                            "color": YELLOW,
-                            "description": `Ty pridrbanec ${msg.author} si ma nepočul či čo? Zasa s poslal **${usersObj[author_id].mpm}** správ za posledných ${Math.floor((new Date().getTime() - usersObj[author_id].timeOfFirstMinuteMessage) / 1000)} sekúnd. Počúvaj ma, máš také skurvené štastie že ťa nemožem !kicknúť IRL lebo by si to neprežil. Choď do piče ok?! Btw máš report.`
-                        }
-                    });
-                    console.log(`[ADMIN_SEND] Reported user (${username}).`);
-                    //adminUser.send(`U **${username}** bolo detekované spamovanie. Odoslal **${usersObj[author_id].mpm}** správ za posledných ${Math.floor((new Date().getTime() - usersObj[author_id].timeOfFirstMinuteMessage) / 1000)} sekúnd.`);
-    
-                    usersObj[author_id].alreadyReportedTimeout = TIMEOUT_BEFORE_REREPORT;
-                }
-
-                
-            }
-        }
     }else{ // If not we create an object with author's id inside the usersObj
         usersObj[author_id] = {
             username: author,
@@ -825,6 +790,44 @@ let spamProtect = (msg, author_id, author)=>{ // On message recieved
             alreadyWishedGN: 0 // 0=not wished GN yet.
         };
     }
+
+
+    // SPAM WARN AND REPORT
+
+    if (usersObj[author_id].timeOfFirstMinuteMessage < 1) {
+        usersObj[author_id].timeOfFirstMinuteMessage = new Date().getTime();
+    }
+
+    if (usersObj[author_id].timeout > TIMEOUT_TRIGGER) {
+        if(!usersObj[author_id].alreadyReportedTimeout > 0) { // If the user is not already to be reported AND is not already reported
+            let username = usersObj[author_id].username;
+            if (usersObj[author_id].warned == 0) {
+                msg.channel.send({
+                    "embed": {
+                        "title": "Spam",
+                        "color": YELLOW,
+                        "description": `Do piče s tebou ${msg.author} ty jebko. Čo si pridrbaný keď posielaš **${usersObj[author_id].mpm}** vyjebaných správ za posledných ${Math.floor((new Date().getTime() - usersObj[author_id].timeOfFirstMinuteMessage) / 1000)} pojebaných sekúnd! Mne sa zdáš že si mentálne retardovaný ffs. Choď sa liečit a ne tu spamovať do piče.`
+                    }
+                });
+                usersObj[author_id].timeout = -25;
+                usersObj[author_id].warned = 90;
+            }else{
+                msg.channel.send({
+                    "embed": {
+                        "title": "Spam",
+                        "color": YELLOW,
+                        "description": `Ty pridrbanec ${msg.author} si ma nepočul či čo? Zasa s poslal **${usersObj[author_id].mpm}** správ za posledných ${Math.floor((new Date().getTime() - usersObj[author_id].timeOfFirstMinuteMessage) / 1000)} sekúnd. Počúvaj ma, máš také skurvené štastie že ťa nemožem !kicknúť IRL lebo by si to neprežil. Choď do piče ok?! Btw máš report.`
+                    }
+                });
+                console.log(`[ADMIN_SEND] Reported user (${username}).`);
+                //adminUser.send(`U **${username}** bolo detekované spamovanie. Odoslal **${usersObj[author_id].mpm}** správ za posledných ${Math.floor((new Date().getTime() - usersObj[author_id].timeOfFirstMinuteMessage) / 1000)} sekúnd.`);
+
+                usersObj[author_id].alreadyReportedTimeout = TIMEOUT_BEFORE_REREPORT;
+            }
+        }
+    }
+
+
 }
 
 let solveMathProblem = (msg, problem)=>{
