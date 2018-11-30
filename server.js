@@ -771,7 +771,16 @@ let spamProtect = (msg, author_id, author)=>{ // On message recieved
     if (msg.attachments.size > 0 && msg.content.length < 128) { // If there is a file attached to the msg and the message is short
         timeout = TIMEOUT_INCREMENT / 2.5; // give less of a shit
     }else{
-        timeout = TIMEOUT_INCREMENT + (msg.content.length * 0.065); // normal message
+        let messageChars = msg.content.split('').filter((e,i,a)=>{
+            return a.indexOf(e) === i;
+        }).join('');
+
+        let charCount = 1;
+        if (messageChars.length > 6) {
+            charCount = messageChars.length;
+        }
+
+        timeout = TIMEOUT_INCREMENT + ((msg.content.length * 0.065) / charCount); // normal message
     }
 
     if (userObj) { // If the author is already in the usersObj
