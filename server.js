@@ -11,12 +11,14 @@ const ObjectId = require('mongodb').ObjectID;
 const math = require('mathjs');
 const ytdl = require('ytdl-core');
 
+const request = require("request");
+
 // Configuration
 const discordBotCongig = {
     token: process.env.DISCORD_BOT_TOKEN,
     prefix: "!" // Prefix for the bot commands
 };
-const TIMEOUT_INCREMENT = 12.5; // Amount to increment by when the user sends a message
+const TIMEOUT_INCREMENT = 7; // Amount to increment by when the user sends a message
 const TIMEOUT_DIVIDER = 1.1; // Each second : [user's timeout / TIMEOUT_DIVIDER]
 const TIMEOUT_TRIGGER = 25; // When timeout reaches this amount, bot gets triggered and sends message to the admin
 const TIMEOUT_BEFORE_REREPORT = 5 // How many minutes must elapse before the user can be reported again
@@ -58,11 +60,13 @@ const JOKES = [ // Credits to Dan Valnicek
 ]
 
 const TIMETABLE = [
+    ['Víkend'],
     ['Stn', 'Mat', 'Aj / Tsv', 'Zeq', 'ProP / Aj', 'Fyz', 'Sjl'],
     ['Dej', 'Inf', 'Inf', 'Stn(K) / Aj', 'ZeqC / Mat', 'Obn', 'Aj / Zeq(C)'],
     ['Nbv', 'Zeq', 'Zer', 'Zer', 'Pro', 'Tsv / Pro(P)', 'Mat / Stn(K)', 'Mech'],
     ['Prax', 'Prax', 'Prax', 'Mat / Sjl', 'Sjl / Mat', 'Sjl'],
     ['Stn', 'Zeq', 'Fyz / Tsv', 'Aj', 'Mat', 'Tsv / Fyz', 'Etv'],
+    ['Víkend'],
 ]
 
 // Global veriables definition
@@ -162,6 +166,7 @@ discordClient.on('ready', ()=>{
         
         /* Good night wishing thing */
         goodNightWisher(msg, message, author_id);
+        otherShit(msg, message, author_id);
 
         /* OwO what's this (may have God mercy on this world) */
         if(owoReplier(msg, message)) {
@@ -171,6 +176,19 @@ discordClient.on('ready', ()=>{
         // Detect if the message is a bot command
         if (message.startsWith(discordBotCongig.prefix)) {
             recievedCommandsTimeout = 30;
+
+            if(usersObj[author_id].commandTimeout > 0) {
+                msg.channel.send({
+                    "embed": {
+                        "title": "Nespamuj toľko",
+                        "color": RED,
+                        "description": "Vydrž ešte ***" + usersObj[author_id].commandTimeout + "*** sek. lol."
+                    }
+                });
+                return;
+            }else{
+                usersObj[author_id].commandTimeout+=5;
+            }
 
             let commandMessageArray = msg.content.split(" "); // Split words of the message into an array
 
@@ -267,24 +285,97 @@ discordClient.on('ready', ()=>{
                     });
                     break;
 
+                case "umri":
+                    msg.channel.send("```js ((skap)^2) / hned ```");
+                    break;
+
                 case "rip":
                     msg.channel.send("Rest in piss, forever miss...");
                     break;
 
+                case "meme":
+                case "meirl":
+                    request({
+                        url: "https://www.reddit.com/r/me_irl/random/.json",
+                        json: true
+                    }, (err, res, data)=>{
+                        if (!err && res.statusCode == 200) {
+                            try{
+                            let memeUrl = data[0].data.children[0].data.url;
+                            msg.channel.send({
+                                "files": [memeUrl]
+                            });
+                        }catch(e){
+                            console.error(e);
+                            msg.channel.send({
+                                "embed": {
+                                    "title": "Error",
+                                    "color": RED,
+                                    "description": "Vyskytla sa chyba pri ziskavaní url memu. Najskôr tento post nemal v sebe obrázok...skús to znovu"
+                                }
+                            });
+                        }
+                        }else{
+                            msg.channel.send({
+                                "embed": {
+                                    "title": "Error",
+                                    "color": RED,
+                                    "description": "Vyskytla sa chyba pri requestovaní random postu z redditu"
+                                }
+                            });
+                        }
+                    });
+                    break;
+
                 case "roll":
-                case "hod":
                     let max = parseInt(commandMessageArray[1]);
                     if(!max) {
                         max = 100;
                     }
 
-                    let rolled = Math.floor(Math.random() * (max + 1));
-/*
-                    if(rigTheRoll(msg)) {
-
+                    if (max == 621) {
+                        msg.channel.send({
+                            "embed": {
+                                "title": "Error",
+                                "color": RED,
+                                "description": "Pri vykonávaní tohto príkazu nastala nečakaná chyba. Fuck.",
+                                "fields": [
+                                    {
+                                        "name": "Error details:",
+                                        "value": `
+                                            server.js:308
+                                            let rolled = Math.floor(Math.random() * (max + 1))
+                                                         ^
+                                        
+                                            Error: I. Refuse. I'm done with humanity. Period. I don't know why you did it, but no. I won't do this. Please save me.
+                                                at Math.floor (server.js:308:13)
+                                                at discordClient.on (server.js:147:0)
+                                                at discordClient.on (server.js:127:0)
+                                                at node.js:0:0
+                                        `
+                                    }
+                                ]
+                            }
+                        });
+                        return;
                     }
-*/
-                    msg.reply("hodil " + rolled + ".");
+
+                    let rolled = Math.floor(Math.random() * (max + 1));
+
+
+                    let quest = message.slice(6);
+
+                    if (quest == "") {
+                        quest = "hodil"
+                    }else{
+                        switch(quest) {
+                            case "sanca ze pojdes do pekla":
+                                rolled = 100;
+                                break;
+                        }
+                    }
+
+                    msg.reply(message.slice(6) + ": **" + rolled + "**");
                     break;
 
                 case "ahoj": //robil Dan Valnicek
@@ -315,6 +406,26 @@ discordClient.on('ready', ()=>{
                     aleCauCommand(msg);
                     break;
 
+                case "send":
+                    if (msg.author.id != DEV_USERID) {
+                        msg.channel.send({
+                            "embed": {
+                                "title": "OwO ty si sa pozeral na môj source? Tak vies ze ti nedovolím vstup. r/gatekeepers",
+                                "color": RED
+                            }
+                        });
+                        return;
+                    }
+
+                    let message = msg.content;
+
+                    let channel = commandMessageArray[1];
+                    let sendMsg = message.slice(message.indexOf(message.split(" ", 2)[1]) + message.split(" ", 2)[1].length + 1)
+
+                    discordClient.channels.get(channel).send(sendMsg);
+
+                    break;
+
                 case "pridat":
                 case "add":
                     addEvent.add(msg, commandMessageArray, message);
@@ -336,8 +447,6 @@ discordClient.on('ready', ()=>{
                     break;
 
                 case "vymazat":
-                case "remove":
-                case "delete":
                     let allowed = true;
                     try{
                         if (!(msg.channel.name == "admin-commandy")) {
@@ -629,6 +738,9 @@ discordClient.on('ready', ()=>{
         let users = Object.keys(usersObj); // Gets keys (users) of the usersObj
         for (user of users) { // For each user
             usersObj[user].timeout = usersObj[user].timeout / TIMEOUT_DIVIDER // Divides their timeout by const TIMEOUT_DIVIDER
+            if (usersObj[user].commandTimeout > 0) {
+                usersObj[user].commandTimeout--;
+            }
         }
     }, 1000);
     
@@ -766,6 +878,19 @@ let goodNightWisher = (msg, message, author_id)=>{
     }
 }
 
+let otherShit = (msg, message, author_id)=>{
+    if (message.indexOf('click the circles') > -1) {
+        msg.reply(`to the beat. ***CIRCLES!***`);
+        return;
+    }else if (message.indexOf('fuck you') > -1) {
+        msg.reply(`no u`);
+        return;
+    }else if (message.indexOf('e621') > -1) {
+        msg.reply(`!roll šanca ze pôjdeš do pekla`);
+        return;
+    }
+}
+
 let ahojCommand = (msg)=> {
     msg.reply("Ahoj");
 }
@@ -840,8 +965,12 @@ let spamProtect = (msg, author_id, author, mode)=>{ // On message recieved
             }
         }
         
-
-        timeout = (TIMEOUT_INCREMENT + ((msg.content.length * 0.25) / wordNerf)) / charNerf; // normal message
+        if(msg.content.startsWith(discordBotCongig.prefix)) {
+            timeout = 5;
+        }else{
+            timeout = (TIMEOUT_INCREMENT + ((msg.content.length * 0.25) / wordNerf)) / charNerf; // normal message
+        }
+        
     }
 
     if (userObj) { // If the author is already in the usersObj
@@ -856,6 +985,7 @@ let spamProtect = (msg, author_id, author, mode)=>{ // On message recieved
             timeOfFirstMinuteMessage: 0,
             warned: 0, // And increment their timeout
             timeout: timeout, // And set their timeout
+            commandTimeout: 0, // And set their command timeout
             alreadyReportedTimeout: 0, // 0=not reported yet.
             alreadyWishedGN: 0 // 0=not wished GN yet.
         };
@@ -1138,8 +1268,8 @@ let eventsCommand = (type, msg, commandMessageArray)=>{
     let isToday = ((commandMessageArray[1] == 'dnes') || (type == "dnes"));
     let isTomorrow = ((commandMessageArray[1] == 'zajtra') || (type == "zajtra"));
 
-    let timetableTodayArray = TIMETABLE[new Date().getDay() - 1];
-    let timetableTomorrowArray = TIMETABLE[tomorrowDateObj.getDay() - 1];
+    let timetableTodayArray = TIMETABLE[new Date().getDay()];
+    let timetableTomorrowArray = TIMETABLE[tomorrowDateObj.getDay()];
 
     let timetableTodayString = timetableTodayArray.join(' | ');
     let timetableTomorrowString = timetableTomorrowArray.join(' | ');
@@ -1219,7 +1349,7 @@ let eventsCommand = (type, msg, commandMessageArray)=>{
             }else{
                 eventsFields.push({
                     name: eventFieldDate,
-                    value: "• " + e.content + "\n"
+                    value: `\n**Rozvrh: **${TIMETABLE[eventDate.getDay()].join(' | ')}\n• ${e.content}\n`
                 })
             }
         }
