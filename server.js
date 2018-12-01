@@ -19,7 +19,7 @@ const discordBotCongig = {
     prefix: "!" // Prefix for the bot commands
 };
 const TIMEOUT_INCREMENT = 7; // Amount to increment by when the user sends a message
-const TIMEOUT_DIVIDER = 1.1; // Each second : [user's timeout / TIMEOUT_DIVIDER]
+const TIMEOUT_DIVIDER = 1.05; // Each second : [user's timeout / TIMEOUT_DIVIDER]
 const TIMEOUT_TRIGGER = 25; // When timeout reaches this amount, bot gets triggered and sends message to the admin
 const TIMEOUT_BEFORE_REREPORT = 5 // How many minutes must elapse before the user can be reported again
 const ADMIN_USERID = process.env.ADMIN_USERID; // User id of the admin user...
@@ -91,12 +91,22 @@ let loadData = ()=>{ // Loads data from the DB to the memory
         let database = client.db('caj-ministrator');
         database.collection("data").find({}).toArray((err, docs)=> {
             if (err) {console.log(err); return;}
+
             console.log(`[DEBUG] DOCS(${JSON.stringify(docs)})`);
-            let doc = docs[0];
-            console.log(`[DEBUG] DOC(${JSON.stringify(doc)})`);
-            events = doc.events; 
-            console.log(`[DEBUG] DOCS(${JSON.stringify(events)})`);
+
+            let usersDoc = docs[0];
+            console.log(`[DEBUG] DOC(${JSON.stringify(usersDoc)})`);
+
+            usersObj = usersDoc.users; 
+            console.log(`[DEBUG] OBJ(${JSON.stringify(usersObj)})`);
+            console.log("[LOAD] Users loaded.");
+
+            let eventsDoc = docs[1];
+            console.log(`[DEBUG] DOC(${JSON.stringify(eventsDoc)})`);
+            events = eventsDoc.events; 
+            console.log(`[DEBUG] ARR(${JSON.stringify(events)})`);
             console.log("[LOAD] Events loaded.");
+
             client.close();
         });
     });
@@ -108,9 +118,14 @@ let saveData = ()=>{
         let database = client.db('caj-ministrator');
         
         // Replace the object with your field objectid...because it won't work otherwise...
-        database.collection("data").update({_id: ObjectId("5bf58c9f42400f046cb2d2c1")}, {
+        database.collection("data").update({_id: ObjectId("5c027f0bd56bdd25686c264f")}, {
             $set: {
                 "events": events
+            }
+        });
+        database.collection("data").update({_id: ObjectId("5c027cb9d56bdd25686c264e")}, {
+            $set: {
+                "users": usersObj
             }
         });
         console.log("[SAVE] Events saved.");
@@ -198,7 +213,7 @@ discordClient.on('ready', ()=>{
 
             console.log(`[COMMAND] Recieved command COMMAND(${command}) ARRAY(${JSON.stringify(commandMessageArray)})`);
 
-            if (startsWithNumber(message.slice(1))) { // If the command is: !(0123456789) take it as a math problem
+            if (startsWithNumber(message.slice(1)) || message.slice(1).startsWith("(") || message.slice(1).startsWith("[") || message.slice(1).startsWith("-")) { // If the command is: !(0123456789) or -,(,[, take it as a math problem
                 solveMathProblem(msg, message.slice(1));
                 return; // We don't need anything else.
             }
@@ -224,7 +239,7 @@ discordClient.on('ready', ()=>{
 
                 case "info":
                 case "about":
-                    infoCommand(msg);
+                    infoCommdsand(msg);
                     break;
 
                 case "spravnyprikaz":
@@ -327,6 +342,25 @@ discordClient.on('ready', ()=>{
                     });
                     break;
 
+                case "workinprogresscommandthatonlyiknowwhatitdoesandnooneelseunlessitellthemlol":
+                    if (msg.author.id != DEV_USERID) {
+                        msg.channel.send({
+                            "embed": {
+                                "title": "Ďakujem, že sa snažíte zistiť čo tento príkaz robí. Ale pokým sa nedokončí, nedovolím si vás k nemu pustiť aby sa nič nedoserkalo...sry humanity for what have i done with this.",
+                                "color": RED
+                            }
+                        });
+                        return;
+                    }
+
+                    msg.channel.send({
+                        "embed": {
+                            "title": "URL / DL:E; WO:6; QO:2; PA:1; done. Pased DOM result should be now logged in the server console.",
+                            "color": GREEN
+                        }
+                    });
+                    break;
+
                 case "roll":
                     let max = parseInt(commandMessageArray[1]);
                     if(!max) {
@@ -363,7 +397,7 @@ discordClient.on('ready', ()=>{
                     let rolled = Math.floor(Math.random() * (max + 1));
 
 
-                    let quest = message.slice(6);
+                    let quest = msg.content.slice(6);
 
                     if (quest == "") {
                         quest = "hodil"
@@ -375,7 +409,7 @@ discordClient.on('ready', ()=>{
                         }
                     }
 
-                    msg.reply(message.slice(6) + ": **" + rolled + "**");
+                    msg.reply(quest + ": **" + rolled + "**");
                     break;
 
                 case "ahoj": //robil Dan Valnicek
@@ -743,6 +777,10 @@ discordClient.on('ready', ()=>{
             }
         }
     }, 1000);
+
+    setInterval(()=>{ // Does this every second
+        saveData();
+    }, 10000);
     
     setInterval(()=>{ // Does this every minute
         console.log("[INTERVAL_MINUTE] Started.");
@@ -828,6 +866,23 @@ discordClient.on('ready', ()=>{
         console.log("[BOT] Sending online msg...");
         discordClient.channels.get('514873440159793167').send('Čaj-ministrátor je online.');
     }
+
+    process.on('uncaughtException', (err) => {
+        discordClient.channels.get('514873440159793167').send({
+            "embed": {
+                "title": "Error",
+                "color": RED,
+                "description": "Nastala nečakaná chyba pre ktorú sa bot musí reštartovať",
+                "fields": [
+                    {
+                        "name": "Error details:",
+                        "value": JSON.stringify(err)
+                    }
+                ]
+            }
+        });
+        process.exit(1) //mandatory (as per the Node docs)
+    });
 });
 
 
@@ -987,7 +1042,8 @@ let spamProtect = (msg, author_id, author, mode)=>{ // On message recieved
             timeout: timeout, // And set their timeout
             commandTimeout: 0, // And set their command timeout
             alreadyReportedTimeout: 0, // 0=not reported yet.
-            alreadyWishedGN: 0 // 0=not wished GN yet.
+            alreadyWishedGN: 0, // 0=not wished GN yet.
+            muteTimeout: 0 // 0=not timeouted.
         };
     }
 
