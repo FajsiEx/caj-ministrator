@@ -12,6 +12,7 @@ const math = require('mathjs');
 const ytdl = require('ytdl-core');
 
 const request = require("request");
+const Scraper = require("image-scraper");
 
 // Configuration
 const discordBotCongig = {
@@ -352,6 +353,37 @@ discordClient.on('ready', ()=>{
                         });
                         return;
                     }
+
+                    request({
+                        url: "https://www.reddit.com/r/me_irl/random/.json",
+                        json: true
+                    }, (err, res, data)=>{
+                        if (!err && res.statusCode == 200) {
+                            try{
+                            let memeUrl = data[0].data.children[0].data.url;
+                            msg.channel.send({
+                                "files": [memeUrl]
+                            });
+                        }catch(e){
+                            console.error(e);
+                            msg.channel.send({
+                                "embed": {
+                                    "title": "Error",
+                                    "color": RED,
+                                    "description": "Vyskytla sa chyba pri ziskavaní url memu. Najskôr tento post nemal v sebe obrázok...skús to znovu"
+                                }
+                            });
+                        }
+                        }else{
+                            msg.channel.send({
+                                "embed": {
+                                    "title": "Error",
+                                    "color": RED,
+                                    "description": "Vyskytla sa chyba pri requestovaní random postu z redditu"
+                                }
+                            });
+                        }
+                    });
 
                     msg.channel.send({
                         "embed": {
