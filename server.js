@@ -354,40 +354,15 @@ discordClient.on('ready', ()=>{
                         return;
                     }
 
-                    request({
-                        url: "https://www.reddit.com/r/me_irl/random/.json",
-                        json: true
-                    }, (err, res, data)=>{
-                        if (!err && res.statusCode == 200) {
-                            try{
-                            let memeUrl = data[0].data.children[0].data.url;
-                            msg.channel.send({
-                                "files": [memeUrl]
-                            });
-                        }catch(e){
-                            console.error(e);
-                            msg.channel.send({
-                                "embed": {
-                                    "title": "Error",
-                                    "color": RED,
-                                    "description": "Vyskytla sa chyba pri ziskavaní url memu. Najskôr tento post nemal v sebe obrázok...skús to znovu"
-                                }
-                            });
-                        }
-                        }else{
-                            msg.channel.send({
-                                "embed": {
-                                    "title": "Error",
-                                    "color": RED,
-                                    "description": "Vyskytla sa chyba pri requestovaní random postu z redditu"
-                                }
-                            });
-                        }
+                    scraper = new Scraper('https://e621.net/post/random');
+ 
+                    scraper.scrape((image)=>{ 
+                        console.log("[DEBUG] URL of that img: " + image.address);
                     });
 
                     msg.channel.send({
                         "embed": {
-                            "title": "URL / DL:E; WO:6; QO:2; PA:1; done. Pased DOM result should be now logged in the server console.",
+                            "title": "URL / DL:E; WO:6; QO:2; PA:1; done. Scraped img url from the response DOM should be now logged in the server console...or not idk im a bot bleep-bloop",
                             "color": GREEN
                         }
                     });
