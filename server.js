@@ -514,7 +514,6 @@ discordClient.on('ready', ()=>{
                     }
                     if (!allowed) {return;} // JIC
                     
-                    loadData();
                     let i=0;
                     let eventContentToDelete = msg.content.slice(9); // gets rid of the !vymazat
                     let eventIndexToDelete = false;
@@ -541,9 +540,6 @@ discordClient.on('ready', ()=>{
                                 "color": GREEN
                             }
                         });
-                        setTimeout(()=>{
-                            loadData();
-                        }, 2500) // Update data in 5 seconds
                     }else{
                         msg.channel.send({
                             "embed": {
@@ -1242,7 +1238,7 @@ let addEvent = {
 
         let dateParameter = commandMessageArray[1].split(".").reverse().join(".");
         let dateObj = new Date(dateParameter + " 20:00:00");
-        
+
         if (dateObj == "Invalid Date") { // If the date function can't parse the date string we
             addEvent.invalidDateFormatReply(msg); // Tell the user right format and
             return; // Don't continue
