@@ -130,6 +130,8 @@ let saveData = ()=>{
             }
         });
         console.log("[SAVE] Events saved.");
+
+        client.close(); // Dont dos yourself kids
     });
 }
 
