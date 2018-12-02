@@ -267,7 +267,7 @@ discordClient.on('ready', ()=>{
                 case "excusewtf":
                 case "wtf":
                     msg.channel.send({
-                        "files": ["https://i.kym-cdn.com/entries/icons/original/000/026/913/excuse.jpg"]
+                        "files": ["https://i.imgur.com/uVZQdsQ.jpg"]
                     });
                     break;
 
