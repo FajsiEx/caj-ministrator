@@ -1085,6 +1085,9 @@ let solveMathProblem = (msg, problem)=>{
             });
         }
 
+        problem = problem.replace(/×/g, '*');
+        problem = problem.replace(/x/g, '*');
+
         let result = math.eval(problem);
         msg.channel.send({
             "embed": {
