@@ -500,6 +500,7 @@ How?
                     break;
 
                 case "joke":
+                case "vtip":
                 case "haha":
                     msg.channel.send({
                         "embed": {
