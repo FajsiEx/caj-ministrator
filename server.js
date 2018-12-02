@@ -973,6 +973,7 @@ How?
         if (!starting) {
             if (disabled) {
                 discordClient.user.setStatus('offline');
+                return;
             }
 
             let hours = new Date().getHours();
@@ -1021,9 +1022,9 @@ let owoReplier = (msg, message)=>{
     if ((message.toLocaleLowerCase().indexOf("owo") > -1) && (message.toLocaleLowerCase().indexOf("uwu") > -1)) {
         msg.channel.send({
             "embed": {
-                "title": "Critical error",
+                "title": "Critical error - Disabled.",
                 "color": RED,
-                "description": "Hey túto správu by ste nemali vidieť lebo...emmm...práve sa len ***KOMPLET POSRAL BOT*** a tiež sa tak nejak nemôže reštartovať sám... Povedzte FajsiEx#6101-kunovi nech urobí z centrálneho serverového cmd-čka `cf restart caj-ministrator`. No nič rip ja lebo práve idem offline. Byeee... >_>",
+                "description": "Hey túto správu by ste nemali vidieť lebo...emmm...práve sa len ***KOMPLET POSRAL BOT*** a tiež sa tak nejak nemôže reštartovať sám pre obavy z toho ze posere este viac niečo... Povedzte FajsiEx#6101-kunovi nech urobí z centrálneho serverového cmd-čka `cf restart caj-ministrator`. No nič rip ja lebo práve idem offline. Byeee... >_>",
             }
         });
         disabled = true;
