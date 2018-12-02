@@ -875,23 +875,6 @@ discordClient.on('ready', ()=>{
         console.log("[BOT] Sending online msg...");
         discordClient.channels.get('514873440159793167').send('Čaj-ministrátor je online.');
     }
-
-    process.on('uncaughtException', (err) => {
-        discordClient.channels.get('514873440159793167').send({
-            "embed": {
-                "title": "Error",
-                "color": RED,
-                "description": "Nastala nečakaná chyba pre ktorú sa bot musí reštartovať",
-                "fields": [
-                    {
-                        "name": "Error details:",
-                        "value": JSON.stringify(err)
-                    }
-                ]
-            }
-        });
-        process.exit(1) //mandatory (as per the Node docs)
-    });
 });
 
 
