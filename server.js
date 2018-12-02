@@ -313,6 +313,10 @@ discordClient.on('ready', ()=>{
                     break;
 
                 case "holdup":
+                case "holdhore":
+                case "holehore":
+                case "drzhore":
+                case "drzup":
                     msg.channel.send({
                         "files": ["https://i.redd.it/op68ltgjypm11.jpg"]
                     });
