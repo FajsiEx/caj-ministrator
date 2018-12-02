@@ -76,6 +76,7 @@ let adminUser;
 let events = [];
 let recievedCommandsTimeout = 30;
 let starting = true;
+let disabled = false;
 let onlineMsgSent = false;
 const WEEK_DAYS = ["Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota"];
 const WEEK_DAYS_SHORT = ["Ne", "Po", "Ut", "St", "Št", "Pi", "So"];
@@ -160,6 +161,7 @@ discordClient.on('ready', ()=>{
 
     // GREETING
     discordClient.on('guildMemberAdd', member => {
+        if (disabled) {return;}
         let channel = member.guild.channels.find(ch => ch.name === 'talk');
         if (!channel) {return;}
         channel.send(`Vítaj, ${member}! Nezabudni si dať svoje IRL meno ako nickname.`);
@@ -167,6 +169,7 @@ discordClient.on('ready', ()=>{
 
 
     discordClient.on('message', (msg)=> { // When there is any message the bot can see
+        if (disabled) {return;}
         if (msg.author.bot) { // We check if the author of the message isn't a bot
             console.log("[IGNORE] Bot message has been ignored.");
             return; // If they are, we just ignore them.
@@ -968,6 +971,10 @@ How?
     
         console.log("[INTERVAL_MINUTE] Setting activity...");
         if (!starting) {
+            if (disabled) {
+                discordClient.user.setStatus('offline');
+            }
+
             let hours = new Date().getHours();
             let day = new Date().getDay();
             let isWorkDay = false;
@@ -1011,6 +1018,18 @@ let checkAdmin = (msg)=>{
 }
 
 let owoReplier = (msg, message)=>{
+    if ((message.toLocaleLowerCase().indexOf("owo") > -1) && (message.toLocaleLowerCase().indexOf("uwu") > -1)) {
+        msg.channel.send({
+            "embed": {
+                "title": "Critical error",
+                "color": RED,
+                "description": "Hey túto správu by ste nemali vidieť lebo...emmm...práve sa len ***KOMPLET POSRAL BOT*** a tiež sa tak nejak nemôže reštartovať sám... Povedzte FajsiEx#6101-kunovi nech urobí z centrálneho serverového cmd-čka `cf restart caj-ministrator`. No nič rip ja lebo práve idem offline. Byeee... >_>",
+            }
+        });
+        disabled = true;
+        return true;
+    }
+
     if (message.toLocaleLowerCase() == "owo" || message.toLocaleLowerCase() == "!owo") {
         msg.channel.send("UwU");
         return true; // dont continue executing the code
