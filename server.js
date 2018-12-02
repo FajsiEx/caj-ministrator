@@ -695,7 +695,7 @@ discordClient.on('ready', ()=>{
 
                 case "snap":
                 case "thanos":
-                    if (commandMessageArray[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf("pilnik") && msg.author.id != 305705560966430721) {
+                    if (commandMessageArray[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf("pilnik") > -1 && msg.author.id != 305705560966430721) {
                         msg.channel.send({
                             "embed": {
                                 "title": "*snap*",
@@ -705,7 +705,7 @@ discordClient.on('ready', ()=>{
                         });
                         return;
                     }
-                    if (commandMessageArray[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf("me") && msg.author.id != 305705560966430721) {
+                    if (commandMessageArray[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf("me") > -1) {
                         msg.channel.send({
                             "embed": {
                                 "title": "No.",
