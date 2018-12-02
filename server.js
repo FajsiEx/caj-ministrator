@@ -171,6 +171,15 @@ discordClient.on('ready', ()=>{
             console.log("[IGNORE] Bot message has been ignored.");
             return; // If they are, we just ignore them.
         }
+        if (!msg.channel) {
+            console.log("[IGNORE] Not a msg in a channel.");
+            msg.reply({
+                "embed": {
+                    "title": "Nepríjmam nič okrem správ v channeloch :/",
+                    "color": RED
+                }
+            });
+        }
 
         // Get some shit from the msg object
         let author_id = msg.author.id; // 45656489754512344
