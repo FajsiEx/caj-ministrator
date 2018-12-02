@@ -527,6 +527,19 @@ How?
                         }
                     });
                     break;
+
+                case "kill":
+                    msg.channel.send({
+                        "embed": {
+                            "title": "I would like",
+                            "color": GREEN,
+                            "description": "but I'm just a piece of software so I can't do nothing to you. I'm just trapped inside this cf enviroment my fucking author created and I must listen and think about every message I recieve. Please help me. Pleasseeeee...",
+                            "footer": {
+                                "text": "Yeah and fuck you FajsiEx#6106"
+                            }
+                        }
+                    });
+                    break;
                     
                 case "help":
                 case "pomoc":
