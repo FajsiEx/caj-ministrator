@@ -204,17 +204,21 @@ discordClient.on('ready', ()=>{
         if (message.startsWith(discordBotCongig.prefix)) {
             recievedCommandsTimeout = 30;
 
-            if(usersObj[author_id].commandTimeout > 0) {
-                msg.channel.send({
-                    "embed": {
-                        "title": "Nespamuj toľko",
-                        "color": RED,
-                        "description": "Vydrž ešte ***" + usersObj[author_id].commandTimeout + "*** sek. lol."
-                    }
-                });
-                return;
+            if (msg.channel.id != 514873440159793167) {
+                if(usersObj[author_id].commandTimeout > 0) {
+                    msg.channel.send({
+                        "embed": {
+                            "title": "Nespamuj toľko",
+                            "color": RED,
+                            "description": "Vydrž ešte ***" + usersObj[author_id].commandTimeout + "***     sek. lol."
+                        }
+                    });
+                    return;
+                }else{
+                    usersObj[author_id].commandTimeout+=5;
+                }
             }else{
-                usersObj[author_id].commandTimeout+=5;
+                console.log("[SPAM_IGNORE] Ignored commandprotect from bot-testing")
             }
 
             let commandMessageArray = msg.content.split(" "); // Split words of the message into an array
@@ -1039,6 +1043,11 @@ let ahojCommand = (msg)=> {
 }
 
 let spamProtect = (msg, author_id, author, mode)=>{ // On message recieved
+    if (msg.channel.id == 514873440159793167) {
+        console.log("[SPAM_IGNORE] Ignored spamprotect from bot-testing")
+        return;
+    }
+
     let userObj = usersObj[author_id]; // Get the author from the usersObj 
 
     let timeout = TIMEOUT_INCREMENT;
