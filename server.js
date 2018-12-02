@@ -492,11 +492,11 @@ discordClient.on('ready', ()=>{
                 case "vymazat":
                     let allowed = true;
                     try{
-                        if (!(msg.channel.name == "admin-commandy")) {
+                        if (checkAdmin(msg)) {
                             allowed = false;
                             msg.channel.send({
                                 "embed": {
-                                    "title": "Tento príkaz sa môže vykonávať len v #admin-commandy",
+                                    "title": "Tento príkaz môžu vykonávať len admini lol",
                                     "color": RED
                                 }
                             });
@@ -506,7 +506,7 @@ discordClient.on('ready', ()=>{
                         allowed = false;
                         msg.channel.send({
                             "embed": {
-                                "title": "Tento príkaz sa môže vykonávať len v #admin-commandy",
+                                "title": "Tento príkaz môžu vykonávať len admini lol",
                                 "color": RED
                             }
                         });
