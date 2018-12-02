@@ -471,7 +471,7 @@ discordClient.on('ready', ()=>{
 
                 case "pridat":
                 case "add":
-                    addEvent.add(msg, commandMessageArray, message);
+                    addEvent.add(msg, commandMessageArray);
                     break;
 
                 case "eventy":
@@ -1230,7 +1230,7 @@ let aleCauCommand = (msg)=>{
 
 
 let addEvent = {
-    add: (msg, commandMessageArray, message)=>{
+    add: (msg, commandMessageArray)=>{
         if (!commandMessageArray[1] || !commandMessageArray[2]) { // If there are missing parameters
             addEvent.missingParametersReply(msg); // Tell them
             return; // Don't continue
@@ -1238,9 +1238,11 @@ let addEvent = {
         
         let author = msg.author.username + "#" + msg.author.discriminator; // User#1337
         let author_id = msg.author.id; // 45656489754512344
+        let message = msg.content;
 
         let dateParameter = commandMessageArray[1].split(".").reverse().join(".");
         let dateObj = new Date(dateParameter + " 20:00:00");
+        
         if (dateObj == "Invalid Date") { // If the date function can't parse the date string we
             addEvent.invalidDateFormatReply(msg); // Tell the user right format and
             return; // Don't continue
