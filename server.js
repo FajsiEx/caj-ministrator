@@ -499,19 +499,7 @@ discordClient.on('ready', ()=>{
                     break;
 
                 case "vymazat":
-                    let allowed = true;
-                    try{
-                        if (checkAdmin(msg)) {
-                            allowed = false;
-                            msg.channel.send({
-                                "embed": {
-                                    "title": "Tento príkaz môžu vykonávať len admini lol",
-                                    "color": RED
-                                }
-                            });
-                            return;
-                        }
-                    }catch(e){
+                    if (!checkAdmin(msg)) {
                         allowed = false;
                         msg.channel.send({
                             "embed": {
@@ -521,7 +509,6 @@ discordClient.on('ready', ()=>{
                         });
                         return;
                     }
-                    if (!allowed) {return;} // JIC
                     
                     let i=0;
                     let eventContentToDelete = msg.content.slice(9); // gets rid of the !vymazat
