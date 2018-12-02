@@ -316,6 +316,19 @@ discordClient.on('ready', ()=>{
                     });
                     break;
 
+                case "lookatthisdude":
+                    if (msg.author.id == 305705560966430721) {
+                        msg.channel.send({
+                            "files": ["https://derpicdn.net/img/2018/4/2/1697488/large.png"]
+                        });
+                        break;
+                    }else{
+                        msg.channel.send({
+                            "files": ["https://i.imgur.com/ZHmHih5.png"]
+                        });
+                        break;
+                    }
+
                 case "holdup":
                 case "holdhore":
                 case "holehore":
@@ -788,7 +801,7 @@ How?
 
                 case "snap":
                 case "thanos":
-                    if (commandMessageArray[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf("pilnik") > -1 && msg.author.id != 305705560966430721) {
+                    if (commandMessageArray[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf("pilnik") > -1 && msg.author.id == 305705560966430721) {
                         msg.channel.send({
                             "embed": {
                                 "title": "*snap*",
