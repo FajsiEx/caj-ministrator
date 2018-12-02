@@ -553,7 +553,7 @@ discordClient.on('ready', ()=>{
                 case "mute":
                 case "silence":
                     // 517295713747599371
-                    if(msg.member.roles.some(r=>["admin", "Owner"].includes(r.name))) {
+                    if(checkAdmin(msg)) {
                         let minutes = parseInt(commandMessageArray[1]);
                         if(!minutes) {
                             msg.channel.send({
@@ -876,6 +876,14 @@ discordClient.on('ready', ()=>{
 
 let startsWithNumber = (str)=>{
     return str.match(/^\d/);
+}
+
+let checkAdmin = (msg)=>{
+    if(msg.member.roles.some(r=>["admin", "Owner"].includes(r.name))) {
+        return true;
+    }else{
+        return false;
+    }
 }
 
 let owoReplier = (msg, message)=>{
