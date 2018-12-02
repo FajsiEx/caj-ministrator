@@ -695,6 +695,27 @@ discordClient.on('ready', ()=>{
 
                 case "snap":
                 case "thanos":
+                    if (commandMessageArray[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf("pilnik") && msg.author.id != 305705560966430721) {
+                        msg.channel.send({
+                            "embed": {
+                                "title": "*snap*",
+                                "color": GREEN,
+                                "description": "Polovica pilníkov a zvierka zmizli. Perfectly balanced as all things should be."
+                            }
+                        });
+                        return;
+                    }
+                    if (commandMessageArray[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf("me") && msg.author.id != 305705560966430721) {
+                        msg.channel.send({
+                            "embed": {
+                                "title": "No.",
+                                "color": RED,
+                                "description": "Fuck off."
+                            }
+                        });
+                        return;
+                    }
+
                     if (msg.author.id != DEV_USERID) {
                         msg.channel.send({
                             "embed": {
