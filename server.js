@@ -317,6 +317,7 @@ discordClient.on('ready', ()=>{
                     break;
 
                 case "lookatthisdude":
+                case "look":
                     if (msg.author.id == 305705560966430721) {
                         msg.channel.send({
                             "files": ["https://derpicdn.net/img/2018/4/2/1697488/large.png"]
