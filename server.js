@@ -312,6 +312,12 @@ discordClient.on('ready', ()=>{
                     });
                     break;
 
+                case "holdup":
+                    msg.channel.send({
+                        "files": ["https://i.redd.it/op68ltgjypm11.jpg"]
+                    });
+                    break;
+
                 case "umri":
                     msg.channel.send("```js ((skap)^2) / hned ```");
                     break;
