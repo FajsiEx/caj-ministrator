@@ -535,7 +535,6 @@ discordClient.on('ready', ()=>{
                     console.log(`[DEBUG] EITD${eventIndexToDelete})`);
                     if (!(eventIndexToDelete === false)) { // If the index was not not found
                         events.splice(eventIndexToDelete,1);
-                        saveData();
                         msg.channel.send({
                             "embed": {
                                 "title": "Event bol vymazaný. Zmeny sa môžu prejaviť až o pár sekúnd!",
@@ -1263,8 +1262,6 @@ let addEvent = {
             content: eventName
         });
 
-        saveData(); // And request save of our data
-
         addEvent.successReply(msg, dateObj, eventName); // And finally we reply the user.
     },
 
@@ -1415,7 +1412,6 @@ let eventsCommand = (type, msg, commandMessageArray)=>{
         events = events.filter((obj)=>{
             return obj.content !== oldEventContentToDelete
         });
-        saveData();
     }
 }
 
