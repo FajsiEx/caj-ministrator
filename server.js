@@ -185,7 +185,7 @@ discordClient.on('ready', ()=>{
         }
 
         // Get some shit from the msg object
-        let author_id = msg.author.id; // 45656489754512344
+        let author_id = msg.author.id;
         let author = msg.author.username + "#" + msg.author.discriminator; // User#1337
         let message = msg.content;
 
