@@ -613,7 +613,7 @@ discordClient.on('ready', ()=>{
                             "embed": {
                                 "title": "Hey,",
                                 "description": "how 'bout you fuck off. Seriously. Don't. This is not place for this. Stop it, get some help.",
-                                "color": GREEN
+                                "color": RED
                             }
                         }).then(msg => msg.delete(10000));
                         return;
@@ -741,7 +741,7 @@ discordClient.on('ready', ()=>{
                         msg.channel.send({
                             "embed": {
                                 "title": "*snap*",
-                                "color": GREEN,
+                                "color": RED,
                                 "description": "Polovica pilníkov a zvierka zmizli. Perfectly balanced as all things should be."
                             }
                         });
