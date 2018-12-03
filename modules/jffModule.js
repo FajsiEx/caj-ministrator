@@ -24,7 +24,7 @@ const memeUrls = {
 module.exports = {
     msgEaterEggReply: (msg, message)=> {
         message = message.toLocaleLowerCase(); //
-        if (message.to.indexOf('click the circles') > -1) {
+        if (message.indexOf('click the circles') > -1) {
             msg.reply(`to the beat. ***CIRCLES!***`);
             return;
         }else if (message.indexOf('fuck you') > -1) {
