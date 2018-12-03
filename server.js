@@ -85,6 +85,10 @@ const YELLOW = 14540032;
 const BLUE = 1616639;
 const GREEN = 4521796;
 
+// Require our own modules
+let jffModule = require('./modules/jffModule');
+
+
 // Function delcarations
 let loadData = ()=>{ // Loads data from the DB to the memory
     MongoClient.connect(DATABASE_URI, (err, client) => {
@@ -196,7 +200,7 @@ discordClient.on('ready', ()=>{
         
         /* Good night wishing thing */
         goodNightWisher(msg, message, author_id);
-        otherShit(msg, message, author_id);
+        jffModule.msgEaterEggReply(msg, message);
 
         /* OwO what's this (may have God mercy on this world) */
         if(owoReplier(msg, message)) {
@@ -1071,7 +1075,8 @@ let goodNightWisher = (msg, message, author_id)=>{
     }
 }
 
-let otherShit = (msg, message, author_id)=>{
+/*
+let otherShit = (msg, message)=>{
     if (message.indexOf('click the circles') > -1) {
         msg.reply(`to the beat. ***CIRCLES!***`);
         return;
@@ -1083,6 +1088,7 @@ let otherShit = (msg, message, author_id)=>{
         return;
     }
 }
+*/
 
 let ahojCommand = (msg)=> {
     msg.reply("Ahoj");
