@@ -273,185 +273,69 @@ discordClient.on('ready', ()=>{
                 case "excuseme":
                 case "excusewtf":
                 case "wtf":
-                    msg.channel.send({
-                        "files": ["https://i.imgur.com/uVZQdsQ.jpg"]
-                    });
+                    jffModule.sendMeme(msg, "excuse");
                     break;
 
                 case "tmyk":
                 case "themoreyouknow":
-                    msg.channel.send({
-                        "files": ["https://i.ytimg.com/vi/GD6qtc2_AQA/maxresdefault.jpg"]
-                    });
+                    jffModule.sendMeme(msg, "tmyk");
                     break;
 
                 case "commit":
                 case "gocommit":
-                    msg.channel.send({
-                        "files": ["https://i.kym-cdn.com/photos/images/newsfeed/001/394/620/475.png"]
-                    });
+                    jffModule.sendMeme(msg, "commit");
                     break;
 
                 case "oof":
-                    msg.channel.send({
-                        "files": ["https://i.imgur.com/p7yQqZ8.png"]
-                    });
+                    jffModule.sendMeme(msg, "oof");
                     break;
 
                 case "pika":
-                    msg.channel.send({
-                        "files": ["https://i.imgur.com/sohWhy9.jpg"]
-                    });
+                    jffModule.sendMeme(msg, "pika");
                     break;
 
                 case "tsj":
-                    msg.channel.send({
-                        "files": ["https://i.imgur.com/8y9Uji5.jpg"]
-                    });
+                    jffModule.sendMeme(msg, "tsj");
                     break;
 
                 case "killmeme":
                 case "memereview":
-                    msg.channel.send("Meme review", {
-                        "files": ["https://thumbs.gfycat.com/HilariousEagerArmednylonshrimp-max-1mb.gif"]
-                    });
+                    jffModule.sendMeme(msg, "killmeme");
                     break;
 
                 case "yeet":
-                    msg.channel.send({
-                        "files": ["https://ih0.redbubble.net/image.562324831.7631/flat,550x550,075,f.u3.jpg"]
-                    });
+                    jffModule.sendMeme(msg, "yeet");
                     break;
 
                 case "lookatthisdude":
                 case "look":
-                    if (msg.author.id == 305705560966430721) {
-                        msg.channel.send({
-                            "files": ["https://derpicdn.net/img/2018/4/2/1697488/large.png"]
-                        });
-                        break;
-                    }else{
-                        msg.channel.send({
-                            "files": ["https://i.imgur.com/ZHmHih5.png"]
-                        });
-                        break;
-                    }
+                    jffModule.sendMeme(msg, "lookatthisdude");
+                    break;
 
                 case "holdup":
                 case "holdhore":
                 case "holehore":
                 case "drzhore":
                 case "drzup":
-                    msg.channel.send({
-                        "files": ["https://i.redd.it/op68ltgjypm11.jpg"]
-                    });
+                    jffModule.sendMeme(msg, "holdup");
                     break;
 
+                case "skap":
                 case "umri":
-                    msg.channel.send("```js ((skap)^2) / hned ```");
+                    jffModule.skapReply(msg);
                     break;
 
                 case "rip":
-                    msg.channel.send("Rest in piss, forever miss...");
+                    jffModule.ripReply(msg);
                     break;
 
                 case "technokitty":
-                    msg.channel.send({
-                        "embed": {
-                            "title": "Techno kitty by *S3RL*",
-                            "color": BLUE,
-                            "description": `
-Up in the sky
-Flyiiing way up high
-I can't beliieve my eyes
-A techno feeeline
-so fly
-Up high
-And neeeveer come down
-I'll move
-Like you
-To the techno sound
-
-***TECHNO CAT***
-
-Techno kitty, kitty
-You're so pretty kitty
-Techno Kitty with a rocket pack
-Techno kitty, kitty
-You're so pretty kitty
-Techno Kitty with wings on your back
-Flying through the air so high
-You're like a shooting star that lights up the sky
-Techno kitty, kitty
-You're so pretty kitty
-Techno kitty
-Tec-tec-techno cat
-***TECHNO CAT***
-How?
-*Hooow?*
-How'd you get there
-Way up in the air
-You're souring so free
-Cute fluffy kitty
-So fly
-Up high
-And neeeveer come down
-I'll move
-Like you
-To the techno sound
-***TECHNO CAT***
-Techno kitty, kitty
-You're so pretty kitty
-Techno Kitty with a rocket pack
-Techno kitty, kitty
-You're so pretty kitty
-Techno Kitty with wings on your back
-Flying through the air so high
-You're like a shooting star that lights up the sky
-Techno kitty, kitty
-You're so pretty kitty
-Techno kitty
-Tec-tec-techno cat
-***TECHNO CAT***
-How?
-*Hooow?*
-                            `
-                        }
-                    });
+                    jffModule.technoKittyReply(msg);
                     break;
 
                 case "meme":
                 case "meirl":
-                    request({
-                        url: "https://www.reddit.com/r/me_irl/random/.json",
-                        json: true
-                    }, (err, res, data)=>{
-                        if (!err && res.statusCode == 200) {
-                            try{
-                            let memeUrl = data[0].data.children[0].data.url;
-                            msg.channel.send({
-                                "files": [memeUrl]
-                            });
-                        }catch(e){
-                            console.error(e);
-                            msg.channel.send({
-                                "embed": {
-                                    "title": "Error",
-                                    "color": RED,
-                                    "description": "Vyskytla sa chyba pri ziskavaní url memu. Najskôr tento post nemal v sebe obrázok...skús to znovu"
-                                }
-                            });
-                        }
-                        }else{
-                            msg.channel.send({
-                                "embed": {
-                                    "title": "Error",
-                                    "color": RED,
-                                    "description": "Vyskytla sa chyba pri requestovaní random postu z redditu"
-                                }
-                            });
-                        }
-                    });
+                    jffModule.sendRedditMeme(msg);
                     break;
 
                 case "workinprogresscommandthatonlyiknowwhatitdoesandnooneelseunlessitellthemlol":
