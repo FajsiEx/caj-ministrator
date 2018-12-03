@@ -61,7 +61,7 @@ module.exports = {
         msg.channel.send("Rest in piss, forever miss...");
     },
 
-    getRandomMemeUrl: ()=> {
+    getRandomMemeUrl: function(request) {
         return new Promise((resolve, reject)=>{
             request({
                 url: "https://www.reddit.com/r/me_irl/random/.json",
@@ -82,7 +82,7 @@ module.exports = {
     },
 
     sendRedditMeme: (msg)=> {
-        getRandomMemeUrl().then((res)=> {
+        getRandomMemeUrl(request).then((res)=> {
             msg.channel.send({
                 "files": [res]
             });
