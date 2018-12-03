@@ -1447,13 +1447,26 @@ let eventsCommand = (type, msg, commandMessageArray)=>{
         }
     });
     
-    msg.channel.send({
-        "embed": {
-            "title": embedTitle,
-            "color": BLUE,
-            "fields": eventsFields
-        }
-    });
+    if (isToday || isTomorrow) {
+        msg.channel.send({
+            "embed": {
+                "title": embedTitle,
+                "color": BLUE,
+                "fields": eventsFields
+            }
+        });
+    }else{ 
+        msg.channel.send({
+            "embed": {
+                "title": embedTitle,
+                "color": BLUE,
+                "fields": eventsFields,
+                "footer": {
+                    "text": "BTW: Keď chceš len čo je na zajtra, napíš !zajtra"
+                }
+            }
+        });
+    }
 
     if (oldEventContentToDelete) {
         events = events.filter((obj)=>{
