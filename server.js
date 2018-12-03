@@ -608,6 +608,16 @@ discordClient.on('ready', ()=>{
                     }
 
                 case "nuke":
+                    if (commandMessageArray[1].toLocaleLowerCase == "me") {
+                        msg.channel.send({
+                            "embed": {
+                                "title": "Hey,",
+                                "description": "how 'bout you fuck off. Seriously. Don't. This is not place for this. Stop it, get some help.",
+                                "color": GREEN
+                            }
+                        }).then(msg => msg.delete(10000));
+                    }
+
                     if(!checkAdmin(msg)) {
                         msg.channel.send({
                             "embed": {
