@@ -1,6 +1,6 @@
 
 module.exports = {
-    msgEaterEggReply = (msg, message)=>{
+    msgEaterEggReply: (msg, message)=>{
         if (message.indexOf('click the circles') > -1) {
             msg.reply(`to the beat. ***CIRCLES!***`);
             return;
