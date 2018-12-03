@@ -658,7 +658,6 @@ How?
 
                 case "mute":
                 case "silence":
-                    // 517295713747599371
                     if(checkAdmin(msg)) {
                         let minutes = parseInt(commandMessageArray[1]);
                         if(!minutes) {
