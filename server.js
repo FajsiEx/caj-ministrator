@@ -646,7 +646,7 @@ discordClient.on('ready', ()=>{
                                 "title": "Vymazal som "+ limit + " správ.",
                                 "color": GREEN
                             }
-                        }).then(msg => msg.delete(3000));
+                        }).then(msg => msg.delete(5000));
                     });
 
                     break;
