@@ -61,42 +61,36 @@ module.exports = {
         msg.channel.send("Rest in piss, forever miss...");
     },
 
-    getRandomMemeUrl: function(request) {
-        return new Promise((resolve, reject)=>{
-            request({
-                url: "https://www.reddit.com/r/me_irl/random/.json",
-                json: true
-            }, (err, res, data)=>{
-                if (!err && res.statusCode == 200) {
-                    try{
-                        resolve(data[0].data.children[0].data.url);
-                    }catch(e){
-                        console.error(e);
-                        reject(0);
-                    }
-                }else{
-                    reject(0);
-                }
-            });
-        });
-    },
-
     sendRedditMeme: (msg)=> {
-        getRandomMemeUrl(request).then((res)=> {
-            msg.channel.send({
-                "files": [res]
-            });
-        }).catch((e)=>{
-            msg.channel.send({
-                "embed": {
-                    "title": "Error",
-                    "color": RED,
-                    "description": "Vyskytla sa chyba pri requestovaní random postu z redditu."
+        request({
+            url: "https://www.reddit.com/r/me_irl/random/.json",
+            json: true
+        }, (err, res, data)=>{
+            if (!err && res.statusCode == 200) {
+                try{
+                    msg.channel.send({
+                        "files": [data[0].data.children[0].data.url]
+                    });
+                }catch(e){
+                    console.error(e);
+                    msg.channel.send({
+                        "embed": {
+                            "title": "Error",
+                            "color": RED,
+                            "description": "Vyskytla sa chyba pri requestovaní random postu z redditu."
+                        }
+                    });
                 }
-            });
-            return;
-        })
-        
+            }else{
+                msg.channel.send({
+                    "embed": {
+                        "title": "Error",
+                        "color": RED,
+                        "description": "Vyskytla sa chyba pri requestovaní random postu z redditu."
+                    }
+                });
+            }
+        });
     },
 
     technoKittyReply: (msg)=> {
