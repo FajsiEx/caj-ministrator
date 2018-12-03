@@ -592,7 +592,7 @@ discordClient.on('ready', ()=>{
                         console.log("[MUTE] Muted "+ user.name + " for " + minutes + " minutes.");
                         msg.channel.send({
                             "embed": {
-                                "title": ``,
+                                "title": user.name + " bol mutnutý na " + minutes + " min.",
                                 "color": GREEN
                             }
                         });
@@ -606,6 +606,40 @@ discordClient.on('ready', ()=>{
                         });
                         return;
                     }
+
+                case "nuke":
+                    if(!checkAdmin(msg)) {
+                        msg.channel.send({
+                            "embed": {
+                                "title": "Tento príkaz môžu vykonávať len admini lol",
+                                "color": RED
+                            }
+                        });
+                        return;
+                    }
+
+                    let limit = parseInt(commandMessageArray[1]);
+                    if(!limit) {
+                        msg.channel.send({
+                            "embed": {
+                                "title": "Chýba koľko správ vymazať",
+                                "color": RED
+                            }
+                        });
+                        return;
+                    }
+
+                    console.log("[NUKE] Nuked "+ limit + " messages.");
+                    msg.channel.bulkDelete(limit).then(() => {
+                        msg.channel.send({
+                            "embed": {
+                                "title": "Vymazal som "+ limit + " správ.",
+                                "color": GREEN
+                            }
+                        }).then(msg => msg.delete(3000));
+                    });
+
+                    break;
 
                 case "testread":
                     if (msg.author.id != DEV_USERID) {
