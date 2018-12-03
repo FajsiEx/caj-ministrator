@@ -616,6 +616,7 @@ discordClient.on('ready', ()=>{
                                 "color": GREEN
                             }
                         }).then(msg => msg.delete(10000));
+                        return;
                     }
 
                     if(!checkAdmin(msg)) {
