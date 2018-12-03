@@ -82,7 +82,7 @@ module.exports = {
     },
 
     sendRedditMeme: (msg)=> {
-        this.getRandomMemeUrl().then((res)=> {
+        getRandomMemeUrl().then((res)=> {
             msg.channel.send({
                 "files": [res]
             });
