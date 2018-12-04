@@ -460,8 +460,11 @@ discordClient.on('ready', ()=>{
                     if (msg.author.id != DEV_USERID) {
                         msg.channel.send({
                             "embed": {
-                                "title": "OwO ty si sa pozeral na môj source? Tak vies ze ti nedovolím vstup. r/gatekeepers",
-                                "color": RED
+                                "title": "Nope nejsi môj master OwO",
+                                "color": RED,
+                                "footer": {
+                                    "text": "Forgive me for the cancer I've done."
+                                }
                             }
                         });
                         return;
