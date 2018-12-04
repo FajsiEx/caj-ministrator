@@ -592,10 +592,10 @@ discordClient.on('ready', ()=>{
                             user.removeRole(role).catch(console.error);
                         }, minutes*60000);
 
-                        console.log("[MUTE] Muted "+ user.name + " for " + minutes + " minutes.");
+                        console.log("[MUTE] Muted "+ user.username + "#" + user.discriminator + " for " + minutes + " minutes.");
                         msg.channel.send({
                             "embed": {
-                                "title": user.name + " bol mutnutý na " + minutes + " min.",
+                                "title": user.username + "#" + user.discriminator + " bol mutnutý na " + minutes + " min.",
                                 "color": GREEN
                             }
                         });
