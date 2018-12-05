@@ -248,7 +248,7 @@ discordClient.on('ready', ()=>{
                     if (msg.author.id != DEV_USERID) {
                         msg.channel.send({
                             "embed": {
-                                "title": "Ďakujem, že sa snažíte zistiť čo tento príkaz robí. Ale pokým sa nedokončí, nedovolím si vás k nemu pustiť aby sa nič nedoserkalo...sry humanity for what have i done with this.",
+                                "title": "OwO *notices you trying to access this command but denies with rapid smashing of the return keyword* nyah.",
                                 "color": RED
                             }
                         });
@@ -259,7 +259,7 @@ discordClient.on('ready', ()=>{
                         console.log(post);
                         console.log('tags: ' + post[0]['tags']);
                         console.log('File URL: ' + post[0]['file_url']);
-                        console.log('artists: ' + post[0]['artist']);
+                        console.log('artists: ' + post[0]['artist']); 
                     });
 
                     msg.channel.send({
