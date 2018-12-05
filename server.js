@@ -268,7 +268,7 @@ discordClient.on('ready', ()=>{
                     });
                     break;
 
-                case "04134861291":
+                case "gia04134861291":
                     if (msg.author.id != DEV_USERID) {
                         msg.channel.send({
                             "embed": {
