@@ -13,34 +13,36 @@ const DATABASE_URI = process.env.DATABASE_URI;
 
 module.exports = {
     load: ()=>{ // Loads data from the DB to the memory
-        MongoClient.connect(DATABASE_URI, (err, client) => {
-            console.log("[LOAD] Loading events...");
-            if (err) return console.error(err)
-            let database = client.db('caj-ministrator');
-            database.collection("data").find({}).toArray((err, docs)=> {
-                if (err) {console.log(err); return;}
-
-                console.log(`[DEBUG] DOCS(${JSON.stringify(docs)})`);
-
-                let usersDoc = docs[0];
-                console.log(`[DEBUG] DOC(${JSON.stringify(usersDoc)})`);
-
-                usersObj = usersDoc.users; 
-                console.log(`[DEBUG] OBJ(${JSON.stringify(usersObj)})`);
-                console.log("[LOAD] Users loaded.");
-
-                let eventsDoc = docs[1];
-                console.log(`[DEBUG] DOC(${JSON.stringify(eventsDoc)})`);
-                events = eventsDoc.events; 
-                console.log(`[DEBUG] ARR(${JSON.stringify(events)})`);
-                console.log("[LOAD] Events loaded.");
-
-                client.close();
-
-                return {
-                    usersObj: usersObj,
-                    events: events,
-                };
+        return new Promise((resolve, reject)=>{
+            MongoClient.connect(DATABASE_URI, (err, client) => {
+                console.log("[LOAD] Loading events...");
+                if (err) return console.error(err)
+                let database = client.db('caj-ministrator');
+                database.collection("data").find({}).toArray((err, docs)=> {
+                    if (err) {console.log(err); return;}
+    
+                    console.log(`[DEBUG] DOCS(${JSON.stringify(docs)})`);
+    
+                    let usersDoc = docs[0];
+                    console.log(`[DEBUG] DOC(${JSON.stringify(usersDoc)})`);
+    
+                    usersObj = usersDoc.users; 
+                    console.log(`[DEBUG] OBJ(${JSON.stringify(usersObj)})`);
+                    console.log("[LOAD] Users loaded.");
+    
+                    let eventsDoc = docs[1];
+                    console.log(`[DEBUG] DOC(${JSON.stringify(eventsDoc)})`);
+                    events = eventsDoc.events; 
+                    console.log(`[DEBUG] ARR(${JSON.stringify(events)})`);
+                    console.log("[LOAD] Events loaded.");
+    
+                    client.close();
+    
+                    resolve({
+                        usersObj: usersObj,
+                        events: events,
+                    });
+                });
             });
         });
     },
