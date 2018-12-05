@@ -60,7 +60,9 @@ discordClient.on('ready', ()=>{
     console.log("[READY] Ready.");
     console.log("[READY] Loading data from db...");
 
-    dbModule.load(events, usersObj);
+    let data = dbModule.load();
+    usersObj = data.usersObj;
+    events = data.events;
 
     discordClient.fetchUser(ADMIN_USERID).then((user)=>{ // Fetch the admin user
         adminUser = user; // Set the admin user as an...emm...admin user?
@@ -573,7 +575,10 @@ discordClient.on('ready', ()=>{
 
                     switch (commandMessageArray[1]) {
                         case "events":
-                            dbModule.load(events, usersObj);
+                            let data = dbModule.load();
+                            usersObj = data.usersObj;
+                            events = data.events;
+                            
                             msg.channel.send({
                                 "embed": {
                                     "title": "JSON dump of events object",

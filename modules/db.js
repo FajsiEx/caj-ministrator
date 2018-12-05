@@ -12,7 +12,7 @@ const ObjectId = require('mongodb').ObjectID;
 const DATABASE_URI = process.env.DATABASE_URI;
 
 module.exports = {
-    load: (events, usersObj)=>{ // Loads data from the DB to the memory
+    load: ()=>{ // Loads data from the DB to the memory
         MongoClient.connect(DATABASE_URI, (err, client) => {
             console.log("[LOAD] Loading events...");
             if (err) return console.error(err)
@@ -36,6 +36,11 @@ module.exports = {
                 console.log("[LOAD] Events loaded.");
 
                 client.close();
+
+                return {
+                    usersObj: usersObj,
+                    events: events,
+                };
             });
         });
     },
