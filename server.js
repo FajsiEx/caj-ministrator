@@ -4,12 +4,7 @@ console.log("[BOT] Starting...");
 const discord = require('discord.js');
 const discordClient = new discord.Client();
 
-const mongo = require('mongodb');
-const MongoClient = require('mongodb').MongoClient;
-const ObjectId = require('mongodb').ObjectID;
-
 const math = require('mathjs');
-const ytdl = require('ytdl-core');
 
 const request = require("request");
 const Scraper = require("image-scraper");
@@ -28,47 +23,8 @@ const DEV_USERID = 342227744513327107;
 
 const EVENT_FILENAME = "events.json";
 
-const DATABASE_URI = process.env.DATABASE_URI;
-
-const JOKES = [ // Credits to Dan Valnicek
-    `Spýtal som sa mojej dcéry, či by mi podala noviny. Povedala mi, že noviny sú stará škola. Povedala, že ľudia dnes používajú tablety a podala im iPad. Mucha nemala šancu.`,
-    `Vždy som si myslela, že moji susedia sú celkom milí ľudia. Ale potom si dali heslo na Wi-Fi.`,
-    `Pred dvoma rokmi som sa pozval dievča svojich snov na rande, dnes som ju požiadal o ruku.
-    Obidva krát povedala nie.`,
-    `"Mami, neľakaj sa, ale som v nemocnici."
-    "Synu, prosím ťa. Si tam chirurg už 8 rokov. Môžeme začať naše telefonáty inak?"`,
-    `Muž hovorí žene: "Vieš, čim chce byť náš 6-ročný syn, keď bude veľký?"
-    Manželka: "Nie"
-    Muž: "Smetiarom. A vieš prečo? "
-    Manželka: "Nie, prečo?"
-    Muž: "Pretože si myslí, že pracujú iba v utorok."`,
-    // haha jokes
-    `Stretnú sa dvaja povaľači. Prvý sa tak zamyslí a vraví:
-    - Človeče, keby nebol ten INTERNET, sedel by som celý deň pri telke!`,
-    `Čo znamená názov systému WINDOWS? Nenechajte sa oblafnúť, že Microsoftu ide o nejaké okná. V skutočnosti ide o akronym z posledných slov indiánskeho náčelníka sediaceho býka, ktoré povedal vo svojom rodnom siouxskom nárečí. V slovenskom preklade veštba znie:
-    "Zvíťazí Biely Muž Čumiaci Na Presýpacie Hodiny!"`,
-    `- Viete, ako sa prežehnáva počítačový fanatik?
-    - V mene otca i syna, i ducha enter.`,
-    `Ide programátor o 18.00 z práce a stretne šéfa, ktorý sa ho pýta: 
-    - Čo ty tak zavčasu? Zobral si si pol dňa dovolenky? 
-    - Nie, len si skočím na obed.`,
-    `- Viete, ako sa povie Linux po španielsky?
-    - Adios BIOS.`,
-    `Život by bol jednoduchší, keby sme k nemu mali zdrojový kód.`,
-    `Programátor hovorí programátorovi:
-    - Moja babka má dnes 64 rokov.
-    - Že gratulujem k peknému okrúhlemu výročiu...`,
-]
-
-const TIMETABLE = [
-    ['Víkend'],
-    ['Stn', 'Mat', 'Aj / Tsv', 'Zeq', 'ProP / Aj', 'Fyz', 'Sjl'],
-    ['Dej', 'Inf', 'Inf', 'Stn(K) / Aj', 'ZeqC / Mat', 'Obn', 'Aj / Zeq(C)'],
-    ['Nbv', 'Zeq', 'Zer', 'Zer', 'Pro', 'Tsv / Pro(P)', 'Mat / Stn(K)', 'Mech'],
-    ['Prax', 'Prax', 'Prax', 'Mat / Sjl', 'Sjl / Mat', 'Sjl'],
-    ['Stn', 'Zeq', 'Fyz / Tsv', 'Aj', 'Mat', 'Tsv / Fyz', 'Etv'],
-    ['Víkend'],
-]
+const JOKES = require("./modules/consts").JOKES;
+const TIMETABLE = require("./modules/consts").TIMETABLE;
 
 // Global veriables definition
 let usersObj = {};
@@ -87,58 +43,7 @@ const GREEN = 4521796;
 
 // Require our own modules
 let jffModule = require('./modules/jffModule');
-
-
-// Function delcarations
-let loadData = ()=>{ // Loads data from the DB to the memory
-    MongoClient.connect(DATABASE_URI, (err, client) => {
-        console.log("[LOAD] Loading events...");
-        if (err) return console.error(err)
-        let database = client.db('caj-ministrator');
-        database.collection("data").find({}).toArray((err, docs)=> {
-            if (err) {console.log(err); return;}
-
-            console.log(`[DEBUG] DOCS(${JSON.stringify(docs)})`);
-
-            let usersDoc = docs[0];
-            console.log(`[DEBUG] DOC(${JSON.stringify(usersDoc)})`);
-
-            usersObj = usersDoc.users; 
-            console.log(`[DEBUG] OBJ(${JSON.stringify(usersObj)})`);
-            console.log("[LOAD] Users loaded.");
-
-            let eventsDoc = docs[1];
-            console.log(`[DEBUG] DOC(${JSON.stringify(eventsDoc)})`);
-            events = eventsDoc.events; 
-            console.log(`[DEBUG] ARR(${JSON.stringify(events)})`);
-            console.log("[LOAD] Events loaded.");
-
-            client.close();
-        });
-    });
-}
-let saveData = ()=>{
-    console.log("[SAVE] Saving events...");
-    MongoClient.connect(DATABASE_URI, (err, client) => {
-        if (err) return console.error(err)
-        let database = client.db('caj-ministrator');
-        
-        // Replace the object with your field objectid...because it won't work otherwise...
-        database.collection("data").update({_id: ObjectId("5c027f0bd56bdd25686c264f")}, {
-            $set: {
-                "events": events
-            }
-        });
-        database.collection("data").update({_id: ObjectId("5c027cb9d56bdd25686c264e")}, {
-            $set: {
-                "users": usersObj
-            }
-        });
-        console.log("[SAVE] Events saved.");
-
-        client.close(); // Dont dos yourself kids
-    });
-}
+let dbModule = require('./modules/db');
 
 let compare = (a,b)=>{
     if (a.time < b.time) {
@@ -152,10 +57,10 @@ let compare = (a,b)=>{
 
 // Discord client init
 discordClient.on('ready', ()=>{
-    console.log("[BOT] Ready.");
-    console.log("[BOT] Calling loadData...");
+    console.log("[READY] Ready.");
+    console.log("[READY] Loading data from db...");
 
-    loadData();
+    dbModule.load(events, usersObj);
 
     discordClient.fetchUser(ADMIN_USERID).then((user)=>{ // Fetch the admin user
         adminUser = user; // Set the admin user as an...emm...admin user?
@@ -668,12 +573,12 @@ discordClient.on('ready', ()=>{
 
                     switch (commandMessageArray[1]) {
                         case "events":
-                            loadData();
+                            dbModule.load(events, usersObj);
                             msg.channel.send({
                                 "embed": {
                                     "title": "JSON dump of events object",
                                     "color": BLUE,
-                                    "description": JSON.stringify(events) + "\n**Warning! Event data will load after this message!**"
+                                    "description": JSON.stringify(events) + "\n**Requested db data load.**"
                                 }
                             });
                             break;
@@ -845,7 +750,7 @@ discordClient.on('ready', ()=>{
     }, 1000);
 
     setInterval(()=>{ // Does this every second
-        saveData();
+        dbModule.save(events, usersObj);
     }, 10000);
     
     setInterval(()=>{ // Does this every minute
