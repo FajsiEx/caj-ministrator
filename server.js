@@ -858,7 +858,7 @@ let checkAdmin = (msg)=>{
 }
 
 let owoReplier = (msg, message)=>{
-    if ((message.toLocaleLowerCase().indexOf("owo") > -1) && (message.toLocaleLowerCase().indexOf("uwu") > -1)) {
+    if (message == "Owo uwU") {
         msg.channel.send({
             "embed": {
                 "title": "Client object destroyed.",
