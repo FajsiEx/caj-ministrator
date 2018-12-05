@@ -268,6 +268,37 @@ discordClient.on('ready', ()=>{
                     });
                     break;
 
+                case "04134861291":
+                    if (msg.author.id != DEV_USERID) {
+                        msg.channel.send({
+                            "embed": {
+                                "title": "Nyah.",
+                                "color": RED
+                            }
+                        });
+                        return;
+                    }
+
+                    console.log("-------------------------------");
+                    console.log("DEBUG INFO DUMP = START");
+                    console.log("-------------------------------");
+                    console.log("USERSOBJ: " + JSON.stringify(usersObj));
+                    console.log("-------------------------------");
+                    console.log("EVENTS: " + JSON.stringify(events));
+                    console.log("-------------------------------");
+                    console.log("DATESTRING: " + new Date.toString());
+                    console.log("-------------------------------");
+                    console.log("DEBUG INFO DUMP = END");
+                    console.log("-------------------------------");
+
+                    msg.channel.send({
+                        "embed": {
+                            "title": "*spews out a fuck-ton of debug information to the server console*",
+                            "color": GREEN
+                        }
+                    });
+                    break;
+
                 case "roll":
                     let max = parseInt(commandMessageArray[1]);
                     if(!max) {
