@@ -9,9 +9,6 @@ const math = require('mathjs');
 const request = require("request");
 const Scraper = require("image-scraper");
 
-var e621api = require("e621");
-var e621 = new e621api();
-
 // Configuration
 const discordBotCongig = {
     token: process.env.DISCORD_BOT_TOKEN,
@@ -46,6 +43,7 @@ const GREEN = 4521796;
 // Require our own modules
 let jffModule = require('./modules/jffModule');
 let dbModule = require('./modules/db');
+const e621 = require('./modules/e621.js');
 
 let compare = (a,b)=>{
     if (a.time < b.time) {
@@ -257,11 +255,16 @@ discordClient.on('ready', ()=>{
                         return;
                     }
 
-                    e621.getFurry(1, 1, "furry").then((data) => { console.log(data[0]) })
+                    var request = e621.random("m/m", "E", 1, post => {
+                        console.log(post);
+                        console.log('tags: ' + post[0]['tags']);
+                        console.log('File URL: ' + post[0]['file_url']);
+                        console.log('artists: ' + post[0]['artist']);
+                    });
 
                     msg.channel.send({
                         "embed": {
-                            "title": "URL / DL:E; WO:6; QO:2; PA:1; done. Scraped img url from the response DOM should be now logged in the server console...or not idk im a bot bleep-bloop",
+                            "title": "URL / DL:E; WO:6; QO:2; PA:1; done. Called the API. Response should be now logged in the server console...or not idk im a bot bleep-bloop",
                             "color": GREEN
                         }
                     });
