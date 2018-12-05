@@ -104,7 +104,7 @@ discordClient.on('ready', ()=>{
         /* Things for the spam protection */
         spamProtect(msg, author_id, author);
 
-        console.log(`[MESSAGE] Recieved message. AUTHOR(${author} ### ${author_id}) CONTENT(${message}) TIMEOUT(${usersObj[author_id].timeout})`);
+        console.log(`[MESSAGE] Recieved message. AUTHOR(${author} ### ${author_id}) CONTENT(${message})`);
         
         /* Good night wishing thing */
         goodNightWisher(msg, message, author_id);
