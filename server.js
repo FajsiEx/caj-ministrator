@@ -9,6 +9,9 @@ const math = require('mathjs');
 const request = require("request");
 const Scraper = require("image-scraper");
 
+var e621api = require("e621");
+var e621 = new e621api();
+
 // Configuration
 const discordBotCongig = {
     token: process.env.DISCORD_BOT_TOKEN,
@@ -254,11 +257,7 @@ discordClient.on('ready', ()=>{
                         return;
                     }
 
-                    scraper = new Scraper('https://e621.net/post/random');
- 
-                    scraper.scrape((image)=>{ 
-                        console.log("[DEBUG] URL of that img: " + image.address);
-                    });
+                    e621.getFurry(1, 1, "furry").then((data) => { console.log(data[0]) })
 
                     msg.channel.send({
                         "embed": {
