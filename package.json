@@ -23,6 +23,7 @@
   "homepage": "https://github.com/FajsiEx/caj-ministrator#readme",
   "dependencies": {
     "discord.js": "^11.4.2",
+    "e621": "0.0.2",
     "image-scraper": "^0.2.1",
     "mathjs": "^5.2.3",
     "mongodb": "^3.1.10",
