@@ -244,7 +244,7 @@ discordClient.on('ready', ()=>{
                     jffModule.sendRedditMeme(msg);
                     break;
 
-                case "workinprogresscommandthatonlyiknowwhatitdoesandnooneelseunlessitellthemlol":
+                case "e621":
                     if (msg.author.id != DEV_USERID) {
                         msg.channel.send({
                             "embed": {
@@ -263,10 +263,7 @@ discordClient.on('ready', ()=>{
                     });
 
                     msg.channel.send({
-                        "embed": {
-                            "title": "URL / DL:E; WO:6; QO:2; PA:1; done. Called the API. Response should be now logged in the server console...or not idk im a bot bleep-bloop",
-                            "color": GREEN
-                        }
+                        "files": [post[0]['file_url']]
                     });
                     break;
 
