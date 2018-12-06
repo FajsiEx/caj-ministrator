@@ -582,7 +582,9 @@ discordClient.on('ready', ()=>{
                     break;
 
                 case "nick":
-                    msg.guild.member(discordClient.fetchUser(514499632924065812)).setNickname(msg.content.slice(6)); // !nick bla =>
+                    discordClient.fetchUser(514499632924065812).then((id)=>{
+                        msg.guild.member(id).setNickname(msg.content.slice(6)); // !nick bla => bla
+                    });
                     break;
 
                 case "testread":
