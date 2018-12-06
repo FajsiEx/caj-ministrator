@@ -245,16 +245,6 @@ discordClient.on('ready', ()=>{
                     break;
 
                 case "e621":
-                    if (msg.author.id != DEV_USERID) {
-                        msg.channel.send({
-                            "embed": {
-                                "title": "OwO *notices you trying to access this command but denies with rapid smashing of the return keyword* nyah.",
-                                "color": RED
-                            }
-                        });
-                        return;
-                    }
-
                     var request = e621.random("m/m", "E", 1, post => {
                         console.log(post);
                         console.log('tags: ' + post[0]['tags']);
@@ -264,8 +254,6 @@ discordClient.on('ready', ()=>{
                             "files": [post[0]['file_url']]
                         });
                     });
-
-                    
                     break;
 
                 case "gia04134861291":
