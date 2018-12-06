@@ -260,11 +260,12 @@ discordClient.on('ready', ()=>{
                         console.log('tags: ' + post[0]['tags']);
                         console.log('File URL: ' + post[0]['file_url']);
                         console.log('artists: ' + post[0]['artist']); 
+                        msg.channel.send({
+                            "files": [post[0]['file_url']]
+                        });
                     });
 
-                    msg.channel.send({
-                        "files": [post[0]['file_url']]
-                    });
+                    
                     break;
 
                 case "gia04134861291":
