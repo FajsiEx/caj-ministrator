@@ -55,6 +55,8 @@ let compare = (a,b)=>{
     }
 }
 
+discordClient.on('error', console.error);
+
 // Discord client init
 discordClient.on('ready', ()=>{
     console.log("[READY] Ready.");
@@ -246,10 +248,6 @@ discordClient.on('ready', ()=>{
 
                 case "e621":
                     var request = e621.random("m/m", "E", 1, post => {
-                        console.log(post);
-                        console.log('tags: ' + post[0]['tags']);
-                        console.log('File URL: ' + post[0]['file_url']);
-                        console.log('artists: ' + post[0]['artist']); 
                         msg.channel.send({
                             "files": [post[0]['file_url']]
                         });
@@ -340,6 +338,10 @@ discordClient.on('ready', ()=>{
 
                 case "ahoj": //robil Dan Valnicek
                     ahojCommand(msg);
+                    break;
+
+                case "zhni":
+                    jffModule.zhniReply(msg);
                     break;
 
                 case "joke":

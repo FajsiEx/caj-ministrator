@@ -57,6 +57,10 @@ module.exports = {
         msg.channel.send("```js ((skap)^2) / hned ```");
     },
 
+    zhniReply: (msg)=> {
+        msg.channel.send("Sa najedz ked si zhni lol");
+    },
+
     ripReply: (msg)=> {
         msg.channel.send("Rest in piss, forever miss...");
     },
