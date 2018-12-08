@@ -33,6 +33,8 @@ let events = [];
 let recievedCommandsTimeout = 30;
 let starting = true;
 let onlineMsgSent = false;
+const RESTRICTED_MODE = true;
+
 const WEEK_DAYS = ["Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota"];
 const WEEK_DAYS_SHORT = ["Ne", "Po", "Ut", "St", "Št", "Pi", "So"];
 const RED = 16720418;
@@ -117,7 +119,19 @@ discordClient.on('ready', ()=>{
 
         // Detect if the message is a bot command
         if (message.startsWith(discordBotCongig.prefix)) {
-            recievedCommandsTimeout = 30;
+            if (RESTRICTED_MODE) {
+                if (msg.author.id != DEV_USERID) {
+                    msg.channel.send({
+                        "embed": {
+                            "title": "Bot je v obmedzenom režime.",
+                            "color": RED,
+                            "description": "Príkazy môžu dávať len developeri z dôvodu aby sa nieco nedosralo..."
+                        }
+                    });
+                }
+            }
+
+
 
             if (msg.channel.id != 514873440159793167) {
                 if(usersObj[author_id].commandTimeout > 0) {
