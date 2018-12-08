@@ -43,5 +43,7 @@ module.exports = {
         `Programátor hovorí programátorovi:
         - Moja babka má dnes 64 rokov.
         - Že gratulujem k peknému okrúhlemu výročiu...`,
-    ]
+    ],
+
+    
 }
