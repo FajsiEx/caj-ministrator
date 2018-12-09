@@ -96,7 +96,7 @@ module.exports = {
 
     owoReplier: (msg, discordClient)=>{
         let message = msg.content;
-        
+
         if (message == "Owo uwU") {
             msg.channel.send({
                 "embed": {
@@ -139,7 +139,7 @@ module.exports = {
         }else{
             return false; // continue executing the code
         }
-    }
+    },
 
     technoKittyReply: (msg)=> {
         msg.channel.send({
