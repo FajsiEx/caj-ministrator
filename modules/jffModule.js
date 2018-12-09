@@ -6,6 +6,7 @@
 */
 
 const request = require("request");
+const WEEK_DAYS = require("./consts").WEEK_DAYS;
 
 const memeUrls = {
     excuse: "https://i.imgur.com/uVZQdsQ.jpg",

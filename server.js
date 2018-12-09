@@ -35,8 +35,8 @@ let starting = true;
 let onlineMsgSent = false;
 const RESTRICTED_MODE = true;
 
-const WEEK_DAYS = ["Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota"];
-const WEEK_DAYS_SHORT = ["Ne", "Po", "Ut", "St", "Št", "Pi", "So"];
+const WEEK_DAYS = require("./modules/consts").WEEK_DAYS;
+const WEEK_DAYS_SHORT = require("./modules/consts").WEEK_DAYS_SHORT;
 const RED = 16720418;
 const YELLOW = 14540032;
 const BLUE = 1616639;
