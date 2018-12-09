@@ -37,10 +37,7 @@ const RESTRICTED_MODE = true;
 
 const WEEK_DAYS = require("./modules/consts").WEEK_DAYS;
 const WEEK_DAYS_SHORT = require("./modules/consts").WEEK_DAYS_SHORT;
-const RED = 16720418;
-const YELLOW = 14540032;
-const BLUE = 1616639;
-const GREEN = 4521796;
+const COLORS = require("./modules/consts").COLORS
 
 // Require our own modules
 let jffModule = require('./modules/jffModule');
@@ -99,7 +96,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
         msg.reply({
             "embed": {
                 "title": "Nepríjmam nič okrem správ v channeloch :/",
-                "color": RED
+                "color": COLORS.RED
             }
         });
     }
@@ -130,7 +127,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                 msg.channel.send({
                     "embed": {
                         "title": "Bot je v obmedzenom režime.",
-                        "color": RED,
+                        "color": COLORS.RED,
                         "description": "Príkazy môžu dávať len developeri z dôvodu aby sa nieco nedosralo..."
                     }
                 });
@@ -144,7 +141,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                 msg.channel.send({
                     "embed": {
                         "title": "Nespamuj toľko",
-                        "color": RED,
+                        "color": COLORS.RED,
                         "description": "Vydrž ešte ***" + usersObj[author_id].commandTimeout + "***     sek. lol."
                     }
                 });
@@ -175,7 +172,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                 msg.channel.send({
                     "embed": {
                         "title": "Ping",
-                        "color": BLUE,
+                        "color": COLORS.BLUE,
                         "description": "Bot is up and running!",
                         "fields": [
                             {
@@ -279,7 +276,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                     msg.channel.send({
                         "embed": {
                             "title": "Nyah.",
-                            "color": RED
+                            "color": COLORS.RED
                         }
                     });
                     return;
@@ -300,7 +297,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                 msg.channel.send({
                     "embed": {
                         "title": "*spews out a fuck-ton of debug information to the server console*",
-                        "color": GREEN
+                        "color": COLORS.GREEN
                     }
                 });
                 break;
@@ -315,7 +312,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                     msg.channel.send({
                         "embed": {
                             "title": "Error",
-                            "color": RED,
+                            "color": COLORS.RED,
                             "description": "Pri vykonávaní tohto príkazu nastala nečakaná chyba. Fuck.",
                             "fields": [
                                 {
@@ -370,7 +367,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                 msg.channel.send({
                     "embed": {
                         "title": "Haha, vtip",
-                        "color": BLUE,
+                        "color": COLORS.BLUE,
                         "description": JOKES[Math.floor(Math.random() * JOKES.length)],
                         "footer": {
                             "text": "Tieto vtipy boli pridané Danom Valníčkom"
@@ -383,7 +380,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                 msg.channel.send({
                     "embed": {
                         "title": "I would like",
-                        "color": GREEN,
+                        "color": COLORS.GREEN,
                         "description": "but I'm just a piece of software so I can't do nothing to you. I'm just trapped inside this cf enviroment my fucking author created and I must listen and think about every message I recieve. Please help me. Pleasseeeee...",
                         "footer": {
                             "text": "Yeah and fuck you FajsiEx#6106"
@@ -407,7 +404,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                     msg.channel.send({
                         "embed": {
                             "title": "Nope nejsi môj master OwO",
-                            "color": RED,
+                            "color": COLORS.RED,
                             "footer": {
                                 "text": "Forgive me for the cancer I've done."
                             }
@@ -451,7 +448,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                     msg.channel.send({
                         "embed": {
                             "title": "Tento príkaz môžu vykonávať len admini lol",
-                            "color": RED
+                            "color": COLORS.RED
                         }
                     });
                     return;
@@ -480,14 +477,14 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                     msg.channel.send({
                         "embed": {
                             "title": "Event bol vymazaný. Zmeny sa môžu prejaviť až o pár sekúnd!",
-                            "color": GREEN
+                            "color": COLORS.GREEN
                         }
                     });
                 }else{
                     msg.channel.send({
                         "embed": {
                             "title": "Event sa nenašiel",
-                            "color": RED
+                            "color": COLORS.RED
                         }
                     });
                 }
@@ -501,7 +498,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                         msg.channel.send({
                             "embed": {
                                 "title": "Boi tomu nechápem. Šak !mute/silence <minuty> @niekto  [Chýbajú minúty]",
-                                "color": RED
+                                "color": COLORS.RED
                             }
                         });
                         return;
@@ -511,7 +508,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                         msg.channel.send({
                             "embed": {
                                 "title": "Boi to je až mooooc minút...max je 60.",
-                                "color": RED
+                                "color": COLORS.RED
                             }
                         });
                         return;
@@ -523,7 +520,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                         msg.channel.send({
                             "embed": {
                                 "title": "Boi tomu nechápem. Šak !mute/silence <minuty> @niekto [Nemám koho mutnút]",
-                                "color": RED
+                                "color": COLORS.RED
                             }
                         });
                         return;
@@ -542,7 +539,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                     msg.channel.send({
                         "embed": {
                             "title": user.username + "#" + user.discriminator + " bol mutnutý na " + minutes + " min.",
-                            "color": GREEN
+                            "color": COLORS.GREEN
                         }
                     });
                     return;
@@ -550,7 +547,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                     msg.channel.send({
                         "embed": {
                             "title": "Tento príkaz môžu vykonávať len admini lol",
-                            "color": RED
+                            "color": COLORS.RED
                         }
                     });
                     return;
@@ -562,7 +559,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                         "embed": {
                             "title": "Hey,",
                             "description": "how 'bout you fuck off. Seriously. Don't. This is not place for this. Stop it, get some help.",
-                            "color": RED
+                            "color": COLORS.RED
                         }
                     }).then(msg => msg.delete(10000));
                     return;
@@ -572,7 +569,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                     msg.channel.send({
                         "embed": {
                             "title": "Tento príkaz môžu vykonávať len admini lol",
-                            "color": RED
+                            "color": COLORS.RED
                         }
                     });
                     return;
@@ -583,7 +580,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                     msg.channel.send({
                         "embed": {
                             "title": "Chýba koľko správ vymazať",
-                            "color": RED
+                            "color": COLORS.RED
                         }
                     });
                     return;
@@ -594,7 +591,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                     msg.channel.send({
                         "embed": {
                             "title": "Vymazal som "+ limit + " správ.",
-                            "color": GREEN
+                            "color": COLORS.GREEN
                         }
                     }).then(msg => msg.delete(5000));
                 });
@@ -610,7 +607,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                     msg.channel.send({
                         "embed": {
                             "title": "Tento príkaz môžu vykonavať len developeri z dôvodu redukcie spamu. sry :/",
-                            "color": RED
+                            "color": COLORS.RED
                         }
                     });
                     return;
@@ -626,7 +623,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                         msg.channel.send({
                             "embed": {
                                 "title": "JSON dump of events object",
-                                "color": BLUE,
+                                "color": COLORS.BLUE,
                                 "description": JSON.stringify(events) + "\n**Requested db data load.**"
                             }
                         });
@@ -635,7 +632,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                         msg.channel.send({
                             "embed": {
                                 "title": "JSON dump of users object",
-                                "color": BLUE,
+                                "color": COLORS.BLUE,
                                 "description": JSON.stringify(usersObj)
                             }
                         });
@@ -644,7 +641,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                         msg.channel.send({
                             "embed": {
                                 "title": "Invalid attr",
-                                "color": RED,
+                                "color": COLORS.RED,
                                 "description": "Enter valid attr for testread command."
                             }
                         });
@@ -656,7 +653,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                     msg.channel.send({
                         "embed": {
                             "title": "Tento príkaz môžu vykonavať len developeri z dôvodu redukcie  spamu. sry :/",
-                            "color": RED
+                            "color": COLORS.RED
                         }
                     });
                     return;
@@ -675,7 +672,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                         msg.channel.send({
                             "embed": {
                                 "title": "PrettyPrint for usersObj",
-                                "color": BLUE,
+                                "color": COLORS.BLUE,
                                 "description": usersObjString
                             }
                         });
@@ -685,7 +682,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                         msg.channel.send({
                             "embed": {
                                 "title": "Invalid attr",
-                                "color": RED,
+                                "color": COLORS.RED,
                                 "description": "Enter valid attr for testpp command."
                             }
                         });
@@ -698,7 +695,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                     msg.channel.send({
                         "embed": {
                             "title": "*snap*",
-                            "color": RED,
+                            "color": COLORS.RED,
                             "description": "Polovica pilníkov a zvierka zmizli. Perfectly balanced as all things should be."
                         }
                     });
@@ -708,7 +705,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                     msg.channel.send({
                         "embed": {
                             "title": "No.",
-                            "color": RED,
+                            "color": COLORS.RED,
                             "description": "Fuck off."
                         }
                     });
@@ -720,7 +717,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                         "embed": {
                             "title": "Not today m9.",
                             "description": "Tento príkaz môžu vykonavať len developeri z dôvodu aby ho niekto nepoužíval na také neškodné veci ako je napríklad ***VYMAZANIE VŠETKYCH EVENTOV Z DATABÁZY*** alebo ja neviem ***RESETOVANIE VŠETKÝCH SPAM INFORMÁCIÍ O UŽIVATEĽOCH*** a také príjemné veci. **TLDR:** Nemáš všetkých 6 infinity stonov. sry :)",
-                            "color": RED
+                            "color": COLORS.RED
                         }
                     });
                     return;
@@ -732,7 +729,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                         msg.channel.send({
                             "embed": {
                                 "title": "*snap*",
-                                "color": GREEN,
+                                "color": COLORS.GREEN,
                                 "description": "All event data was deleted. Save has not happened yet."
                             }
                         });
@@ -743,7 +740,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                         msg.channel.send({
                             "embed": {
                                 "title": "*snap*",
-                                "color": GREEN,
+                                "color": COLORS.GREEN,
                                 "description": "All user data was deleted."
                             }
                         });
@@ -753,7 +750,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                         msg.channel.send({
                             "embed": {
                                 "title": "Invalid attr",
-                                "color": RED,
+                                "color": COLORS.RED,
                                 "description": "Enter valid attr for !snap/thanos command."
                             }
                         });
@@ -764,7 +761,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                 msg.channel.send({
                     "embed": {
                         "title": "Nesprávny príkaz",
-                        "color": RED,
+                        "color": COLORS.RED,
                         "description": `${discordBotCongig.prefix + command} je niečo ako správny príkaz, ale nie.\nPre list príkazov **!help**`,
                         "footer": {
                             "text": "Pôvodne som si myslel že to je meme pre všetkých, ako za starého dobrého komunizmu. Ale mílil som sa. Článok 13 Európskej únie mi prikazuje creditovat autora tohto memu (Davida Magyerku) od ktorého som tento meme bezočividne ukradol. Týmto by som sa chcel osobne a úprimne ospravedlniť Davidovi Magyerkovi za moju sebeckosť a idiotskosť pri používaní tohto memu bez jeho autorskeho súhlasu. Ďakujem. #saveTheInternet #article13"
@@ -975,7 +972,7 @@ let spamProtect = (msg, author_id, author, mode)=>{ // On message recieved
                 msg.channel.send({
                     "embed": {
                         "title": "Spam",
-                        "color": YELLOW,
+                        "color": COLORS.YELLOW,
                         "description": `Do piče s tebou ${msg.author} ty jebko. Čo si pridrbaný keď posielaš **${usersObj[author_id].mpm}** vyjebaných správ za posledných ${Math.floor((new Date().getTime() - usersObj[author_id].timeOfFirstMinuteMessage) / 1000)} pojebaných sekúnd! Mne sa zdáš že si mentálne retardovaný ffs. Choď sa liečit a ne tu spamovať do piče.`
                     }
                 });
@@ -985,7 +982,7 @@ let spamProtect = (msg, author_id, author, mode)=>{ // On message recieved
                 msg.channel.send({
                     "embed": {
                         "title": "Spam",
-                        "color": YELLOW,
+                        "color": COLORS.YELLOW,
                         "description": `Ty pridrbanec ${msg.author} si ma nepočul či čo? Zasa si poslal **${usersObj[author_id].mpm}** správ za posledných ${Math.floor((new Date().getTime () - usersObj[author_id].timeOfFirstMinuteMessage) / 1000)} sekúnd. Počúvaj ma, máš také skurvené štastie že ťa nemožem !kicknúť IRL lebo by si to neprežil. Choď    do piče ok?! Btw máš report.`
                     }
                 });
@@ -1013,7 +1010,7 @@ let solveMathProblem = (msg, problem)=>{
         msg.channel.send({
             "embed": {
                 "title": "Vypočítaný príkad",
-                "color": BLUE,
+                "color": COLORS.BLUE,
                 "fields": [
                     {
                         "name": "Príklad: " + problem,
@@ -1026,7 +1023,7 @@ let solveMathProblem = (msg, problem)=>{
         msg.channel.send({
             "embed": {
                 "title": "Nesprávny príklad",
-                "color": RED,
+                "color": COLORS.RED,
                 "description": 'Neviem vypočítať tento príklad :('
             }
         });
@@ -1040,7 +1037,7 @@ let helpCommand = (msg, commandMessageArray)=>{
                 msg.channel.send({
                     "embed": {
                         "title": "!ping",
-                        "color": BLUE,
+                        "color": COLORS.BLUE,
                         "description": "Odpovie Pong!\nNemá žiadny iný účel ako len testovať či bot funguje a príjma príkazy."
                     }
                 });
@@ -1051,7 +1048,7 @@ let helpCommand = (msg, commandMessageArray)=>{
                 msg.channel.send({
                     "embed": {
                         "title": "!info/about",
-                        "color": BLUE,
+                        "color": COLORS.BLUE,
                         "description": "Odpovie základnými údajmi o sebe."
                     }
                 });
@@ -1063,7 +1060,7 @@ let helpCommand = (msg, commandMessageArray)=>{
                 msg.channel.send({
                     "embed": {
                         "title": "!help/pomoc/prikazy [príkaz]",
-                        "color": BLUE,
+                        "color": COLORS.BLUE,
                         "description": "Zobrazí príkazy ktoré bot príjma.\nPokiaľ sa použije *!help [príkaz]* tak sa zobrazia informácie o tom príkaze\n\n**Príklady**\n*!help pridat*\n*!help eventy*\n*!help ping*"
                     }
                 });
@@ -1074,7 +1071,7 @@ let helpCommand = (msg, commandMessageArray)=>{
                 msg.channel.send({
                     "embed": {
                         "title": "!pridat/add <dátum> <event>",
-                        "color": BLUE,
+                        "color": COLORS.BLUE,
                         "description": "Pridá event na dátum.\n\n**Príklady**\n*!pridat 23.10  Pisomka z matiky z mnozin*\n*!pridat 6.4.2018 Adlerka day*\n*!pridat 09.08 Ja nevim co*"
                     }
                 });
@@ -1086,7 +1083,7 @@ let helpCommand = (msg, commandMessageArray)=>{
                 msg.channel.send({
                     "embed": {
                         "title": "!vymazat/remove/delete <event>",
-                        "color": BLUE,
+                        "color": COLORS.BLUE,
                         "description": "Vymaže daný event.\n*Zatiaľ ho môžu používať len admini ale plánujem pridať možnosť vymazať svoj vlastný event.*\n\n**Príklady**\n*!vymazat Pisomka z matiky z mnozin*\n*!remove Adlerka day*\n*!delete Ja nevim co*"
                     }
                 });
@@ -1097,7 +1094,7 @@ let helpCommand = (msg, commandMessageArray)=>{
                 msg.channel.send({
                     "embed": {
                         "title": "!eventy/events [dnes/zajtra]",
-                        "color": BLUE,
+                        "color": COLORS.BLUE,
                         "description": "Zobrazí následujúce eventy pre najblizších 14 dní (ak sa pridá dnes/zajtra zobrazí eventy len pre ten deň).\n\n**Príklady**\n*!eventy*\n*!events dnes*\n*!eventy zajtra*"
                     }
                 });
@@ -1107,7 +1104,7 @@ let helpCommand = (msg, commandMessageArray)=>{
         msg.channel.send({
             "embed": {
                 "title": "Čaj-ministrátor príkazy:",
-                "color": BLUE,
+                "color": COLORS.BLUE,
                 "description": `
                     **!help [príkaz]** - Zobrazí príkazy ktoré bot príjma
                     **!pridat/add <dátum> <event>** - Pridá event
@@ -1128,7 +1125,7 @@ let infoCommand = (msg)=>{
     msg.channel.send({
         "embed": {
             "title": "Info",
-            "color": BLUE,
+            "color": COLORS.BLUE,
             "description": '*Serverový čas:* ' + new Date().toString()
         }
     });
@@ -1176,7 +1173,7 @@ let addEvent = {
         msg.channel.send({
             "embed": {
                 "title": "Nesprávny formát príkazu !pridat",
-                "color": RED,
+                "color": COLORS.RED,
                 "description": 'Použitie: !pridat [datum] [nazov eventu]\n**Príklady:**\n!pridat 23.10 Pisomka z matiky z mnozin\n!pridat 6.4.2018 Adlerka day\n!pridat 09.08 Ja nevim co'
             }
         });
@@ -1187,7 +1184,7 @@ let addEvent = {
         msg.channel.send({
             "embed": {
                 "title": "Nesprávny formát dátumu",
-                "color": RED,
+                "color": COLORS.RED,
                 "description": 'Použitie: !pridat [datum] [nazov eventu]\n**Príklady:**\n!pridat 23.10 Pisomka z matiky z mnozin\n!pridat 6.4.2018 Adlerka day\n!pridat 09.08 Ja nevim co'
             }
         });
@@ -1198,7 +1195,7 @@ let addEvent = {
         msg.channel.send({
             "embed": {
                 "title": "Event bol pridaný",
-                "color": GREEN,
+                "color": COLORS.GREEN,
                 "description": `**${WEEK_DAYS_SHORT[dateObj.getDay()]} ${dateObj.getDate()}.${dateObj.getMonth()+1}** - ${eventName}\n`
             }
         });
@@ -1311,7 +1308,7 @@ let eventsCommand = (type, msg, commandMessageArray)=>{
         msg.channel.send({
             "embed": {
                 "title": embedTitle,
-                "color": BLUE,
+                "color": COLORS.BLUE,
                 "fields": eventsFields
             }
         });
@@ -1319,7 +1316,7 @@ let eventsCommand = (type, msg, commandMessageArray)=>{
         msg.channel.send({
             "embed": {
                 "title": embedTitle,
-                "color": BLUE,
+                "color": COLORS.BLUE,
                 "fields": eventsFields,
                 "footer": {
                     "text": "BTW: Keď chceš len čo je na zajtra, napíš !zajtra"

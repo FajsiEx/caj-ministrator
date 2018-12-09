@@ -8,6 +8,13 @@ module.exports = {
     WEEK_DAYS: ["Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota"],
     WEEK_DAYS_SHORT: ["Ne", "Po", "Ut", "St", "Št", "Pi", "So"],
 
+    COLORS: {
+        RED: 16720418,
+        YELLOW: 14540032,
+        BLUE: 1616639,
+        GREEN: 4521796
+    },
+
     TIMETABLE: [
         ['Víkend'],
         ['Stn', 'Mat', 'Aj / Tsv', 'Zeq', 'ProP / Aj', 'Fyz', 'Sjl'],
