@@ -7,6 +7,7 @@
 
 const request = require("request");
 const WEEK_DAYS = require("./consts").WEEK_DAYS;
+const COLORS = require("./consts").COLORS;
 
 const memeUrls = {
     excuse: "https://i.imgur.com/uVZQdsQ.jpg",
@@ -78,7 +79,7 @@ module.exports = {
                     msg.channel.send({
                         "embed": {
                             "title": "Error",
-                            "color": RED,
+                            "color": COLORS.RED,
                             "description": "Vyskytla sa chyba pri requestovaní random postu z redditu."
                         }
                     });
@@ -87,7 +88,7 @@ module.exports = {
                 msg.channel.send({
                     "embed": {
                         "title": "Error",
-                        "color": RED,
+                        "color": COLORS.RED,
                         "description": "Vyskytla sa chyba pri requestovaní random postu z redditu."
                     }
                 });
@@ -102,7 +103,7 @@ module.exports = {
             msg.channel.send({
                 "embed": {
                     "title": "Client object destroyed.",
-                    "color": RED,
+                    "color": COLORS.RED,
                     "description": "Thanks for using me. Goodbye for now ;)",
                 }
             });
@@ -146,7 +147,7 @@ module.exports = {
         msg.reply({
             "embed": {
                 "title": "Si myslíš, že si múdry, čo?",
-                "color": RED,
+                "color": COLORS.RED,
                 "description": 'Hahahahahahahahahahahahaha...strašne vtipné normálne sa smejem XD'
             }
         });
@@ -164,7 +165,7 @@ module.exports = {
         msg.channel.send({
             "embed": {
                 "title": "Techno kitty by *S3RL*",
-                "color": BLUE,
+                "color": COLORS.BLUE,
                 "description": `
 Up in the sky
 Flyiiing way up high
