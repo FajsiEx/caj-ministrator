@@ -194,7 +194,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                 break;
 
             case "spravnyprikaz":
-                spravnyPrikazCommand(msg);
+                jffModule.spravnyPrikazCommand(msg);
                 break;
 
             case "excuse":
@@ -399,7 +399,7 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
                 break;
 
             case "alecau":
-                aleCauCommand(msg);
+                jffModule.aleCauCommand(msg);
                 break;
 
             case "send":
@@ -1133,25 +1133,6 @@ let infoCommand = (msg)=>{
         }
     });
 }
-
-let spravnyPrikazCommand = (msg)=>{
-    msg.channel.send({
-        "embed": {
-            "title": "Si myslíš, že si múdry, čo?",
-            "color": RED,
-            "description": 'Hahahahahahahahahahahahaha...strašne vtipné normálne sa smejem XD'
-        }
-    });
-}
-
-let aleCauCommand = (msg)=>{
-    if (new Date().getDay() == 3) {
-        msg.reply(`AAALLEEE ČAAAAAUUU!!! Dneska je **Streda zaMEMOVAŤ TREBA**`);
-    }else{
-        msg.reply(`AAALLEEE ČAAAAAUUU!!! Dneska je **${WEEK_DAYS[new Date().getDay()]}**`);
-    }
-}
-
 
 let addEvent = {
     add: (msg, commandMessageArray)=>{
