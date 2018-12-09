@@ -94,6 +94,53 @@ module.exports = {
         });
     },
 
+    owoReplier: (msg, discordClient)=>{
+        let message = msg.content;
+        
+        if (message == "Owo uwU") {
+            msg.channel.send({
+                "embed": {
+                    "title": "Client object destroyed.",
+                    "color": RED,
+                    "description": "Thanks for using me. Goodbye for now ;)",
+                }
+            });
+            discordClient.destroy();
+            return true;
+        }
+    
+        if (message.toLocaleLowerCase() == "owo" || message.toLocaleLowerCase() == "!owo") {
+            msg.channel.send("UwU");
+            return true; // dont continue executing the code
+        }else if (message.toLocaleLowerCase() == "uwu" || message.toLocaleLowerCase() == "!uwu") {
+            msg.channel.send("^w^");
+            return true; // dont continue executing the code
+        }else if (message.toLocaleLowerCase() == "^w^" || message.toLocaleLowerCase() == "!^w^") {
+            msg.channel.send("O.o");
+            return true; // dont continue executing the code
+        }else if (message.toLocaleLowerCase() == "o.o" || message.toLocaleLowerCase() == "!o.o") {
+            msg.channel.send("=_=");
+            return true; // dont continue executing the code
+        }else if (message.toLocaleLowerCase() == "=_=" || message.toLocaleLowerCase() == "!=_=") {
+            msg.channel.send("EwE");
+            return true; // dont continue executing the code
+        }else if (message.toLocaleLowerCase() == "ewe" || message.toLocaleLowerCase() == "!ewe") {
+            msg.channel.send("XwX");
+            return true; // dont continue executing the code
+        }else if (message.toLocaleLowerCase() == "xwx" || message.toLocaleLowerCase() == "!xwx") {
+            let author_id = msg.author.id;
+            if (author_id == 305705560966430721) { // To protect the innocent.
+                msg.channel.send("E621");
+            }else{
+                msg.reply("***YOU DON'T WANT TO GO DEEPER DOWN THIS RABBIT HOLE.*** Trust me, I'm protecting you. Please, listen to me. *Please.*");
+            }
+            
+            return true; // dont continue executing the code
+        }else{
+            return false; // continue executing the code
+        }
+    }
+
     technoKittyReply: (msg)=> {
         msg.channel.send({
             "embed": {
