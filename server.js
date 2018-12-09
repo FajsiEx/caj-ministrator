@@ -778,10 +778,6 @@ discordClient.on('message', (msg)=> { // When there is any message the bot can s
     }
 });
 
-console.log("[BOT] Setting activity...");
-discordClient.user.setStatus('dnd');
-discordClient.user.setActivity('nothing because I\'m restarting...', { type: 'WATCHING' });
-
 setTimeout(()=>{
     starting = false;
     discordClient.user.setStatus('online');
