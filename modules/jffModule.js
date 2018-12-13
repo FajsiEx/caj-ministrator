@@ -62,7 +62,7 @@ module.exports = {
     },
 
     skapReply: (msg)=> {
-        msg.channel.send("```js ((skap)^2) / hned ```");
+        msg.channel.send("``` ((skap)^2) / hned ```");
     },
 
     zhniReply: (msg)=> {
