@@ -94,10 +94,15 @@ setInterval(()=>{ // Does this every minute
         }
 
         currentDate = new Date();
+        currentDateTS = new Date().getTime();
 
-        let countDownDate = new Date(currentDate.setHours(8,0,0,0)).setDate(currentDate.getDate()+1);
+        let countDownDateTS = new Date(currentDate.setHours(7,0,0,0)).setDate(currentDate.getDate()+1);
 
-        statusText += " School epoch timestamp: " + countDownDate;
+        let deltaTS = countDownDateTS - currentDateTS;
+
+        let deltaDate = new Date(deltaTS);
+
+        statusText += ` School in ${deltaDate.getHours()}h ${deltaDate.getMinutes()}m`;
 
         discordClient.user.setActivity(statusText, { type: statusType });
     }
