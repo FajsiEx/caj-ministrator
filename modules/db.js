@@ -47,8 +47,14 @@ module.exports = {
         });
     },
 
-    save: (events, usersObj)=>{
+    save: (data)=>{
         console.log("[SAVE] Saving events...");
+
+        if (!data || !data.events || !data.usersObj) {
+            console.warn("[SAVE] Data is false. Aborting save.");
+            return false;
+        }
+        
         MongoClient.connect(DATABASE_URI, (err, client) => {
             if (err) return console.error(err)
             let database = client.db('caj-ministrator');
@@ -56,12 +62,12 @@ module.exports = {
             // Replace the object with your field objectid...because it won't work otherwise...
             database.collection("data").update({_id: ObjectId("5c027f0bd56bdd25686c264f")}, {
                 $set: {
-                    "events": events
+                    "events": data.events
                 }
             });
             database.collection("data").update({_id: ObjectId("5c027cb9d56bdd25686c264e")}, {
                 $set: {
-                    "users": usersObj
+                    "users": data.usersObj
                 }
             });
             console.log("[SAVE] Events saved.");

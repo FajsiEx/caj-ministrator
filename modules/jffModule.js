@@ -8,6 +8,7 @@
 const request = require("request");
 const WEEK_DAYS = require("./consts").WEEK_DAYS;
 const COLORS = require("./consts").COLORS;
+const globalVariables = require("./globalVariables");
 
 const memeUrls = {
     excuse: "https://i.imgur.com/uVZQdsQ.jpg",
@@ -38,6 +39,10 @@ module.exports = {
         }
     },
 
+    ahojCommand: (msg)=> {
+        msg.reply("Ahoj");
+    },
+
     sendMeme: (msg, memeName)=> {
         if (memeName == "lookatthisdude" && msg.author.id == 305705560966430721) {
             memeName+="2";
@@ -62,6 +67,20 @@ module.exports = {
 
     ripReply: (msg)=> {
         msg.channel.send("Rest in piss, forever miss...");
+    },
+
+    goodNightWisher: (msg, author_id)=>{
+        let message = msg.content;
+        let usersObj = globalVariables.get("usersObj");
+
+        if (((message.indexOf('idem spat') > -1) || (message.indexOf('idem spať') > -1)) && usersObj[author_id].alreadyWishedGN < 1) {
+            let sleeperEmoji = discordClient.emojis.find(emoji => emoji.name == "Sleeper")
+            msg.reply(`Dobrú noc! ${sleeperEmoji} ${sleeperEmoji} ${sleeperEmoji} ${sleeperEmoji} ${sleeperEmoji}`);
+            usersObj[author_id].alreadyWishedGN = 15
+            return;
+        }
+
+        globalVariables.set("usersObj", usersObj);
     },
 
     sendRedditMeme: (msg)=> {

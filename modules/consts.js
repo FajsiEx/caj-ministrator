@@ -8,6 +8,17 @@ module.exports = {
     WEEK_DAYS: ["Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota"],
     WEEK_DAYS_SHORT: ["Ne", "Po", "Ut", "St", "Št", "Pi", "So"],
 
+    RESTRICTED_MODE: false,
+
+    TEST_CHANNEL_ID: 514873440159793167,
+
+    DEV_USERID: 342227744513327107,
+
+    discordBotConfig: {
+        token: process.env.DISCORD_BOT_TOKEN,
+        prefix: "!" // Prefix for the bot commands
+    },
+
     COLORS: {
         RED: 16720418,
         YELLOW: 14540032,
