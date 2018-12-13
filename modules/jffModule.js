@@ -12,7 +12,7 @@ const globalVariables = require("./globalVariables");
 
 const memeUrls = {
     excuse: "https://i.imgur.com/uVZQdsQ.jpg",
-    tmyk: "https://i.kym-cdn.com/photos/images/newsfeed/001/394/620/475.png",
+    tmyk: "https://cdn.theatlantic.com/assets/media/img/mt/2014/09/The_More_You_Know/lead_720_405.png?mod=1533691703",
     commit: "https://i.kym-cdn.com/photos/images/newsfeed/001/394/620/475.png",
     oof: "https://i.imgur.com/p7yQqZ8.png",
     pika: "https://i.imgur.com/sohWhy9.jpg",
