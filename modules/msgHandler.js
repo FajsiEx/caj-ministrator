@@ -218,6 +218,10 @@ module.exports = (msg, discordClient)=>{
                 jffModule.sendMeme(msg, "kappa");
                 break;
 
+            case "speech":
+                jffModule.sendMeme(msg, "speech");
+                break;
+
             case "lookatthisdude":
             case "look":
                 jffModule.sendMeme(msg, "lookatthisdude");

@@ -25,6 +25,7 @@ const memeUrls = {
     wwtf: "https://media1.tenor.com/images/670e30e70f9e0edf6462520d7a24fd1f/tenor.gif?itemid=4633333",
     ooth: "https://media1.tenor.com/images/4513ea9275fcf686f383c712784f3408/tenor.gif?itemid=5288272",
     kappa: "https://i.kym-cdn.com/photos/images/newsfeed/000/925/494/218.png_large"
+    speech: "https://i.imgur.com/0Z7cJQR.jpg"
 }
 
 module.exports = {
