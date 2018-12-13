@@ -96,7 +96,11 @@ setInterval(()=>{ // Does this every minute
         currentDate = new Date();
         currentDateTS = new Date().getTime();
 
-        let countDownDateTS = new Date(currentDate.setHours(7,0,0,0)).setDate(currentDate.getDate()+1);
+        let addDay = 0;
+        if (currentDate.getHours() > 14) {
+            addDay = 1;
+        }
+        let countDownDateTS = new Date(currentDate.setHours(7,0,0,0)).setDate(currentDate.getDate()+addDay);
 
         let deltaTS = countDownDateTS - currentDateTS;
 
