@@ -83,17 +83,23 @@ setInterval(()=>{ // Does this every minute
 
         if (day==1||day==2||day==3||day==4||day==5) {isWorkDay = true;}
 
+        let statusText = "your messages. ";
+        let statusType = "WATCHING";
+
         if ( (hours <= 3 && isWorkDay) || (hours >= 22 && (day==0||day==1||day==2||day==3||day==4)) ) { // in our time (+1GMT) 23h-4h
-            discordClient.user.setActivity('you sleep. BTW Čo robíš hore zajtra je škola lol.', { type: 'WATCHING' });
+            statusText = "your sleep. ";
         }else if ((hours >= 7 && hours <= 13) && isWorkDay) { // in our time (+1GMT) 8h-14h
-            discordClient.user.setActivity('the teachers.', { type: 'LISTENING' });
-        }else{
-            if (Math.random() < 0.05) { // Small chance (1/20 minutes)
-                discordClient.user.setActivity('your every move', { type: 'WATCHING' });
-            }else{
-                discordClient.user.setActivity('your every message', { type: 'WATCHING' });
-            }
+            statusText = "the teachers. ";
+            statusType = "LISTENING";
         }
+
+        currentDate = new Date();
+
+        let countDownDate = new Date(currentDate.setHours(8,0,0,0)).setDate(currentDate.getDate()+1);
+
+        statusText += " School epoch timestamp: " + countDownDate;
+
+        discordClient.user.setActivity(statusText, { type: statusType });
     }
     console.log("[INTERVAL_MINUTE] Complete.");
 }, 60000);
