@@ -21,7 +21,9 @@ const memeUrls = {
     yeet: "https://ih0.redbubble.net/image.562324831.7631/flat,550x550,075,f.u3.jpg",
     lookatthisdude: "https://i.imgur.com/ZHmHih5.png",
     lookatthisdude2: "https://derpicdn.net/img/2018/4/2/1697488/large.png",
-    holdup: "https://i.redd.it/op68ltgjypm11.jpg"
+    holdup: "https://i.redd.it/op68ltgjypm11.jpg",
+    wwtf: "https://media1.tenor.com/images/670e30e70f9e0edf6462520d7a24fd1f/tenor.gif?itemid=4633333",
+    ooth: "https://media1.tenor.com/images/4513ea9275fcf686f383c712784f3408/tenor.gif?itemid=5288272"
 }
 
 module.exports = {
