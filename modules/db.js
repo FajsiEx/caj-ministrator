@@ -50,7 +50,7 @@ module.exports = {
     save: (data)=>{
         console.log("[SAVE] Saving events...");
 
-        if (!data || !data.events || !data.usersObj) {
+        if ((Object.keys(usersObj).length === 0 && usersObj.constructor === Object) || (events.length < 1) || (!data)) {
             console.warn("[SAVE] Data is false. Aborting save.");
             return false;
         }
