@@ -1,6 +1,7 @@
 let global = {
     usersObj: {},
-    events: []
+    events: [],
+    logData: []
 }
 
 dbModule = require("./db");
