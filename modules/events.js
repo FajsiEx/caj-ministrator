@@ -90,7 +90,10 @@ module.exports = {
     eventsCommand: (type, msg, commandMessageArray)=>{
         let events = globalVariables.get("events");
         events.sort(smallFunctions.compare);
-        let oldEventContentToDelete = false;
+
+        events = events.filter((e)=>{
+            return e.time < new Date().getTime();
+        });
     
         let todayDateString = `${new Date().getDate()}.${new Date().getMonth()+1}.${new Date().getFullYear()}`;
         
@@ -139,7 +142,10 @@ module.exports = {
         }
     
         events.forEach((e)=>{
-            if (e.time > new Date().getTime() + 1209600000) { // If the event is older than 14 days
+            if (e.time < new Date().getTime()) { // If the event is old
+                return;
+            }
+            if (e.time > new Date().getTime() + 1209600000) { // If the event is in the futute than 14 days
                 return;
             }
     
@@ -206,5 +212,7 @@ module.exports = {
                 }
             });
         }
+
+        globalVariables.set("events", events);
     }
 }
