@@ -77,7 +77,7 @@ module.exports = {
                         **!vymazat/remove/delete** - Odstráni event
                         **!eventy/events** - Vypíše nasledujúce eventy
                         **!dnes/zajtra** - To isté ako !eventy dnes/zajtra
-                        **!<príklad>** - Vpočíta príklad
+                        **!<príklad>** - Vypočíta príklad
     
                         *Pre viac informácií o príkaze napíšte napr.: !help eventy*
                         *Ak chcete niečo pridať/zmeniť napíšte do bot-chat*
