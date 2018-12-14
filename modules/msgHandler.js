@@ -432,7 +432,7 @@ module.exports = (msg, discordClient)=>{
                 break;
 
             case "vymazat":
-                if (!smallFunctions.checkAdmin(msg)) {
+                /*if (!smallFunctions.checkAdmin(msg)) {
                     allowed = false;
                     msg.channel.send({
                         "embed": {
@@ -442,41 +442,36 @@ module.exports = (msg, discordClient)=>{
                     });
                     return;
                 }
-                
-                let i=0;
+                */
+
                 let eventContentToDelete = msg.content.slice(9); // gets rid of the !vymazat
-                let eventIndexToDelete = false;
 
-                console.log(`[DEBUG] ECTD(${eventContentToDelete})`);
-
-                events.forEach((e)=>{
-                    if (eventIndexToDelete) {
-                        return; // If the index of the wannabe deleted event is found we just skip past the other events
-                    }
-                    console.log(`[DEBUG] EC(${e.content}) i(${i}) EQ(${e.content == eventContentToDelete})`);
-                    if (e.content == eventContentToDelete) {
-                        eventIndexToDelete = i;
-                    }
-                    i++;
+                let eventsFinal = events.filter((e)=>{
+                    return e.content != eventContentToDelete;
                 });
 
-                console.log(`[DEBUG] EITD${eventIndexToDelete})`);
-                if (!(eventIndexToDelete === false)) { // If the index was not not found
-                    events.splice(eventIndexToDelete,1);
-                    msg.channel.send({
-                        "embed": {
-                            "title": "Event bol vymazaný. Zmeny sa môžu prejaviť až o pár sekúnd!",
-                            "color": COLORS.GREEN
-                        }
-                    });
-                }else{
-                    msg.channel.send({
-                        "embed": {
-                            "title": "Event sa nenašiel",
-                            "color": COLORS.RED
-                        }
-                    });
-                }
+                msg.channel.send({
+                    "embed": {
+                        "title": "Event JSON dump of what is about to be written:\n"+JSON.stringify(eventsFinal),
+                        "color": COLORS.GREEN
+                    }
+                });
+
+                // if (eventIndexToDelete === false) { // If the index was not not found
+                //     msg.channel.send({
+                //         "embed": {
+                //             "title": "Event bol vymazaný. Zmeny sa môžu prejaviť až o pár sekúnd!",
+                //             "color": COLORS.GREEN
+                //         }
+                //     });
+                // }else{
+                //     msg.channel.send({
+                //         "embed": {
+                //             "title": "Event sa nenašiel",
+                //             "color": COLORS.RED
+                //         }
+                //     });
+                // }
                 break;
 
             case "mute":
