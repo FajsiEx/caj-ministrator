@@ -452,7 +452,8 @@ module.exports = (msg, discordClient)=>{
 
                 msg.channel.send({
                     "embed": {
-                        "title": "Event JSON dump of what is about to be written:\n"+JSON.stringify(eventsFinal),
+                        "title": "Event JSON dump of what is about to be written:",
+                        "description": JSON.stringify(eventsFinal),
                         "color": COLORS.GREEN
                     }
                 });
