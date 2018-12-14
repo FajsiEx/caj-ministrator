@@ -449,11 +449,21 @@ module.exports = (msg, discordClient)=>{
                 let eventsFinal = events.filter((e)=>{
                     return e.content != eventContentToDelete;
                 });
+                let eventsDelete = events.filter((e)=>{
+                    return e.content == eventContentToDelete;
+                });
 
                 msg.channel.send({
                     "embed": {
                         "title": "Event JSON dump of what is about to be written:",
                         "description": JSON.stringify(eventsFinal),
+                        "color": COLORS.GREEN
+                    }
+                });
+                msg.channel.send({
+                    "embed": {
+                        "title": "Event JSON dump of what is about to be delted:",
+                        "description": JSON.stringify(eventsDelete),
                         "color": COLORS.GREEN
                     }
                 });
