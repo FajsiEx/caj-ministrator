@@ -446,43 +446,31 @@ module.exports = (msg, discordClient)=>{
 
                 let eventContentToDelete = msg.content.slice(9); // gets rid of the !vymazat
 
-                let eventsFinal = events.filter((e)=>{
-                    return e.content != eventContentToDelete;
-                });
                 let eventsDelete = events.filter((e)=>{
                     return e.content == eventContentToDelete;
                 });
 
-                msg.channel.send({
-                    "embed": {
-                        "title": "Event JSON dump of what is about to be written:",
-                        "description": JSON.stringify(eventsFinal),
-                        "color": COLORS.GREEN
-                    }
-                });
-                msg.channel.send({
-                    "embed": {
-                        "title": "Event JSON dump of what is about to be delted:",
-                        "description": JSON.stringify(eventsDelete),
-                        "color": COLORS.GREEN
-                    }
-                });
+                if (eventsDelete.length > 0) { // If the event was found
+                    let eventsFinal = events.filter((e)=>{
+                        return e.content != eventContentToDelete;
+                    });
 
-                // if (eventIndexToDelete === false) { // If the index was not not found
-                //     msg.channel.send({
-                //         "embed": {
-                //             "title": "Event bol vymazaný. Zmeny sa môžu prejaviť až o pár sekúnd!",
-                //             "color": COLORS.GREEN
-                //         }
-                //     });
-                // }else{
-                //     msg.channel.send({
-                //         "embed": {
-                //             "title": "Event sa nenašiel",
-                //             "color": COLORS.RED
-                //         }
-                //     });
-                // }
+                    msg.channel.send({
+                        "embed": {
+                            "title": `Event **${eventContentToDelete}** bol vymazaný.`,
+                            "color": COLORS.GREEN
+                        }
+                    });
+
+                    globalVariables.set("events", eventsFinal);
+                }else{
+                    msg.channel.send({
+                        "embed": {
+                            "title": "Event sa nenašiel",
+                            "color": COLORS.RED
+                        }
+                    });
+                }
                 break;
 
             case "mute":
