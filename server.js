@@ -21,7 +21,7 @@ const COLORS = require("./modules/consts").COLORS
 require('./modules/globalVariables').init();
 
 const msgHandler = require('./modules/msgHandler');
-const globalVariables = require("./globalVariables");
+const globalVariables = require("./modules/globalVariables");
 
 discordClient.on('error', console.error);
 
