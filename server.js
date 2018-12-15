@@ -128,6 +128,11 @@ app.get("/logs", (req, res)=>{
     res.send("<h1>Logs</h1>" + logString);
 })
 
+var port = process.env.PORT || 3000
+app.listen(port, function() {
+    console.log("[WEB_SERVER] Listening. Port:" + port);
+});
+
 // ED
 discordClient.login(discordBotCongig.token);
 console.log("[BOT] Started.");
