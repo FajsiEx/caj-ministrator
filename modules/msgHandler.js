@@ -451,7 +451,7 @@ module.exports = (msg, discordClient)=>{
                 });
 
                 if (eventsDelete.length > 0) { // If the event was found
-                    let eventsFinal = events.filter((e)=>{
+                    events = events.filter((e)=>{
                         return e.content != eventContentToDelete;
                     });
 
@@ -461,8 +461,6 @@ module.exports = (msg, discordClient)=>{
                             "color": COLORS.GREEN
                         }
                     });
-
-                    globalVariables.set("events", eventsFinal);
                 }else{
                     msg.channel.send({
                         "embed": {
