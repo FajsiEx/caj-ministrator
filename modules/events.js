@@ -92,6 +92,8 @@ module.exports = {
         let events = globalVariables.get("events");
         events.sort(smallFunctions.compare);
 
+        logger.log("debug", "Event get @ E:" + JSON.stringify(events));
+
         // events = events.filter((e)=>{
         //     return e.time < new Date().getTime();
         // });
