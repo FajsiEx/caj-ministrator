@@ -293,9 +293,27 @@ module.exports = (msg, discordClient)=>{
                 break;
 
             case "roll":
-                let max = parseInt(commandMessageArray[1]);
+                let min,max;
+                if (commandMessageArray[2]) {
+                    min = parseInt(commandMessageArray[1]);
+                    max = parseInt(commandMessageArray[2]);
+                }else{
+                    max = parseInt(commandMessageArray[1]);
+                }
+                
+
                 if(!max) {
                     max = 100;
+                }
+                if(min > max) {
+                    msg.channel.send({
+                        "embed": {
+                            "title": "Nesprávne použitie príkazu",
+                            "color": COLORS.RED,
+                            "description": "!roll\n!roll [max]\n!roll [min] [max]",
+                        }
+                    });
+                    return;
                 }
 
                 if (max == 621) {
@@ -325,7 +343,12 @@ module.exports = (msg, discordClient)=>{
                     return;
                 }
 
-                let rolled = Math.floor(Math.random() * (max + 1));
+                let rolled;
+                if (min) {
+                    rolled = Math.floor((min) + Math.random() * (max - min + 1));
+                }else{
+                    rolled = Math.floor(Math.random() * (max + 1));
+                }
 
                 let quest = msg.content.slice(6);
 
