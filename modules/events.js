@@ -6,6 +6,7 @@
 
 const globalVariables = require("./globalVariables");
 const smallFunctions = require("./smallFunctions");
+const logger = require("./logger");
 const TIMETABLE = require("./consts").TIMETABLE;
 const WEEK_DAYS = require("./consts").WEEK_DAYS;
 const WEEK_DAYS_SHORT = require("./consts").WEEK_DAYS_SHORT;
@@ -142,6 +143,8 @@ module.exports = {
         }
     
         events.forEach((e)=>{
+            logger.log("debug", "Event loop @ ET:" + e.time + ", EC:" + e.content);
+
             if (e.time < new Date().getTime()) { // If the event is old
                 return;
             }

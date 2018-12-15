@@ -18,6 +18,7 @@ let compareReverse = (a,b)=>{
 
 module.exports = {
     log: (type, data)=>{
+        console.log(`[LOGGER] /${type}/ : ${data}`)
         logData.push({
             time: new Date().getTime(),
             type: type,
