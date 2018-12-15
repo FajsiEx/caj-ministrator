@@ -72,7 +72,8 @@ module.exports = {
 
     serveTea: (msg)=> {
         let teas = globalVariables.get("teas");
-        globalVariables.set("teas", teas++); // increments and returns inc value. Win win for me
+        teas++
+        globalVariables.set("teas", teas);
         msg.channel.send("Tu je tvoj čaj. Spotrebovalo sa už **" + teas + "** čajov");
     },
 
