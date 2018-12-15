@@ -366,6 +366,17 @@ module.exports = (msg, discordClient)=>{
                 break;
 
             case "kill":
+                if (commandMessageArray[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase().indexOf("me") > -1) {
+                    msg.channel.send({
+                        "embed": {
+                            "title": "Hey,",
+                            "description": "I won't do that. Suffer some more you fuck.",
+                            "color": COLORS.BLUE
+                        }
+                    });
+                    return;
+                }
+
                 msg.channel.send({
                     "embed": {
                         "title": "I would like",
