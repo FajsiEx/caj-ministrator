@@ -91,9 +91,9 @@ module.exports = {
         let events = globalVariables.get("events");
         events.sort(smallFunctions.compare);
 
-        events = events.filter((e)=>{
-            return e.time < new Date().getTime();
-        });
+        // events = events.filter((e)=>{
+        //     return e.time < new Date().getTime();
+        // });
 
         globalVariables.set("events", events);
     
