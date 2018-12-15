@@ -89,7 +89,7 @@ module.exports = {
     },
     
     eventsCommand: (type, msg, commandMessageArray)=>{
-        let events = globalVariables.get("events");
+        let events = globalVariables.get("events")[0];
         events.sort(smallFunctions.compare);
 
         logger.log("debug", "Event get @ E:" + JSON.stringify(events));
