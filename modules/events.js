@@ -94,8 +94,6 @@ module.exports = {
         // events = events.filter((e)=>{
         //     return e.time < new Date().getTime();
         // });
-
-        globalVariables.set("events", events);
     
         let todayDateString = `${new Date().getDate()}.${new Date().getMonth()+1}.${new Date().getFullYear()}`;
         
