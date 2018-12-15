@@ -121,7 +121,7 @@ app.get("/logs", (req, res)=>{
     let logData = globalVariables.get("logData");
     let logString = "";
 
-    logData.array.forEach(e => {
+    logData.forEach(e => {
         logString+=`[${new Date(e.time).toString()}] <b>${e.type}</b> - ${e.data} <br>`
     });
 
