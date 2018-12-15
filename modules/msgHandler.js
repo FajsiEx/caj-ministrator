@@ -222,6 +222,11 @@ module.exports = (msg, discordClient)=>{
                 jffModule.sendMeme(msg, "speech");
                 break;
 
+            case "tea":
+            case "caj":
+                jffModule.serveTea(msg);
+                break;
+
             case "lookatthisdude":
             case "look":
                 jffModule.sendMeme(msg, "lookatthisdude");

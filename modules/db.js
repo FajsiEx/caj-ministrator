@@ -35,12 +35,19 @@ module.exports = {
                     events = eventsDoc.events; 
                     console.log(`[DEBUG] ARR(${JSON.stringify(events)})`);
                     console.log("[LOAD] Events loaded.");
+
+                    let teaDoc = docs[2];
+                    console.log(`[DEBUG] DOC(${JSON.stringify(teaDoc)})`);
+                    teas = teaDoc.teas; 
+                    console.log(`[DEBUG] ARR(${JSON.stringify(events)})`);
+                    console.log("[LOAD] Teas loaded.");
     
                     client.close();
     
                     resolve({
                         usersObj: usersObj,
                         events: events,
+                        teas: teas,
                     });
                 });
             });
@@ -70,7 +77,12 @@ module.exports = {
                     "users": data.usersObj
                 }
             });
-            console.log("[SAVE] Events saved.");
+            database.collection("data").update({_id: ObjectId("5c15742068c0cc26c0e1ea6b")}, {
+                $set: {
+                    "teas": data.teas
+                }
+            });
+            console.log("[SAVE] Everything saved.");
 
             client.close(); // Dont dos yourself kids
         });

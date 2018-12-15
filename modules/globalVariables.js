@@ -1,7 +1,8 @@
 let global = {
     usersObj: {},
     events: [],
-    logData: []
+    logData: [],
+    teas: 0
 }
 
 dbModule = require("./db");
@@ -21,6 +22,7 @@ module.exports = {
         dbModule.load().then((data)=>{
             global.usersObj = data.usersObj;
             global.events = data.events;
+            global.teas = data.teas;
         });
         setInterval(()=>{ // Does this every 10 seconds
             dbModule.save(global);

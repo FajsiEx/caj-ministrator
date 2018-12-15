@@ -70,6 +70,12 @@ module.exports = {
         msg.channel.send("Sa najedz ked si zhni lol");
     },
 
+    serveTea: (msg)=> {
+        let teas = globalVariables.get("teas");
+        globalVariables.set("teas", teas++); // increments and returns inc value. Win win for me
+        msg.channel.send("Tu je tvoj čaj. Spotrebovalo sa už **" + teas + "** čajov");
+    },
+
     ripReply: (msg)=> {
         msg.channel.send("Rest in piss, forever miss...");
     },
