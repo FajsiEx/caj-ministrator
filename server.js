@@ -21,6 +21,7 @@ const COLORS = require("./modules/consts").COLORS
 require('./modules/globalVariables').init();
 
 const msgHandler = require('./modules/msgHandler');
+const globalVariables = require("./globalVariables");
 
 discordClient.on('error', console.error);
 
@@ -112,6 +113,20 @@ setInterval(()=>{ // Does this every minute
     }
     console.log("[INTERVAL_MINUTE] Complete.");
 }, 60000);
+
+var express = require("express");
+var app = express();
+
+app.get("/logs", (req, res)=>{
+    let logData = globalVariables.get("logData");
+    let logString = "";
+
+    logData.array.forEach(e => {
+        logString+=`[${new Date(e.time).toString()}] <b>${e.type}</b> - ${e.data} <br>`
+    });
+
+    res.send("<h1>Logs</h1>" + logString);
+})
 
 // ED
 discordClient.login(discordBotCongig.token);
