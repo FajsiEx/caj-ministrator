@@ -92,7 +92,7 @@ module.exports = {
         events.sort(smallFunctions.compare);
 
         events = events.filter((e)=>{
-            return e.time > new Date().getTime();
+            return e.time < new Date().getTime();
         });
 
         globalVariables.set("events", events);
