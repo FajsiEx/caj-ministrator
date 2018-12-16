@@ -79,7 +79,10 @@ module.exports = {
             });
             database.collection("data").update({_id: ObjectId("5c15742068c0cc26c0e1ea6b")}, {
                 $set: {
-                    "teas": data.teas
+                    "teas": {
+                        teas: data.teas,
+                        time: new Date().getTime()
+                    }
                 }
             });
             console.log("[SAVE] Everything saved.");

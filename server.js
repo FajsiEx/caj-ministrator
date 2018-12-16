@@ -43,7 +43,7 @@ discordClient.on('ready', ()=>{
 
     discordClient.fetchUser(DEV_USERID).then((user)=>{ // Fetch the admin user
         devUser = user; // Set the admin user as an...emm...admin user?
-        console.log("[BOT] Fetched the admin user");
+        console.log("[BOT] Fetched the dev user");
     });
 
     if(!onlineMsgSent) {
@@ -55,6 +55,8 @@ discordClient.on('ready', ()=>{
                 "color": COLORS.GREEN,
                 "description": `
                     **Serverový čas:** ${new Date().toString()}
+                    **Admin user id:** ${ADMIN_USERID}
+                    **Dev user id:** ${DEV_USERID}
                 `
             }
         });
