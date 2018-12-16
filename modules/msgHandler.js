@@ -21,6 +21,8 @@ const discordBotConfig = require("./consts").discordBotConfig;
 const startsWithNumber = require("./smallFunctions").startsWithNumber;
 const e621 = require('./e621');
 
+let modModeOn = false;
+
 module.exports = (msg, discordClient)=>{
     let usersObj = globalVariables.get("usersObj");
     let events = globalVariables.get("events");
@@ -77,15 +79,8 @@ module.exports = (msg, discordClient)=>{
 
     // Detect if the message is a bot command
     if (message.startsWith(discordBotConfig.prefix)) { // If the message starts with !, take it as a command
-        if (RESTRICTED_MODE) { // If the bot is in restricted mode,
+        if (modModeOn) { // If the bot is in restricted mode,
             if (msg.author.id != DEV_USERID) { // Check if the author is dev
-                msg.channel.send({ // If not, DENY!!!
-                    "embed": {
-                        "title": "Bot je v obmedzenom režime.",
-                        "color": COLORS.RED,
-                        "description": "Príkazy môžu dávať len developeri z dôvodu aby sa nieco nedosralo..."
-                    }
-                });
                 return;
             }
         }
@@ -711,6 +706,39 @@ module.exports = (msg, discordClient)=>{
                                 "description": "Enter valid attr for testpp command."
                             }
                         });
+                }
+                break;
+
+            case "mod":
+                if (msg.author.id != DEV_USERID) {
+                    msg.channel.send({
+                        "embed": {
+                            "title": "Nope.",
+                            "description": "Dev only :/",
+                            "color": COLORS.RED
+                        }
+                    });
+                    return;
+                }
+
+                if (modModeOn) {
+                    modModeOn = false;
+                    msg.channel.send({
+                        "embed": {
+                            "title": "Moderated mode",
+                            "description": "Moderated mode has been disabled.",
+                            "color": COLORS.GREEN
+                        }
+                    });
+                }else{
+                    modModeOn = true;
+                    msg.channel.send({
+                        "embed": {
+                            "title": "Moderated mode",
+                            "description": "Moderated mode has been enabled.",
+                            "color": COLORS.GREEN
+                        }
+                    });
                 }
                 break;
 
