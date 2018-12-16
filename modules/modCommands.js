@@ -1,4 +1,6 @@
 
+const smallFunctions = require("./smallFunctions");
+
 module.exports = {
     nuke: (msg, commandMessageArray)=>{
         if (commandMessageArray[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase().indexOf("me") > -1) {
@@ -11,7 +13,7 @@ module.exports = {
             }).then(msg => msg.delete(10000));
             return;
         }
-    
+
         if(!smallFunctions.checkAdmin(msg)) {
             msg.channel.send({
                 "embed": {
@@ -21,7 +23,7 @@ module.exports = {
             });
             return;
         }
-    
+
         let limit = parseInt(commandMessageArray[1]);
         if(!limit) {
             msg.channel.send({
@@ -32,7 +34,7 @@ module.exports = {
             });
             return;
         }
-    
+
         console.log("[NUKE] Nuked "+ limit + " messages.");
         msg.channel.bulkDelete(limit).then(() => {
             msg.channel.send({
