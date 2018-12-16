@@ -36,14 +36,31 @@ module.exports = {
             return;
         }
 
-        console.log("[NUKE] Nuked "+ limit + " messages.");
-        msg.channel.bulkDelete(limit).then(() => {
-            msg.channel.send({
-                "embed": {
-                    "title": "Vymazal som "+ limit + " správ.",
-                    "color": COLORS.GREEN
-                }
-            }).then(msg => msg.delete(5000));
-        });
+        let timer = parseInt(commandMessageArray[2]);
+        if (!timer) {timer = 0}
+        timer = timer * 1000;
+
+        if (timer > 0) {
+            msg.channel.bulkDelete(limit).then(() => {
+                msg.channel.send({
+                    "embed": {
+                        "title": "TACTICAL NUKE INCOMING IN "+ timer/1000 + " SECONDS!!! EVACUATE IMMEDIATELY!!!",
+                        "color": COLORS.YELLOW
+                    }
+                }).then(msg => msg.delete(timer));
+            });
+        }
+
+        setTimeout(()=>{
+            console.log("[NUKE] Nuked "+ limit + " messages.");
+            msg.channel.bulkDelete(limit).then(() => {
+                msg.channel.send({
+                    "embed": {
+                        "title": "Vymazal som "+ limit + " správ.",
+                        "color": COLORS.GREEN
+                    }
+                }).then(msg => msg.delete(5000));
+            });
+        }, timer);
     }
 }
