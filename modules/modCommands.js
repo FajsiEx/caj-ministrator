@@ -41,14 +41,12 @@ module.exports = {
         timer = timer * 1000;
 
         if (timer > 0) {
-            msg.channel.bulkDelete(limit).then(() => {
-                msg.channel.send({
-                    "embed": {
-                        "title": "TACTICAL NUKE INCOMING IN "+ timer/1000 + " SECONDS!!! EVACUATE IMMEDIATELY!!!",
-                        "color": COLORS.YELLOW
-                    }
-                }).then(msg => msg.delete(timer));
-            });
+            msg.channel.send({
+                "embed": {
+                    "title": "TACTICAL NUKE INCOMING IN "+ timer/1000 + " SECONDS!!! EVACUATE IMMEDIATELY!!!",
+                    "color": COLORS.YELLOW
+                }
+            }).then(msg => msg.delete(timer));
         }
 
         setTimeout(()=>{
