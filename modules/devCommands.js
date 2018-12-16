@@ -1,8 +1,12 @@
 
+const globalVariables = require("./globalVariables");
 const DEV_USERID = require("./consts").DEV_USERID;
 
 module.exports = {
     testread: (msg, commandMessageArray)=> {
+        let usersObj = globalVariables.get("usersObj");
+        let events = globalVariables.get("events");
+
         if (msg.author.id != DEV_USERID) {
             msg.channel.send({
                 "embed": {
@@ -44,6 +48,9 @@ module.exports = {
     },
 
     testpp: (msg, commandMessageArray)=>{
+        let usersObj = globalVariables.get("usersObj");
+        let events = globalVariables.get("events");
+        
         if (msg.author.id != DEV_USERID) {
             msg.channel.send({
                 "embed": {
