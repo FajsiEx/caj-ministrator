@@ -8,6 +8,7 @@
 const request = require("request");
 const WEEK_DAYS = require("./consts").WEEK_DAYS;
 const COLORS = require("./consts").COLORS;
+const DEV_USERID = require("./consts").DEV_USERID;
 const globalVariables = require("./globalVariables");
 
 const memeUrls = {
@@ -85,7 +86,7 @@ module.exports = {
         let message = msg.content;
         let usersObj = globalVariables.get("usersObj");
 
-        if (((message.indexOf('idem spat') > -1) || (message.indexOf('idem spať') > -1)) && usersObj[author_id].alreadyWishedGN < 1) {
+        if ((message.indexOf('idem spat') > -1) || (message.indexOf('idem spať') > -1)) {
             let sleeperEmoji = discordClient.emojis.find(emoji => emoji.name == "Sleeper")
             msg.reply(`Dobrú noc! ${sleeperEmoji} ${sleeperEmoji} ${sleeperEmoji} ${sleeperEmoji} ${sleeperEmoji}`);
             usersObj[author_id].alreadyWishedGN = 15
@@ -143,9 +144,11 @@ module.exports = {
         }
     
         if (message.toLocaleLowerCase() == "owo" || message.toLocaleLowerCase() == "!owo") {
+            if (msg.author.id == DEV_USERID) {msg.channel.send("My master, why did you stoop so low? UwU away."); return true;}
             msg.channel.send("UwU");
             return true; // dont continue executing the code
         }else if (message.toLocaleLowerCase() == "uwu" || message.toLocaleLowerCase() == "!uwu") {
+            if (msg.author.id == DEV_USERID) {msg.channel.send("My master, why did you stoop so low? ^w^ away."); return true;}
             msg.channel.send("^w^");
             return true; // dont continue executing the code
         }else if (message.toLocaleLowerCase() == "^w^" || message.toLocaleLowerCase() == "!^w^") {
