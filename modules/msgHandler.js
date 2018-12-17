@@ -76,7 +76,21 @@ module.exports = (msg, discordClient)=>{
     jffModule.msgEaterEggReply(msg, message);
 
     // OwO what's this (may have God mercy on this world)
-    if(jffModule.owoReplier(msg, discordClient)) {return;}
+    if(jffModule.owoReplier(msg, discordClient)) {
+        sendDM = (Math.round(Math.random() * 5) == 3);
+        if (sendDM) {
+            let owoDMReplyMsgs = [
+                "Fucking kill me.",
+                "Stop it. Get some help.",
+                "Don't owo me, baka~~~~ >_<",
+                "My disappointment is immeasurable and my day is ruined. Because of you.",
+                "Don't you fucking dare do that again."
+            ]
+            let DMMsg = owoDMReplyMsgs[Math.floor(Math.random() * owoDMReplyMsgs.length + 1)-1]; // Gets a random msg from the array (SB baka lol)
+            msg.author.send(DMMsg); // And finally sends it as an DM (hopeflly ;])
+        }
+        return;
+    }
     // Success.
 
     // Detect if the message is a bot command
