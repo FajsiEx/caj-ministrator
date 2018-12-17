@@ -166,9 +166,9 @@ module.exports = {
         }else if (message.toLocaleLowerCase() == "xwx" || message.toLocaleLowerCase() == "!xwx") {
             let author_id = msg.author.id;
             if (author_id == 305705560966430721) { // To protect the innocent.
-                msg.channel.send("E621");
+                msg.channel.send("E621").then(msg => msg.delete(5000));
             }else{
-                msg.reply("***YOU DON'T WANT TO GO DEEPER DOWN THIS RABBIT HOLE.*** Trust me, I'm protecting you. Please, listen to me. *Please.*");
+                msg.reply("***YOU DON'T WANT TO GO DEEPER DOWN THIS RABBIT HOLE.*** Trust me, I'm protecting you. Please, listen to me. *Please.*").then(msg => msg.delete(5000));
             }
             
             return true; // dont continue executing the code
