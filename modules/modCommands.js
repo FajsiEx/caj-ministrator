@@ -38,20 +38,21 @@ module.exports = {
 
         let timer = parseInt(commandMessageArray[2]);
         if (!timer) {timer = 0}
+        
         timer = timer * 1000;
 
-        if (timer > 0) {
+        if (timer > 2) {
             msg.channel.send({
                 "embed": {
                     "title": "TACTICAL NUKE INCOMING IN "+ timer/1000 + " SECONDS!!! EVACUATE IMMEDIATELY!!!",
                     "color": COLORS.YELLOW
                 }
-            }).then(msg => msg.delete(timer));
+            }).then(msg => msg.delete(timer - 1));
         }
 
         setTimeout(()=>{
             console.log("[NUKE] Nuked "+ limit + " messages.");
-            msg.channel.bulkDelete(limit).then(() => {
+            msg.channel.bulkDelete(limit + 1).then(() => { // +1 because we count the !nuke comm msg too
                 msg.channel.send({
                     "embed": {
                         "title": "Vymazal som "+ limit + " správ.",

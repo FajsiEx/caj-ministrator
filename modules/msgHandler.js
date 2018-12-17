@@ -273,7 +273,7 @@ module.exports = (msg, discordClient)=>{
                 });
                 break;
 
-            case "gia04134861291":
+            case "debugdump":
                 if (msg.author.id != DEV_USERID) {
                     msg.channel.send({
                         "embed": {
