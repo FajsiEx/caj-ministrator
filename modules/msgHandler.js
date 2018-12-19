@@ -18,6 +18,7 @@ const TEST_CHANNEL_ID = require("./consts").TEST_CHANNEL_ID;
 const COLORS = require("./consts").COLORS;
 const DEV_USERID = require("./consts").DEV_USERID;
 const JOKES = require("./consts").JOKES;
+const OWO_DM_REPLY_MSGS = require("./consts").OWO_DM_REPLY_MSGS;
 const discordBotConfig = require("./consts").discordBotConfig;
 
 const startsWithNumber = require("./smallFunctions").startsWithNumber;
@@ -79,14 +80,7 @@ module.exports = (msg, discordClient)=>{
     if(jffModule.owoReplier(msg, discordClient)) {
         sendDM = (Math.round(Math.random() * 5) == 3);
         if (sendDM) {
-            let owoDMReplyMsgs = [
-                "Fucking kill me.",
-                "Stop it. Get some help.",
-                "Don't owo me, baka~~~~ >_<",
-                "My disappointment is immeasurable and my day is ruined. Because of you.",
-                "Don't you fucking dare do that again."
-            ]
-            let DMMsg = owoDMReplyMsgs[Math.floor(Math.random() * owoDMReplyMsgs.length + 1)-1]; // Gets a random msg from the array (SB baka lol)
+            let DMMsg = OWO_DM_REPLY_MSGS[Math.floor(Math.random() * OWO_DM_REPLY_MSGS.length + 1)-1]; // Gets a random msg from the array (SB baka lol)
             msg.author.send(DMMsg); // And finally sends it as an DM (hopeflly ;])
         }
         return;

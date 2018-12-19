@@ -66,5 +66,11 @@ module.exports = {
         - Že gratulujem k peknému okrúhlemu výročiu...`,
     ],
 
-    
+    OWO_DM_REPLY_MSGS: [
+        "Fucking kill me.",
+        "Stop it. Get some help.",
+        "Don't owo me, baka~~~~ >_<",
+        "My disappointment is immeasurable and my day is ruined. Because of you.",
+        "Don't you fucking dare do that again."
+    ]
 }
