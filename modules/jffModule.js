@@ -195,6 +195,28 @@ module.exports = {
         }
     },
 
+    wipReply: (msg, type)=> {
+        if (!type) {
+            msg.channel.send({
+                "embed": {
+                    "title": "Work in progress",
+                    "color": COLORS.YELLOW,
+                    "description": "Stále na tom robím...tak počkaj a uvidíš zlaté prasiatko..."
+                }
+            });
+        }else if(type==1) {
+            msg.channel.send({
+                "embed": {
+                    "title": "Work in progress",
+                    "color": COLORS.YELLOW,
+                    "description": "Stále na tom robím...tak počkaj a uvidíš plynovú komoru..."
+                }
+            });
+        }else{
+            console.warn("[WIP_REPLY] Unknown reply type.")
+        }
+    },
+
     technoKittyReply: (msg)=> {
         msg.channel.send({
             "embed": {

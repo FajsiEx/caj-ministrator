@@ -393,6 +393,14 @@ module.exports = (msg, discordClient)=>{
                 jffModule.zhniReply(msg);
                 break;
 
+            case "aledan":
+                jffModule.wipReply(msg);
+                break;
+
+            case "hell":
+                jffModule.wipReply(msg, 1);
+                break;
+
             case "joke":
             case "vtip":
             case "haha":
