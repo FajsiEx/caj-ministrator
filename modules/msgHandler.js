@@ -60,7 +60,8 @@ module.exports = (msg, discordClient)=>{
             commandTimeout: 0, // And set their command timeout
             alreadyReportedTimeout: 0, // 0=not reported yet. [LEGACY]
             alreadyWishedGN: 0, // 0=not wished GN yet.
-            muteTimeout: 0 // 0=not timeouted.
+            muteTimeout: 0, // 0=not timeouted.
+            agreedWarning: 0 // Agreed? Better not.
         };
         globalVariables.set("usersObj", usersObj)
     }
@@ -324,11 +325,11 @@ module.exports = (msg, discordClient)=>{
                 jffModule.zhniReply(msg);
                 break;
 
-            case "aledan":
+            case "aledan": // TODO: Finish !aledan command
                 jffModule.wipReply(msg);
                 break;
 
-            case "hell":
+            case "hell": // TODO: Finish !hell alias for The Command
                 jffModule.wipReply(msg, 1);
                 break;
 

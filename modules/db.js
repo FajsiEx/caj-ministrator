@@ -38,7 +38,7 @@ module.exports = {
 
                     let teaDoc = docs[2];
                     console.log(`[DEBUG] DOC(${JSON.stringify(teaDoc)})`);
-                    teas = teaDoc.teas; 
+                    teas = teaDoc.teas.teas; 
                     console.log(`[DEBUG] ARR(${JSON.stringify(events)})`);
                     console.log("[LOAD] Teas loaded.");
     
