@@ -51,13 +51,8 @@ discordClient.on('ready', ()=>{
         console.log("[BOT] Sending online msg...");
         discordClient.channels.get('514873440159793167').send({
             "embed": {
-                "title": "Čaj-bot je online:",
-                "color": COLORS.GREEN,
-                "description": `
-                    **Serverový čas:** ${new Date().toString()}
-                    **Admin user id:** ${ADMIN_USERID}
-                    **Dev user id:** ${DEV_USERID}
-                `
+                "title": "Čaj-bot je online",
+                "color": COLORS.GREEN
             }
         });
     }
