@@ -107,7 +107,7 @@ setInterval(()=>{ // Does this every minute
         statusText += ` School in ${deltaDate.getHours()}h ${deltaDate.getMinutes()}m`;
 */
 
-        endStamp = new Date("Sun Jan 01 2019 00:00:01 GMT+0100").getTime();
+        endStamp = new Date("Sun Jan 08 2019 08:00:00 GMT+0100").getTime();
         nowStamp = new Date().getTime();
         deltaStamp = endStamp - nowStamp;
 
