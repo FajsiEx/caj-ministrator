@@ -4,6 +4,36 @@ const DEV_USERID = require("./consts").DEV_USERID;
 const COLORS = require("./consts").COLORS;
 
 module.exports = {
+    selfTest: (msg, commandMessageArray)=> {
+        if (msg.author.id != DEV_USERID) {
+            msg.channel.send({
+                "embed": {
+                    "title": "Dev only.",
+                    "color": COLORS.RED
+                }
+            });
+            return;
+        }
+
+        // TODO: Add .then(msg => msg.delete(5000)) to dev only replies.
+
+        msg.channel.send({
+            "embed": {
+                "title": "Running self-test...this may take a while...",
+                "color": COLORS.BLUE
+            }
+        }).then((msg)=>{
+            setTimeout(()=>{
+                msg.edit({
+                    "embed": {
+                        "title": "Self-test done.",
+                        "color": COLORS.GREEN
+                    }
+                });
+            }, 5000)
+        });
+    },
+
     testread: (msg, commandMessageArray)=> {
         let usersObj = globalVariables.get("usersObj");
         let events = globalVariables.get("events");

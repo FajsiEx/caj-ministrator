@@ -536,6 +536,10 @@ module.exports = (msg, discordClient)=>{
                 msg.guild.member(discordClient.user).setNickname(msg.content.slice(6)); // !nick bla => bla
                 break;
 
+            case "st":
+                devCommands.selfTest(msg, commandMessageArray);
+                break;
+
             case "testread":
                 devCommands.testread(msg, commandMessageArray);
                 break;
