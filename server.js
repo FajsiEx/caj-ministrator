@@ -109,7 +109,7 @@ setInterval(()=>{ // Does this every minute
 
         endStamp = new Date("Sun Jan 01 2019 00:00:01 GMT+0100").getTime();
         nowStamp = new Date().getTime();
-        deltaStamp = nyStamp - nowStamp;
+        deltaStamp = endStamp - nowStamp;
 
         days = Math.floor(deltaStamp / 86400000);
         deltaStamp -= days * 86400000;
