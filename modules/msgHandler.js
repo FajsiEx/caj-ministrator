@@ -56,12 +56,12 @@ module.exports = (msg, discordClient)=>{
             mpm: 1, // Messages per minute [LEGACY]
             timeOfFirstMinuteMessage: 0, // [LEGACY]
             warned: 0, // And increment their timeout [LEGACY]
-            timeout: 6.5, // And set their timeout [LEGACY]
+            timeout: 0, // And set their timeout [LEGACY]
             commandTimeout: 0, // And set their command timeout
             alreadyReportedTimeout: 0, // 0=not reported yet. [LEGACY]
-            alreadyWishedGN: 0, // 0=not wished GN yet.
+            alreadyWishedGN: 0, // 0=not wished GN yet. [LEGACY]
             muteTimeout: 0, // 0=not timeouted.
-            agreedWarning: 0 // Agreed? Better not.
+            agreedWarning: false // Agreed? Better not.
         };
         globalVariables.set("usersObj", usersObj)
     }
@@ -335,6 +335,10 @@ module.exports = (msg, discordClient)=>{
 
             case "hell": // TODO: Finish !hell alias for The Command
                 jffModule.wipReply(msg, 1);
+                break;
+
+            case "agree":
+                usersObj[author_id].warned = true;
                 break;
 
             case "joke":
