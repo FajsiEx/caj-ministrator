@@ -279,6 +279,21 @@ module.exports = (msg, discordClient)=>{
                 break;
 
             case "e621":
+                if (!usersObj[author_id].agreedWarning) {
+                    msg.author.send({
+                        "embed": {
+                            "title": "Varovanie!",
+                            "description": `
+                                Hej emm...práve si chcel použiť !e621 príkaz...
+                                Pre bezpečnosť tých, čo nevedia čo tento príkaz robí dávam toto family-friendly SFW varovanie:
+                                
+                                Pokiaľ nevieš čo tento príkaz robí plz ako nepouživaj ho...pre tvoje dobro...
+                                Pokiaľ však vieš, čo tento príkaz robí odpovedz !agree a už ťa nebudem otravovať ;)`,
+                            "color": COLORS.YELLOW
+                        }
+                    });
+                    return;
+                }
                 var request = e621.random("m/m", "E", 1, post => {
                     msg.channel.send({
                         "files": [post[0]['file_url']]
@@ -338,7 +353,7 @@ module.exports = (msg, discordClient)=>{
                 break;
 
             case "agree":
-                usersObj[author_id].warned = true;
+                usersObj[author_id].agreedWarning = true;
                 break;
 
             case "joke":
