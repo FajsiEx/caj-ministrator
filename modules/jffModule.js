@@ -82,7 +82,7 @@ module.exports = {
         msg.channel.send("Rest in piss, forever miss...");
     },
 
-    goodNightWisher: (msg, author_id)=>{
+    goodNightWisher: (msg, author_id, discordClient)=>{
         let message = msg.content;
 
         if ((message.indexOf('idem spat') > -1) || (message.indexOf('idem spať') > -1)) {

@@ -72,7 +72,7 @@ module.exports = (msg, discordClient)=>{
     console.log(`[MESSAGE] Recieved message. AUTHOR(${author} ### ${author_id}) CONTENT(${message})`);
     
     // Good night wishing thing
-    jffModule.goodNightWisher(msg, author_id);
+    jffModule.goodNightWisher(msg, author_id, discordClient);
 
     // Various easter eggs
     jffModule.msgEaterEggReply(msg, message);
