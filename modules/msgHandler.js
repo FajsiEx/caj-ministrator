@@ -269,6 +269,10 @@ module.exports = (msg, discordClient)=>{
                 jffModule.technoKittyReply(msg);
                 break;
 
+            case "united":
+                jffModule.unitedReply(msg);
+                break;
+
             case "meme":
             case "meirl":
                 jffModule.sendRedditMeme(msg);
