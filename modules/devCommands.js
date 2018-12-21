@@ -61,25 +61,23 @@ module.exports = {
             let timeSinceLastDataSaveDate = new Date(timeSinceLastDataSaveTS);
             timeSinceLastDataSave = `${timeSinceLastDataSaveDate.getHours()}h ${timeSinceLastDataSaveDate.getMinutes()}min ${timeSinceLastDataSaveDate.getSeconds()}s ${timeSinceLastDataSaveDate.getMilliseconds()}ms`;
 
-            setTimeout(()=>{
-                msg.edit({
-                    "embed": {
-                        "title": "Self-test done.",
-                        "description": `
-                            **Users object length:** ${usersObjLength}
-                            **Events length:** ${eventsLength}
-                            **Teas count:** ${teasCount}
-                            **Server time string:** ${serverTimeString}
-                            **Admin user id [DEPRECATED]:** ${adminUserid}
-                            **Dev user id [DEPRECATED]:** ${devUserid}
-                            **Message author data string:** ${authorUserData}
-                            **Server uptime:** ${uptime}
-                            **Time since last data save:** ${timeSinceLastDataSave}
-                        `,
-                        "color": COLORS.GREEN
-                    }
-                });
-            }, 5000)
+            msg.edit({
+                "embed": {
+                    "title": "Self-test done.",
+                    "description": `
+                        **Users object length:** ${usersObjLength}
+                        **Events length:** ${eventsLength}
+                        **Teas count:** ${teasCount}
+                        **Server time string:** ${serverTimeString}
+                        **Admin user id [DEPRECATED]:** ${adminUserid}
+                        **Dev user id [DEPRECATED]:** ${devUserid}
+                        **Message author data string:** ${authorUserData}
+                        **Server uptime:** ${uptime}
+                        **Time since last data save:** ${timeSinceLastDataSave}
+                    `,
+                    "color": COLORS.GREEN
+                }
+            });
         });
     },
 
