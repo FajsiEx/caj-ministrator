@@ -85,12 +85,12 @@ setInterval(()=>{ // Does this every minute
         let statusType = "WATCHING";
 
         if ( (hours <= 3 && isWorkDay) || (hours >= 22 && (day==0||day==1||day==2||day==3||day==4)) ) { // in our time (+1GMT) 23h-4h
-            statusText = "your sleep. ";
+            statusText = "you sleep. ";
         }else if ((hours >= 7 && hours <= 13) && isWorkDay) { // in our time (+1GMT) 8h-14h
             statusText = "the teachers. ";
             statusType = "LISTENING";
         }
-
+/*
         currentDate = new Date();
         currentDateTS = new Date().getTime();
 
@@ -105,6 +105,23 @@ setInterval(()=>{ // Does this every minute
         let deltaDate = new Date(deltaTS);
 
         statusText += ` School in ${deltaDate.getHours()}h ${deltaDate.getMinutes()}m`;
+*/
+
+        endStamp = new Date("Sun Jan 01 2019 00:00:01 GMT+0100").getTime();
+        nowStamp = new Date().getTime();
+        deltaStamp = nyStamp - nowStamp;
+
+        days = Math.floor(deltaStamp / 86400000);
+        deltaStamp -= days * 86400000;
+
+        hours = Math.floor(deltaStamp / 3600000);
+        deltaStamp -= hours * 3600000;      
+        minutes = Math.floor(deltaStamp / 60000);
+        deltaStamp -= minutes * 60000;
+
+        seconds = Math.floor(deltaStamp / 1000);
+
+        statusText += `${days} dní, ${hours} hodín, ${minutes} minút do konca prázdnin`
 
         discordClient.user.setActivity(statusText, { type: statusType });
     }
