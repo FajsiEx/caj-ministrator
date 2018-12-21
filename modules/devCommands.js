@@ -11,11 +11,9 @@ module.exports = {
                     "title": "Dev only.",
                     "color": COLORS.RED
                 }
-            });
+            }).then(msg => msg.delete(5000));
             return;
         }
-
-        // TODO: Add .then(msg => msg.delete(5000)) to dev only replies.
 
         msg.channel.send({
             "embed": {
@@ -44,7 +42,7 @@ module.exports = {
                     "title": "Tento príkaz môžu vykonavať len developeri z dôvodu redukcie spamu. sry :/",
                     "color": COLORS.RED
                 }
-            });
+            }).then(msg => msg.delete(5000));
             return;
         }
 
@@ -74,7 +72,7 @@ module.exports = {
                         "color": COLORS.RED,
                         "description": "Enter valid attr for testread command."
                     }
-                });
+                }).then(msg => msg.delete(5000));
         }
     },
 
@@ -88,7 +86,7 @@ module.exports = {
                     "title": "Tento príkaz môžu vykonavať len developeri z dôvodu redukcie  spamu. sry :/",
                     "color": COLORS.RED
                 }
-            });
+            }).then(msg => msg.delete(5000));
             return;
         }
 
@@ -118,7 +116,7 @@ module.exports = {
                         "color": COLORS.RED,
                         "description": "Enter valid attr for testpp command."
                     }
-                });
+                }).then(msg => msg.delete(5000));
         }
     }
 }
