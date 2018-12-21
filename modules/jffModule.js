@@ -84,7 +84,6 @@ module.exports = {
 
     goodNightWisher: (msg, author_id)=>{
         let message = msg.content;
-        let usersObj = globalVariables.get("usersObj");
 
         if ((message.indexOf('idem spat') > -1) || (message.indexOf('idem spať') > -1)) {
             let sleeperEmoji = discordClient.emojis.find(emoji => emoji.name == "Sleeper")
@@ -92,8 +91,6 @@ module.exports = {
             usersObj[author_id].alreadyWishedGN = 15
             return;
         }
-
-        globalVariables.set("usersObj", usersObj);
     },
 
     sendRedditMeme: (msg)=> {
@@ -288,7 +285,7 @@ module.exports = {
         msg.channel.send({
             "embed": {
                 "title": "United by *Our Stolen Theory*",
-                "color": COLORS.BLUE,
+                "color": COLORS.BLUE, // TODO: Move lyrics to consts module
                 "description": `
 Uni-uni-uni-uni-uni-uni-uni-uni-uni...
 -ted-ted-ted-ted-ted-ted-ted-ted-ted...
