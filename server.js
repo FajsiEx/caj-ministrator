@@ -130,6 +130,8 @@ app.get("/logs", (req, res)=>{
     res.send("<h1>Logs</h1>" + logString);
 })
 
+globalVariables.set("startTime", new Date().getTime());
+
 var port = process.env.PORT || 3000
 app.listen(port, function() {
     console.log("[WEB_SERVER] Listening. Port:" + port);

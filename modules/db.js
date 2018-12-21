@@ -39,6 +39,7 @@ module.exports = {
                     let teaDoc = docs[2];
                     console.log(`[DEBUG] DOC(${JSON.stringify(teaDoc)})`);
                     teas = teaDoc.teas.teas; 
+                    lastSaveTime = teaDoc.teas.time; 
                     console.log(`[DEBUG] ARR(${JSON.stringify(events)})`);
                     console.log("[LOAD] Teas loaded.");
     
@@ -48,6 +49,7 @@ module.exports = {
                         usersObj: usersObj,
                         events: events,
                         teas: teas,
+                        lastSaveTime: lastSaveTime
                     });
                 });
             });
