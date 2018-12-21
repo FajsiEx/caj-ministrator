@@ -29,6 +29,7 @@ module.exports = {
         });
         setInterval(()=>{ // Does this every 10 seconds
             dbModule.save(global);
+            global.lastSaveTime = new Date().getTime();
         }, 10000);
     }
 }
