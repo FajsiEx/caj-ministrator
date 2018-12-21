@@ -15,7 +15,7 @@ module.exports = {
             return;
         }
 
-        if(!smallFunctions.checkAdmin(msg)) {
+        if(!smallFunctions.checkAdmin(msg) || msg.member.roles.some(r=>["EmoteMaster"].includes(r.name))) { // Yes I have allowed this.
             msg.channel.send({
                 "embed": {
                     "title": "Tento príkaz môžu vykonávať len admini lol",
