@@ -300,6 +300,10 @@ module.exports = (msg, discordClient)=>{
                 jffModule.roll(msg, commandMessageArray);
                 break;
 
+            case "tf":
+                jffModule.tf(msg, commandMessageArray);
+                break;
+
             case "ahoj": //robil Dan Valnicek
                 jffModule.ahojCommand(msg);
                 break;
