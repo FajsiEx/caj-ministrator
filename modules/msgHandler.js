@@ -533,7 +533,7 @@ module.exports = (msg, discordClient)=>{
                     console.log("[DEBUG] Muted:" + user);
                     msg.channel.send({
                         "embed": {
-                            "title": user.username + "#" + user.discriminator + " bol mutnutý na " + minutes + " min.",
+                            "title": "Hotovo.",
                             "color": COLORS.GREEN
                         }
                     });
@@ -541,7 +541,7 @@ module.exports = (msg, discordClient)=>{
                 }else{
                     msg.channel.send({
                         "embed": {
-                            "title": "Tento príkaz môžu vykonávať len admini lol",
+                            "title": "Tento príkaz môžu vykonávať len admini.",
                             "color": COLORS.RED
                         }
                     }).then(msg => msg.delete(5000));
@@ -573,7 +573,7 @@ module.exports = (msg, discordClient)=>{
                     console.log("[MUTE] Unmuted "+ user.username + "#" + user.discriminator);
                     msg.channel.send({
                         "embed": {
-                            "title": user.username + "#" + user.discriminator + " bol unmutnutý.",
+                            "title": "Hotovo.",
                             "color": COLORS.GREEN
                         }
                     }).then(msg => msg.delete(10000));
@@ -581,7 +581,7 @@ module.exports = (msg, discordClient)=>{
                 }else{
                     msg.channel.send({
                         "embed": {
-                            "title": "Tento príkaz môžu vykonávať len admini lol",
+                            "title": "Tento príkaz môžu vykonávať len admini",
                             "color": COLORS.RED
                         }
                     }).then(msg => msg.delete(5000));
