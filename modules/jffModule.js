@@ -32,7 +32,10 @@ const memeUrls = {
 
 module.exports = {
     msgEaterEggReply: (msg, message)=> {
-        message = message.toLocaleLowerCase(); //
+        if(message.length > 64) {return;}
+
+        message = message.toLocaleLowerCase();
+
         if (message.indexOf('click the circles') > -1) {
             msg.reply(`to the beat. ***CIRCLES!***`);
             return;
@@ -251,7 +254,7 @@ module.exports = {
         }else{
             rolled = "áno";
         }
-        
+
         msg.reply(rolled);
     },
 
