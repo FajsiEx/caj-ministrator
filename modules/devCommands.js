@@ -130,7 +130,7 @@ module.exports = {
 
             case "users":
                 fileName = 'usersObj_JSON_dump_' + Math.floor(Math.random() * 1000000) + '.json'
-                fs.writeFile(fileName, JSON.stringify(events), (err)=>{
+                fs.writeFile(fileName, JSON.stringify(usersObj), (err)=>{
                     if (err) {
                         msg.channel.send({
                             "embed": {
