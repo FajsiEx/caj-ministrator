@@ -1,4 +1,7 @@
 
+
+const fs = require('fs');
+
 const globalVariables = require("./globalVariables");
 const DEV_USERID = require("./consts").DEV_USERID;
 
@@ -97,12 +100,29 @@ module.exports = {
 
         switch (commandMessageArray[1]) {
             case "events":
-                msg.channel.send({
-                    "embed": {
-                        "title": "JSON dump of events object",
-                        "color": COLORS.BLUE,
-                        "description": JSON.stringify(events) + "\n**This data is stored in the program memory. Not in the database.**"
-                    }
+                let fileName = 'events_JSON_dump_' + Math.floor(Math.random() * 1000000) + '.json'
+                fs.writeFile(fileName, JSON.stringify(events), (err)=>{
+                    if (err) {
+                        msg.channel.send({
+                            "embed": {
+                                "title": "Error trying to write",
+                                "color": COLORS.RED,
+                                "description": "Check the logs for more details."
+                            }
+                        });
+                        console.err("[TEST_READ] Failed to write");
+                    };
+
+                    msg.channel.send({
+                        "embed": {
+                            "title": "Raw JSON output of events array",
+                            "color": COLORS.GREEN
+                        },
+                        "files": [
+                            fileName
+                        ]
+                    });
+                    console.log('[TEST_READ] File written');
                 });
                 break;
             case "users":
