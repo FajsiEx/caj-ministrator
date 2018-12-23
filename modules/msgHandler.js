@@ -540,7 +540,7 @@ module.exports = (msg, discordClient)=>{
                 }
                 break;
 
-            case "un":
+            case "unmute":
             case "unsilence":
                 if(smallFunctions.checkAdmin(msg)) {
                     let mentionList = msg.mentions.users;
