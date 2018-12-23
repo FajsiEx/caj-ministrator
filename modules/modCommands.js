@@ -41,13 +41,38 @@ module.exports = {
         
         timer = timer * 1000;
 
+        if (timer > 60) {
+            msg.channel.send({
+                "embed": {
+                    "title": "Max 60 sekúnd.",
+                    "color": COLORS.RED
+                }
+            }).then(msg => msg.delete(5000));
+            return;
+        }
+
         if (timer > 2) {
             msg.channel.send({
                 "embed": {
                     "title": "TACTICAL NUKE INCOMING IN "+ timer/1000 + " SECONDS!!! EVACUATE IMMEDIATELY!!!",
                     "color": COLORS.YELLOW
                 }
-            }).then(msg => msg.delete(timer - 1));
+            }).then(msg => {
+                msg.delete(timer - 1);
+                let countdown = timer / 1000;
+                let intervalId = setInterval(()=>{
+                    countdown--;
+                    if (countdown < 1) {
+                        clearInterval(intervalId);
+                    }
+                    msg.edit({
+                        "embed": {
+                            "title": "TACTICAL NUKE INCOMING IN "+ countdown + " SECONDS!!! EVACUATE IMMEDIATELY!!!",
+                            "color": COLORS.YELLOW
+                        }
+                    });
+                },1000)
+            });
         }
 
         setTimeout(()=>{
