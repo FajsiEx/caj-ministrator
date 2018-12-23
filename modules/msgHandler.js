@@ -158,13 +158,7 @@ module.exports = (msg, discordClient)=>{
                     "embed": {
                         "title": "Ping",
                         "color": COLORS.BLUE,
-                        "description": "Bot is up and running!",
-                        "fields": [
-                            {
-                                "name": "Ping:",
-                                "value": new Date().getTime() - msg.createdTimestamp + "ms"
-                            }
-                        ]
+                        "description": new Date().getTime() - msg.createdTimestamp + "ms"
                     }
                 });
 
