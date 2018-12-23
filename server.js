@@ -47,8 +47,6 @@ discordClient.on('message', (msg)=>{
     msgHandler(msg, discordClient);
 });
 
-setInterval(setStatus, 60000);
-
 let setStatus = ()=>{
     if (starting) {
         console.warn("[SET_STATUS] Bot starting. ABORT!");
@@ -109,6 +107,8 @@ let setStatus = ()=>{
 
     console.log("[SET_STATUS] Completed");
 }
+
+setInterval(setStatus, 60000);
 
 var express = require("express");
 var app = express();
