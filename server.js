@@ -45,17 +45,6 @@ discordClient.on('ready', ()=>{
         devUser = user; // Set the admin user as an...emm...admin user?
         console.log("[BOT] Fetched the dev user");
     });
-
-    if(!onlineMsgSent) {
-        onlineMsgSent = true;
-        console.log("[BOT] Sending online msg...");
-        discordClient.channels.get('514873440159793167').send({
-            "embed": {
-                "title": "Čaj-bot je online",
-                "color": COLORS.GREEN
-            }
-        });
-    }
 });
 
 discordClient.on('message', (msg)=>{
