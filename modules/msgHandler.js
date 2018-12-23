@@ -371,6 +371,8 @@ module.exports = (msg, discordClient)=>{
 
                 let customKillMsg = KILL_MSGS[msg.mentions.members.first().id];
 
+                console.log("[KILL] ID:" + msg.mentions.members.first().id + " /// MSG:" + customKillMsg);
+
                 if (customKillMsg) {
                     msg.channel.send({
                         "embed": {
@@ -530,8 +532,7 @@ module.exports = (msg, discordClient)=>{
                         console.log("[MUTE] Muted "+ user.name + ".");
                         user.removeRole(role).catch(console.error);
                     }, minutes*60000);
-
-                    console.log("[DEBUG] Muted:" + user);
+                    
                     msg.channel.send({
                         "embed": {
                             "title": "Hotovo.",
