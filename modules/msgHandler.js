@@ -274,6 +274,7 @@ module.exports = (msg, discordClient)=>{
 
             case "e621":
             case "hell":
+                
                 if (!usersObj[author_id].agreedWarning) {
                     msg.author.send({
                         "embed": {
@@ -289,9 +290,18 @@ module.exports = (msg, discordClient)=>{
                     });
                     return;
                 }
-                var request = e621.random("m/m", "E", 1, post => {
-                    msg.channel.send({
-                        "files": [post[0]['file_url']]
+
+                msg.channel.send({
+                    "embed": {
+                        "title": "Loading...",
+                        "description": "Loading image from e621...this ***MAY*** take a **while**",
+                        "color": COLORS.BLUE
+                    }
+                }).then((msg)=>{
+                    let request = e621.random("m/m", "E", 1, post => {
+                        msg.edit({
+                            "files": [post[0]['file_url']]
+                        });
                     });
                 });
                 break;
