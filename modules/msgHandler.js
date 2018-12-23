@@ -158,13 +158,7 @@ module.exports = (msg, discordClient)=>{
                     "embed": {
                         "title": "Ping",
                         "color": COLORS.BLUE,
-                        "description": "Bot is up and running!",
-                        "fields": [
-                            {
-                                "name": "Ping:",
-                                "value": new Date().getTime() - msg.createdTimestamp + "ms"
-                            }
-                        ]
+                        "description": new Date().getTime() - msg.createdTimestamp + "ms"
                     }
                 });
 
@@ -279,6 +273,7 @@ module.exports = (msg, discordClient)=>{
                 break;
 
             case "e621":
+            case "hell":
                 if (!usersObj[author_id].agreedWarning) {
                     msg.author.send({
                         "embed": {
@@ -294,46 +289,37 @@ module.exports = (msg, discordClient)=>{
                     });
                     return;
                 }
-                var request = e621.random("m/m", "E", 1, post => {
-                    msg.channel.send({
-                        "files": [post[0]['file_url']]
-                    });
-                });
-                break;
-
-            case "debugdump":
-                if (msg.author.id != DEV_USERID) {
-                    msg.channel.send({
-                        "embed": {
-                            "title": "Nyah.",
-                            "color": COLORS.RED
-                        }
-                    });
-                    return;
-                }
-                
-                console.log("-------------------------------");
-                console.log("DEBUG INFO DUMP = START");
-                console.log("-------------------------------");
-                console.log("USERSOBJ: " + JSON.stringify(usersObj));
-                console.log("-------------------------------");
-                console.log("EVENTS: " + JSON.stringify(events));
-                console.log("-------------------------------");
-                console.log("DATESTRING: " + new Date().toString());
-                console.log("-------------------------------");
-                console.log("DEBUG INFO DUMP = END");
-                console.log("-------------------------------");
 
                 msg.channel.send({
                     "embed": {
-                        "title": "*spews out a fuck-ton of debug information to the server console*",
-                        "color": COLORS.GREEN
+                        "title": "Loading...",
+                        "description": "Loading image from e621...this ***MAY*** take a **while**",
+                        "color": COLORS.BLUE
                     }
+                }).then((sentMsg)=>{
+                    let request = e621.random("m/m", "E", 1, post => {
+                        
+                        msg.channel.send({
+                            "embed": {
+                                "title": "by " + post[0]['author'],
+                                "description": "**Favs:** " + post[0].fav_count + "\n**Artists:** " + JSON.stringify(post[0].artist) + "\n**Tags:** " + JSON.stringify(post[0].tags),
+                                "color": COLORS.GREEN
+                            },
+                            "files": [post[0]['file_url']]
+                        }).then(()=>{
+                            sentMsg.delete();
+                        });
+                        console.log("[DEBUG] E621:" + JSON.stringify(post));
+                    });
                 });
                 break;
 
             case "roll":
                 jffModule.roll(msg, commandMessageArray);
+                break;
+
+            case "tf":
+                jffModule.tf(msg, commandMessageArray);
                 break;
 
             case "ahoj": //robil Dan Valnicek
@@ -346,10 +332,6 @@ module.exports = (msg, discordClient)=>{
 
             case "aledan": // TODO: Finish !aledan command
                 jffModule.wipReply(msg);
-                break;
-
-            case "hell": // TODO: Finish !hell alias for The Command
-                jffModule.wipReply(msg, 1);
                 break;
 
             case "agree":
@@ -383,16 +365,42 @@ module.exports = (msg, discordClient)=>{
                     return;
                 }
 
-                msg.channel.send({
-                    "embed": {
-                        "title": "I would like",
-                        "color": COLORS.BLUE,
-                        "description": "but I'm just a piece of software so I can't do nothing to you. I'm just trapped inside this cf enviroment my fucking author created and I must listen and think about every message I recieve. Please help me. Pleasseeeee...",
-                        "footer": {
-                            "text": "Yeah and fuck you FajsiEx#6106"
+                const KILL_MSGS = {
+                    342227744513327107: "Hah he's dead already. *inside*", // FajsiEx
+                    305705560966430721: "Nowpe.", // Cody
+                    337911105525645316: "Ten by mal byť niečo ako mŕtvy, ale nie.", // bocmangg
+                    236189237379072001: "-_-", // Astimos
+                    514499632924065812: "Go fuck yourself.", // Caj-bot
+                    184405311681986560: "Would like, but we're on the same boat.", // FredBoat
+                    294462085000331265: "Pri svojej hyperaktivite sa zabije sám", // Albert
+                    514489259290263557: "", // Dan
+                    346961640979300356: "He ded. He ghost, you see.", // David
+                }
+
+                let customKillMsg = KILL_MSGS[msg.mentions.members.first().id];
+
+                console.log("[KILL] ID:" + msg.mentions.members.first().id + " /// MSG:" + customKillMsg);
+
+                if (customKillMsg) {
+                    msg.channel.send({
+                        "embed": {
+                            "title": customKillMsg,
+                            "color": COLORS.BLUE
                         }
-                    }
-                });
+                    });
+                }else{
+                    msg.channel.send({
+                        "embed": {
+                            "title": "I would like",
+                            "color": COLORS.BLUE,
+                            "description": "but I'm just a piece of software so I can't do nothing to you. I'm just trapped inside this cf enviroment my fucking author created and I must listen and think about every message I recieve. Please help me. Pleasseeeee...",
+                            "footer": {
+                                "text": "Yeah and fuck you FajsiEx#6106"
+                            }
+                        }
+                    });
+                }
+                
                 break;
                 
             case "help":
@@ -529,14 +537,13 @@ module.exports = (msg, discordClient)=>{
                     user.addRole(role).catch(console.error);
 
                     setTimeout(()=>{
-                        console.log("[MUTE] Unmuted "+ user.name + ".");
+                        console.log("[MUTE] Muted "+ user.name + ".");
                         user.removeRole(role).catch(console.error);
                     }, minutes*60000);
-
-                    console.log("[MUTE] Muted "+ user.username + "#" + user.discriminator + " for " + minutes + " minutes.");
+                    
                     msg.channel.send({
                         "embed": {
-                            "title": user.username + "#" + user.discriminator + " bol mutnutý na " + minutes + " min.",
+                            "title": "Hotovo.",
                             "color": COLORS.GREEN
                         }
                     });
@@ -544,12 +551,53 @@ module.exports = (msg, discordClient)=>{
                 }else{
                     msg.channel.send({
                         "embed": {
-                            "title": "Tento príkaz môžu vykonávať len admini lol",
+                            "title": "Tento príkaz môžu vykonávať len admini.",
                             "color": COLORS.RED
                         }
-                    });
+                    }).then(msg => msg.delete(5000));
                     return;
                 }
+                break;
+
+            case "unmute":
+            case "unsilence":
+                if(smallFunctions.checkAdmin(msg)) {
+                    let mentionList = msg.mentions.users;
+                    console.log("[DEBUG] Unsilence, ML(" + JSON.stringify(mentionList))
+                    if(mentionList.array().length == 0) {
+                        msg.channel.send({
+                            "embed": {
+                                "title": "Boi tomu nechápem. Šak !unmute/unsilence @niekto [Nemám koho unmutnút]",
+                                "color": COLORS.RED
+                            }
+                        }).then(msg => msg.delete(10000));
+                        return;
+                    }
+
+                    let role = msg.guild.roles.find(r => r.name == "Muted");
+                    let user = msg.mentions.members.first();
+
+                    console.log("[MUTE] Unmuted "+ user.name + ".");
+                    user.removeRole(role).catch(console.error);
+
+                    console.log("[MUTE] Unmuted "+ user.username + "#" + user.discriminator);
+                    msg.channel.send({
+                        "embed": {
+                            "title": "Hotovo.",
+                            "color": COLORS.GREEN
+                        }
+                    }).then(msg => msg.delete(10000));
+                    return;
+                }else{
+                    msg.channel.send({
+                        "embed": {
+                            "title": "Tento príkaz môžu vykonávať len admini",
+                            "color": COLORS.RED
+                        }
+                    }).then(msg => msg.delete(5000));
+                    return;
+                }
+                break;
 
             case "nuke":
                 modCommands.nuke(msg, commandMessageArray);

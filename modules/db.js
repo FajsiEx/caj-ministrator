@@ -57,6 +57,8 @@ module.exports = {
     },
 
     save: (data)=>{
+        if (process.env.DISABLE_SAVE == "yes") {return;} // for beta
+
         console.log("[SAVE] Saving events...");
 
         if ((Object.keys(usersObj).length === 0 && usersObj.constructor === Object) || (events.length < 1) || (!data)) {
