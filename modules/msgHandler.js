@@ -295,37 +295,6 @@ module.exports = (msg, discordClient)=>{
                 });
                 break;
 
-            case "debugdump":
-                if (msg.author.id != DEV_USERID) {
-                    msg.channel.send({
-                        "embed": {
-                            "title": "Nyah.",
-                            "color": COLORS.RED
-                        }
-                    });
-                    return;
-                }
-                
-                console.log("-------------------------------");
-                console.log("DEBUG INFO DUMP = START");
-                console.log("-------------------------------");
-                console.log("USERSOBJ: " + JSON.stringify(usersObj));
-                console.log("-------------------------------");
-                console.log("EVENTS: " + JSON.stringify(events));
-                console.log("-------------------------------");
-                console.log("DATESTRING: " + new Date().toString());
-                console.log("-------------------------------");
-                console.log("DEBUG INFO DUMP = END");
-                console.log("-------------------------------");
-
-                msg.channel.send({
-                    "embed": {
-                        "title": "*spews out a fuck-ton of debug information to the server console*",
-                        "color": COLORS.GREEN
-                    }
-                });
-                break;
-
             case "roll":
                 jffModule.roll(msg, commandMessageArray);
                 break;
