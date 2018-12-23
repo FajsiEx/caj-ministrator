@@ -299,8 +299,13 @@ module.exports = (msg, discordClient)=>{
                 }).then((sentMsg)=>{
                     let request = e621.random("m/m", "E", 1, post => {
                         sentMsg.edit({
+                            "embed": {
+                                "title": "Done.",
+                                "color": COLORS.GREEN
+                            },
                             "files": [post[0]['file_url']]
                         });
+                        console.log("[DEBUG] E621:" + post);
                     });
                 });
                 break;
