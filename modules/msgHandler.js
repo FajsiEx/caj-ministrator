@@ -296,10 +296,9 @@ module.exports = (msg, discordClient)=>{
                         "description": "Loading image from e621...this ***MAY*** take a **while**",
                         "color": COLORS.BLUE
                     }
-                }).then((msg)=>{
-                    msg.delete();
+                }).then((sentMsg)=>{
                     let request = e621.random("m/m", "E", 1, post => {
-                        msg.channel.send({
+                        sentMsg.edit({
                             "files": [post[0]['file_url']]
                         });
                     });
