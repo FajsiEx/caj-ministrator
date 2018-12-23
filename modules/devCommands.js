@@ -98,9 +98,11 @@ module.exports = {
             return;
         }
 
+        let fileName = "JSON_dump.json";
+
         switch (commandMessageArray[1]) {
             case "events":
-                let fileName = 'events_JSON_dump_' + Math.floor(Math.random() * 1000000) + '.json'
+                fileName = 'events_JSON_dump_' + Math.floor(Math.random() * 1000000) + '.json'
                 fs.writeFile(fileName, JSON.stringify(events), (err)=>{
                     if (err) {
                         msg.channel.send({
@@ -127,7 +129,7 @@ module.exports = {
                 break;
 
             case "users":
-                let fileName = 'usersObj_JSON_dump_' + Math.floor(Math.random() * 1000000) + '.json'
+                fileName = 'usersObj_JSON_dump_' + Math.floor(Math.random() * 1000000) + '.json'
                 fs.writeFile(fileName, JSON.stringify(events), (err)=>{
                     if (err) {
                         msg.channel.send({
