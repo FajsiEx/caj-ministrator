@@ -298,14 +298,15 @@ module.exports = (msg, discordClient)=>{
                     }
                 }).then((sentMsg)=>{
                     let request = e621.random("m/m", "E", 1, post => {
-                        sentMsg.edit({
+                        sentMsg.delete();
+                        msg.channel.send({
                             "embed": {
-                                "title": "Done.",
+                                "title": "",
                                 "color": COLORS.GREEN
                             },
                             "files": [post[0]['file_url']]
                         });
-                        console.log("[DEBUG] E621:" + post);
+                        console.log("[DEBUG] E621:" + JSON.stringify(post));
                     });
                 });
                 break;
