@@ -274,7 +274,6 @@ module.exports = (msg, discordClient)=>{
 
             case "e621":
             case "hell":
-                
                 if (!usersObj[author_id].agreedWarning) {
                     msg.author.send({
                         "embed": {
@@ -527,11 +526,11 @@ module.exports = (msg, discordClient)=>{
                     user.addRole(role).catch(console.error);
 
                     setTimeout(()=>{
-                        console.log("[MUTE] Unmuted "+ user.name + ".");
+                        console.log("[MUTE] Muted "+ user.name + ".");
                         user.removeRole(role).catch(console.error);
                     }, minutes*60000);
 
-                    console.log("[MUTE] Muted "+ user.username + "#" + user.discriminator + " for " + minutes + " minutes.");
+                    console.log("[DEBUG] Muted:" + user);
                     msg.channel.send({
                         "embed": {
                             "title": user.username + "#" + user.discriminator + " bol mutnutý na " + minutes + " min.",
