@@ -297,8 +297,9 @@ module.exports = (msg, discordClient)=>{
                         "color": COLORS.BLUE
                     }
                 }).then((msg)=>{
+                    msg.delete();
                     let request = e621.random("m/m", "E", 1, post => {
-                        msg.edit({
+                        msg.channel.send({
                             "files": [post[0]['file_url']]
                         });
                     });
