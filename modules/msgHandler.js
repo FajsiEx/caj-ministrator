@@ -273,6 +273,7 @@ module.exports = (msg, discordClient)=>{
                 break;
 
             case "e621":
+            case "hell":
                 if (!usersObj[author_id].agreedWarning) {
                     msg.author.send({
                         "embed": {
@@ -309,10 +310,6 @@ module.exports = (msg, discordClient)=>{
 
             case "aledan": // TODO: Finish !aledan command
                 jffModule.wipReply(msg);
-                break;
-
-            case "hell": // TODO: Finish !hell alias for The Command
-                jffModule.wipReply(msg, 1);
                 break;
 
             case "agree":
