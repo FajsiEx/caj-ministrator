@@ -41,7 +41,7 @@ module.exports = {
         
         timer = timer * 1000;
 
-        if (timer > 60) {
+        if (timer > 60000) {
             msg.channel.send({
                 "embed": {
                     "title": "Max 60 sekúnd.",
