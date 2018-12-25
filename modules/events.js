@@ -12,6 +12,7 @@ const WEEK_DAYS = require("./consts").WEEK_DAYS;
 const WEEK_DAYS_SHORT = require("./consts").WEEK_DAYS_SHORT;
 const COLORS = require("./consts").COLORS;
 const HOLIDAYS = require("./consts").HOLIDAYS;
+const NAMEDAYS = require("./consts").NAMEDAYS;
 
 module.exports = {
     addEvent: {
@@ -241,5 +242,11 @@ module.exports = {
                 "description": holidaysString
             }
         });
+    },
+
+    wishNameday:()=>{
+        let month = new Date("11/11/2019 01:00:00 GMT+0100").getMonth() + 1; // because 0 = jan
+        let day = new Date("11/11/2019 01:00:00 GMT+0100").getDate();
+        discordClient.channels.get('527170494613422092').send("Všetko najlepšie k meninám, " + discordClient.fetchUser(NAMEDAYS[month][day]))
     }
 }

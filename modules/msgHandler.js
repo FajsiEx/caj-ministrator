@@ -336,7 +336,7 @@ module.exports = (msg, discordClient)=>{
                 break;
 
             case "nameday":
-                msg.channel.send(NAMEDAYS[commandMessageArray[1]][commandMessageArray[2]]);
+                eventsModule.wishNameday();
                 break;
 
             case "agree":
