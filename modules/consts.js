@@ -29,19 +29,19 @@ module.exports = {
     HOLIDAYS: [
         {
             name: "Polročne prázdniny",
-            date: new Date("01.02.2019")
+            date: new Date("02/01/2019 00:00:00 GMT+0100")
         },
         {
             name: "Jarné prázdniny",
-            date: new Date("23.02.2019")
+            date: new Date("02/23/2019 00:00:00 GMT+0100")
         },
         {
             name: "Veľkonočné prázdniny",
-            date: new Date("18.04.2019")
+            date: new Date("04/18/2019 00:00:00 GMT+0100")
         },
         {
             name: "Letné prázdniny",
-            date: new Date("29.06.2019")
+            date: new Date("06/29/2019 00:00:00 GMT+0100")
         }
     ],
 
