@@ -231,7 +231,7 @@ module.exports = {
             days = Math.floor(deltaStamp / 86400000);
             console.log(days);
             
-            holidaysString+=`**${e.name}** ${days}d\n`
+            holidaysString+=`**${days}d** - ${e.name}\n`
         });
 
         msg.channel.send({
