@@ -247,6 +247,8 @@ module.exports = {
     wishNameday:(discordClient)=>{
         let month = new Date("11/11/2019 01:00:00 GMT+0100").getMonth() + 1; // because 0 = jan
         let day = new Date("11/11/2019 01:00:00 GMT+0100").getDate();
-        discordClient.channels.get('527170494613422092').send("Všetko najlepšie k meninám, " + discordClient.fetchUser(NAMEDAYS[month][day]))
+        discordClient.fetchUser(NAMEDAYS[month][day]).then((user)=>{
+            discordClient.channels.get('527170494613422092').send("Všetko najlepšie k meninám, " + user + "!");
+        });        
     }
 }
