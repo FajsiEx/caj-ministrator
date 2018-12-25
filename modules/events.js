@@ -225,8 +225,11 @@ module.exports = {
         nowStamp = new Date().getTime();
 
         HOLIDAYS.forEach((e)=>{
+            console.log(e);
             deltaStamp = e.date.getTime() - nowStamp;
+            console.log(deltaStamp);
             days = Math.floor(deltaStamp / 86400000);
+            console.log(days);
             
             holidaysString+=`**${e.name}** ${days}d\n`
         });
