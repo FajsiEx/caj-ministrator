@@ -19,6 +19,7 @@ const COLORS = require("./consts").COLORS;
 const DEV_USERID = require("./consts").DEV_USERID;
 const JOKES = require("./consts").JOKES;
 const OWO_DM_REPLY_MSGS = require("./consts").OWO_DM_REPLY_MSGS;
+const NAEMDAYS = require("./consts").NAMEDAYS;
 const discordBotConfig = require("./consts").discordBotConfig;
 
 const startsWithNumber = require("./smallFunctions").startsWithNumber;
@@ -332,6 +333,10 @@ module.exports = (msg, discordClient)=>{
 
             case "aledan": // TODO: Finish !aledan command
                 jffModule.wipReply(msg);
+                break;
+
+            case "nameday":
+                msg.channel.send(NAMEDAYS[commandMessageArray[1]][commandMessageArray[2]]);
                 break;
 
             case "agree":
