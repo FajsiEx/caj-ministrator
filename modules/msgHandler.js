@@ -436,10 +436,16 @@ module.exports = (msg, discordClient)=>{
 
                 break;
 
+            case "holidays":
+            case "prazdniny":
+                eventsModule.holidayCommand(msg);
+                break;
+
             case "pridat":
             case "add":
                 eventsModule.addEvent.add(msg, commandMessageArray);
                 break;
+
 
             case "eventy":
             case "events":

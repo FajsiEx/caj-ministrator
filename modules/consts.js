@@ -26,6 +26,25 @@ module.exports = {
         GREEN: 4521796
     },
 
+    HOLIDAYS: [
+        {
+            name: "Polročne prázdniny",
+            date: new Date("02/01/2019 00:00:00 GMT+0100")
+        },
+        {
+            name: "Jarné prázdniny",
+            date: new Date("02/23/2019 00:00:00 GMT+0100")
+        },
+        {
+            name: "Veľkonočné prázdniny",
+            date: new Date("04/18/2019 00:00:00 GMT+0100")
+        },
+        {
+            name: "Letné prázdniny",
+            date: new Date("06/29/2019 00:00:00 GMT+0100")
+        }
+    ],
+
     TIMETABLE: [
         ['Víkend'],
         ['Stn', 'Mat', 'Aj / Tsv', 'Zeq', 'ProP / Aj', 'Fyz', 'Sjl'],

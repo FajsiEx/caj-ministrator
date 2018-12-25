@@ -11,6 +11,7 @@ const TIMETABLE = require("./consts").TIMETABLE;
 const WEEK_DAYS = require("./consts").WEEK_DAYS;
 const WEEK_DAYS_SHORT = require("./consts").WEEK_DAYS_SHORT;
 const COLORS = require("./consts").COLORS;
+const HOLIDAYS = require("./consts").HOLIDAYS;
 
 module.exports = {
     addEvent: {
@@ -217,5 +218,28 @@ module.exports = {
                 }
             });
         }
+    },
+
+    holidayCommand:(msg)=>{
+        let holidaysString = "";
+        nowStamp = new Date().getTime();
+
+        HOLIDAYS.forEach((e)=>{
+            console.log(e);
+            deltaStamp = e.date.getTime() - nowStamp;
+            console.log(deltaStamp);
+            days = Math.floor(deltaStamp / 86400000);
+            console.log(days);
+            
+            holidaysString+=`**${days}d** - ${e.name}\n`
+        });
+
+        msg.channel.send({
+            "embed": {
+                "title": "Prázdniny",
+                "color": COLORS.BLUE,
+                "description": holidaysString
+            }
+        });
     }
 }
