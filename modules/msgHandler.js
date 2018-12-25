@@ -336,7 +336,7 @@ module.exports = (msg, discordClient)=>{
                 break;
 
             case "nameday":
-                eventsModule.wishNameday();
+                eventsModule.wishNameday(discordClient);
                 break;
 
             case "agree":
