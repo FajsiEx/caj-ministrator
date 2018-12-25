@@ -19,7 +19,7 @@ const COLORS = require("./consts").COLORS;
 const DEV_USERID = require("./consts").DEV_USERID;
 const JOKES = require("./consts").JOKES;
 const OWO_DM_REPLY_MSGS = require("./consts").OWO_DM_REPLY_MSGS;
-const NAEMDAYS = require("./consts").NAMEDAYS;
+const NAMEDAYS = require("./consts").NAMEDAYS;
 const discordBotConfig = require("./consts").discordBotConfig;
 
 const startsWithNumber = require("./smallFunctions").startsWithNumber;
