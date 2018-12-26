@@ -13,7 +13,8 @@ const infoCommands = require("./infoCommands");
 const modCommands = require("./modCommands");
 const devCommands = require("./devCommands");
 const botCommands = require("./botCommands");
-const mathCommands = require("./mathCommands");
+
+const mathHandler = require("./mathHandler");
 
 const RESTRICTED_MODE = require("./consts").RESTRICTED_MODE;
 const TEST_CHANNEL_ID = require("./consts").TEST_CHANNEL_ID;
@@ -114,7 +115,7 @@ module.exports = (msg, discordClient)=>{
 
         console.log(`[COMMAND] Recieved command COMMAND(${command}) ARRAY(${JSON.stringify(commandMessageArray)})`);
 
-        if (mathCommands.processCommand(msg)) {return;}
+        if (mathHandler.processCommand(msg)) {return;}
 
         /* Normal commands */
         switch (command) {
