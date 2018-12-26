@@ -7,9 +7,7 @@
 const math = require('mathjs');
 
 module.exports = {
-    startsWithNumber: (str)=>{
-        return str.match(/^\d/);
-    },
+    
 
     compare: (a,b)=>{
         if (a.time < b.time) {
@@ -26,19 +24,6 @@ module.exports = {
             return true;
         }else{
             return false;
-        }
-    },
-
-    solveMathProblem: (problem)=>{
-        try {
-            problem = problem.replace(/×/g, '*');
-            problem = problem.replace(/x/g, '*');
-    
-            let result = math.eval(problem);
-            return result;
-        }catch(e){
-            console.error(e);
-            return false;            
         }
     }
 }

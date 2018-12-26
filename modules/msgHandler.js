@@ -12,6 +12,8 @@ const smallFunctions = require("./smallFunctions");
 const infoCommands = require("./infoCommands");
 const modCommands = require("./modCommands");
 const devCommands = require("./devCommands");
+const botCommands = require("./botCommands");
+const mathCommands = require("./mathCommands");
 
 const RESTRICTED_MODE = require("./consts").RESTRICTED_MODE;
 const TEST_CHANNEL_ID = require("./consts").TEST_CHANNEL_ID;
@@ -26,6 +28,10 @@ const startsWithNumber = require("./smallFunctions").startsWithNumber;
 const e621 = require('./e621');
 
 let modModeOn = false;
+
+let commands = {
+    
+}
 
 module.exports = (msg, discordClient)=>{
     let usersObj = globalVariables.get("usersObj");
@@ -66,11 +72,12 @@ module.exports = (msg, discordClient)=>{
         };
         globalVariables.set("usersObj", usersObj)
     }
+
     // Things for the spam protection
     // As per request this is now disabled.
     //spamProtect(msg, author_id, author);
 
-    console.log(`[MESSAGE] Recieved message. AUTHOR(${author} ### ${author_id}) CONTENT(${message})`);
+    console.log(`[MESSAGE] Recieved message. AUTHOR(${author} /// ${author_id}) CONTENT(${message})`);
     
     // Good night wishing thing
     jffModule.goodNightWisher(msg, author_id, discordClient);
@@ -91,28 +98,12 @@ module.exports = (msg, discordClient)=>{
 
     // Detect if the message is a bot command
     if (message.startsWith(discordBotConfig.prefix)) { // If the message starts with !, take it as a command
+        botCommands.handleBotCommand(msg);
+
         if (modModeOn) { // If the bot is in restricted mode,
             if (msg.author.id != DEV_USERID) { // Check if the author is dev
                 return;
             }
-        }
-
-        if (msg.channel.id != TEST_CHANNEL_ID) { // If the channel is not a testing channel,
-            if(usersObj[author_id].commandTimeout > 0) { // Do the command cooldown thing
-                msg.channel.send({
-                    "embed": {
-                        "title": "Nespamuj toľko",
-                        "color": COLORS.RED,
-                        "description": "Vydrž ešte ***" + usersObj[author_id].commandTimeout + "*** sek. lol."
-                    }
-                });
-                globalVariables.set("usersObj", usersObj);
-                return;
-            }else{
-                usersObj[author_id].commandTimeout+=0; // TODO: Fix this top use Date().getTime();
-            }
-        }else{
-            console.log("[SPAM_IGNORE] Ignored commandprotect from bot-testing")
         }
 
         let commandMessageArray = msg.content.split(" "); // Split words of the message into an array
@@ -123,34 +114,7 @@ module.exports = (msg, discordClient)=>{
 
         console.log(`[COMMAND] Recieved command COMMAND(${command}) ARRAY(${JSON.stringify(commandMessageArray)})`);
 
-        if (startsWithNumber(message.slice(1)) || message.slice(1).startsWith("(") || message.slice(1).startsWith("[") || message.slice(1).startsWith("-")) { // If the command is: !(0123456789) or -,(,[, take it as a math problem
-            let problem = message.slice(1);
-            let result = smallFunctions.solveMathProblem(problem);
-
-            if (result === false) {
-                msg.channel.send({
-                    "embed": {
-                        "title": "Nesprávny príklad",
-                        "color": COLORS.RED,
-                        "description": 'Neviem vypočítať tento príklad :('
-                    }
-                });
-            }else{
-                msg.channel.send({
-                    "embed": {
-                        "title": "Vypočítaný príkad",
-                        "color": COLORS.BLUE,
-                        "fields": [
-                            {
-                                "name": "Príklad: " + problem,
-                                "value": "Výsledok: **" + result + "**"
-                            }
-                        ]
-                    }
-                });
-            }
-            return; // We don't need anything else.
-        }
+        if (mathCommands.processCommand(msg)) {return;}
 
         /* Normal commands */
         switch (command) {
