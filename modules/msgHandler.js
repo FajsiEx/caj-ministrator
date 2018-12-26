@@ -371,15 +371,15 @@ module.exports = (msg, discordClient)=>{
                 }
 
                 const KILL_MSGS = {
-                    342227744513327107: "Hah he's dead already. *inside*", // FajsiEx
-                    305705560966430721: "Nowpe.", // Cody
-                    337911105525645316: "Ten by mal byť niečo ako mŕtvy, ale nie.", // bocmangg
-                    236189237379072001: "-_-", // Astimos
-                    514499632924065812: "Go fuck yourself.", // Caj-bot
-                    184405311681986560: "Would like, but we're on the same boat.", // FredBoat
-                    294462085000331265: "Pri svojej hyperaktivite sa zabije sám", // Albert
-                    514489259290263557: "", // Dan
-                    346961640979300356: "He ded. He ghost, you see.", // David
+                    '342227744513327107': "Hah he's dead already. *inside*", // FajsiEx
+                    '305705560966430721': "Nowpe.", // Cody
+                    '337911105525645316': "Ten by mal byť niečo ako mŕtvy, ale nie.", // bocmangg
+                    '236189237379072001': "-_-", // Astimos
+                    '514499632924065812': "Go fuck yourself.", // Caj-bot
+                    '184405311681986560': "Would like, but we're on the same boat.", // FredBoat
+                    '294462085000331265': "Pri svojej hyperaktivite sa zabije sám", // Albert
+                    '514489259290263557': "", // Dan
+                    '346961640979300356': "He ded. He ghost, you see.", // David
                 }
 
                 let customKillMsg = KILL_MSGS[msg.mentions.members.first().id];
