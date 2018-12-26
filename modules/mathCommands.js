@@ -1,7 +1,7 @@
 
 module.exports = {
     processCommand: (msg)=>{
-        let commandContent = message.slice(1);
+        let commandContent = msg.content.slice(1);
         if (this.startsWithNumber(commandContent) ||
             commandContent.startsWith("(") ||
             commandContent.startsWith("[") ||
