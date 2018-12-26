@@ -1,6 +1,6 @@
 
 module.exports = {
-    processCommand: (msg)=>{
+    processCommand: function(msg){
         let commandContent = msg.content.slice(1);
         if (this.startsWithNumber(commandContent) ||
             commandContent.startsWith("(") ||
@@ -37,7 +37,7 @@ module.exports = {
         }
     },
 
-    solveMathProblem: (problem)=>{
+    solveMathProblem: function(problem){
         try {
             problem = problem.replace(/×/g, '*');
             problem = problem.replace(/x/g, '*');
@@ -50,7 +50,7 @@ module.exports = {
         }
     },
 
-    startsWithNumber: (str)=>{
+    startsWithNumber: function(str){
         return str.match(/^\d/);
     },
 }
