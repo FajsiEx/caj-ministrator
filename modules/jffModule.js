@@ -28,14 +28,6 @@ module.exports = {
         }
     },
 
-    ahojCommand: (msg)=> {
-        
-    },
-
-    zhniReply: (msg)=> {
-        
-    },
-
     goodNightWisher: (msg, author_id, discordClient)=>{
         let message = msg.content;
 
@@ -45,10 +37,6 @@ module.exports = {
             usersObj[author_id].alreadyWishedGN = 15
             return;
         }
-    },
-
-    sendRedditMeme: (msg)=> {
-
     },
 
     owoReplier: (msg, discordClient)=>{
@@ -98,18 +86,6 @@ module.exports = {
         }else{
             return false; // continue executing the code
         }
-    },
-
-    roll: (msg, commandMessageArray)=>{
-        
-    },
-
-    tf: (msg, commandMessageArray)=>{
-        
-    },
-    
-    aleCauCommand: (msg)=>{
-        
     },
 
     wipReply: (msg, type)=> {
