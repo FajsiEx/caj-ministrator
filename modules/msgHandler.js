@@ -99,10 +99,6 @@ module.exports = (msg, discordClient)=>{
 
         /* Normal commands */
         switch (command) {
-            case "gtg":
-            case "cau":
-                msg.channel.send("I'll be waiting...");
-                break;
 
             case "skap":
             case "umri":

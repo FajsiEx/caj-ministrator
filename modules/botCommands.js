@@ -7,15 +7,16 @@ const ping = require("./commands/dev/ping");
 
 const spravnyprikaz = require("./commands/jff/spravnyprikaz");
 const tea = require("./commands/jff/tea");
+const gtg = require("./commands/jff/gtg");
 
 const meme = require("./commands/jff/meme");
 
 let commands = {
     'ping': (msg)=>{ping.command(msg);},
-
-    'spravnyprikaz': (msg)=>{spravnyprikaz.command(msg);},
-
+    
     // Random commands
+    'spravnyprikaz': (msg)=>{spravnyprikaz.command(msg);},
+    'gtg': (msg)=>{gtg.command(msg);},
     'tea': (msg)=>{tea.command(msg);},
 
     // Memes
@@ -58,7 +59,7 @@ let commands = {
     'drzhore': (msg)=>{meme.command(msg, "holdup")},
     'holehore': (msg)=>{meme.command(msg, "holdup")},
 
-    'bye': (msg)=>{meme.command(msg, "bye")}
+    'bye': (msg)=>{meme.command(msg, "bye")},
     'cau': (msg)=>{meme.command(msg, "bye")}
 }
 
