@@ -13,6 +13,7 @@ const rip = require("./commands/jff/rip");
 const ahoj = require("./commands/jff/ahoj");
 const zhni = require("./commands/jff/zhni");
 const joke = require("./commands/jff/joke");
+const kill = require("./commands/jff/kill");
 
 const roll = require("./commands/random/roll");
 const tf = require("./commands/random/tf");
@@ -48,6 +49,9 @@ let commands = {
     'joke': (msg)=>{joke.command(msg);},
     'vtip': (msg)=>{joke.command(msg);},
     'haha': (msg)=>{joke.command(msg);},
+
+    'kill': (msg)=>{kill.command(msg);},
+    'zabi': (msg)=>{kill.command(msg);},
 
     // Roll
     'roll': (msg)=>{roll.command(msg);},

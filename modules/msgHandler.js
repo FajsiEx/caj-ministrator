@@ -93,9 +93,6 @@ module.exports = (msg, discordClient)=>{
         
         /* Normal commands */
         switch (command) {
-
-            case "kill":
-                break;
                 
             case "help":
             case "pomoc":
