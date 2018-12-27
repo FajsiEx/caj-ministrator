@@ -97,10 +97,6 @@ module.exports = (msg, discordClient)=>{
         
         /* Normal commands */
         switch (command) {
-            case "e621":
-            case "hell":
-                
-                break;
 
             case "roll":
                 jffModule.roll(msg, commandMessageArray);

@@ -17,6 +17,8 @@ const united = require("./commands/lyrics/united");
 const meme = require("./commands/jff/meme");
 const meirl = require("./commands/jff/meirl");
 
+const e621 = require("./commands/yiff/e621");
+
 let commands = {
     'ping': (msg)=>{ping.command(msg);},
     
@@ -31,6 +33,10 @@ let commands = {
     'umri': (msg)=>{skap.command(msg);},
 
     'rip': (msg)=>{rip.command(msg);},
+
+    // >_<
+    'e621': (msg)=>{e621.command(msg);},
+    'hell': (msg)=>{e621.command(msg);},
 
     // Lyrics
     'technokitty': (msg)=>{technokitty.command(msg);},

@@ -7,7 +7,7 @@ module.exports = {
     command: function(msg) {
         let usersObj = globalVariables.get("usersObj");
         
-        if (!usersObj[author_id].agreedWarning) {
+        if (!usersObj[msg.author.id].agreedWarning) {
             msg.author.send({
                 "embed": {
                     "title": "Varovanie!",
