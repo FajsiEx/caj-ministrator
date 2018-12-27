@@ -6,6 +6,8 @@ const mathHandler = require("./mathHandler");
 const ping = require("./commands/dev/ping");
 const send = require("./commands/dev/send");
 const st = require("./commands/dev/st");
+const testread = require("./commands/dev/testread");
+const testpp = require("./commands/dev/testpp");
 
 const mute = require("./commands/mod/mute");
 const unmute = require("./commands/mod/unmute");
@@ -49,6 +51,10 @@ let commands = {
     'send': (msg, discordClient)=>{send.command(msg, discordClient);},
 
     'st': (msg)=>{st.command(msg);},
+
+    'testread': (msg)=>{testread.command(msg);},
+
+    'testpp': (msg)=>{testpp.command(msg);},
 
     // Mod commands
     'mute': (msg)=>{mute.command(msg);},
