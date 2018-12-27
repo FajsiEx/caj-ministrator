@@ -22,10 +22,6 @@ const OWO_DM_REPLY_MSGS = require("./consts").OWO_DM_REPLY_MSGS;
 
 const discordBotConfig = require("./consts").discordBotConfig;
 
-let commands = {
-    
-}
-
 module.exports = (msg, discordClient)=>{
     let usersObj = globalVariables.get("usersObj");
     let events = globalVariables.get("events");
@@ -97,14 +93,6 @@ module.exports = (msg, discordClient)=>{
         
         /* Normal commands */
         switch (command) {
-
-            case "aledan": // TODO: Finish !aledan command
-                jffModule.wipReply(msg);
-                break;
-
-            case "nameday": // discard as of now.
-                eventsModule.wishNameday(discordClient);
-                break;
 
             case "agree":
                 usersObj[author_id].agreedWarning = true;
