@@ -88,26 +88,7 @@ module.exports = (msg, discordClient)=>{
     // Detect if the message is a bot command
     if (message.startsWith(discordBotConfig.prefix)) { // If the message starts with !, take it as a command
         botCommands.handleBotCommand(msg, discordClient);
-
         return;
-        
-        /* Normal commands */
-        switch (command) {
-
-            default: // If there is a command sent but it is invalid fall back to this
-                msg.channel.send({
-                    "embed": {
-                        "title": "Nesprávny príkaz",
-                        "color": COLORS.RED,
-                        "description": `${discordBotConfig.prefix + command} je niečo ako správny príkaz, ale nie.\nPre list príkazov **!help**`,
-                        "footer": {
-                            "text": "Pôvodne som si myslel že to je meme pre všetkých, ako za starého dobrého komunizmu. Ale mílil som sa. Článok 13 Európskej únie mi prikazuje creditovat autora tohto memu (Davida Magyerku) od ktorého som tento meme bezočividne ukradol. Týmto by som sa chcel osobne a úprimne ospravedlniť Davidovi Magyerkovi za moju sebeckosť a idiotskosť pri používaní tohto memu bez jeho autorskeho súhlasu. Ďakujem. #saveTheInternet #article13"
-                        }
-                    }
-                });
-
-                break;
-        }
     }
 
     globalVariables.set("usersObj", usersObj);
