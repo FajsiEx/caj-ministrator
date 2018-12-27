@@ -98,14 +98,6 @@ module.exports = (msg, discordClient)=>{
         /* Normal commands */
         switch (command) {
 
-            case "roll":
-                jffModule.roll(msg, commandMessageArray);
-                break;
-
-            case "tf":
-                jffModule.tf(msg, commandMessageArray);
-                break;
-
             case "ahoj":
                 jffModule.ahojCommand(msg);
                 break;

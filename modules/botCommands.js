@@ -11,6 +11,9 @@ const gtg = require("./commands/jff/gtg");
 const skap = require("./commands/jff/skap");
 const rip = require("./commands/jff/rip");
 
+const roll = require("./commands/random/roll");
+const tf = require("./commands/random/tf");
+
 const technokitty = require("./commands/lyrics/technokitty");
 const united = require("./commands/lyrics/united");
 
@@ -33,6 +36,10 @@ let commands = {
     'umri': (msg)=>{skap.command(msg);},
 
     'rip': (msg)=>{rip.command(msg);},
+
+    // Roll
+    'roll': (msg)=>{roll.command(msg);},
+    'tf': (msg)=>{tf.command(msg);},
 
     // >_<
     'e621': (msg)=>{e621.command(msg);},
