@@ -4,6 +4,7 @@ const DEV_USERID = require("./consts").DEV_USERID;
 const mathHandler = require("./mathHandler");
 
 const ping = require("./commands/dev/ping");
+const send = require("./commands/dev/send");
 
 const help = require("./commands/info/help");
 
@@ -33,6 +34,7 @@ const agree = require("./commands/yiff/agree");
 let commands = {
     // Dev commands
     'ping': (msg)=>{ping.command(msg);},
+    'send': (msg, discordClient)=>{send.command(msg, discordClient);},
 
     // Info commands
     'help': (msg)=>{help.command(msg);},

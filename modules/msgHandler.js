@@ -93,10 +93,6 @@ module.exports = (msg, discordClient)=>{
         
         /* Normal commands */
         switch (command) {
-
-            case "send":
-                break;
-
             case "holidays":
             case "prazdniny": /////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 eventsModule.holidayCommand(msg);

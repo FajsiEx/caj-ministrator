@@ -4,6 +4,8 @@ const DEV_USERID = require("../../consts").DEV_USERID;
 
 module.exports = {
     command: function(msg, discordClient) {
+        let commandMessageArray = msg.content.split(" ");
+        
         if (msg.author.id != DEV_USERID) {
             msg.channel.send({
                 "embed": {
