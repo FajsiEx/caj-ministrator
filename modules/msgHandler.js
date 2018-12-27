@@ -97,14 +97,6 @@ module.exports = (msg, discordClient)=>{
         
         /* Normal commands */
         switch (command) {
-            case "technokitty":
-                jffModule.technoKittyReply(msg);
-                break;
-
-            case "united":
-                jffModule.unitedReply(msg);
-                break;
-
             case "meme":
             case "meirl":
                 jffModule.sendRedditMeme(msg);

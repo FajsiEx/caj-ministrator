@@ -11,6 +11,9 @@ const gtg = require("./commands/jff/gtg");
 const skap = require("./commands/jff/skap");
 const rip = require("./commands/jff/rip");
 
+const technokitty = require("./commands/lyrics/technokitty");
+const united = require("./commands/lyrics/united");
+
 const meme = require("./commands/jff/meme");
 
 let commands = {
@@ -27,6 +30,12 @@ let commands = {
     'umri': (msg)=>{skap.command(msg);},
 
     'rip': (msg)=>{rip.command(msg);},
+
+    // Lyrics
+    'technokitty': (msg)=>{technokitty.command(msg);},
+    'tk': (msg)=>{technokitty.command(msg);},
+
+    'united': (msg)=>{united.command(msg);},
 
     // Memes
     'excuse': (msg)=>{meme.command(msg, "excuse")},
