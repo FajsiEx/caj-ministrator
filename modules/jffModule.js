@@ -5,8 +5,6 @@
 
 */
 
-const request = require("request");
-const WEEK_DAYS = require("./consts").WEEK_DAYS;
 const COLORS = require("./consts").COLORS;
 const DEV_USERID = require("./consts").DEV_USERID;
 
