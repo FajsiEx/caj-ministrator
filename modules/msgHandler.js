@@ -94,31 +94,6 @@ module.exports = (msg, discordClient)=>{
         /* Normal commands */
         switch (command) {
 
-            case "pridat":
-            case "add":
-                eventsModule.addEvent.add(msg, commandMessageArray);
-                break;
-
-
-            case "eventy":
-            case "events":
-                eventsModule.eventsCommand(null, msg, commandMessageArray);
-                break;
-
-            case "dnes":
-            case "today":
-                eventsModule.eventsCommand("dnes", msg, commandMessageArray);
-                break;
-
-            case "zajtra":
-            case "tomorrow":
-                eventsModule.eventsCommand("zajtra", msg, commandMessageArray);
-                break;
-
-            case "vymazat":
-               
-                break;
-
             case "mute":
             case "silence":
                 

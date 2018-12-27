@@ -56,6 +56,11 @@ let commands = {
     'events': (msg)=>{events.command(msg);},
     'eventy': (msg)=>{events.command(msg);},
 
+    'dnes': (msg)=>{events.command(msg, "dnes");},
+    'today': (msg)=>{events.command(msg, "dnes");},
+    'zajtra': (msg)=>{events.command(msg, "zajtra");},
+    'tomorrow': (msg)=>{events.command(msg, "zajtra");},
+
     'vymazat': (msg)=>{deleteEvent.command(msg);},
 
     // Random commands
