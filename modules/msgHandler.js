@@ -94,10 +94,6 @@ module.exports = (msg, discordClient)=>{
         /* Normal commands */
         switch (command) {
 
-            case "alecau":
-                jffModule.aleCauCommand(msg);
-                break;
-
             case "send":
                 break;
 

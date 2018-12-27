@@ -16,6 +16,7 @@ const ahoj = require("./commands/jff/ahoj");
 const zhni = require("./commands/jff/zhni");
 const joke = require("./commands/jff/joke");
 const kill = require("./commands/jff/kill");
+const alecau = require("./commands/jff/alecau");
 
 const roll = require("./commands/random/roll");
 const tf = require("./commands/random/tf");
@@ -60,6 +61,8 @@ let commands = {
 
     'kill': (msg)=>{kill.command(msg);},
     'zabi': (msg)=>{kill.command(msg);},
+
+    'alecau': (msg)=>{alecau.command(msg);},
 
     // Roll
     'roll': (msg)=>{roll.command(msg);},
