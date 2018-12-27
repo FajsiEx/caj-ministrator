@@ -10,6 +10,7 @@ const tea = require("./commands/jff/tea");
 const gtg = require("./commands/jff/gtg");
 const skap = require("./commands/jff/skap");
 const rip = require("./commands/jff/rip");
+const ahoj = require("./commands/jff/ahoj");
 
 const roll = require("./commands/random/roll");
 const tf = require("./commands/random/tf");
@@ -36,6 +37,8 @@ let commands = {
     'umri': (msg)=>{skap.command(msg);},
 
     'rip': (msg)=>{rip.command(msg);},
+
+    'ahoj': (msg)=>{ahoj.command(msg);},
 
     // Roll
     'roll': (msg)=>{roll.command(msg);},
