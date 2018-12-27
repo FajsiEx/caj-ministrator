@@ -8,6 +8,7 @@ const ping = require("./commands/dev/ping");
 const spravnyprikaz = require("./commands/jff/spravnyprikaz");
 const tea = require("./commands/jff/tea");
 const gtg = require("./commands/jff/gtg");
+const skap = require("./commands/jff/skap");
 
 const meme = require("./commands/jff/meme");
 
@@ -16,8 +17,13 @@ let commands = {
     
     // Random commands
     'spravnyprikaz': (msg)=>{spravnyprikaz.command(msg);},
+
     'gtg': (msg)=>{gtg.command(msg);},
+
     'tea': (msg)=>{tea.command(msg);},
+
+    'skap': (msg)=>{skap.command(msg);},
+    'umri': (msg)=>{skap.command(msg);},
 
     // Memes
     'excuse': (msg)=>{meme.command(msg, "excuse")},

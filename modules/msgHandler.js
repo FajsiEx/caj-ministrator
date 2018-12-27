@@ -94,16 +94,9 @@ module.exports = (msg, discordClient)=>{
         botCommands.handleBotCommand(msg, discordClient);
 
         return;
-
         
-
         /* Normal commands */
         switch (command) {
-
-            case "skap":
-            case "umri":
-                jffModule.skapReply(msg);
-                break;
 
             case "rip":
                 jffModule.ripReply(msg);
