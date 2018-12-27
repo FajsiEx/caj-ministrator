@@ -15,6 +15,7 @@ const technokitty = require("./commands/lyrics/technokitty");
 const united = require("./commands/lyrics/united");
 
 const meme = require("./commands/jff/meme");
+const meirl = require("./commands/jff/meirl");
 
 let commands = {
     'ping': (msg)=>{ping.command(msg);},
@@ -38,6 +39,9 @@ let commands = {
     'united': (msg)=>{united.command(msg);},
 
     // Memes
+    'meme': (msg)=>{meirl.command(msg)},
+    'meirl': (msg)=>{meirl.command(msg)},
+
     'excuse': (msg)=>{meme.command(msg, "excuse")},
     'excuseme': (msg)=>{meme.command(msg, "excuse")},
     'excusemewtf': (msg)=>{meme.command(msg, "excuse")},
