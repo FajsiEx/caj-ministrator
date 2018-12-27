@@ -1,5 +1,7 @@
 
 const COLORS = require("../../consts").COLORS;
+const TIMETABLE = require("../../consts").TIMETABLE;
+const WEEK_DAYS = require("../../consts").WEEK_DAYS;
 const globalVariables = require("../../globalVariables");
 const smallFunctions = require("../../smallFunctions");
 
@@ -61,8 +63,6 @@ module.exports = {
         }
     
         events.forEach((e)=>{
-            logger.log("debug", "Event loop @ ET:" + e.time + ", EC:" + e.content);
-
             if (e.time < new Date().getTime()) { // If the event is old
                 return;
             }

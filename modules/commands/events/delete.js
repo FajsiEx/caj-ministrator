@@ -17,7 +17,8 @@ module.exports = {
              return;
          }
          */
-
+        
+         // TODO: Improve this.
         let eventContentToDelete = msg.content.slice(9); // gets rid of the !vymazat
 
         let eventsDelete = events.filter((e)=>{

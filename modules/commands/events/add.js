@@ -1,9 +1,10 @@
 
 const COLORS = require("../../consts").COLORS;
+const WEEK_DAYS_SHORT = require("../../consts").WEEK_DAYS_SHORT;
 const globalVariables = require("../../globalVariables");
 
 module.exports = {
-    command: function(msg, commandMessageArray){
+    command: function(msg){
         let commandMessageArray = msg.content.split(" ");
         let events = globalVariables.get("events");
     
