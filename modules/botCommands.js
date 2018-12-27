@@ -6,6 +6,9 @@ const mathHandler = require("./mathHandler");
 const ping = require("./commands/dev/ping");
 const send = require("./commands/dev/send");
 
+const mute = require("./commands/mod/mute");
+const unmute = require("./commands/mod/unmute");
+
 const help = require("./commands/info/help");
 
 const holidays = require("./commands/events/holidays");
@@ -40,6 +43,12 @@ let commands = {
     // Dev commands
     'ping': (msg)=>{ping.command(msg);},
     'send': (msg, discordClient)=>{send.command(msg, discordClient);},
+
+    // Mod commands
+    'mute': (msg)=>{mute.command(msg);},
+    'silence': (msg)=>{mute.command(msg);},
+    'unmute': (msg)=>{unmute.command(msg);},
+    'unsilence': (msg)=>{unmute.command(msg);},
 
     // Info commands
     'help': (msg)=>{help.command(msg);},

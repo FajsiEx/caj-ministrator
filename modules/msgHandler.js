@@ -94,16 +94,6 @@ module.exports = (msg, discordClient)=>{
         /* Normal commands */
         switch (command) {
 
-            case "mute":
-            case "silence":
-                
-                break;
-
-            case "unmute":
-            case "unsilence":
-                
-                break;
-
             case "nuke":
                 modCommands.nuke(msg, commandMessageArray);
                 break;
