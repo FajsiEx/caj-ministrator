@@ -8,6 +8,7 @@ const send = require("./commands/dev/send");
 
 const mute = require("./commands/mod/mute");
 const unmute = require("./commands/mod/unmute");
+const nuke = require("./commands/mod/nuke");
 
 const help = require("./commands/info/help");
 
@@ -47,8 +48,11 @@ let commands = {
     // Mod commands
     'mute': (msg)=>{mute.command(msg);},
     'silence': (msg)=>{mute.command(msg);},
+
     'unmute': (msg)=>{unmute.command(msg);},
     'unsilence': (msg)=>{unmute.command(msg);},
+
+    'nuke': (msg)=>{nuke.command(msg);},
 
     // Info commands
     'help': (msg)=>{help.command(msg);},

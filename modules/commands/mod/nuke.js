@@ -1,5 +1,6 @@
 
 const COLORS = require("../../consts").COLORS;
+const smallFunctions = require("../../smallFunctions");
 
 module.exports = {
     command: function(msg) {

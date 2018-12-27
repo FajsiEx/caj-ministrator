@@ -94,10 +94,6 @@ module.exports = (msg, discordClient)=>{
         /* Normal commands */
         switch (command) {
 
-            case "nuke":
-                modCommands.nuke(msg, commandMessageArray);
-                break;
-
             case "nick":
                 // TODO: Finish him!
                 break;
