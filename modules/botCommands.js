@@ -8,6 +8,8 @@ const send = require("./commands/dev/send");
 
 const help = require("./commands/info/help");
 
+const holidays = require("./commands/events/holidays");
+
 const spravnyprikaz = require("./commands/jff/spravnyprikaz");
 const tea = require("./commands/jff/tea");
 const gtg = require("./commands/jff/gtg");
@@ -40,6 +42,10 @@ let commands = {
     'help': (msg)=>{help.command(msg);},
     'pomoc': (msg)=>{help.command(msg);},
     'prikazy': (msg)=>{help.command(msg);},
+
+    // Event commands
+    'holidays': (msg)=>{holidays.command(msg);},
+    'prazdniny': (msg)=>{holidays.command(msg);},
 
     // Random commands
     'spravnyprikaz': (msg)=>{spravnyprikaz.command(msg);},
