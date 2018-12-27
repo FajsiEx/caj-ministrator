@@ -99,13 +99,6 @@ module.exports = (msg, discordClient)=>{
 
         /* Normal commands */
         switch (command) {
-
-            case "tea":
-            case "caj":
-                jffModule.serveTea(msg);
-                break;
-
-            case "bye":
             case "gtg":
             case "cau":
                 msg.channel.send("I'll be waiting...");

@@ -59,6 +59,7 @@ let commands = {
     'holehore': (msg)=>{meme.command(msg, "holdup")},
 
     'bye': (msg)=>{meme.command(msg, "bye")}
+    'cau': (msg)=>{meme.command(msg, "bye")}
 }
 
 module.exports = {
