@@ -93,11 +93,6 @@ module.exports = (msg, discordClient)=>{
         
         /* Normal commands */
         switch (command) {
-
-            case "agree":
-                usersObj[author_id].agreedWarning = true;
-                break;
-
             case "joke":
             case "vtip":
             case "haha":

@@ -23,6 +23,7 @@ const meme = require("./commands/jff/meme");
 const meirl = require("./commands/jff/meirl");
 
 const e621 = require("./commands/yiff/e621");
+const agree = require("./commands/yiff/agree");
 
 let commands = {
     'ping': (msg)=>{ping.command(msg);},
@@ -45,11 +46,14 @@ let commands = {
 
     // Roll
     'roll': (msg)=>{roll.command(msg);},
+
     'tf': (msg)=>{tf.command(msg);},
 
     // >_<
     'e621': (msg)=>{e621.command(msg);},
     'hell': (msg)=>{e621.command(msg);},
+
+    'agree': (msg)=>{agree.command(msg);},
 
     // Lyrics
     'technokitty': (msg)=>{technokitty.command(msg);},
