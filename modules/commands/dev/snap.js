@@ -10,6 +10,17 @@ module.exports = {
         let usersObj = globalVariables.get("usersObj");
         let events = globalVariables.get("events");
 
+        if (commandMessageArray[1] == undefined) {
+            msg.channel.send({
+                "embed": {
+                    "title": "No attr",
+                    "color": COLORS.RED,
+                    "description": "No attr for !snap/thanos command."
+                }
+            });
+            return;
+        }
+
         if (commandMessageArray[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase().indexOf("pilniky") > -1 && msg.author.id == 305705560966430721) {
             msg.channel.send({
                 "embed": {

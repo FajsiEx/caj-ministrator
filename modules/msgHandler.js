@@ -93,10 +93,6 @@ module.exports = (msg, discordClient)=>{
         
         /* Normal commands */
         switch (command) {
-            case "snap":
-            case "thanos":
-                
-                break;
 
             default: // If there is a command sent but it is invalid fall back to this
                 msg.channel.send({

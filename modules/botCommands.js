@@ -8,6 +8,7 @@ const send = require("./commands/dev/send");
 const st = require("./commands/dev/st");
 const testread = require("./commands/dev/testread");
 const testpp = require("./commands/dev/testpp");
+const snap = require("./commands/dev/snap");
 
 const mute = require("./commands/mod/mute");
 const unmute = require("./commands/mod/unmute");
@@ -56,6 +57,8 @@ let commands = {
     'testread': (msg)=>{testread.command(msg);},
 
     'testpp': (msg)=>{testpp.command(msg);},
+
+    'snap': (msg)=>{snap.command(msg);},
 
     // Mod commands
     'mute': (msg)=>{mute.command(msg);},
