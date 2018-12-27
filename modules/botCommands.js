@@ -9,6 +9,7 @@ const spravnyprikaz = require("./commands/jff/spravnyprikaz");
 const tea = require("./commands/jff/tea");
 const gtg = require("./commands/jff/gtg");
 const skap = require("./commands/jff/skap");
+const rip = require("./commands/jff/rip");
 
 const meme = require("./commands/jff/meme");
 
@@ -24,6 +25,8 @@ let commands = {
 
     'skap': (msg)=>{skap.command(msg);},
     'umri': (msg)=>{skap.command(msg);},
+
+    'rip': (msg)=>{rip.command(msg);},
 
     // Memes
     'excuse': (msg)=>{meme.command(msg, "excuse")},

@@ -97,11 +97,6 @@ module.exports = (msg, discordClient)=>{
         
         /* Normal commands */
         switch (command) {
-
-            case "rip":
-                jffModule.ripReply(msg);
-                break;
-
             case "technokitty":
                 jffModule.technoKittyReply(msg);
                 break;
