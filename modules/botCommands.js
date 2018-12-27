@@ -11,6 +11,7 @@ const gtg = require("./commands/jff/gtg");
 const skap = require("./commands/jff/skap");
 const rip = require("./commands/jff/rip");
 const ahoj = require("./commands/jff/ahoj");
+const zhni = require("./commands/jff/zhni");
 
 const roll = require("./commands/random/roll");
 const tf = require("./commands/random/tf");
@@ -39,6 +40,8 @@ let commands = {
     'rip': (msg)=>{rip.command(msg);},
 
     'ahoj': (msg)=>{ahoj.command(msg);},
+
+    'zhni': (msg)=>{zhni.command(msg);},
 
     // Roll
     'roll': (msg)=>{roll.command(msg);},

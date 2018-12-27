@@ -98,14 +98,6 @@ module.exports = (msg, discordClient)=>{
         /* Normal commands */
         switch (command) {
 
-            case "ahoj":
-                jffModule.ahojCommand(msg);
-                break;
-
-            case "zhni":
-                jffModule.zhniReply(msg);
-                break;
-
             case "aledan": // TODO: Finish !aledan command
                 jffModule.wipReply(msg);
                 break;
