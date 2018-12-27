@@ -5,6 +5,8 @@ const mathHandler = require("./mathHandler");
 
 const ping = require("./commands/dev/ping");
 
+const help = require("./commands/info/help");
+
 const spravnyprikaz = require("./commands/jff/spravnyprikaz");
 const tea = require("./commands/jff/tea");
 const gtg = require("./commands/jff/gtg");
@@ -28,8 +30,14 @@ const e621 = require("./commands/yiff/e621");
 const agree = require("./commands/yiff/agree");
 
 let commands = {
+    // Dev commands
     'ping': (msg)=>{ping.command(msg);},
-    
+
+    // Info commands
+    'help': (msg)=>{help.command(msg);},
+    'pomoc': (msg)=>{help.command(msg);},
+    'prikazy': (msg)=>{help.command(msg);},
+
     // Random commands
     'spravnyprikaz': (msg)=>{spravnyprikaz.command(msg);},
 
