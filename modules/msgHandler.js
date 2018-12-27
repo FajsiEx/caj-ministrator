@@ -93,20 +93,6 @@ module.exports = (msg, discordClient)=>{
         
         /* Normal commands */
         switch (command) {
-            case "joke":
-            case "vtip":
-            case "haha":
-                msg.channel.send({
-                    "embed": {
-                        "title": "Haha, vtip",
-                        "color": COLORS.BLUE,
-                        "description": JOKES[Math.floor(Math.random() * JOKES.length)],
-                        "footer": {
-                            "text": "Tieto vtipy boli pridané Danom Valníčkom"
-                        }
-                    }
-                });
-                break;
 
             case "kill":
                 break;
