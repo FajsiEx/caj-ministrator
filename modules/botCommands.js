@@ -4,13 +4,19 @@ const DEV_USERID = require("./consts").DEV_USERID;
 const mathHandler = require("./mathHandler");
 
 const ping = require("./commands/dev/ping");
+
 const spravnyprikaz = require("./commands/jff/spravnyprikaz");
+const tea = require("./commands/jff/tea");
+
 const meme = require("./commands/jff/meme");
 
 let commands = {
     'ping': (msg)=>{ping.command(msg);},
 
     'spravnyprikaz': (msg)=>{spravnyprikaz.command(msg);},
+
+    // Random commands
+    'tea': (msg)=>{tea.command(msg);},
 
     // Memes
     'excuse': (msg)=>{meme.command(msg, "excuse")},

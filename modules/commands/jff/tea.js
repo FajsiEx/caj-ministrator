@@ -1,5 +1,5 @@
 
-const globalVariables = require("./globalVariables");
+const globalVariables = require("../../globalVariables");
 
 module.exports = {
     command: function(msg) {
