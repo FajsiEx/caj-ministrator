@@ -4,7 +4,6 @@
 
 */
 
-//const spamProtect = require("./spamProtect"); // Disabled
 const jffModule = require("./jffModule");
 const globalVariables = require("./globalVariables");
 const botCommands = require("./botCommands");
@@ -53,10 +52,6 @@ module.exports = (msg, discordClient)=>{
         };
         globalVariables.set("usersObj", usersObj)
     }
-
-    // Things for the spam protection
-    // As per request this is now disabled.
-    //spamProtect(msg, author_id, author);
 
     console.log(`[MESSAGE] Recieved message. AUTHOR(${author} /// ${author_id}) CONTENT(${message})`);
     
