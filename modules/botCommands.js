@@ -12,6 +12,7 @@ const testpp = require("./commands/dev/testpp");
 const mute = require("./commands/mod/mute");
 const unmute = require("./commands/mod/unmute");
 const nuke = require("./commands/mod/nuke");
+const mod = require("./commands/mod/mod");
 
 const help = require("./commands/info/help");
 
@@ -64,6 +65,8 @@ let commands = {
     'unsilence': (msg)=>{unmute.command(msg);},
 
     'nuke': (msg)=>{nuke.command(msg);},
+
+    'mod': (msg)=>{mod.command(msg);},
 
     // Info commands
     'help': (msg)=>{help.command(msg);},

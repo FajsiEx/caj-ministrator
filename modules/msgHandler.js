@@ -93,11 +93,6 @@ module.exports = (msg, discordClient)=>{
         
         /* Normal commands */
         switch (command) {
-
-            case "mod":
-                
-                break;
-
             case "snap":
             case "thanos":
                 
