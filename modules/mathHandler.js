@@ -1,5 +1,5 @@
 
-
+const math = require('mathjs');
 
 module.exports = {
     processCommand: function(msg){

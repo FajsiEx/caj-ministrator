@@ -6,10 +6,10 @@
 */
 
 const globalVariables = require("./globalVariables");
-const TIMEOUT_BEFORE_REREPORT = require("./consts").TIMEOUT_BEFORE_REREPORT;
-const TIMEOUT_INCREMENT = require("./consts").TIMEOUT_INCREMENT;
-const TIMEOUT_TRIGGER = require("./consts").TIMEOUT_TRIGGER;
-const COLORS = require("./consts").COLORS;
+const TIMEOUT_BEFORE_REREPORT = require("../../consts").TIMEOUT_BEFORE_REREPORT;
+const TIMEOUT_INCREMENT = require("../../consts").TIMEOUT_INCREMENT;
+const TIMEOUT_TRIGGER = require("../../consts").TIMEOUT_TRIGGER;
+const COLORS = require("../../consts").COLORS;
 
 module.exports = (msg, author_id, author, mode)=>{ // On message recieved
     // if (msg.channel.id == 514873440159793167) {

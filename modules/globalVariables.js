@@ -4,7 +4,8 @@ let global = {
     logData: [],
     teas: 0,
     startTime: 0,
-    lastSaveTime: 0
+    lastSaveTime: 0,
+    modModeOn: false
 }
 
 dbModule = require("./db");
