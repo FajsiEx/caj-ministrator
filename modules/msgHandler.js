@@ -93,10 +93,6 @@ module.exports = (msg, discordClient)=>{
         
         /* Normal commands */
         switch (command) {
-
-            case "st":
-                break;
-
             case "testread":
                 break;
 

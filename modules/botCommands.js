@@ -5,6 +5,7 @@ const mathHandler = require("./mathHandler");
 
 const ping = require("./commands/dev/ping");
 const send = require("./commands/dev/send");
+const st = require("./commands/dev/st");
 
 const mute = require("./commands/mod/mute");
 const unmute = require("./commands/mod/unmute");
@@ -44,7 +45,10 @@ const agree = require("./commands/yiff/agree");
 let commands = {
     // Dev commands
     'ping': (msg)=>{ping.command(msg);},
+
     'send': (msg, discordClient)=>{send.command(msg, discordClient);},
+
+    'st': (msg)=>{st.command(msg);},
 
     // Mod commands
     'mute': (msg)=>{mute.command(msg);},
