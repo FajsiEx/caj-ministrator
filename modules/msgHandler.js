@@ -7,17 +7,9 @@
 //const spamProtect = require("./spamProtect"); // Disabled
 const jffModule = require("./jffModule");
 const globalVariables = require("./globalVariables");
-const eventsModule = require("./events");
-const smallFunctions = require("./smallFunctions");
-const infoCommands = require("./infoCommands");
-const modCommands = require("./modCommands");
-const devCommands = require("./devCommands");
 const botCommands = require("./botCommands");
 
-const mathHandler = require("./mathHandler");
-
 const COLORS = require("./consts").COLORS;
-const JOKES = require("./consts").JOKES;
 const OWO_DM_REPLY_MSGS = require("./consts").OWO_DM_REPLY_MSGS;
 
 const discordBotConfig = require("./consts").discordBotConfig;
