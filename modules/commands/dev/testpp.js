@@ -1,6 +1,5 @@
 
 const COLORS = require("../../consts").COLORS;
-const DEV_USERID = require("../../consts").DEV_USERID;
 const globalVariables = require("../../globalVariables");
 
 module.exports = {
