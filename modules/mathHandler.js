@@ -1,5 +1,6 @@
 
 const math = require('mathjs');
+const COLORS = require('./consts').COLORS;
 
 module.exports = {
     processCommand: function(msg){
@@ -20,13 +21,19 @@ module.exports = {
                     }
                 });
             }else{
+                if (Math.random() < 0.2) {
+                    msg.channel.send({
+                        "files": ["https://i.imgur.com/IBopYGD.png"]
+                    });
+                }
+
                 msg.channel.send({
                     "embed": {
                         "title": "Vypočítaný príkad",
                         "color": COLORS.BLUE,
                         "fields": [
                             {
-                                "name": "Príklad: " + problem,
+                                "name": "Príklad: " + commandContent,
                                 "value": "Výsledok: **" + result + "**"
                             }
                         ]

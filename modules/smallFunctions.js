@@ -4,8 +4,6 @@
 
 */
 
-const math = require('mathjs');
-
 module.exports = {
     compare: (a,b)=>{
         if (a.time < b.time) {
