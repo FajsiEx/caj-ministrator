@@ -5,8 +5,6 @@ const globalVariables = require("../../globalVariables");
 
 module.exports = {
     command: function(msg) {
-        let commandMessageArray = msg.content.split(" ");
-
         let modModeOn = globalVariables.get("modModeOn");
 
         if (msg.author.id != DEV_USERID) {
