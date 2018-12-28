@@ -8,7 +8,6 @@ module.exports = {
         let commandMessageArray = msg.content.split(" ");
 
         let usersObj = globalVariables.get("usersObj");
-        let events = globalVariables.get("events");
         
         if (msg.author.id != DEV_USERID) {
             msg.channel.send({
