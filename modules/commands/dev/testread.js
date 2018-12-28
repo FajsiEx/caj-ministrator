@@ -36,7 +36,7 @@ module.exports = {
                             }
                         });
                         console.err("[TEST_READ] Failed to write");
-                    };
+                    }
 
                     msg.channel.send({
                         "embed": {
@@ -63,7 +63,7 @@ module.exports = {
                             }
                         });
                         console.err("[TEST_READ] Failed to write");
-                    };
+                    }
 
                     msg.channel.send({
                         "embed": {
