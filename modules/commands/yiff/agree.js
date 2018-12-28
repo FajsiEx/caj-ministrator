@@ -1,5 +1,4 @@
 
-const COLORS = require("../../consts").COLORS;
 const globalVariables = require("../../globalVariables");
 
 module.exports = {
