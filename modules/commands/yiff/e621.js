@@ -30,8 +30,7 @@ module.exports = {
                 "color": COLORS.BLUE
             }
         }).then((sentMsg)=>{
-            let request = e621api.random("m/m", "E", 1, post => {
-                
+            e621api.random("m/m", "E", 1, post => {
                 msg.channel.send({
                     "embed": {
                         "title": "by " + post[0]['author'],
