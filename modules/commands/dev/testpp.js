@@ -21,7 +21,7 @@ module.exports = {
 
         switch (commandMessageArray[1]) {
             case "users":
-                let usersObjString = "";
+                let usersObjString;
 
                 let users = Object.keys(usersObj); // Gets keys (users) of the usersObj
                 for (user of users) { // For each user
