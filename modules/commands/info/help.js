@@ -1,13 +1,10 @@
-/*
 
-    Methods for replying to the information commands such as: !ping, !info, !help, and so on...
-
-*/
-
-const COLORS = require("./consts").COLORS;
+const COLORS = require("../../consts").COLORS;
 
 module.exports = {
-    helpCommand: (msg, commandMessageArray)=>{
+    command: function(msg) {
+        let commandMessageArray = msg.content.split(" ");
+
         if (commandMessageArray[1]) {
             switch (commandMessageArray[1]) {
                 case "ping":
@@ -19,7 +16,7 @@ module.exports = {
                         }
                     });
                     break;
-    
+        
                 case "help":
                 case "pomoc":
                 case "prikazy":
@@ -31,7 +28,7 @@ module.exports = {
                         }
                     });
                     break;
-    
+        
                 case "pridat":
                 case "add":
                     msg.channel.send({
@@ -42,7 +39,7 @@ module.exports = {
                         }
                     });
                     break;
-    
+        
                 case "vymazat":
                 case "remove":
                 case "delete":
@@ -54,7 +51,7 @@ module.exports = {
                         }
                     });
                     break;
-    
+        
                 case "eventy":
                 case "events":
                     msg.channel.send({
@@ -78,7 +75,7 @@ module.exports = {
                         **!eventy/events** - Vypíše nasledujúce eventy
                         **!dnes/zajtra** - To isté ako !eventy dnes/zajtra
                         **!<príklad>** - Vypočíta príklad
-    
+        
                         *Pre viac informácií o príkaze napíšte napr.: !help eventy*
                         *Ak chcete niečo pridať/zmeniť napíšte do bot-chat*
                     `

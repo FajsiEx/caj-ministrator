@@ -26,7 +26,7 @@ module.exports = {
         });
     },
 
-    getLogs: (type, limit)=>{
+    getLogs: ()=>{
         logData.sort(compareReverse);
         return logData;
     }

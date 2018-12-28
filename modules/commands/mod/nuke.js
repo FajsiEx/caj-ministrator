@@ -1,9 +1,11 @@
 
-const smallFunctions = require("./smallFunctions");
-const COLORS = require("./consts").COLORS;
+const COLORS = require("../../consts").COLORS;
+const smallFunctions = require("../../smallFunctions");
 
 module.exports = {
-    nuke: (msg, commandMessageArray)=>{
+    command: function(msg) {
+        let commandMessageArray = msg.content.split(" ");
+        
         if (commandMessageArray[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase().indexOf("me") > -1) {
             msg.channel.send({
                 "embed": {

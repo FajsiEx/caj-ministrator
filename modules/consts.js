@@ -91,5 +91,48 @@ module.exports = {
         "Don't owo me, baka~~~~ >_<",
         "My disappointment is immeasurable and my day is ruined. Because of you.",
         "Don't you fucking dare do that again."
+    ],
+
+    NAMEDAYS: { // Emma 30.1, Gordii ?,
+        2: {
+            24: "Matej",
+            26: "Viktor",
+            27: "Alex"
+        },
+        3: {
+            7: "Tomáš"
+        },
+        4: {
+            8: "Albert"
+        },
+        6: {
+            7: "Robo",
+            29: "Peťo"
+        },
+        7: {
+            6: "Patrik",
+            21: "Daniel",
+            25: "Jakub"
+        },
+        9: {
+            24: "Ľuboš",
+            29: "Michal"
+        },
+        10: {
+            15: "Tez",
+            18: "Lukáš",
+            30: "Šimon"
+        },
+        11: {
+            11: '342227744513327107' // Martin & Maros
+        },
+        12: {
+            17: "Nela",
+            30: "Dávid"
+        }
+    },
+
+    NAMEDAY_ARRAY: [
+        "Nový rok", "Alexandra", "Daniela", "Drahoslav", "Andrea", "Antónia", "Bohuslava/Róbert", "Severín", "Alexej", "Dáša", "Malvína", "Ernest", "Rastislav", "Radovan", "Dobroslav", "Kristína", "Nataša" ,"Bohdana" ,"Drahomíra" ,"Dalibor" ,"Vincent" ,"Zora" , "Miloš" ,"Timotej" ,"Gejza" ,"Tamara" ,"Bohuš" ,"Alfonz" , "Gašpar" ,"Ema" ,"Emil" , "Tatiana" ,"Erika/Erik" ,"Blažej" ,"Veronika" ,"Agáta" ,"Dorota" , "Vanda" ,"Zoja" ,"Zdenko" ,"Gabriela" ,"Dezider" ,"Perla" , "Arpád" ,"Valentín" ,"Pravoslav" ,"Ida" ,"Miloslava" ,"Jaromír" , "Vlasta" ,"Lívia" ,"Eleonóra" ,"Etela" ,"Roman/Romana" , "Matej" ,"Frederik/Frederika" ,"Viktor" ,"Alexander" , "Zlatica" ,"" , "Albín" ,"Anežka" ,"Bohumil/Bohumila" ,"Kazimír" ,"Fridrich" , "Radoslav/Radoslava" ,"Tomáš/Róbert" ,"Alan/Alana" ,"Františka" , "Branislav/Bruno" ,"Angela/Angelika" ,"Gregor" ,"Vlastimil" , "Matilda" ,"Svetlana" ,"Boleslav" ,"Ľubica" ,"Eduard" ,"Jozef" , "Víťazoslav" ,"Blahoslav" ,"Beňadik" ,"Adrián" ,"Gabriel" , "Marián" ,"Emanuel" ,"Alena" ,"Soňa" ,"Miroslav" ,"Vieroslava" , "Benjamín" , "Hugo" ,"Zita" ,"Richard" ,"Izidor" ,"Miroslava" ,"Irena" , "Zoltán/Róbert" ,"Albert" ,"Milena" ,"Igor" ,"Július" ,"Estera" , "Aleš" ,"Justína" ,"Fedor" ,"Dana/Danica" ,"Rudolf" ,"Valér" , "Jela" ,"Marcel" ,"Ervín" ,"Slavomír" ,"Vojtech" ,"Juraj" , "Marek" ,"Jaroslava" ,"Jaroslav" ,"Jarmila" ,"Lea" , "Anastázia" , "Sviatok práce" ,"Žigmund" ,"Galina" ,"Florián" ,"Lesana/Lesia" ,"Hermína" , "Monika/Róbert" ,"Ingrida" ,"Roland" ,"Viktória" ,"Blažena" , "Pankrác" ,"Servác" ,"Bonifác" ,"Žofia" ,"Svetozár" ,"Gizela" , "Viola" ,"Gertrúda" ,"Bernard" ,"Zina" ,"Júlia/Juliana" , "Želmíra" ,"Ela" ,"Urban" ,"Dušan" ,"Iveta" ,"Viliam" ,"Vilma" , "Ferdinand" ,"Petronela/Petrana" , "Žaneta" ,"Xénia" ,"Karolína" ,"Lenka" ,"Laura" ,"Norbert" , "Róbert" ,"Medard" ,"Stanislava" ,"Margaréta" ,"Dobroslava" , "Zlatko" ,"Anton" ,"Vasil" ,"Vít" ,"Blanka" ,"Adolf" ,"Vratislav" , "Alfréd" ,"Valéria" ,"Alojz" ,"Paulína" ,"Sidónia" ,"Ján" , "Tadeáš" ,"Adriana" ,"Ladislav/Ladislava" ,"Beata" , "Peter/Pavol/Petra" ,"Melánia" , "Diana" ,"Berta" ,"Miloslav" ,"Prokop" ,"" ,"Patrik/Patrícia" , "Oliver" ,"Ivan" ,"Lujza" ,"Amália" ,"Milota" ,"Nina" ,"Margita" , "Kamil" ,"Henrich" ,"Drahomír" ,"Bohuslav" ,"Kamila" ,"Dušana" , "Iľja/Eliáš" ,"Daniel" ,"Magdaléna" ,"Oľga" ,"Vladimír" , "Jakub" ,"Anna/Hana" ,"Božena" ,"Krištof" ,"Marta" ,"Libuša" , "Ignác" , "Božidara" ,"Gustáv" ,"Jerguš" ,"Dominik/Dominika" ,"Hortenzia" , "Jozefína" ,"Štefánia" ,"Oskar" ,"Ľubomíra" ,"Vavrinec" , "Zuzana" ,"Darina" ,"Ľubomír" ,"Mojmír" ,"Marcela" ,"Leonard" , "Milica" ,"Elena/Helena" ,"Lýdia" ,"Anabela" ,"Jana" ,"Tichomír" , "Filip" ,"Bartolomej" ,"Ľudovít" ,"Samuel" ,"Silvia" ,"Augustín" , "Nikola/Nikolaj" ,"Ružena" ,"Nora" , "Drahoslava" ,"Linda" ,"Belo" ,"Rozália" ,"Regína" ,"Alica" , "Marianna" ,"Miriama" ,"Martina" ,"Oleg" ,"Bystrík" , "Mária" ,"Ctibor" ,"Ľudomil" ,"Jolana" ,"Ľudmila" ,"Olympia" , "Eugénia" ,"Konštantín" ,"Ľuboslav/Ľuboslava" ,"Matúš" ,"Móric" , "Zdenka" ,"Ľuboš/Ľubor" ,"Vladislav" ,"Edita" ,"Cyprián" , "Václav" ,"Michal/Michaela" ,"Jarolím" , "Arnold" ,"Levoslav" ,"Stela" ,"František" ,"Viera" ,"Natália" , "Eliška" ,"Brigita" ,"Dionýz" ,"Slavomíra" ,"Valentína" , "Maximilián" ,"Koloman" ,"Boris" ,"Terézia" ,"Vladimíra" , "Hedviga" ,"Lukáš" ,"Kristián" ,"Vendelín" ,"Uršuľa" ,"Sergej" , "Alojzia" ,"Kvetoslava" ,"Aurel" ,"Demeter" ,"Sabína" ,"Dobromila" , "Klára" ,"Šimon/Simona" ,"Aurélia" , "Denis/Denisa" ,"" ,"Hubert" ,"Karol" ,"Imrich" ,"Renáta" , "René" ,"Bohumír" ,"Teodor" ,"Tibor" ,"Martin/Maroš" ,"Svätopluk" , "Stanislav" ,"Irma" ,"Leopold" ,"Agnesa" ,"Klaudia" ,"Eugen" , "Alžbeta" ,"Félix" ,"Elvíra" ,"Cecília" ,"Klement" ,"Emília" , "Katarína" ,"Kornel" ,"Milan" ,"Henrieta" ,"Vratko" , "Ondrej/Andrej" , "Edmund" ,"Bibiána" ,"Oldrich" ,"Barbora" ,"Oto" ,"Mikuláš" , "Ambróz" ,"Marína" ,"Izabela" ,"Radúz" ,"Hilda" ,"Otília" , "Lucia" ,"Branislava/Bronislava" ,"Ivica" ,"Albína" ,"Kornélia" , "Sláva/Slávka" ,"Judita" ,"Dagmara" ,"Bohdan" ,"Adela" ,"Nadežda" , "Adam/Eva" ,"Vianoce" ,"Štefan" ,"Filoména" ,"Ivana/Ivona" ,"Milada" , "Dávid" ,"Silvester"
     ]
 }

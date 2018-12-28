@@ -47,7 +47,7 @@ discordClient.on('message', (msg)=>{
     msgHandler(msg, discordClient);
 });
 
-let setStatus = ()=>{
+let setStatus = ()=>{ // TODO: fix this thing jesus this is fucking ugly as fuck...h-h-how did I even write this shit...
     if (starting) {
         console.warn("[SET_STATUS] Bot starting. ABORT!");
         return;
