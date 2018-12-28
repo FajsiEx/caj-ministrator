@@ -12,7 +12,7 @@ const DATABASE_URI = process.env.DATABASE_URI;
 
 module.exports = {
     load: ()=>{ // Loads data from the DB to the memory
-        return new Promise((resolve, reject)=>{
+        return new Promise((resolve)=>{
             MongoClient.connect(DATABASE_URI, (err, client) => {
                 console.log("[LOAD] Loading data...");
                 if (err) return console.error(err)
