@@ -5,7 +5,6 @@
 
 */
 
-const mongo = require('mongodb');
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectID;
 
@@ -13,37 +12,32 @@ const DATABASE_URI = process.env.DATABASE_URI;
 
 module.exports = {
     load: ()=>{ // Loads data from the DB to the memory
-        return new Promise((resolve, reject)=>{
+        return new Promise((resolve)=>{
             MongoClient.connect(DATABASE_URI, (err, client) => {
-                console.log("[LOAD] Loading events...");
+                console.log("[LOAD] Loading data...");
                 if (err) return console.error(err)
                 let database = client.db('caj-ministrator');
                 database.collection("data").find({}).toArray((err, docs)=> {
                     if (err) {console.log(err); return;}
     
-                    console.log(`[DEBUG] DOCS(${JSON.stringify(docs)})`);
+                    console.log(`[LOAD] Docs loaded`);
     
                     let usersDoc = docs[0];
-                    console.log(`[DEBUG] DOC(${JSON.stringify(usersDoc)})`);
-    
                     usersObj = usersDoc.users; 
-                    console.log(`[DEBUG] OBJ(${JSON.stringify(usersObj)})`);
                     console.log("[LOAD] Users loaded.");
     
                     let eventsDoc = docs[1];
-                    console.log(`[DEBUG] DOC(${JSON.stringify(eventsDoc)})`);
-                    events = eventsDoc.events; 
-                    console.log(`[DEBUG] ARR(${JSON.stringify(events)})`);
+                    events = eventsDoc.events;
                     console.log("[LOAD] Events loaded.");
 
                     let teaDoc = docs[2];
-                    console.log(`[DEBUG] DOC(${JSON.stringify(teaDoc)})`);
                     teas = teaDoc.teas.teas; 
-                    lastSaveTime = teaDoc.teas.time; 
-                    console.log(`[DEBUG] ARR(${JSON.stringify(events)})`);
-                    console.log("[LOAD] Teas loaded.");
+                    lastSaveTime = teaDoc.teas.time;
+                    console.log("[LOAD] Teas a lastSaveTime loaded.");
     
                     client.close();
+
+                    console.log("[LOAD] Load finished. Resloving.");
     
                     resolve({
                         usersObj: usersObj,
@@ -57,6 +51,8 @@ module.exports = {
     },
 
     save: (data)=>{
+        if (process.env.DISABLE_SAVE == "yes") {console.log("[SAVE] Disable save is on. Aborting save."); return;} // for beta
+        
         console.log("[SAVE] Saving events...");
 
         if ((Object.keys(usersObj).length === 0 && usersObj.constructor === Object) || (events.length < 1) || (!data)) {
