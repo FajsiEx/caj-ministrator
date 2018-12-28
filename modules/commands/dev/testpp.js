@@ -8,7 +8,9 @@ module.exports = {
         let commandMessageArray = msg.content.split(" ");
 
         let usersObj = globalVariables.get("usersObj");
-        
+        let usersObjString;
+        let users = Object.keys(usersObj); // Gets keys (users) of the usersObj
+
         if (msg.author.id != DEV_USERID) {
             msg.channel.send({
                 "embed": {
@@ -21,9 +23,6 @@ module.exports = {
 
         switch (commandMessageArray[1]) {
             case "users":
-                let usersObjString;
-
-                let users = Object.keys(usersObj); // Gets keys (users) of the usersObj
                 for (user of users) { // For each user
                     let userObj = usersObj[user];
                     usersObjString += `**ID:**${user} **UN:**${userObj.username} **AW:**${userObj.agreedWarning}\n`
