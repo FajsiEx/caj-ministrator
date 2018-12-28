@@ -1,6 +1,4 @@
 
-const COLORS = require("../../consts").COLORS;
-
 module.exports = {
     command: function(msg) {
         let rolled = Math.floor(Math.random() * 100);

@@ -1,5 +1,4 @@
 
-const COLORS = require("../../consts").COLORS;
 const WEEK_DAYS = require("../../consts").WEEK_DAYS;
 
 module.exports = {
