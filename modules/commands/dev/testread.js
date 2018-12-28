@@ -11,16 +11,6 @@ module.exports = {
         let usersObj = globalVariables.get("usersObj");
         let events = globalVariables.get("events");
 
-        if (msg.author.id != DEV_USERID) {
-            msg.channel.send({
-                "embed": {
-                    "title": "Tento príkaz môžu vykonavať len developeri z dôvodu redukcie spamu. sry :/",
-                    "color": COLORS.RED
-                }
-            }).then(msg => msg.delete(5000));
-            return;
-        }
-
         let fileName = "JSON_dump.json";
 
         switch (commandMessageArray[1]) {
