@@ -2,6 +2,7 @@
 const COLORS = require("./consts").COLORS;
 const DEV_USERID = require("./consts").DEV_USERID;
 const globalVariables = require("./globalVariables");
+const smallFunctions = require("./smallFunctions");
 const mathHandler = require("./mathHandler");
 
 const ping = require("./commands/dev/ping");
@@ -191,8 +192,8 @@ module.exports = {
     handleBotCommand: (msg, discordClient)=>{
         let modModeOn = globalVariables.get("modModeOn");
 
-        if (modModeOn) { // If the bot is in restricted mode,
-            if (msg.author.id != DEV_USERID) { // Check if the author is dev
+        if (modModeOn) { // If the bot is in modderated mode,
+            if (!smallFunctions.checkAdmin(msg)) { // Check if the author is dev
                 return;
             }
         }
