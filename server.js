@@ -47,7 +47,7 @@ discordClient.on('message', (msg)=>{
     msgHandler(msg, discordClient);
 });
 
-let setStatus = ()=>{ // TODO: fix this thing jesus this is fucking ugly as fuck...h-h-how did I even write this shit...
+let setStatus = ()=>{
     if (starting) {
         console.warn("[SET_STATUS] Bot starting. ABORT!");
         return;
@@ -58,7 +58,7 @@ let setStatus = ()=>{ // TODO: fix this thing jesus this is fucking ugly as fuck
     let hours = new Date().getHours();
 
     let statusText = "your messages. ";
-    let statusType = "WATCHING";
+    let statusType = "STREAMING";
 
     if (hours < 5) {
         statusText = "you sleep. ";
