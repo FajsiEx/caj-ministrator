@@ -18,18 +18,19 @@ module.exports = (msg, discordClient)=>{
     let events = globalVariables.get("events");
 
     if (msg.author.bot) { // We check if the author of the message isn't a bot
-        console.log("[IGNORE] Bot message has been ignored.");
+        console.log("[MSG_HANDLER] REJECTED: Bot message has been ignored.");
         return; // If they are, we just ignore them.
     }
 
     if (!msg.channel) { // Because the bot uses the msg.channel.send function to reply in most cases we check if that channel exists
-        console.log("[ERR] Not a msg in a channel.");
+        console.log("[MSG_HANDLER] REJECTED: No message channel object");
         msg.reply({
             "embed": {
                 "title": "Prosím napíšte mi do nejakého kanálu alebo DM.",
                 "color": COLORS.RED
             }
         });
+        return;
     }
 
     // Get some shit from the msg object
@@ -53,7 +54,7 @@ module.exports = (msg, discordClient)=>{
         globalVariables.set("usersObj", usersObj)
     }
 
-    console.log(`[MSG_HANDLER] Message from ${author}: "${message}"`);
+    console.log(`[MSG_HANDLER] MESSAGE: ${author}: "${message}"`);
     
     // Good night wishing thing
     jffModule.goodNightWisher(msg, author_id, discordClient);
@@ -74,10 +75,12 @@ module.exports = (msg, discordClient)=>{
 
     // Detect if the message is a bot command
     if (message.startsWith(discordBotConfig.prefix)) { // If the message starts with !, take it as a command
+        console.log(`[MSG_HANDLER] COMMAND: Passing message to botCommand handler.`);
         botCommands.handleBotCommand(msg, discordClient);
         return;
     }
 
+    console.log(`[MSG_HANDLER] SAVE: Saving global vars. We're done here.`);
     globalVariables.set("usersObj", usersObj);
     globalVariables.set("events", events);
 }

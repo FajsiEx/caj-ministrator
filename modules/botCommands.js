@@ -189,10 +189,13 @@ let commands = {
 
 module.exports = {
     handleBotCommand: (msg, discordClient)=>{
+        console.log(`[BOT_COMMANDS] HANDLER: Called. Processing the msg...`);
+        
         let modModeOn = globalVariables.get("modModeOn");
 
         if (modModeOn) { // If the bot is in modderated mode,
             if (!smallFunctions.checkAdmin(msg)) { // Check if the author is dev
+                console.log(`[BOT_COMMANDS] REJECTED: Bot is in mod mode.`);
                 return;
             }
         }
@@ -203,13 +206,17 @@ module.exports = {
         command = command.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Get rid of shit in Slovak lang
         command = command.toLocaleLowerCase(); // Ignore the case by converting it to lower
 
-        console.log(`[COMMAND] Recieved command COMMAND(${command}) ARRAY(${JSON.stringify(commandMessageArray)})`);
+        console.log(`[BOT_COMMANDS] HANDLER: Done with basic processing of the msg. Calling mathHandler to check...`);
 
         if (mathHandler.processCommand(msg)) {return;} // This will check if the command is a math command and if it is, it will process and reply to it and return true;
 
+        console.log(`[BOT_COMMANDS] HANDLER: All the shit out of the way. Checking with object literals...`);
+
         if (commands[command]) {
+            console.log(`[BOT_COMMANDS] PASS: Command found in the object. Passing control to the actual command module. Done here.`);
             commands[command](msg, discordClient);
         }else{
+            console.log(`[BOT_COMMANDS] HANDLER: Command not found in object. Replying and we're done.`);
             msg.channel.send({
                 "embed": {
                     "title": "Nesprávny príkaz",
