@@ -20,10 +20,10 @@ module.exports = {
         if(!smallFunctions.checkAdmin(msg) || msg.member.roles.some(r=>["EmoteMaster"].includes(r.name))) { // Yes I have allowed this.
             msg.channel.send({
                 "embed": {
-                    "title": "Tento príkaz môžu vykonávať len admini lol",
+                    "title": "Admin only.",
                     "color": COLORS.RED
                 }
-            });
+            }).then(msg => msg.delete(5000));
             return;
         }
 

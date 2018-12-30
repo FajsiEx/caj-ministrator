@@ -1,20 +1,18 @@
 
 const COLORS = require("../../consts").COLORS;
-const DEV_USERID = require("../../consts").DEV_USERID;
 const globalVariables = require("../../globalVariables");
 
 module.exports = {
     command: function(msg) {
         let modModeOn = globalVariables.get("modModeOn");
 
-        if (msg.author.id != DEV_USERID) {
+        if(!smallFunctions.checkAdmin(msg)) { // Yes I have allowed this.
             msg.channel.send({
                 "embed": {
-                    "title": "Nope.",
-                    "description": "Dev only :/",
+                    "title": "Admin only.",
                     "color": COLORS.RED
                 }
-            });
+            }).then(msg => msg.delete(5000));
             return;
         }
 

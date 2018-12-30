@@ -6,16 +6,6 @@ const globalVariables = require("../../globalVariables");
 
 module.exports = {
     command: function(msg) {
-        if (msg.author.id != DEV_USERID) {
-            msg.channel.send({
-                "embed": {
-                    "title": "Dev only.",
-                    "color": COLORS.RED
-                }
-            }).then(msg => msg.delete(5000));
-            return;
-        }
-
         let baseLoadingString = "Running self-test...this may take a while... ";
 
         msg.channel.send({

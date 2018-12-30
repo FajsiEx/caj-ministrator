@@ -181,6 +181,8 @@ let commands = {
     'drzhore': (msg)=>{meme.command(msg, "holdup")},
     'holehore': (msg)=>{meme.command(msg, "holdup")},
 
+    'ohfuck': (msg)=>{meme.command(msg, "ohfuck")},
+
     'bye': (msg)=>{meme.command(msg, "bye")},
     'cau': (msg)=>{meme.command(msg, "bye")}
 }
