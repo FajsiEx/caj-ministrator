@@ -62,6 +62,7 @@ let setStatus = ()=>{ // TODO: fix this thing jesus this is fucking ugly as fuck
 
     if (hours < 5) {
         statusText = "you sleep. ";
+    }
 
     endStamp = new Date("Sun Jan 08 2019 08:00:00 GMT+0100").getTime();
     nowStamp = new Date().getTime();
