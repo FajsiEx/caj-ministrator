@@ -60,8 +60,6 @@ let setStatus = ()=>{
     let statusText = "your messages. ";
     let statusType = "WATCHING";
 
-    discordClient.verified = true;
-
     if (hours < 5) {
         statusText = "you sleep. ";
     }
