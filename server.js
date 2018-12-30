@@ -47,7 +47,7 @@ discordClient.on('message', (msg)=>{
     msgHandler(msg, discordClient);
 });
 
-let setStatus = ()=>{ // TODO: fix this thing jesus this is fucking ugly as fuck...h-h-how did I even write this shit...
+let setStatus = ()=>{
     if (starting) {
         console.warn("[SET_STATUS] Bot starting. ABORT!");
         return;
@@ -56,36 +56,13 @@ let setStatus = ()=>{ // TODO: fix this thing jesus this is fucking ugly as fuck
     console.log("[SET_STATUS] Setting activity...");
     
     let hours = new Date().getHours();
-    let day = new Date().getDay();
-    let isWorkDay = false;
-
-    if (day==1||day==2||day==3||day==4||day==5) {isWorkDay = true;}
 
     let statusText = "your messages. ";
     let statusType = "WATCHING";
 
-    if ( (hours <= 3 && isWorkDay) || (hours >= 22 && (day==0||day==1||day==2||day==3||day==4)) ) { // in our time (+1GMT) 23h-4h
+    if (hours < 5) {
         statusText = "you sleep. ";
-    }else if ((hours >= 7 && hours <= 13) && isWorkDay) { // in our time (+1GMT) 8h-14h
-        statusText = "the teachers. ";
-        statusType = "LISTENING";
     }
-/*
-    currentDate = new Date();
-    currentDateTS = new Date().getTime();
-
-    let addDay = 0;
-    if (currentDate.getHours() > 14) {
-        addDay = 1;
-    }
-    let countDownDateTS = new Date(currentDate.setHours(7,0,0,0)).setDate(currentDate.getDate()+addDay);
-
-    let deltaTS = countDownDateTS - currentDateTS;
-
-    let deltaDate = new Date(deltaTS);
-
-    statusText += ` School in ${deltaDate.getHours()}h ${deltaDate.getMinutes()}m`;
-*/
 
     endStamp = new Date("Sun Jan 08 2019 08:00:00 GMT+0100").getTime();
     nowStamp = new Date().getTime();

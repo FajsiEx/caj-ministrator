@@ -1,6 +1,7 @@
 
 const COLORS = require("../../consts").COLORS;
 const globalVariables = require("../../globalVariables");
+const smallFunctions = require("../../smallFunctions");
 
 module.exports = {
     command: function(msg) {
