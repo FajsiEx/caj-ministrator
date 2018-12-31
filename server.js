@@ -98,8 +98,7 @@ setInterval(setStatus, 60000);
 
 setInterval(()=>{
     currentStamp = new Date().getTime();
-    // endStamp = new Date("Tue Jan 01 2019 00:00:01 GMT+0100").getTime();
-    endStamp = new Date("Tue Jan 1 2019 00:00:01 GMT+0100").getTime();
+    endStamp = new Date("Tue Jan 01 2019 00:00:01 GMT+0100").getTime();
     deltaStamp = endStamp - currentStamp;
 
     if(deltaStamp < 1000 && deltaStamp > 0) {
