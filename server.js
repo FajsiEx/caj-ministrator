@@ -4,7 +4,7 @@
     Licensed under MIT license
     For a full license, go to LICENSE file.
     TL;DR of license: use this as you want just include the license somewhere.
-
+    
 */
 
 // As soon as the bot starts up we print a message so we know at least it's working
@@ -95,18 +95,6 @@ let setStatus = ()=>{
 }
 
 setInterval(setStatus, 60000);
-
-setInterval(()=>{
-    currentStamp = new Date().getTime();
-    endStamp = new Date("Tue Jan 01 2019 00:00:01 GMT+0100").getTime();
-    deltaStamp = endStamp - currentStamp;
-
-    if(deltaStamp < 1000 && deltaStamp > 0) {
-        discordClient.channels.get("511969442947923971").send(":confetti_ball: :confetti_ball: :confetti_ball: Šťastný nový rok! :confetti_ball: :confetti_ball: :confetti_ball:");
-    }
-
-    console.log("[NY] DS: " + deltaStamp);
-}, 1000)
 
 var express = require("express");
 var app = express();
