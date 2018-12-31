@@ -47,6 +47,15 @@ discordClient.on('message', (msg)=>{
     msgHandler(msg, discordClient);
 });
 
+discordClient.on('presenceUpdate', (oldMember, newMember)=>{
+    if (newMember.presence.game) {
+        console.log(`[PRESENCE_UPDATE] ${newMember.user.username}#${newMember.user.discriminator} [${newMember.presence.status}] - Playing ${newMember.presence.game.toString()}`);
+    }else{
+        console.log(`[PRESENCE_UPDATE] ${newMember.user.username}#${newMember.user.discriminator} [${newMember.presence.status}] - Playing nothing`);
+    }
+    
+});
+
 let setStatus = ()=>{
     if (starting) {
         console.warn("[SET_STATUS] Bot starting. ABORT!");
