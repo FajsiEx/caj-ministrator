@@ -47,6 +47,15 @@ discordClient.on('message', (msg)=>{
     msgHandler(msg, discordClient);
 });
 
+discordClient.on('presenceUpdate', (oldMember, newMember)=>{
+    if (newMember.presence.game) {
+        console.log(`[PRESENCE_UPDATE] ${newMember.user.username}#${newMember.user.discriminator} [${newMember.presence.status}] - Playing ${newMember.presence.game.toString()}`);
+    }else{
+        console.log(`[PRESENCE_UPDATE] ${newMember.user.username}#${newMember.user.discriminator} [${newMember.presence.status}] - Playing nothing`);
+    }
+    
+});
+
 let setStatus = ()=>{
     if (starting) {
         console.warn("[SET_STATUS] Bot starting. ABORT!");
@@ -86,6 +95,18 @@ let setStatus = ()=>{
 }
 
 setInterval(setStatus, 60000);
+
+setInterval(()=>{
+    currentStamp = new Date().getTime();
+    endStamp = new Date("Tue Jan 01 2019 00:00:01 GMT+0100").getTime();
+    deltaStamp = endStamp - currentStamp;
+
+    if(deltaStamp < 1000 && deltaStamp > 0) {
+        discordClient.channels.get("527170494613422092").send(":confetti_ball: :confetti_ball: :confetti_ball: Šťastný nový rok! :confetti_ball: :confetti_ball: :confetti_ball:");
+    }
+
+    console.log("[NY] DS: " + deltaStamp);
+}, 1000)
 
 var express = require("express");
 var app = express();
