@@ -102,7 +102,7 @@ setInterval(()=>{
     deltaStamp = endStamp - currentStamp;
 
     if(deltaStamp < 1000 && deltaStamp > 0) {
-        discordClient.channels.get("527170494613422092").send(":confetti_ball: :confetti_ball: :confetti_ball: Šťastný nový rok! :confetti_ball: :confetti_ball: :confetti_ball:");
+        discordClient.channels.get("511969442947923971").send(":confetti_ball: :confetti_ball: :confetti_ball: Šťastný nový rok! :confetti_ball: :confetti_ball: :confetti_ball:");
     }
 
     console.log("[NY] DS: " + deltaStamp);
