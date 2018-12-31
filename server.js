@@ -99,10 +99,10 @@ setInterval(setStatus, 60000);
 setInterval(()=>{
     currentStamp = new Date().getTime();
     // endStamp = new Date("Tue Jan 01 2019 00:00:01 GMT+0100").getTime();
-    endStamp = new Date("Mon Dec 31 2018 14:25:01 GMT+0100").getTime();
+    endStamp = new Date("Mon Dec 31 2018 14:40:01 GMT+0100").getTime();
     deltaStamp = endStamp - currentStamp;
 
-    if(0 < deltaStamp < 1000) {
+    if(deltaStamp < 1000 && deltaStamp > 0) {
         discordClient.channels.get("527170494613422092").send(":confetti_ball: :confetti_ball: :confetti_ball: Šťastný nový rok! :confetti_ball: :confetti_ball: :confetti_ball:");
     }
 
