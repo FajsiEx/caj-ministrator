@@ -49,14 +49,17 @@ const agree = require("./commands/yiff/agree");
 
 let commands = {
     // Dev commands
+    'dp': (msg)=>{ping.command(msg);},
     'ping': (msg)=>{ping.command(msg);},
 
     'send': (msg, discordClient)=>{send.command(msg, discordClient);},
 
     'st': (msg)=>{st.command(msg);},
 
+    'dtr': (msg)=>{testread.command(msg);},
     'testread': (msg)=>{testread.command(msg);},
 
+    'dtp': (msg)=>{testpp.command(msg);},
     'testpp': (msg)=>{testpp.command(msg);},
 
     'snap': (msg)=>{snap.command(msg);},
@@ -73,17 +76,20 @@ let commands = {
     'mod': (msg)=>{mod.command(msg);},
 
     // Info commands
+    'h': (msg)=>{help.command(msg);},
     'help': (msg)=>{help.command(msg);},
     'pomoc': (msg)=>{help.command(msg);},
     'prikazy': (msg)=>{help.command(msg);},
 
     // Event commands
+    'ho': (msg)=>{holidays.command(msg);},
     'holidays': (msg)=>{holidays.command(msg);},
     'prazdniny': (msg)=>{holidays.command(msg);},
 
     'add': (msg)=>{addEvent.command(msg);},
     'pridat': (msg)=>{addEvent.command(msg);},
 
+    'ev': (msg)=>{events.command(msg);},
     'events': (msg)=>{events.command(msg);},
     'eventy': (msg)=>{events.command(msg);},
 
