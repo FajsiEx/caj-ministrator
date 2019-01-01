@@ -1,6 +1,7 @@
 /*
 
     Tea-bot
+    © Fajsiex 2018-2019
     Licensed under MIT license
     For a full license, go to LICENSE file.
     TL;DR of license: use this as you want just include the license somewhere.
