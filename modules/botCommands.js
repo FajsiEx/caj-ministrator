@@ -44,8 +44,8 @@ const united = require("./commands/lyrics/united");
 const meme = require("./commands/jff/meme");
 const meirl = require("./commands/jff/meirl");
 
-const e621 = require("./commands/yiff/e621");
-const agree = require("./commands/yiff/agree");
+const e621 = require("./commands/ffiy/e621");
+const agree = require("./commands/ffiy/agree");
 
 let commands = {
     // Dev commands
