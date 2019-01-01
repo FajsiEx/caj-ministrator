@@ -1,6 +1,6 @@
 /*
 
-    Caj-bot
+    Tea-bot
     Licensed under MIT license
     For a full license, go to LICENSE file.
     TL;DR of license: use this as you want just include the license somewhere.
@@ -73,6 +73,7 @@ let setStatus = ()=>{
         statusText = "you sleep. ";
     }
 
+    /*
     endStamp = new Date("Sun Jan 08 2019 08:00:00 GMT+0100").getTime();
     nowStamp = new Date().getTime();
     deltaStamp = endStamp - nowStamp;
@@ -88,7 +89,8 @@ let setStatus = ()=>{
     seconds = Math.floor(deltaStamp / 1000);
 
     statusText += `${days} dní, ${hours} hodín, ${minutes} minút do konca prázdnin`
-
+    */
+   
     discordClient.user.setActivity(statusText, { type: statusType });
 
     console.log("[SET_STATUS] Completed");
