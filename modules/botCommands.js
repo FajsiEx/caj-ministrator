@@ -34,6 +34,7 @@ const joke = require("./commands/jff/joke");
 const kill = require("./commands/jff/kill");
 const alecau = require("./commands/jff/alecau");
 const nick = require("./commands/jff/nick");
+const kawaii = require("./commands/jff/kawaii");
 
 const roll = require("./commands/random/roll");
 const tf = require("./commands/random/tf");
@@ -128,6 +129,9 @@ let commands = {
     'alecau': (msg)=>{alecau.command(msg);},
 
     'nick': (msg, discordClient)=>{nick.command(msg, discordClient);},
+
+    'kawaii': (msg)=>{kawaii.command(msg);},
+    'kw': (msg)=>{kawaii.command(msg);},
 
     // Roll
     'roll': (msg)=>{roll.command(msg);},
