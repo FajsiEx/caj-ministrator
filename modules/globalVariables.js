@@ -5,7 +5,8 @@ let global = {
     teas: 0,
     startTime: 0,
     lastSaveTime: 0,
-    modModeOn: false
+    modModeOn: false,
+    disableStatus: false // If true auto status will be disabled
 }
 
 dbModule = require("./db");

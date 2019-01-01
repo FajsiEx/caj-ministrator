@@ -10,6 +10,7 @@ const st = require("./commands/dev/st");
 const testread = require("./commands/dev/testread");
 const testpp = require("./commands/dev/testpp");
 const snap = require("./commands/dev/snap");
+const sd = require("./commands/dev/sd");
 
 const mute = require("./commands/mod/mute");
 const unmute = require("./commands/mod/unmute");
@@ -66,6 +67,8 @@ let commands = {
     'testpp': (msg)=>{testpp.command(msg);},
 
     'snap': (msg)=>{snap.command(msg);},
+
+    'sd': (msg, discordClient)=>{sd.command(msg, discordClient);},
 
     // Mod commands
     'mute': (msg)=>{mute.command(msg);},

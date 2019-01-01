@@ -58,6 +58,10 @@ discordClient.on('presenceUpdate', (oldMember, newMember)=>{
 });
 
 let setStatus = ()=>{
+    if (globalVariables.get('disableStatus')) {
+        console.warn("[SET_STATUS] Status disabled. ABORT!");
+        return;
+    }
     if (starting) {
         console.warn("[SET_STATUS] Bot starting. ABORT!");
         return;
