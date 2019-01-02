@@ -11,6 +11,9 @@ const testread = require("./commands/dev/testread");
 const testpp = require("./commands/dev/testpp");
 const snap = require("./commands/dev/snap");
 const sd = require("./commands/dev/sd");
+const forceload = require("./commands/dev/forceload");
+const forcesave = require("./commands/dev/forcesave");
+const forceinit = require("./commands/dev/forceinit");
 
 const mute = require("./commands/mod/mute");
 const unmute = require("./commands/mod/unmute");
@@ -53,8 +56,8 @@ const agree = require("./commands/ffiy/agree");
 
 let commands = {
     // Dev commands
-    'dp': (msg)=>{ping.command(msg);},
     'ping': (msg)=>{ping.command(msg);},
+    'dp': (msg)=>{ping.command(msg);},
 
     'send': (msg, discordClient)=>{send.command(msg, discordClient);},
 
@@ -69,6 +72,16 @@ let commands = {
     'snap': (msg)=>{snap.command(msg);},
 
     'sd': (msg, discordClient)=>{sd.command(msg, discordClient);},
+
+    'forceload': (msg)=>{forceload.command(msg);},
+    'fl': (msg)=>{forceload.command(msg);},
+
+    'forcesave': (msg)=>{forcesave.command(msg);},
+    'fs': (msg)=>{forcesave.command(msg);},
+
+    'forceinit': (msg)=>{forceinit.command(msg);},
+    'fi': (msg)=>{forceinit.command(msg);},
+    
 
     // Mod commands
     'mute': (msg)=>{mute.command(msg);},

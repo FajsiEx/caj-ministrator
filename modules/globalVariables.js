@@ -38,5 +38,22 @@ module.exports = {
             dbModule.save(global);
             global.lastSaveTime = new Date().getTime();
         }, 10000);
+    },
+
+    fLoad: ()=>{
+        console.log(`[GV_FLOAD] Force loading...`);
+        dbModule.load().then((data)=>{
+            console.log(`[GV_FLOAD] Loaded.`);
+            global.usersObj = data.usersObj;
+            global.events = data.events;
+            global.teas = data.teas;
+            global.lastSaveTime = data.lastSaveTime;
+        });
+    },
+    fSave: ()=>{
+        console.log(`[GV_FSAVE] Force saving...`);
+        dbModule.save(global);
+        global.lastSaveTime = new Date().getTime();
+        console.log(`[GV_FSAVE] Saved.`);
     }
 }
