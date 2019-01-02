@@ -1,6 +1,7 @@
 /*
 
-    Caj-bot
+    Tea-bot
+    © Fajsiex 2018-2019
     Licensed under MIT license
     For a full license, go to LICENSE file.
     TL;DR of license: use this as you want just include the license somewhere.
@@ -26,6 +27,7 @@ require('./modules/globalVariables').init();
 
 const msgHandler = require('./modules/msgHandler');
 const globalVariables = require("./modules/globalVariables");
+const COLORS = require("./modules/consts").COLORS;
 
 discordClient.on('error', console.error);
 
@@ -39,6 +41,16 @@ discordClient.on('guildMemberAdd', member => {
 // Discord client init
 discordClient.on('ready', ()=>{
     console.log("[READY] Ready.");
+    discordClient.channels.get("527170494613422092").send({
+        "embed": {
+            "title": "Bot launched",
+            "color": COLORS.YELLOW,
+            "description": `
+                Tea-bot launched in beta mode.
+                Saving is therefore disabled.
+            `
+        }
+    });
     starting = false;
     setStatus();
 });
@@ -57,6 +69,10 @@ discordClient.on('presenceUpdate', (oldMember, newMember)=>{
 });
 
 let setStatus = ()=>{
+    if (globalVariables.get('disableStatus')) {
+        console.warn("[SET_STATUS] Status disabled. ABORT!");
+        return;
+    }
     if (starting) {
         console.warn("[SET_STATUS] Bot starting. ABORT!");
         return;
@@ -73,6 +89,7 @@ let setStatus = ()=>{
         statusText = "you sleep. ";
     }
 
+    /*
     endStamp = new Date("Sun Jan 08 2019 08:00:00 GMT+0100").getTime();
     nowStamp = new Date().getTime();
     deltaStamp = endStamp - nowStamp;
@@ -88,7 +105,8 @@ let setStatus = ()=>{
     seconds = Math.floor(deltaStamp / 1000);
 
     statusText += `${days} dní, ${hours} hodín, ${minutes} minút do konca prázdnin`
-
+    */
+   
     discordClient.user.setActivity(statusText, { type: statusType });
 
     console.log("[SET_STATUS] Completed");

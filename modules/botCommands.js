@@ -10,6 +10,10 @@ const st = require("./commands/dev/st");
 const testread = require("./commands/dev/testread");
 const testpp = require("./commands/dev/testpp");
 const snap = require("./commands/dev/snap");
+const sd = require("./commands/dev/sd");
+const forceload = require("./commands/dev/forceload");
+const forcesave = require("./commands/dev/forcesave");
+const forceinit = require("./commands/dev/forceinit");
 
 const mute = require("./commands/mod/mute");
 const unmute = require("./commands/mod/unmute");
@@ -17,6 +21,7 @@ const nuke = require("./commands/mod/nuke");
 const mod = require("./commands/mod/mod");
 
 const help = require("./commands/info/help");
+const faq = require("./commands/info/faq");
 
 const holidays = require("./commands/events/holidays");
 const addEvent = require("./commands/events/add");
@@ -34,6 +39,9 @@ const joke = require("./commands/jff/joke");
 const kill = require("./commands/jff/kill");
 const alecau = require("./commands/jff/alecau");
 const nick = require("./commands/jff/nick");
+const kawaii = require("./commands/jff/kawaii");
+const pvt = require("./commands/jff/pvt");
+const weather = require("./commands/jff/weather");
 
 const roll = require("./commands/random/roll");
 const tf = require("./commands/random/tf");
@@ -44,22 +52,39 @@ const united = require("./commands/lyrics/united");
 const meme = require("./commands/jff/meme");
 const meirl = require("./commands/jff/meirl");
 
-const e621 = require("./commands/yiff/e621");
-const agree = require("./commands/yiff/agree");
+const owo = require("./commands/ffiy/owo");
+const uwu = require("./commands/ffiy/uwu");
+const e621 = require("./commands/ffiy/e621");
+const agree = require("./commands/ffiy/agree");
 
 let commands = {
     // Dev commands
     'ping': (msg)=>{ping.command(msg);},
+    'dp': (msg)=>{ping.command(msg);},
 
     'send': (msg, discordClient)=>{send.command(msg, discordClient);},
 
     'st': (msg)=>{st.command(msg);},
 
+    'dtr': (msg)=>{testread.command(msg);},
     'testread': (msg)=>{testread.command(msg);},
 
+    'dtp': (msg)=>{testpp.command(msg);},
     'testpp': (msg)=>{testpp.command(msg);},
 
     'snap': (msg)=>{snap.command(msg);},
+
+    'sd': (msg, discordClient)=>{sd.command(msg, discordClient);},
+
+    'forceload': (msg)=>{forceload.command(msg);},
+    'fl': (msg)=>{forceload.command(msg);},
+
+    'forcesave': (msg)=>{forcesave.command(msg);},
+    'fs': (msg)=>{forcesave.command(msg);},
+
+    'forceinit': (msg)=>{forceinit.command(msg);},
+    'fi': (msg)=>{forceinit.command(msg);},
+    
 
     // Mod commands
     'mute': (msg)=>{mute.command(msg);},
@@ -73,17 +98,22 @@ let commands = {
     'mod': (msg)=>{mod.command(msg);},
 
     // Info commands
+    'h': (msg)=>{help.command(msg);},
     'help': (msg)=>{help.command(msg);},
     'pomoc': (msg)=>{help.command(msg);},
     'prikazy': (msg)=>{help.command(msg);},
 
+    'faq': (msg)=>{faq.command(msg);},
+
     // Event commands
+    'ho': (msg)=>{holidays.command(msg);},
     'holidays': (msg)=>{holidays.command(msg);},
     'prazdniny': (msg)=>{holidays.command(msg);},
 
     'add': (msg)=>{addEvent.command(msg);},
     'pridat': (msg)=>{addEvent.command(msg);},
 
+    'ev': (msg)=>{events.command(msg);},
     'events': (msg)=>{events.command(msg);},
     'eventy': (msg)=>{events.command(msg);},
 
@@ -121,12 +151,22 @@ let commands = {
 
     'nick': (msg, discordClient)=>{nick.command(msg, discordClient);},
 
+    'kawaii': (msg)=>{kawaii.command(msg);},
+    'kw': (msg)=>{kawaii.command(msg);},
+
+    'pvt': (msg)=>{pvt.command(msg);},
+
+    'weather': (msg)=>{weather.command(msg);},
+    'pocasie': (msg)=>{weather.command(msg);},
+
     // Roll
     'roll': (msg)=>{roll.command(msg);},
 
     'tf': (msg)=>{tf.command(msg);},
 
     // >_<
+    'owo': (msg)=>{owo.command(msg);},
+    'uwu': (msg)=>{uwu.command(msg);},
     'e621': (msg)=>{e621.command(msg);},
     'hell': (msg)=>{e621.command(msg);},
 
