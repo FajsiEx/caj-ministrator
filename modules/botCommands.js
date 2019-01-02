@@ -40,6 +40,7 @@ const alecau = require("./commands/jff/alecau");
 const nick = require("./commands/jff/nick");
 const kawaii = require("./commands/jff/kawaii");
 const pvt = require("./commands/jff/pvt");
+const weather = require("./commands/jff/weather");
 
 const roll = require("./commands/random/roll");
 const tf = require("./commands/random/tf");
@@ -151,6 +152,9 @@ let commands = {
     'kw': (msg)=>{kawaii.command(msg);},
 
     'pvt': (msg)=>{pvt.command(msg);},
+
+    'weather': (msg)=>{weather.command(msg);},
+    'pocasie': (msg)=>{weather.command(msg);},
 
     // Roll
     'roll': (msg)=>{roll.command(msg);},
