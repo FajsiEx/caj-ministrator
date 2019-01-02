@@ -48,6 +48,8 @@ module.exports = {
             setTimeout(()=>{process.exit(50);}, 5000);
         }, timeout);
 
+        console.log("[SD] DEBUG: timeoutId:" + shutdownTimeoutId); // so i pass that fucking check
+
         msg.channel.send({
             "embed": {
                 "title": "*Done*",
