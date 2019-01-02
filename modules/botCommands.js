@@ -21,6 +21,7 @@ const nuke = require("./commands/mod/nuke");
 const mod = require("./commands/mod/mod");
 
 const help = require("./commands/info/help");
+const faq = require("./commands/info/faq");
 
 const holidays = require("./commands/events/holidays");
 const addEvent = require("./commands/events/add");
@@ -101,6 +102,8 @@ let commands = {
     'help': (msg)=>{help.command(msg);},
     'pomoc': (msg)=>{help.command(msg);},
     'prikazy': (msg)=>{help.command(msg);},
+
+    'faq': (msg)=>{faq.command(msg);},
 
     // Event commands
     'ho': (msg)=>{holidays.command(msg);},
