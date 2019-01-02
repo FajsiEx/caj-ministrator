@@ -36,7 +36,10 @@ module.exports = {
     },
 
     save: (data)=>{
-        //if (process.env.DISABLE_SAVE == "yes") {console.log("[SAVE] Disable save is on. Aborting save."); return;} // for beta
+        if (process.env.DISABLE_SAVE == "yes") {
+            console.log("[SAVE] Disable save is on. Aborting save.");
+            return;
+        } // for beta
         
         console.log("[SAVE] Saving events...");
 
