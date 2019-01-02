@@ -27,6 +27,7 @@ require('./modules/globalVariables').init();
 
 const msgHandler = require('./modules/msgHandler');
 const globalVariables = require("./modules/globalVariables");
+const COLORS = require("./modules/consts").COLORS;
 
 discordClient.on('error', console.error);
 
@@ -40,6 +41,16 @@ discordClient.on('guildMemberAdd', member => {
 // Discord client init
 discordClient.on('ready', ()=>{
     console.log("[READY] Ready.");
+    discordClient.channels.get("527170494613422092").send({
+        "embed": {
+            "title": "Bot launched",
+            "color": COLORS.YELLOW,
+            "description": `
+                Tea-bot launched in beta mode.
+                Saving is therefore disabled.
+            `
+        }
+    });
     starting = false;
     setStatus();
 });

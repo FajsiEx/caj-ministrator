@@ -31,18 +31,19 @@ module.exports = {
         }
 
         let timeout = parseInt(commandMessageArray[1]);
+        let reason = msg.content.slice(msg.content.indexOf(msg.content.split(" ", 2)[1]) + msg.content.split(" ", 2)[1].length + 1);
 
         timeout = timeout * 60000;
 
-        globalVariables.set('disableSave', true);
+        globalVariables.set('disableStatus', true);
 
         discordClient.user.setStatus('idle').then(()=>{
-            discordClient.user.setActivity("myself die in " + commandMessageArray[1] + " min.", { type: "watching" });
+            setTimeout(()=>{discordClient.user.setActivity("myself die in " + commandMessageArray[1] + " min. because of " + reason, { type: "watching" })}, 2500);
         });
 
         shutdownTimeoutId = setTimeout(()=>{
             discordClient.user.setStatus('offline').then(()=>{
-                discordClient.user.setActivity("nothing.", { type: "watching" });
+                setTimeout(()=>{discordClient.user.setActivity("nothing.", { type: "watching" })}, 2500);
             });
             setTimeout(()=>{process.exit(50);}, 5000);
         }, timeout);
