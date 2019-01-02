@@ -28,10 +28,13 @@ module.exports = {
         console.log(`[GV_INIT] Initing...`);
         dbModule.load().then((data)=>{
             console.log(`[GV_INIT] Loaded init.`);
-            global.usersObj = data.usersObj;
-            global.events = data.events;
-            global.teas = data.teas;
-            global.lastSaveTime = data.lastSaveTime;
+
+            if (Object.keys(data).length <= 2) { // If the db is empty leave and wait for auto save to write the default values.
+                console.log("[GV_INIT] Empty load. Returning.");
+                return;
+            }
+
+            global = data;
         });
         console.log(`[GV_INIT] Setting interval.`);
         setInterval(()=>{ // Does this every 10 seconds
@@ -44,10 +47,7 @@ module.exports = {
         console.log(`[GV_FLOAD] Force loading...`);
         dbModule.load().then((data)=>{
             console.log(`[GV_FLOAD] Loaded.`);
-            global.usersObj = data.usersObj;
-            global.events = data.events;
-            global.teas = data.teas;
-            global.lastSaveTime = data.lastSaveTime;
+            global = data;
         });
     },
     fSave: ()=>{
@@ -55,5 +55,9 @@ module.exports = {
         dbModule.save(global);
         global.lastSaveTime = new Date().getTime();
         console.log(`[GV_FSAVE] Saved.`);
+    },
+    dump: ()=>{
+        console.log(`[GV_DUMP] Dumping...`);
+        return JSON.stringify(global);
     }
 }
