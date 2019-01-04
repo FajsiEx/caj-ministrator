@@ -55,6 +55,7 @@ const meirl = require("./commands/jff/meirl");
 const owo = require("./commands/ffiy/owo");
 const uwu = require("./commands/ffiy/uwu");
 const e621 = require("./commands/ffiy/e621");
+const e926 = require("./commands/ffiy/e926");
 const agree = require("./commands/ffiy/agree");
 
 let commands = {
@@ -166,9 +167,13 @@ let commands = {
 
     // >_<
     'owo': (msg)=>{owo.command(msg);},
+
     'uwu': (msg)=>{uwu.command(msg);},
+
     'e621': (msg)=>{e621.command(msg);},
     'hell': (msg)=>{e621.command(msg);},
+
+    'e926': (msg)=>{e926.command(msg);},
 
     'agree': (msg)=>{agree.command(msg);},
 
