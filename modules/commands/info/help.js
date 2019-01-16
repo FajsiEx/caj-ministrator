@@ -9,7 +9,7 @@ module.exports = {
                 "color": COLORS.BLUE,
                 "description": `
                     Tea-bot project 2019.1.3
-                    [Všetky príkazy](https://fajsiex.ml/docs/tea-bot.html)
+                    [Všetky príkazy a changelog](https://fajsiex.ml/docs/tea-bot.html)
                     [GitHub repo (source)](https://github.com/FajsiEx/tea-bot)
                 `
             }
