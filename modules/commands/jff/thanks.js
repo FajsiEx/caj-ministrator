@@ -1,6 +1,4 @@
 
-const COLORS = require("../../consts").COLORS;
-
 const THX_REPLIES = [
     "You're welcome.",
     "No problem ;)",
