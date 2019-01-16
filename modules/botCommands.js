@@ -1,4 +1,6 @@
 
+const stringSimilarity = require('string-similarity');
+
 const COLORS = require("./consts").COLORS;
 const globalVariables = require("./globalVariables");
 const smallFunctions = require("./smallFunctions");
@@ -239,6 +241,8 @@ let commands = {
     'cau': (msg)=>{meme.command(msg, "bye")}
 }
 
+const COMMANDS_ARRAY = Object.keys(commands);
+
 module.exports = {
     handleBotCommand: (msg, discordClient)=>{
         console.log(`[BOT_COMMANDS] HANDLER: Called. Processing the msg...`);
@@ -283,11 +287,28 @@ module.exports = {
             commands[command](msg, discordClient);
         }else{
             console.log(`[BOT_COMMANDS] HANDLER: Command not found in object. Replying and we're done.`);
+
+            let mostSimilarCommand = false;
+            let mostSimilarCommandSimilarity = 0;
+
+            COMMANDS_ARRAY.forEach((e)=>{
+                similarity = stringSimilarity.compareTwoStrings(e, command);
+                if (similarity > 0.25 && similarity > mostSimilarCommandSimilarity) { // Compares the entered command to every known command
+                    mostSimilarCommandSimilarity = similarity; // If it is similar enough to an existing command and it is more similar than prev commands, store it.
+                    mostSimilarCommand = e;
+                }
+            });
+
+            let similarityMsg = ""
+            if (mostSimilarCommand) {
+                similarityMsg = `Možno si myslel **!${mostSimilarCommand}**? idk.`;
+            }
+
             msg.channel.send({
                 "embed": {
                     "title": "Nesprávny príkaz",
                     "color": COLORS.RED,
-                    "description": `!${command} je niečo ako správny príkaz, ale nie.\nPre list príkazov **!help**`,
+                    "description": `!${command} je niečo ako správny príkaz, ale nie. ${similarityMsg}\nPre list príkazov **!help**`,
                     "footer": {
                         "text": "Pôvodne som si myslel že to je meme pre všetkých, ako za starého dobrého komunizmu. Ale mílil som sa. Článok 13 Európskej únie mi prikazuje creditovat autora tohto memu (Davida Magyerku) od ktorého som tento meme bezočividne ukradol. Týmto by som sa chcel osobne a úprimne ospravedlniť Davidovi Magyerkovi za moju sebeckosť a idiotskosť pri používaní tohto memu bez jeho autorskeho súhlasu. Ďakujem. #saveTheInternet #article13"
                     }
