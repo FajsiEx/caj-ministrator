@@ -16,6 +16,10 @@ module.exports = {
         let author = msg.author.username + "#" + msg.author.discriminator; // User#1337
         let author_id = msg.author.id; // 45656489754512344
         let message = msg.content;
+
+        if (commandMessageArray[1].endsWith(".")) {
+            commandMessageArray[1] = commandMessageArray[1].slice(0,-1);
+        }
     
         let dateParameter = commandMessageArray[1].split(".").reverse().join(".");
         let dateObj = new Date(dateParameter + " 20:00:00");

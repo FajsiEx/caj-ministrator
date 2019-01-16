@@ -42,6 +42,7 @@ const nick = require("./commands/jff/nick");
 const kawaii = require("./commands/jff/kawaii");
 const pvt = require("./commands/jff/pvt");
 const weather = require("./commands/jff/weather");
+const thanks = require("./commands/jff/thanks");
 
 const roll = require("./commands/random/roll");
 const tf = require("./commands/random/tf");
@@ -160,6 +161,12 @@ let commands = {
     'weather': (msg)=>{weather.command(msg);},
     'pocasie': (msg)=>{weather.command(msg);},
 
+    'thanks': (msg)=>{thanks.command(msg);},
+    'thx': (msg)=>{thanks.command(msg);},
+    'dakujem': (msg)=>{thanks.command(msg);},
+    'diki': (msg)=>{thanks.command(msg);},
+    'dik': (msg)=>{thanks.command(msg);},
+
     // Roll
     'roll': (msg)=>{roll.command(msg);},
 
@@ -235,6 +242,20 @@ let commands = {
 module.exports = {
     handleBotCommand: (msg, discordClient)=>{
         console.log(`[BOT_COMMANDS] HANDLER: Called. Processing the msg...`);
+
+        console.log(`[BOT_COMMANDS] CHAN_CATEGORY ${msg.channel.parent.name}`);
+        if (msg.channel.parent.name != "bot") {
+            msg.channel.send({
+                "embed": {
+                    "title": "Príkazy sa môžu vykonávať len v bot channeloch.",
+                    "color": COLORS.RED
+                }
+            }).then((responseMsg)=>{
+                msg.delete(); // Deletes the user's message
+                responseMsg.delete(5000); // and deletes this msg after 5 seconds
+            });
+            return; // Don't continue
+        } 
         
         let modModeOn = globalVariables.get("modModeOn");
 
