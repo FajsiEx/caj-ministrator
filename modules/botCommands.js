@@ -1,4 +1,6 @@
 
+const stringSimilarity = require('string-similarity');
+
 const COLORS = require("./consts").COLORS;
 const globalVariables = require("./globalVariables");
 const smallFunctions = require("./smallFunctions");
@@ -239,12 +241,23 @@ let commands = {
     'cau': (msg)=>{meme.command(msg, "bye")}
 }
 
+const COMMANDS_ARRAY = Object.keys(commands);
+const ANYCHAN_COMMANDS = [
+    "nuke"
+]
+
 module.exports = {
     handleBotCommand: (msg, discordClient)=>{
         console.log(`[BOT_COMMANDS] HANDLER: Called. Processing the msg...`);
 
+        let commandMessageArray = msg.content.split(" "); // Split words of the message into an array
+
+        let command = commandMessageArray[0].slice(1); // Extracts the command from the message
+        command = command.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Get rid of shit in Slovak lang
+        command = command.toLocaleLowerCase(); // Ignore the case by converting it to lower
+
         console.log(`[BOT_COMMANDS] CHAN_CATEGORY ${msg.channel.parent.name}`);
-        if (msg.channel.parent.name != "bot") {
+        if (msg.channel.parent.name != "bot" && ANYCHAN_COMMANDS.indexOf(command) == -1) { // If the chan is not in bot category AND command is not in the allowed commands array
             msg.channel.send({
                 "embed": {
                     "title": "Príkazy sa môžu vykonávať len v bot channeloch.",
@@ -266,12 +279,6 @@ module.exports = {
             }
         }
 
-        let commandMessageArray = msg.content.split(" "); // Split words of the message into an array
-
-        let command = commandMessageArray[0].slice(1); // Extracts the command from the message
-        command = command.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Get rid of shit in Slovak lang
-        command = command.toLocaleLowerCase(); // Ignore the case by converting it to lower
-
         console.log(`[BOT_COMMANDS] HANDLER: Done with basic processing of the msg. Calling mathHandler to check...`);
 
         if (mathHandler.processCommand(msg)) {return;} // This will check if the command is a math command and if it is, it will process and reply to it and return true;
@@ -283,11 +290,28 @@ module.exports = {
             commands[command](msg, discordClient);
         }else{
             console.log(`[BOT_COMMANDS] HANDLER: Command not found in object. Replying and we're done.`);
+
+            let mostSimilarCommand = false;
+            let mostSimilarCommandSimilarity = 0;
+
+            COMMANDS_ARRAY.forEach((e)=>{
+                similarity = stringSimilarity.compareTwoStrings(e, command);
+                if (similarity > 0.25 && similarity > mostSimilarCommandSimilarity) { // Compares the entered command to every known command
+                    mostSimilarCommandSimilarity = similarity; // If it is similar enough to an existing command and it is more similar than prev commands, store it.
+                    mostSimilarCommand = e;
+                }
+            });
+
+            let similarityMsg = ""
+            if (mostSimilarCommand) {
+                similarityMsg = `Možno si myslel **!${mostSimilarCommand}**? idk.`;
+            }
+
             msg.channel.send({
                 "embed": {
                     "title": "Nesprávny príkaz",
                     "color": COLORS.RED,
-                    "description": `!${command} je niečo ako správny príkaz, ale nie.\nPre list príkazov **!help**`,
+                    "description": `!${command} je niečo ako správny príkaz, ale nie. ${similarityMsg}\nPre list príkazov **!help**`,
                     "footer": {
                         "text": "Pôvodne som si myslel že to je meme pre všetkých, ako za starého dobrého komunizmu. Ale mílil som sa. Článok 13 Európskej únie mi prikazuje creditovat autora tohto memu (Davida Magyerku) od ktorého som tento meme bezočividne ukradol. Týmto by som sa chcel osobne a úprimne ospravedlniť Davidovi Magyerkovi za moju sebeckosť a idiotskosť pri používaní tohto memu bez jeho autorskeho súhlasu. Ďakujem. #saveTheInternet #article13"
                     }
