@@ -242,13 +242,22 @@ let commands = {
 }
 
 const COMMANDS_ARRAY = Object.keys(commands);
+const ANYCHAN_COMMANDS = [
+    "nuke"
+]
 
 module.exports = {
     handleBotCommand: (msg, discordClient)=>{
         console.log(`[BOT_COMMANDS] HANDLER: Called. Processing the msg...`);
 
+        let commandMessageArray = msg.content.split(" "); // Split words of the message into an array
+
+        let command = commandMessageArray[0].slice(1); // Extracts the command from the message
+        command = command.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Get rid of shit in Slovak lang
+        command = command.toLocaleLowerCase(); // Ignore the case by converting it to lower
+
         console.log(`[BOT_COMMANDS] CHAN_CATEGORY ${msg.channel.parent.name}`);
-        if (msg.channel.parent.name != "bot") {
+        if (msg.channel.parent.name != "bot" && ANYCHAN_COMMANDS.indexOf(command) == -1) { // If the chan is not in bot category AND command is not in the allowed commands array
             msg.channel.send({
                 "embed": {
                     "title": "Príkazy sa môžu vykonávať len v bot channeloch.",
@@ -269,12 +278,6 @@ module.exports = {
                 return;
             }
         }
-
-        let commandMessageArray = msg.content.split(" "); // Split words of the message into an array
-
-        let command = commandMessageArray[0].slice(1); // Extracts the command from the message
-        command = command.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Get rid of shit in Slovak lang
-        command = command.toLocaleLowerCase(); // Ignore the case by converting it to lower
 
         console.log(`[BOT_COMMANDS] HANDLER: Done with basic processing of the msg. Calling mathHandler to check...`);
 
