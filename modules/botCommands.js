@@ -235,6 +235,20 @@ let commands = {
 module.exports = {
     handleBotCommand: (msg, discordClient)=>{
         console.log(`[BOT_COMMANDS] HANDLER: Called. Processing the msg...`);
+
+        console.log(`[BOT_COMMANDS] CHAN_CATEGORY ${msg.channel.parent.name}`);
+        if (msg.channel.parent.name != "bot") {
+            msg.channel.send({
+                "embed": {
+                    "title": "Príkazy sa môžu vykonávať len v bot channeloch.",
+                    "color": COLORS.RED
+                }
+            }).then((responseMsg)=>{
+                msg.delete(); // Deletes the user's message
+                responseMsg.delete(5000); // and deletes this msg after 5 seconds
+            });
+            return; // Don't continue
+        } 
         
         let modModeOn = globalVariables.get("modModeOn");
 
