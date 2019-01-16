@@ -9,7 +9,7 @@ module.exports = {
                 "color": COLORS.BLUE,
                 "description": `
                     [Všetky príkazy](https://fajsiex.ml/docs/caj-bot.html)
-                    [GitHub repo (source)](https://github.com/FajsiEx/caj-ministrator)
+                    [GitHub repo (source)](https://github.com/FajsiEx/tea-bot)
                 `
             }
         });
