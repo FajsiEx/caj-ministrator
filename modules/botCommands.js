@@ -42,6 +42,7 @@ const nick = require("./commands/jff/nick");
 const kawaii = require("./commands/jff/kawaii");
 const pvt = require("./commands/jff/pvt");
 const weather = require("./commands/jff/weather");
+const thanks = require("./commands/jff/thanks");
 
 const roll = require("./commands/random/roll");
 const tf = require("./commands/random/tf");
@@ -159,6 +160,12 @@ let commands = {
 
     'weather': (msg)=>{weather.command(msg);},
     'pocasie': (msg)=>{weather.command(msg);},
+
+    'thanks': (msg)=>{thanks.command(msg);},
+    'thx': (msg)=>{thanks.command(msg);},
+    'dakujem': (msg)=>{thanks.command(msg);},
+    'diki': (msg)=>{thanks.command(msg);},
+    'dik': (msg)=>{thanks.command(msg);},
 
     // Roll
     'roll': (msg)=>{roll.command(msg);},
