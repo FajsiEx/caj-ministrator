@@ -41,6 +41,18 @@ discordClient.on('guildMemberAdd', member => {
 // Discord client init
 discordClient.on('ready', ()=>{
     console.log("[READY] Ready.");
+
+    discordClient.fetchUser("342227744513327107").then((user)=>{ // Fetch the admin user
+        user.send({
+            "embed": {
+                "title": "Bot launched",
+                "color": COLORS.GREEN,
+                "description": `
+                    Tea-bot has been launched and is ready for use.
+                `
+            }
+        })
+    });
     
     if (process.env.DISABLE_SAVE == "yes") {
         discordClient.channels.get("527170494613422092").send({
