@@ -5,6 +5,8 @@
 */
 
 module.exports = {
+    VERSION: "2019.1.4",
+
     WEEK_DAYS: ["Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota"],
     WEEK_DAYS_SHORT: ["Ne", "Po", "Ut", "St", "Št", "Pi", "So"],
 
@@ -23,6 +25,7 @@ module.exports = {
         RED: 16720418,
         YELLOW: 14540032,
         BLUE: 1616639,
+        PINK: 13041919,
         GREEN: 4521796
     },
 

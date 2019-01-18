@@ -256,19 +256,21 @@ module.exports = {
         command = command.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Get rid of shit in Slovak lang
         command = command.toLocaleLowerCase(); // Ignore the case by converting it to lower
 
-        console.log(`[BOT_COMMANDS] CHAN_CATEGORY ${msg.channel.parent.name}`);
-        if (msg.channel.parent.name != "bot" && ANYCHAN_COMMANDS.indexOf(command) == -1) { // If the chan is not in bot category AND command is not in the allowed commands array
-            msg.channel.send({
-                "embed": {
-                    "title": "Príkazy sa môžu vykonávať len v bot channeloch.",
-                    "color": COLORS.RED
-                }
-            }).then((responseMsg)=>{
-                msg.delete(); // Deletes the user's message
-                responseMsg.delete(5000); // and deletes this msg after 5 seconds
-            });
-            return; // Don't continue
-        } 
+        if (msg.channel.type == 'text') { // If the origin  of the msg is from a text channel
+            console.log(`[BOT_COMMANDS] CHAN_CATEGORY ${msg.channel.parent.name}`);
+            if (msg.channel.parent.name != "bot" && ANYCHAN_COMMANDS.indexOf(command) == -1) { // If the chan is not in bot category AND command is not in the allowed commands array
+                msg.channel.send({
+                    "embed": {
+                        "title": "Príkazy sa môžu vykonávať len v bot channeloch.",
+                        "color": COLORS.RED
+                    }
+                }).then((responseMsg)=>{
+                    msg.delete(); // Deletes the user's message
+                    responseMsg.delete(5000); // and deletes this msg after 5 seconds
+                });
+                return; // Don't continue
+            }
+        }
         
         let modModeOn = globalVariables.get("modModeOn");
 

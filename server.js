@@ -28,6 +28,7 @@ require('./modules/globalVariables').init();
 const msgHandler = require('./modules/msgHandler');
 const globalVariables = require("./modules/globalVariables");
 const COLORS = require("./modules/consts").COLORS;
+const VERSION = require("./modules/consts").VERSION;
 
 discordClient.on('error', console.error);
 
@@ -41,6 +42,18 @@ discordClient.on('guildMemberAdd', member => {
 // Discord client init
 discordClient.on('ready', ()=>{
     console.log("[READY] Ready.");
+
+    discordClient.fetchUser("342227744513327107").then((user)=>{ // Fetch the admin user
+        user.send({
+            "embed": {
+                "title": "Bot launched",
+                "color": COLORS.GREEN,
+                "description": `
+                    Tea-bot (version ${VERSION}) has been launched and is ready for use.
+                `
+            }
+        })
+    });
     
     if (process.env.DISABLE_SAVE == "yes") {
         discordClient.channels.get("527170494613422092").send({
