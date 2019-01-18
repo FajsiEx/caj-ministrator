@@ -28,6 +28,7 @@ require('./modules/globalVariables').init();
 const msgHandler = require('./modules/msgHandler');
 const globalVariables = require("./modules/globalVariables");
 const COLORS = require("./modules/consts").COLORS;
+const VERSION = require("./modules/consts").VERSION;
 
 discordClient.on('error', console.error);
 
@@ -48,7 +49,7 @@ discordClient.on('ready', ()=>{
                 "title": "Bot launched",
                 "color": COLORS.GREEN,
                 "description": `
-                    Tea-bot has been launched and is ready for use.
+                    Tea-bot (version ${VERSION}) has been launched and is ready for use.
                 `
             }
         })
