@@ -10,7 +10,7 @@ const memeUrls = {
     yeet: "https://ih0.redbubble.net/image.562324831.7631/flat,550x550,075,f.u3.jpg",
     lookatthisdude: "https://i.imgur.com/ZHmHih5.png",
     lookatthisdude2: "https://derpicdn.net/img/2018/4/2/1697488/large.png",
-    holdup: "https://i.redd.it/op68ltgjypm11.jpg",
+    holdup: "https://i.imgur.com/fIAHgWM.jpg",
     wwtf: "https://media.giphy.com/media/y7LLt6Cmv62Lm/giphy.gif",
     ooth: "https://i.imgur.com/vwMOUZN.gif",
     kappa: "https://pbs.twimg.com/media/CP3AUr9WcAApMcw.png",
