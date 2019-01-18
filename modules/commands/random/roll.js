@@ -54,6 +54,30 @@ module.exports = {
             });
             return;
         }
+        if (max == 1273) {
+            msg.channel.send({ // TODO: Move this to consts module
+                "embed": {
+                    "title": "1 2 7 3",
+                    "color": COLORS.PINK,
+                    "description": `down the Rockefeller street
+                    Life is marchin' on, do you feel that?
+                    1273 down the Rockefeller street
+                    Everything is more than surreal
+                    So let's keep movin' on
+                    Keep movin', keep movin', keep movin', keep movin'
+                    If you want to know what Rockefeller groove is
+                    Keep movin', keep movin', keep movin', keep movin'
+                    Time is right to celebrate the good times
+                    We're singing
+                    1273 down the Rockefeller street
+                    Life is marchin' on, do you feel that?
+                    We're singing
+                    1273 down the Rockefeller street
+                    Everything is more than surreal`,
+                }
+            });
+            return;
+        }
 
         let rolled;
         if (min) {

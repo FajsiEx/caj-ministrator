@@ -25,6 +25,7 @@ module.exports = {
         RED: 16720418,
         YELLOW: 14540032,
         BLUE: 1616639,
+        PINK: 13041919,
         GREEN: 4521796
     },
 
