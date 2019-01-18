@@ -83,15 +83,23 @@ module.exports = {
         if (min) {
             rolled = Math.floor((min) + Math.random() * (max - min + 1));
         }else{
+            min = 0;
             rolled = Math.floor(Math.random() * (max + 1));
         }
 
         let quest = msg.content.slice(6);
+        let title = "Roll"
 
-        if (quest == "") {
-            quest = "hodil"
+        if (quest != "" && quest != max && quest != min) {
+            title += " | " + quest;
         }
 
-        msg.reply(quest + ": **" + rolled + "**");
+        msg.channel.send({
+            "embed": {
+                "title": title,
+                "color": COLORS.BLUE,
+                "description": `${min} - ${max} : **${rolled}**`,
+            }
+        });
     }
 }
