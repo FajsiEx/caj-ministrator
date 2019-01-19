@@ -133,7 +133,7 @@ module.exports = {
             30: "Šimon"
         },
         11: {
-            11: '342227744513327107' // Martin & Maros
+            11: 'Martin & Maros'
         },
         12: {
             17: "Nela",
