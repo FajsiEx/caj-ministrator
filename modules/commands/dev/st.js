@@ -17,6 +17,7 @@ module.exports = {
             let usersObjLength;
             let eventsLength;
             let teasCount;
+            let commsServed;
             let serverTimeString;
             let adminUserid;
             let devUserid;
@@ -34,6 +35,7 @@ module.exports = {
             usersObjLength = Object.keys(globalVariables.get("usersObj")).length;
             eventsLength = globalVariables.get("events").length;
             teasCount = globalVariables.get("teas");
+            commsServed = globalVariables.get("commandsServed");
 
             serverTimeString = new Date().toString();
             adminUserid = process.env.ADMIN_USERID;
@@ -58,6 +60,7 @@ module.exports = {
                         **Users object length:** ${usersObjLength}
                         **Events length:** ${eventsLength}
                         **Teas count:** ${teasCount}
+                        **Commands served:** ${commsServed}
                         **Server time string:** ${serverTimeString}
                         **Admin user id [DEPRECATED]:** ${adminUserid}
                         **Dev user id [DEPRECATED]:** ${devUserid}

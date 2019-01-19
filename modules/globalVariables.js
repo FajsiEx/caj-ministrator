@@ -3,6 +3,7 @@ let global = {
     events: [],
     logData: [],
     teas: 0,
+    commandsServed: 0,
     startTime: 0,
     lastSaveTime: 0,
     modModeOn: false,
@@ -36,13 +37,13 @@ module.exports = {
                 return;
             }
 
+            global = data;
+
             if (new Date().getTime() - data.lastSaveTime < 10000) {
                 disableAutoSave = true;
                 console.log("[GV_INIT] Overlap load. Auto-saving is disabled. Restart manually to reset.");
                 return;
             }
-
-            global = data;
         });
         console.log(`[GV_INIT] Setting interval.`);
         setInterval(()=>{ // Does this every 10 seconds
