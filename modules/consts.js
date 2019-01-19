@@ -98,8 +98,9 @@ module.exports = {
         "Don't you fucking dare do that again."
     ],
 
-    NAMEDAYS: { // Gordii ?,
+    NAMEDAYS: {
         1: {
+            16: "Gordii",
             30: "Emma"
         },
         2: {
