@@ -17,7 +17,9 @@ const memeUrls = {
     speech: "https://i.imgur.com/0Z7cJQR.jpg",
     ohfuck: "https://i.imgur.com/EvCW3xu.png",
     bye: "https://ih0.redbubble.net/image.369279749.4315/ap,550x550,12x12,1,transparent,t.png",
-    doit: "https://thumbs.gfycat.com/IncredibleOrganicBug-size_restricted.gif"
+    doit: "https://thumbs.gfycat.com/IncredibleOrganicBug-size_restricted.gif",
+    forehead: "https://pbs.twimg.com/media/CtIhuSYVIAA-diM.jpg",
+    facepalm: "https://ballzbeatz.com/wp-content/uploads/2018/01/Meme-s-Facepalm-Meme-Decal.jpg"
 }
 
 module.exports = {

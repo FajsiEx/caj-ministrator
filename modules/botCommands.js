@@ -218,6 +218,10 @@ let commands = {
 
     'doit': (msg)=>{meme.command(msg, "doit")},
 
+    'facepalm': (msg)=>{meme.command(msg, "facepalm")},
+
+    'forehead': (msg)=>{meme.command(msg, "forehead")},
+
     'pika': (msg)=>{meme.command(msg, "pika")},
 
     'tsj': (msg)=>{meme.command(msg, "tsj")},
