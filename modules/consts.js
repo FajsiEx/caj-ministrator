@@ -86,6 +86,8 @@ module.exports = {
         `Programátor hovorí programátorovi:
         - Moja babka má dnes 64 rokov.
         - Že gratulujem k peknému okrúhlemu výročiu...`,
+        //Cody's jokes
+        - "Čo si dáva kulturista v kaviarni? Benchpresso s mliekom"
     ],
 
     OWO_DM_REPLY_MSGS: [
