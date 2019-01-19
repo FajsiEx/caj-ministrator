@@ -222,6 +222,8 @@ let commands = {
 
     'forehead': (msg)=>{meme.command(msg, "forehead")},
 
+    'flashbang': (msg)=>{meme.command(msg, "flashbang")},
+
     'pika': (msg)=>{meme.command(msg, "pika")},
 
     'tsj': (msg)=>{meme.command(msg, "tsj")},
