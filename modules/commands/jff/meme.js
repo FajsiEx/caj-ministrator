@@ -20,7 +20,8 @@ const memeUrls = {
     doit: "https://thumbs.gfycat.com/IncredibleOrganicBug-size_restricted.gif",
     forehead: "https://pbs.twimg.com/media/CtIhuSYVIAA-diM.jpg",
     facepalm: "https://ballzbeatz.com/wp-content/uploads/2018/01/Meme-s-Facepalm-Meme-Decal.jpg",
-    flashbang: "https://i.ytimg.com/vi/WKB0JUkksJg/maxresdefault.jpg"
+    flashbang: "https://i.ytimg.com/vi/WKB0JUkksJg/maxresdefault.jpg",
+    way: "https://i.imgflip.com/234zr7.jpg"
 }
 
 module.exports = {
