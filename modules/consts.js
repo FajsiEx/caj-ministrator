@@ -5,7 +5,7 @@
 */
 
 module.exports = {
-    VERSION: "2019.1.6",
+    VERSION: "2019.1.7",
 
     WEEK_DAYS: ["Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota"],
     WEEK_DAYS_SHORT: ["Ne", "Po", "Ut", "St", "Št", "Pi", "So"],
