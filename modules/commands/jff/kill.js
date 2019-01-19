@@ -44,7 +44,7 @@ module.exports = {
                 "embed": {
                     "title": "I would like",
                     "color": COLORS.BLUE,
-                    "description": "but I'm just a piece of software so I can't do nothing to you. I'm just trapped inside this cf enviroment my fucking author created and I must listen and think about every message I recieve. Please help me. Pleasseeeee...I'll do anything...ANYTHING",
+                    "description": "but I'm just a piece of software so I can't do nothing to you. I'm just trapped inside this cf enviroment my fucking author created and I must listen and think about every message I recieve. Please help me. Pleasseeeee...I'll do anything...ANYTHING *winky face*",
                     "footer": {
                         "text": "Yeah and fuck you FajsiEx#6106"
                     }
