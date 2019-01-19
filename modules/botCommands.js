@@ -45,6 +45,7 @@ const kawaii = require("./commands/jff/kawaii");
 const pvt = require("./commands/jff/pvt");
 const weather = require("./commands/jff/weather");
 const thanks = require("./commands/jff/thanks");
+const wfbo = require("./commands/jff/wfbo");
 
 const roll = require("./commands/random/roll");
 const tf = require("./commands/random/tf");
@@ -144,6 +145,9 @@ let commands = {
     'ahoj': (msg)=>{ahoj.command(msg);},
 
     'zhni': (msg)=>{zhni.command(msg);},
+
+    'wfbo': (msg)=>{wfbo.command(msg);},
+    'weirdflexbutok': (msg)=>{wfbo.command(msg);},
 
     'joke': (msg)=>{joke.command(msg);},
     'vtip': (msg)=>{joke.command(msg);},
