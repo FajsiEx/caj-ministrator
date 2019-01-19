@@ -123,13 +123,14 @@ let setStatus = ()=>{
 
     statusText += `${days} dní, ${hours} hodín, ${minutes} minút do konca prázdnin`
     */
-   
-    discordClient.user.setActivity(statusText + " | !help | v." + VERSION, { type: statusType });
+    let commsServed = globalVariables.get("commandsServed");
+    
+    discordClient.user.setActivity(statusText + " | !help | v." + VERSION + " | " + commsServed + " commands served", { type: statusType });
 
     console.log("[SET_STATUS] Completed");
 }
 
-setInterval(setStatus, 60000);
+setInterval(setStatus, 15000);
 
 var express = require("express");
 var app = express();
