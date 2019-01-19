@@ -96,7 +96,10 @@ module.exports = {
         "Don't you fucking dare do that again."
     ],
 
-    NAMEDAYS: { // Emma 30.1, Gordii ?,
+    NAMEDAYS: { // Gordii ?,
+        1: {
+            30: "Emma"
+        },
         2: {
             24: "Matej",
             26: "Viktor",

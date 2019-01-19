@@ -8,10 +8,7 @@ module.exports = {
             "embed": {
                 "title": "Haha, vtip",
                 "color": COLORS.BLUE,
-                "description": JOKES[Math.floor(Math.random() * JOKES.length)],
-                "footer": {
-                    "text": "Tieto vtipy boli pridané Danom Valníčkom"
-                }
+                "description": JOKES[Math.floor(Math.random() * JOKES.length)]
             }
         });
     }
