@@ -4,7 +4,8 @@ const THX_REPLIES = [
     "No problem ;)",
     "My pleasure.",
     "Sure.",
-    "Anytime :)"
+    "Anytime :)",
+    "Don't bother me again"
 ]
 
 module.exports = {

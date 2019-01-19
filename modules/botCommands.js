@@ -45,12 +45,14 @@ const kawaii = require("./commands/jff/kawaii");
 const pvt = require("./commands/jff/pvt");
 const weather = require("./commands/jff/weather");
 const thanks = require("./commands/jff/thanks");
+const wfbo = require("./commands/jff/wfbo");
 
 const roll = require("./commands/random/roll");
 const tf = require("./commands/random/tf");
 
 const technokitty = require("./commands/lyrics/technokitty");
 const united = require("./commands/lyrics/united");
+const raveboy = require("./commands/lyrics/raveboy");
 
 const meme = require("./commands/jff/meme");
 const meirl = require("./commands/jff/meirl");
@@ -144,6 +146,9 @@ let commands = {
 
     'zhni': (msg)=>{zhni.command(msg);},
 
+    'wfbo': (msg)=>{wfbo.command(msg);},
+    'weirdflexbutok': (msg)=>{wfbo.command(msg);},
+
     'joke': (msg)=>{joke.command(msg);},
     'vtip': (msg)=>{joke.command(msg);},
     'haha': (msg)=>{joke.command(msg);},
@@ -192,6 +197,8 @@ let commands = {
 
     'united': (msg)=>{united.command(msg);},
 
+    "raveboy": (msg)=>{raveboy.command(msg);},
+
     // Memes
     'meme': (msg)=>{meirl.command(msg)},
     'meirl': (msg)=>{meirl.command(msg)},
@@ -208,6 +215,16 @@ let commands = {
     'gocommit': (msg)=>{meme.command(msg, "commit")},
 
     'oof': (msg)=>{meme.command(msg, "oof")},
+
+    'doit': (msg)=>{meme.command(msg, "doit")},
+
+    'facepalm': (msg)=>{meme.command(msg, "facepalm")},
+
+    'forehead': (msg)=>{meme.command(msg, "forehead")},
+
+    'flashbang': (msg)=>{meme.command(msg, "flashbang")},
+
+    'way': (msg)=>{meme.command(msg, "way")},
 
     'pika': (msg)=>{meme.command(msg, "pika")},
 

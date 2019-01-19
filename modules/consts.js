@@ -5,7 +5,7 @@
 */
 
 module.exports = {
-    VERSION: "2019.1.5",
+    VERSION: "2019.1.6",
 
     WEEK_DAYS: ["Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota"],
     WEEK_DAYS_SHORT: ["Ne", "Po", "Ut", "St", "Št", "Pi", "So"],
@@ -86,6 +86,8 @@ module.exports = {
         `Programátor hovorí programátorovi:
         - Moja babka má dnes 64 rokov.
         - Že gratulujem k peknému okrúhlemu výročiu...`,
+        //Cody's jokes
+        - "Čo si dáva kulturista v kaviarni? Benchpresso s mliekom"
     ],
 
     OWO_DM_REPLY_MSGS: [
@@ -96,7 +98,10 @@ module.exports = {
         "Don't you fucking dare do that again."
     ],
 
-    NAMEDAYS: { // Emma 30.1, Gordii ?,
+    NAMEDAYS: { // Gordii ?,
+        1: {
+            30: "Emma"
+        },
         2: {
             24: "Matej",
             26: "Viktor",
