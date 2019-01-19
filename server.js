@@ -124,7 +124,7 @@ let setStatus = ()=>{
     statusText += `${days} dní, ${hours} hodín, ${minutes} minút do konca prázdnin`
     */
    
-    discordClient.user.setActivity(statusText, { type: statusType });
+    discordClient.user.setActivity(statusText + " | !help | v." + VERSION, { type: statusType });
 
     console.log("[SET_STATUS] Completed");
 }
