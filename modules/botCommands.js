@@ -46,6 +46,7 @@ const pvt = require("./commands/jff/pvt");
 const weather = require("./commands/jff/weather");
 const thanks = require("./commands/jff/thanks");
 const wfbo = require("./commands/jff/wfbo");
+const crabrave = require("./commands/jff/crabrave")
 
 const roll = require("./commands/random/roll");
 const tf = require("./commands/random/tf");
@@ -148,6 +149,9 @@ let commands = {
 
     'wfbo': (msg)=>{wfbo.command(msg);},
     'weirdflexbutok': (msg)=>{wfbo.command(msg);},
+
+    'crabrave': (msg)=>{crabrave.command(msg);},
+    'ravecrab': (msg)=>{crabrave.command(msg);},
 
     'joke': (msg)=>{joke.command(msg);},
     'vtip': (msg)=>{joke.command(msg);},
