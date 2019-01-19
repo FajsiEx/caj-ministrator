@@ -289,6 +289,11 @@ module.exports = {
 
         if (commands[command]) {
             console.log(`[BOT_COMMANDS] PASS: Command found in the object. Passing control to the actual command module. Done here.`);
+
+            let commsServed = globalVariables.get("commandsServed");
+            commsServed++;
+            globalVariables.set("commandsServed", commsServed)
+
             commands[command](msg, discordClient);
         }else{
             console.log(`[BOT_COMMANDS] HANDLER: Command not found in object. Replying and we're done.`);
