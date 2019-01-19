@@ -16,7 +16,8 @@ const memeUrls = {
     kappa: "https://pbs.twimg.com/media/CP3AUr9WcAApMcw.png",
     speech: "https://i.imgur.com/0Z7cJQR.jpg",
     ohfuck: "https://i.imgur.com/EvCW3xu.png",
-    bye: "https://ih0.redbubble.net/image.369279749.4315/ap,550x550,12x12,1,transparent,t.png"
+    bye: "https://ih0.redbubble.net/image.369279749.4315/ap,550x550,12x12,1,transparent,t.png",
+    doit: "https://thumbs.gfycat.com/IncredibleOrganicBug-size_restricted.gif"
 }
 
 module.exports = {

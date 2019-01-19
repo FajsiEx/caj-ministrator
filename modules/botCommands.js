@@ -216,6 +216,8 @@ let commands = {
 
     'oof': (msg)=>{meme.command(msg, "oof")},
 
+    'doit': (msg)=>{meme.command(msg, "doit")},
+
     'pika': (msg)=>{meme.command(msg, "pika")},
 
     'tsj': (msg)=>{meme.command(msg, "tsj")},
