@@ -53,7 +53,7 @@ module.exports = {
                 "embed": {
                     "title": "Client object destroyed.",
                     "color": COLORS.RED,
-                    "description": "Thanks for using me. Goodbye for now ;)",
+                    "description": "Thanks for using me. Goodbye for now ;3",
                 }
             });
             discordClient.destroy();
