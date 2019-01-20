@@ -46,6 +46,8 @@ const pvt = require("./commands/jff/pvt");
 const weather = require("./commands/jff/weather");
 const thanks = require("./commands/jff/thanks");
 const wfbo = require("./commands/jff/wfbo");
+const crabrave = require("./commands/jff/crabrave")
+const fuckea = require("./commands/jff/fuckea")
 
 const roll = require("./commands/random/roll");
 const tf = require("./commands/random/tf");
@@ -56,6 +58,8 @@ const raveboy = require("./commands/lyrics/raveboy");
 
 const meme = require("./commands/jff/meme");
 const meirl = require("./commands/jff/meirl");
+
+const play = require("./commands/music/play");
 
 const owo = require("./commands/ffiy/owo");
 const uwu = require("./commands/ffiy/uwu");
@@ -144,10 +148,16 @@ let commands = {
 
     'ahoj': (msg)=>{ahoj.command(msg);},
 
+    'ea': (msg)=>{fuckea.command(msg);},
+    'fuckea': (msg)=>{fuckea.command(msg);},
+
     'zhni': (msg)=>{zhni.command(msg);},
 
     'wfbo': (msg)=>{wfbo.command(msg);},
     'weirdflexbutok': (msg)=>{wfbo.command(msg);},
+
+    'crabrave': (msg)=>{crabrave.command(msg);},
+    'ravecrab': (msg)=>{crabrave.command(msg);},
 
     'joke': (msg)=>{joke.command(msg);},
     'vtip': (msg)=>{joke.command(msg);},
@@ -173,6 +183,9 @@ let commands = {
     'dakujem': (msg)=>{thanks.command(msg);},
     'diki': (msg)=>{thanks.command(msg);},
     'dik': (msg)=>{thanks.command(msg);},
+
+    // Music
+    'play': (msg)=>{play.command(msg);},
 
     // Roll
     'roll': (msg)=>{roll.command(msg);},
@@ -235,7 +248,21 @@ let commands = {
 
     'yeet': (msg)=>{meme.command(msg, "yeet")},
 
+    'monkas': (msg)=>{meme.command(msg, "monkas")},
+
+    'monkaomega': (msg)=>{meme.command(msg, "monkaomega")},
+
+    'monkagiga': (msg)=>{meme.command(msg, "monkagiga")},
+
     'wwtf': (msg)=>{meme.command(msg, "wwtf")},
+
+    'whid': (msg)=>{meme.command(msg, "whid")},
+    'whathaveidone': (msg)=>{meme.command(msg, "whid")},
+
+    'gj': (msg)=>{meme.command(msg, "gj")},
+    'greatjob': (msg)=>{meme.command(msg, "gj")},
+
+    'booty': (msg)=>{meme.command(msg, "booty")},
 
     'ooth': (msg)=>{meme.command(msg, "ooth")},
 

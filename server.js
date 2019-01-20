@@ -12,6 +12,7 @@
 console.log("[BOT] Starting...");
 
 // Import modules
+
 const discord = require('discord.js');
 const discordClient = new discord.Client(); // Creates a discordClient
 

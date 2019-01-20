@@ -5,7 +5,7 @@
 */
 
 module.exports = {
-    VERSION: "2019.1.6",
+    VERSION: "2019.1.7",
 
     WEEK_DAYS: ["Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota"],
     WEEK_DAYS_SHORT: ["Ne", "Po", "Ut", "St", "Št", "Pi", "So"],
@@ -87,7 +87,8 @@ module.exports = {
         - Moja babka má dnes 64 rokov.
         - Že gratulujem k peknému okrúhlemu výročiu...`,
         //Cody's jokes
-        - "Čo si dáva kulturista v kaviarni? Benchpresso s mliekom"
+        - "Čo si dáva kulturista v kaviarni? Benchpresso s mliekom",
+        - "Viete aké auto vyhralo cenu za najlepšie auto roku 2018 podľa magazínu EVA?.....To modré"
     ],
 
     OWO_DM_REPLY_MSGS: [
@@ -98,8 +99,9 @@ module.exports = {
         "Don't you fucking dare do that again."
     ],
 
-    NAMEDAYS: { // Gordii ?,
+    NAMEDAYS: {
         1: {
+            16: "Gordii",
             30: "Emma"
         },
         2: {
@@ -132,7 +134,7 @@ module.exports = {
             30: "Šimon"
         },
         11: {
-            11: '342227744513327107' // Martin & Maros
+            11: 'Martin & Maros'
         },
         12: {
             17: "Nela",
