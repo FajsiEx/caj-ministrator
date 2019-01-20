@@ -12,5 +12,20 @@ module.exports = {
                 `
             }
         });
+
+        let vc = msg.member.voiceChannel;
+        if (!vc) {
+            msg.channel.send({
+                "embed": {
+                    "title": "Play",
+                    "color": COLORS.RED,
+                    "description": `
+                        Nie si vo voice channeli ;_(
+                    `
+                }
+            });
+            return;
+        }
+        vc.join();
     }
 }
