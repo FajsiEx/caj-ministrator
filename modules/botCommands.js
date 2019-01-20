@@ -47,6 +47,7 @@ const weather = require("./commands/jff/weather");
 const thanks = require("./commands/jff/thanks");
 const wfbo = require("./commands/jff/wfbo");
 const crabrave = require("./commands/jff/crabrave")
+const fuckea = require("./commands/jff/fuckea")
 
 const roll = require("./commands/random/roll");
 const tf = require("./commands/random/tf");
@@ -146,6 +147,9 @@ let commands = {
     'rip': (msg)=>{rip.command(msg);},
 
     'ahoj': (msg)=>{ahoj.command(msg);},
+
+    'ea': (msg)=>{fuckea.command(msg);},
+    'fuckea': (msg)=>{fuckea.command(msg);},
 
     'zhni': (msg)=>{zhni.command(msg);},
 
