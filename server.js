@@ -12,7 +12,6 @@
 console.log("[BOT] Starting...");
 
 // Import modules
-const ffmpeg = require('easy-ffmpeg');
 
 const discord = require('discord.js');
 const discordClient = new discord.Client(); // Creates a discordClient
