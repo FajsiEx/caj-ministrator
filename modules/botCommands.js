@@ -58,6 +58,8 @@ const raveboy = require("./commands/lyrics/raveboy");
 const meme = require("./commands/jff/meme");
 const meirl = require("./commands/jff/meirl");
 
+const play = require("./commands/music/play");
+
 const owo = require("./commands/ffiy/owo");
 const uwu = require("./commands/ffiy/uwu");
 const e621 = require("./commands/ffiy/e621");
@@ -177,6 +179,9 @@ let commands = {
     'dakujem': (msg)=>{thanks.command(msg);},
     'diki': (msg)=>{thanks.command(msg);},
     'dik': (msg)=>{thanks.command(msg);},
+
+    // Music
+    'play': (msg)=>{play.command(msg);},
 
     // Roll
     'roll': (msg)=>{roll.command(msg);},
