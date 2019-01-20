@@ -87,7 +87,8 @@ module.exports = {
         - Moja babka má dnes 64 rokov.
         - Že gratulujem k peknému okrúhlemu výročiu...`,
         //Cody's jokes
-        - "Čo si dáva kulturista v kaviarni? Benchpresso s mliekom"
+        - "Čo si dáva kulturista v kaviarni? Benchpresso s mliekom",
+        - "Viete, aké auto vyhralo cenu za najlepšie auto roku 2018 podľa magazínu EVA?.....To modré"
     ],
 
     OWO_DM_REPLY_MSGS: [
