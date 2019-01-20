@@ -169,6 +169,7 @@ let commands = {
     'alecau': (msg)=>{alecau.command(msg);},
 
     'nick': (msg, discordClient)=>{nick.command(msg, discordClient);},
+    'name': (msg, discordClient)=>{nick.command(msg, discordClient);},
 
     'kawaii': (msg)=>{kawaii.command(msg);},
     'kw': (msg)=>{kawaii.command(msg);},
