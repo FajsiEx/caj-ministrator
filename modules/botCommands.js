@@ -250,6 +250,10 @@ let commands = {
 
     'monkas': (msg)=>{meme.command(msg, "monkas")},
 
+    'monkaomega': (msg)=>{meme.command(msg, "monkaomega")},
+
+    'monkagiga': (msg)=>{meme.command(msg, "monkagiga")},
+
     'wwtf': (msg)=>{meme.command(msg, "wwtf")},
 
     'whid': (msg)=>{meme.command(msg, "whid")},
