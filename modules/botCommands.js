@@ -249,9 +249,7 @@ let commands = {
     'wwtf': (msg)=>{meme.command(msg, "wwtf")},
 
     'whid': (msg)=>{meme.command(msg, "whid")},
-    'whId': (msg)=>{meme.command(msg, "whid")},
     'whathaveidone': (msg)=>{meme.command(msg, "whid")},
-    'whathaveIdone': (msg)=>{meme.command(msg, "whid")},
 
     'gj': (msg)=>{meme.command(msg, "gj")},
     'greatjob': (msg)=>{meme.command(msg, "gj")},
