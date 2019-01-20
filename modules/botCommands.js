@@ -246,6 +246,8 @@ let commands = {
     'gj': (msg)=>{meme.command(msg, "gj")},
     'greatjob': (msg)=>{meme.command(msg, "gj")},
 
+    'booty': (msg)=>{meme.command(msg, "booty")},
+
     'ooth': (msg)=>{meme.command(msg, "ooth")},
 
     'kappa': (msg)=>{meme.command(msg, "kappa")},

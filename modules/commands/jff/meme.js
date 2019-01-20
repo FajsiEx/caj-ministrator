@@ -23,7 +23,8 @@ const memeUrls = {
     flashbang: "https://i.ytimg.com/vi/WKB0JUkksJg/maxresdefault.jpg",
     way: "https://i.imgflip.com/234zr7.jpg",
     monkas: "https://cdn.vox-cdn.com/thumbor/ITErCh1_JR7_GwWdMVmM9WRFwu4=/0x0:1200x675/1200x0/filters:focal(0x0:1200x675):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/10838143/monkas.png",
-    gj: "https://i.redd.it/yqzqyob3lnv01.jpg"
+    gj: "https://i.redd.it/yqzqyob3lnv01.jpg",
+    booty: "https://i.kym-cdn.com/photos/images/original/000/811/629/bf6.gif"
 }
 
 module.exports = {
