@@ -230,6 +230,9 @@ let commands = {
 
     'circles': (msg)=>{meme.command(msg, "circles")},
 
+    'qi': (msg)=>{meme.command(msg, "qi")},
+    '400qi': (msg)=>{meme.command(msg, "qi")},
+
     'oof': (msg)=>{meme.command(msg, "oof")},
 
     'doit': (msg)=>{meme.command(msg, "doit")},
