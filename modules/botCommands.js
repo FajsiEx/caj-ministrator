@@ -55,6 +55,7 @@ const tf = require("./commands/random/tf");
 const technokitty = require("./commands/lyrics/technokitty");
 const united = require("./commands/lyrics/united");
 const raveboy = require("./commands/lyrics/raveboy");
+const mtc = require("./commands/lyrics/mtc");
 
 const meme = require("./commands/jff/meme");
 const meirl = require("./commands/jff/meirl");
@@ -212,6 +213,8 @@ let commands = {
     'united': (msg)=>{united.command(msg);},
 
     "raveboy": (msg)=>{raveboy.command(msg);},
+
+    "rmrc": (msg)=>{mtc.command(msg);},
 
     // Memes
     'meme': (msg)=>{meirl.command(msg)},
