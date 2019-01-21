@@ -313,8 +313,16 @@ module.exports = {
         command = command.toLocaleLowerCase(); // Ignore the case by converting it to lower
 
         if (msg.channel.type == 'text') { // If the origin  of the msg is from a text channel
-            console.log(`[BOT_COMMANDS] CHAN_CATEGORY ${msg.channel.parent.name}`);
-            if (msg.channel.parent.name != "bot" && ANYCHAN_COMMANDS.indexOf(command) == -1) { // If the chan is not in bot category AND command is not in the allowed commands array
+            let chan_permitted = false;
+
+            if (msg.channel.parent) {
+                console.log(`[BOT_COMMANDS] CHAN_CATEGORY ${msg.channel.parent.name}`);
+                if(msg.channel.parent.name == "bot") {
+                    chan_permitted = true;
+                }
+            }
+
+            if (!chan_permitted && ANYCHAN_COMMANDS.indexOf(command) == -1) { // If the chan is not in bot category AND command is not in the allowed commands array
                 msg.channel.send({
                     "embed": {
                         "title": "Príkazy sa môžu vykonávať len v bot channeloch.",
