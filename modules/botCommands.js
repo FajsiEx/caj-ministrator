@@ -243,6 +243,8 @@ let commands = {
     'really': (msg)=>{meme.command(msg, "nigga")},
     'nigga': (msg)=>{meme.command(msg, "nigga")},
 
+    'cheese': (msg)=>{meme.command(msg, "cheese")},
+
     'oof': (msg)=>{meme.command(msg, "oof")},
 
     'doit': (msg)=>{meme.command(msg, "doit")},
