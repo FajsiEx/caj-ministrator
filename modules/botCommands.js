@@ -214,7 +214,7 @@ let commands = {
 
     "raveboy": (msg)=>{raveboy.command(msg);},
 
-    "rmrc": (msg)=>{mtc.command(msg);},
+    "mtc": (msg)=>{mtc.command(msg);},
 
     // Memes
     'meme': (msg)=>{meirl.command(msg)},
