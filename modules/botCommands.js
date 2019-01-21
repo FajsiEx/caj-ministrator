@@ -59,6 +59,7 @@ const mtc = require("./commands/lyrics/mtc");
 
 const meme = require("./commands/jff/meme");
 const meirl = require("./commands/jff/meirl");
+const kubko = require("./commands/jff/kubko"); // A.K.A the hentai command
 
 const play = require("./commands/music/play");
 
@@ -219,6 +220,9 @@ let commands = {
     // Memes
     'meme': (msg)=>{meirl.command(msg)},
     'meirl': (msg)=>{meirl.command(msg)},
+
+    'kubko': (msg)=>{kubko.command(msg)},
+    'hentai': (msg)=>{kubko.command(msg)},
 
     'excuse': (msg)=>{meme.command(msg, "excuse")},
     'excuseme': (msg)=>{meme.command(msg, "excuse")},
