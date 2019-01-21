@@ -29,7 +29,8 @@ const memeUrls = {
     monkaomega: "https://i.ytimg.com/vi/KoW_FECTIek/hqdefault.jpg",
     monkagiga: "https://pbs.twimg.com/profile_images/1007188804141137920/5qr8l423_400x400.jpg",
     circles: "https://ih0.redbubble.net/image.361285756.7565/mp,550x550,gloss,ffffff,t.3.jpg",
-    qi: "https://i.imgur.com/uHPXN9m.jpg"
+    qi: "https://i.imgur.com/uHPXN9m.jpg",
+    nigga: "http://m.memegen.com/v6b7ma.jpg"
 }
 
 module.exports = {
