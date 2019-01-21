@@ -88,7 +88,10 @@ module.exports = {
         - Že gratulujem k peknému okrúhlemu výročiu...`,
         //Cody's jokes
         - "Čo si dáva kulturista v kaviarni? Benchpresso s mliekom",
-        - "Viete aké auto vyhralo cenu za najlepšie auto roku 2018 podľa magazínu EVA?.....To modré"
+        - "Viete aké auto vyhralo cenu za najlepšie auto roku 2018 podľa magazínu EVA?.....To modré",
+        - "Ako sa volá miesto, kde hromadne zomierajú mačky? Mňauschwitz",
+        - "Ako sa volá strážny pes čo nešteká? Mlčiak",
+        - "Ako Freddie Mercury dostal AIDS? Len tak, z prdele"
     ],
 
     OWO_DM_REPLY_MSGS: [
