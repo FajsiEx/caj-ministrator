@@ -228,6 +228,8 @@ let commands = {
     'commit': (msg)=>{meme.command(msg, "commit")},
     'gocommit': (msg)=>{meme.command(msg, "commit")},
 
+    'circles': (msg)=>{meme.command(msg, "circles")},
+
     'oof': (msg)=>{meme.command(msg, "oof")},
 
     'doit': (msg)=>{meme.command(msg, "doit")},

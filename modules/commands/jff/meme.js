@@ -27,7 +27,8 @@ const memeUrls = {
     booty: "https://i.kym-cdn.com/photos/images/original/000/811/629/bf6.gif",
     whid: "http://www.reactiongifs.com/r/whid1.gif",
     monkaomega: "https://i.ytimg.com/vi/KoW_FECTIek/hqdefault.jpg",
-    monkagiga: "https://pbs.twimg.com/profile_images/1007188804141137920/5qr8l423_400x400.jpg"
+    monkagiga: "https://pbs.twimg.com/profile_images/1007188804141137920/5qr8l423_400x400.jpg",
+    circles: "https://ih0.redbubble.net/image.361285756.7565/mp,550x550,gloss,ffffff,t.3.jpg"
 }
 
 module.exports = {
