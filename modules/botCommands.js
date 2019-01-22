@@ -46,8 +46,9 @@ const pvt = require("./commands/jff/pvt");
 const weather = require("./commands/jff/weather");
 const thanks = require("./commands/jff/thanks");
 const wfbo = require("./commands/jff/wfbo");
-const crabrave = require("./commands/jff/crabrave")
-const fuckea = require("./commands/jff/fuckea")
+const crabrave = require("./commands/jff/crabrave");
+const fuckea = require("./commands/jff/fuckea");
+const sleep = require("./commands/jff/sleep");
 
 const roll = require("./commands/random/roll");
 const tf = require("./commands/random/tf");
@@ -55,9 +56,11 @@ const tf = require("./commands/random/tf");
 const technokitty = require("./commands/lyrics/technokitty");
 const united = require("./commands/lyrics/united");
 const raveboy = require("./commands/lyrics/raveboy");
+const mtc = require("./commands/lyrics/mtc");
 
 const meme = require("./commands/jff/meme");
 const meirl = require("./commands/jff/meirl");
+const kubko = require("./commands/jff/kubko"); // A.K.A the hentai command
 
 const play = require("./commands/music/play");
 
@@ -151,6 +154,9 @@ let commands = {
     'ea': (msg)=>{fuckea.command(msg);},
     'fuckea': (msg)=>{fuckea.command(msg);},
 
+    'gn': (msg)=>{sleep.command(msg);},
+    'sleep': (msg)=>{sleep.command(msg);},
+
     'zhni': (msg)=>{zhni.command(msg);},
 
     'wfbo': (msg)=>{wfbo.command(msg);},
@@ -169,6 +175,7 @@ let commands = {
     'alecau': (msg)=>{alecau.command(msg);},
 
     'nick': (msg, discordClient)=>{nick.command(msg, discordClient);},
+    'name': (msg, discordClient)=>{nick.command(msg, discordClient);},
 
     'kawaii': (msg)=>{kawaii.command(msg);},
     'kw': (msg)=>{kawaii.command(msg);},
@@ -212,9 +219,14 @@ let commands = {
 
     "raveboy": (msg)=>{raveboy.command(msg);},
 
+    "mtc": (msg)=>{mtc.command(msg);},
+
     // Memes
     'meme': (msg)=>{meirl.command(msg)},
     'meirl': (msg)=>{meirl.command(msg)},
+
+    'kubko': (msg)=>{kubko.command(msg)},
+    'hentai': (msg)=>{kubko.command(msg)},
 
     'excuse': (msg)=>{meme.command(msg, "excuse")},
     'excuseme': (msg)=>{meme.command(msg, "excuse")},
@@ -226,6 +238,16 @@ let commands = {
 
     'commit': (msg)=>{meme.command(msg, "commit")},
     'gocommit': (msg)=>{meme.command(msg, "commit")},
+
+    'circles': (msg)=>{meme.command(msg, "circles")},
+
+    'qi': (msg)=>{meme.command(msg, "qi")},
+    '400qi': (msg)=>{meme.command(msg, "qi")},
+
+    'really': (msg)=>{meme.command(msg, "nigga")},
+    'nigga': (msg)=>{meme.command(msg, "nigga")},
+
+    'cheese': (msg)=>{meme.command(msg, "cheese")},
 
     'oof': (msg)=>{meme.command(msg, "oof")},
 
@@ -301,8 +323,16 @@ module.exports = {
         command = command.toLocaleLowerCase(); // Ignore the case by converting it to lower
 
         if (msg.channel.type == 'text') { // If the origin  of the msg is from a text channel
-            console.log(`[BOT_COMMANDS] CHAN_CATEGORY ${msg.channel.parent.name}`);
-            if (msg.channel.parent.name != "bot" && ANYCHAN_COMMANDS.indexOf(command) == -1) { // If the chan is not in bot category AND command is not in the allowed commands array
+            let chan_permitted = false;
+
+            if (msg.channel.parent) {
+                console.log(`[BOT_COMMANDS] CHAN_CATEGORY ${msg.channel.parent.name}`);
+                if(msg.channel.parent.name == "bot") {
+                    chan_permitted = true;
+                }
+            }
+
+            if (!chan_permitted && ANYCHAN_COMMANDS.indexOf(command) == -1) { // If the chan is not in bot category AND command is not in the allowed commands array
                 msg.channel.send({
                     "embed": {
                         "title": "Príkazy sa môžu vykonávať len v bot channeloch.",

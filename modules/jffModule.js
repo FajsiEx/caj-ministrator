@@ -19,6 +19,9 @@ module.exports = {
         }else if (message.indexOf('fuck you') > -1) {
             msg.reply(`no u`);
             return;
+        }else if (message.indexOf('fuck u') > -1) {
+            msg.reply(`no u`);
+            return;
         }else if (message.indexOf('no u') > -1) {
             msg.reply(`no u`);
             return;
@@ -53,7 +56,7 @@ module.exports = {
                 "embed": {
                     "title": "Client object destroyed.",
                     "color": COLORS.RED,
-                    "description": "Thanks for using me. Goodbye for now ;)",
+                    "description": "Thanks for using me. Goodbye for now ;3",
                 }
             });
             discordClient.destroy();
