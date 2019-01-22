@@ -41,7 +41,7 @@ module.exports = {
             msg.channel.send({
                 "embed": {
                     "title": "Play",
-                    "color": COLORS.GREEN,
+                    "color": COLORS.RED,
                     "description": `
                         Prijmam len YT video linky (zatiaľ)
                     `
@@ -61,7 +61,7 @@ module.exports = {
             msg.channel.send({
                 "embed": {
                     "title": "Play",
-                    "color": COLORS.RED,
+                    "color": COLORS.GREEN,
                     "description": `
                         Hrajem ${song}.
                     `
