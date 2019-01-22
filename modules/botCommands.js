@@ -46,9 +46,9 @@ const pvt = require("./commands/jff/pvt");
 const weather = require("./commands/jff/weather");
 const thanks = require("./commands/jff/thanks");
 const wfbo = require("./commands/jff/wfbo");
-const crabrave = require("./commands/jff/crabrave")
-const fuckea = require("./commands/jff/fuckea")
-const sleep = require("./commands/jff/sleep")
+const crabrave = require("./commands/jff/crabrave");
+const fuckea = require("./commands/jff/fuckea");
+const sleep = require("./commands/jff/sleep");
 
 const roll = require("./commands/random/roll");
 const tf = require("./commands/random/tf");
