@@ -29,6 +29,7 @@
     "mathjs": "^5.2.3",
     "mongodb": "^3.1.10",
     "request": "^2.88.0",
-    "string-similarity": "^3.0.0"
+    "string-similarity": "^3.0.0",
+    "ytpl": "^0.1.14"
   }
 }
