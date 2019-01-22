@@ -16,7 +16,7 @@
     "ministrator"
   ],
   "engines": {
-    "node": "6.9.x"
+    "node": "6.2.0"
   },
   "author": "FajsiEx",
   "license": "MIT",
