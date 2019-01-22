@@ -19,6 +19,9 @@ module.exports = {
         }else if (message.indexOf('fuck you') > -1) {
             msg.reply(`no u`);
             return;
+        }else if (message.indexOf('fuck u') > -1) {
+            msg.reply(`no u`);
+            return;
         }else if (message.indexOf('no u') > -1) {
             msg.reply(`no u`);
             return;
