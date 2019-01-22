@@ -153,6 +153,9 @@ let commands = {
     'ea': (msg)=>{fuckea.command(msg);},
     'fuckea': (msg)=>{fuckea.command(msg);},
 
+    'gn': (msg)=>{sleep.command(msg);},
+    'sleep': (msg)=>{sleep.command(msg);},
+
     'zhni': (msg)=>{zhni.command(msg);},
 
     'wfbo': (msg)=>{wfbo.command(msg);},
