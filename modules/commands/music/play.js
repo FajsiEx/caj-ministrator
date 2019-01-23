@@ -54,7 +54,7 @@ module.exports = {
             let audioStream = ytdl(
                 song, {
                 audioonly: true,
-                quality: "lowest"
+                quality: "lowestaudio"
             });
     
             connection.playStream(audioStream);
