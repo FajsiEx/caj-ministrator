@@ -1,0 +1,3 @@
+buildpacks:
+  - https://github.com/maurostorch/nodejs-ffmpeg-buildpack
+  - https://github.com/heroku/heroku-buildpack-nodejs
