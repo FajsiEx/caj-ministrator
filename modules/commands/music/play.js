@@ -99,7 +99,10 @@ module.exports = {
                         "color": COLORS.GREEN,
                         "description": `
                             Hraje sa **${info.title}** od **${info.owner}** (${info.duration}s).
-                        `
+                        `,
+                        "footer": {
+                            "text": "Music príkazy sú ešte v BETA stave. Možno budú fungovať, možno nie. Stabilita sa zlepši s nasledujúcimi verziami :)"
+                        }
                     }
                 };
     
