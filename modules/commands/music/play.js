@@ -1,6 +1,8 @@
 
 const COLORS = require("../../consts").COLORS;
 const ytdl = require("ytdl-core");
+const fetchVideoInfo = require('youtube-info');
+const fs = require("fs");
 
 module.exports = {
     command: function(msg) {
@@ -50,29 +52,68 @@ module.exports = {
             return;
         }
 
-        vc.join().then((connection)=>{
-            let audioStream = ytdl(
+        let videoID = song.split("=")[1]
+        console.log("[PLAY_COMM] Video ID: " + videoID);
+
+        let dlMsg;
+
+        msg.delete();
+        
+
+        let fileName = videoID + ".mp3";
+
+        if (fs.existsSync(fileName)) {
+            this.playFile(msg, vc, fileName, videoID, false);
+        }else{
+            msg.channel.send({
+                "embed": {
+                    "title": "Sťahujem...",
+                    "color": COLORS.BLUE,
+                    "description": `
+                        Sťahuje sa ${song}... **Toto bude trvať pár sekúnd...**
+                    `
+                }
+            }).then((sentMsg)=>{dlMsg = sentMsg});
+
+            let stream = ytdl(
                 song, {
                 audioonly: true
             });
-    
-            connection.playStream(audioStream);
-
-            msg.channel.send({
-                "embed": {
-                    "title": "Play",
-                    "color": COLORS.GREEN,
-                    "description": `
-                        Hrajem ${song}.
-                    `
-                }
+            stream.pipe(fs.createWriteStream(fileName))
+            .on('finish', () => {
+                this.playFile(msg, vc, fileName, videoID, dlMsg);
             });
+        }
+    },
 
-            msg.delete();
-        });
+    playFile: function(msg, vc, fileName, vID, dlMsg) {
+        vc.join().then(connection => {
+            console.log('[PLAY_COMM] Down done. Joined a VC.');
 
-        
-
-
+            fetchVideoInfo(vID, (err, info)=> {
+                if (err) throw new Error(err);
+                
+                let playEmbedObj = {
+                    "embed": {
+                        "title": "Hrajem...",
+                        "color": COLORS.GREEN,
+                        "description": `
+                            Hraje sa **${info.title}** od **${info.owner}** (${info.duration}s).
+                        `
+                    }
+                };
+    
+                if (!dlMsg) {
+                    msg.channel.send(playEmbedObj);
+                }else{
+                    dlMsg.edit(playEmbedObj);
+                }
+    
+                connection.playStream(fs.createReadStream(fileName)).on('end', () => {
+                    console.log('[PLAY_COMM] Song done. Leaving the VC.');
+                    connection.channel.leave();
+                }).catch(console.error);
+            });
+        }).catch(console.error);
     }
 }
