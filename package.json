@@ -15,9 +15,6 @@
     "caj",
     "ministrator"
   ],
-  "engines": {
-    "node": "6.15.1"
-  },
   "author": "FajsiEx",
   "license": "MIT",
   "bugs": {
