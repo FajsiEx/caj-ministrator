@@ -53,8 +53,7 @@ module.exports = {
         vc.join().then((connection)=>{
             let audioStream = ytdl(
                 song, {
-                audioonly: true,
-                quality: "lowestaudio"
+                audioonly: true
             });
     
             connection.playStream(audioStream);
