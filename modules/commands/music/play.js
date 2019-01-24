@@ -112,7 +112,7 @@ module.exports = {
                     dlMsg.edit(playEmbedObj);
                 }
     
-                connection.playStream(fs.createReadStream(fileName)).on('end', () => {
+                connection.playFile(fileName).on('end', () => {
                     console.log('[PLAY_COMM] Song done. Leaving the VC.');
                     connection.channel.leave();
                 }).catch(console.error);
