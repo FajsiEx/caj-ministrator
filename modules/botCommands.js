@@ -8,7 +8,6 @@ const mathHandler = require("./mathHandler");
 
 const ping = require("./commands/dev/ping");
 const send = require("./commands/dev/send");
-const friend = require("./commands/dev/friend");
 const st = require("./commands/dev/st");
 const testread = require("./commands/dev/testread");
 const testpp = require("./commands/dev/testpp");
@@ -77,8 +76,6 @@ let commands = {
     'dp': (msg)=>{ping.command(msg);},
 
     'send': (msg, discordClient)=>{send.command(msg, discordClient);},
-
-    'friend': (msg, discordClient)=>{friend.command(msg, discordClient);},
 
     'st': (msg)=>{st.command(msg);},
 
