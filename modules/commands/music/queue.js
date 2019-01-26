@@ -28,10 +28,13 @@ module.exports = {
 
     showQueue: function(msg, queueArray) {
         let queueString = "";
-        let i = 1
+        let i = ">"
 
         queueArray.forEach(song => {
             queueString += `**${i}.** ${song.author} - ${song.song} (${smallFunctions.secondsToTimeString(song.duration)})\n`;
+            if (i == ">") { // If this was the first song
+                i = 0;
+            }
             i++;
         });
 
