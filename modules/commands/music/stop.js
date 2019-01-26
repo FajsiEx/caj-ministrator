@@ -4,9 +4,15 @@ const COLORS = require("../../consts").COLORS;
 
 module.exports = {
     command: function(msg) {
-        let vc = globalVariables.get("vc");
+        let guildMusicConns = globalVariables.get("musicConnections");
+        if (!guildMusicConns) { // In the case if the var fails to load from db,
+            guildMusicConns = {} // create it and we will save it later in the code.
+        }
 
-        if (!vc) {
+        let guildId = msg.guild.id;
+        let guildMusicConn = guildMusicConns[guildId];
+
+        if (!guildMusicConn) {
             msg.channel.send({
                 "embed": {
                     "title": "Stop",
@@ -19,7 +25,12 @@ module.exports = {
             return;
         }
 
-        vc.disconnect();
+        guildMusicConn.queue = [];
+        guildMusicConn.conn.disconnect();
+
+        guildMusicConns[guildId] = guildMusicConn;
+
+        globalVariables.set("musicConnections", guildMusicConns);
 
         msg.channel.send({
             "embed": {

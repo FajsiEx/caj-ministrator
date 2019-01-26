@@ -60,32 +60,56 @@ module.exports = {
         let dlMsg;
 
         msg.delete();
-        
 
-        let fileName = videoID + ".mp3";
+        this.checkMaxLength(videoID).then((isMaxLength)=>{
+            if (isMaxLength) {
+                msg.channel.send({
+                    "embed": {
+                        "title": "Play",
+                        "color": COLORS.RED,
+                        "description": `
+                            Moc dlhé. Maximum 15 minút.
+                        `
+                    }
+                })
+                return;
+            }
 
-        if (fs.existsSync(fileName)) {
-            this.addToQ(msg, vc, fileName, videoID, false);
-        }else{
+            let fileName = videoID + ".mp3";
+
+            if (fs.existsSync(fileName)) {
+                this.addToQ(msg, vc, fileName, videoID, false);
+            }else{
+                msg.channel.send({
+                    "embed": {
+                        "title": "Sťahujem...",
+                        "color": COLORS.BLUE,
+                        "description": `
+                            Sťahuje sa ${song}... **Toto bude trvať pár sekúnd...**
+                        `
+                    }
+                }).then((sentMsg)=>{dlMsg = sentMsg});
+
+                let stream = ytdl(
+                    song, {
+                    audioonly: true
+                });
+                stream.pipe(fs.createWriteStream(fileName))
+                .on('finish', () => {
+                    this.addToQ(msg, vc, fileName, videoID, dlMsg);
+                });
+            }
+        }).catch((err)=>{
             msg.channel.send({
                 "embed": {
-                    "title": "Sťahujem...",
-                    "color": COLORS.BLUE,
+                    "title": "Play",
+                    "color": COLORS.RED,
                     "description": `
-                        Sťahuje sa ${song}... **Toto bude trvať pár sekúnd...**
+                        Vyskytla sa chyba pri zisťovaní dĺžky videa. ERR:${err}
                     `
                 }
-            }).then((sentMsg)=>{dlMsg = sentMsg});
-
-            let stream = ytdl(
-                song, {
-                audioonly: true
-            });
-            stream.pipe(fs.createWriteStream(fileName))
-            .on('finish', () => {
-                this.addToQ(msg, vc, fileName, videoID, dlMsg);
-            });
-        }
+            })
+        });
     },
 
     addToQ: function(msg, vc, fileName, vID, dlMsg) {
@@ -109,6 +133,7 @@ module.exports = {
                 guildMusicConns[guildId.toString()] = {
                     test: "dsds",
                     vc: "",
+                    conn: "",
                     queue: []
                 }
 
@@ -161,7 +186,8 @@ module.exports = {
 
         guildMusicConn.vc.join().then(connection => {
             console.log("[PLAY_COMM] Joined a VC");
-            guildMusicConn.vc = connection;
+            guildMusicConns[guildId].conn = connection;
+            globalVariables.set("musicConnections", guildMusicConns);
     
             connection.playFile(guildMusicConn.queue[0].file).on('end', () => {
                 console.log('[PLAY_COMM] Song done.');
@@ -181,5 +207,22 @@ module.exports = {
             });
 
         }).catch(console.error);
+    },
+
+    checkMaxLength: function(videoID) {
+        return new Promise((resolve, reject)=> {
+            fetchVideoInfo(videoID, (err, info)=> {
+                if (err) {
+                    reject("video_info_fetch_error");
+                    throw new Error(err);
+                };
+
+                if(info.duration > 15*60) { // If the video is longer than 15*60 seconds
+                    resolve(true); // return true = song won't play
+                }else{
+                    resolve(false); // if it's in the length limit return false
+                }
+            });
+        })
     }
 }

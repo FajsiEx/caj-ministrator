@@ -5,8 +5,6 @@ const COLORS = require("../../consts").COLORS;
 
 module.exports = {
     command: function(msg) {
-        let vc = globalVariables.get("vc");
-
         let guildMusicConns = globalVariables.get("musicConnections");
         if (!guildMusicConns) { // In the case if the var fails to load from db,
             guildMusicConns = {} // create it and we will save it later in the code.
