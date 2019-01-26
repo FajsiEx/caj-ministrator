@@ -26,6 +26,7 @@ module.exports = {
         }
 
         guildMusicConn.queue = [];
+        guildMusicConn.stream.end();
         guildMusicConn.conn.disconnect();
 
         guildMusicConns[guildId] = guildMusicConn;
@@ -37,7 +38,7 @@ module.exports = {
                 "title": "Stop",
                 "color": COLORS.GREEN,
                 "description": `
-                    Done.
+                    Rada bola vyprázdnená.
                 `
             }
         });

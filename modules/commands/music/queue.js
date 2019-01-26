@@ -41,7 +41,10 @@ module.exports = {
                 "color": COLORS.BLUE,
                 "description": `
                     ${queueString}
-                `
+                `,
+                "footer": {
+                    "text": "Music príkazy sú ešte v BETA stave. Možno budú fungovať, možno nie. Stabilita sa zlepši s nasledujúcimi verziami :)"
+                }
             }
         });
     },
@@ -52,8 +55,11 @@ module.exports = {
                 "title": "Rada",
                 "color": COLORS.BLUE,
                 "description": `
-                    Nič v rade. (pre pridanie do rady: !play https://www.youtube.com/watch?v=*videoID*)
-                `
+                    Nič v rade. (pre pridanie do rady: **!play** *link na youtube video*)
+                `,
+                "footer": {
+                    "text": "Music príkazy sú ešte v BETA stave. Možno budú fungovať, možno nie. Stabilita sa zlepši s nasledujúcimi verziami :)"
+                }
             }
         });
     }

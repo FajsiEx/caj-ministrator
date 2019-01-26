@@ -134,6 +134,7 @@ module.exports = {
                     test: "dsds",
                     vc: "",
                     conn: "",
+                    stream: "",
                     queue: []
                 }
 
@@ -186,10 +187,11 @@ module.exports = {
 
         guildMusicConn.vc.join().then(connection => {
             console.log("[PLAY_COMM] Joined a VC");
-            guildMusicConns[guildId].conn = connection;
-            globalVariables.set("musicConnections", guildMusicConns);
+
+            console.log("[PLAY_COMM] GID: " + guildId);
+            console.log("[PLAY_COMM] QUEUE: " + JSON.stringify(guildMusicConn.queue));
     
-            connection.playFile(guildMusicConn.queue[0].file).on('end', () => {
+            let stream = connection.playFile(guildMusicConn.queue[0].file).on('end', () => {
                 console.log('[PLAY_COMM] Song done.');
                 guildMusicConn.queue.shift();
 
@@ -205,6 +207,10 @@ module.exports = {
                     this.playSong(guildId);
                 }
             });
+
+            guildMusicConns[guildId].conn = connection;
+            guildMusicConns[guildId].stream = stream;
+            globalVariables.set("musicConnections", guildMusicConns);
 
         }).catch(console.error);
     },

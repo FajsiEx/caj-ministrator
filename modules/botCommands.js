@@ -64,6 +64,7 @@ const kubko = require("./commands/jff/kubko"); // A.K.A the hentai command
 
 const play = require("./commands/music/play");
 const stop = require("./commands/music/stop");
+const skip = require("./commands/music/skip");
 const queue = require("./commands/music/queue");
 
 const owo = require("./commands/ffiy/owo");
@@ -198,6 +199,8 @@ let commands = {
     'hraj': (msg)=>{play.command(msg);},
 
     'stop': (msg)=>{stop.command(msg);},
+
+    'skip': (msg)=>{skip.command(msg);},
 
     'queue': (msg)=>{queue.command(msg);},
     'mq': (msg)=>{queue.command(msg);},
