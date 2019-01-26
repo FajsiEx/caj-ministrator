@@ -1,7 +1,6 @@
 
 const globalVariables = require("../../globalVariables");
 const COLORS = require("../../consts").COLORS;
-const play = require("./play");
 const smallFunctions = require("../../smallFunctions");
 
 module.exports = {
