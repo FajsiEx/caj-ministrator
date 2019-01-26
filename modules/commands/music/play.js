@@ -221,7 +221,7 @@ module.exports = {
                 if (err) {
                     reject("video_info_fetch_error");
                     throw new Error(err);
-                };
+                }
 
                 if(info.duration > 15*60) { // If the video is longer than 15*60 seconds
                     resolve(true); // return true = song won't play
