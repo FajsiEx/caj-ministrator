@@ -127,8 +127,11 @@ let setStatus = ()=>{
     statusText += `${days} dní, ${hours} hodín, ${minutes} minút do konca prázdnin`
     */
     let commsServed = globalVariables.get("commandsServed");
+    if (!commsServed) {
+        commsServed = "loading number of"
+    }
     
-    discordClient.user.setActivity(statusText + " | !help | v." + VERSION + " | " + commsServed + " commands served", { type: statusType });
+    discordClient.user.setActivity(statusText + "| !help | v." + VERSION + " | " + commsServed + " commands served", { type: statusType });
 
     console.log("[SET_STATUS] Completed");
 }

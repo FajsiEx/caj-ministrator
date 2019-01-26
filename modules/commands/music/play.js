@@ -1,8 +1,10 @@
 
-const COLORS = require("../../consts").COLORS;
 const ytdl = require("ytdl-core");
 const fetchVideoInfo = require('youtube-info');
 const fs = require("fs");
+
+const globalVariables = require("../../globalVariables");
+const COLORS = require("../../consts").COLORS;
 
 module.exports = {
     command: function(msg) {
@@ -58,65 +60,175 @@ module.exports = {
         let dlMsg;
 
         msg.delete();
-        
 
-        let fileName = videoID + ".mp3";
+        this.checkMaxLength(videoID).then((isMaxLength)=>{
+            if (isMaxLength) {
+                msg.channel.send({
+                    "embed": {
+                        "title": "Play",
+                        "color": COLORS.RED,
+                        "description": `
+                            Moc dlhé. Maximum 15 minút.
+                        `
+                    }
+                })
+                return;
+            }
 
-        if (fs.existsSync(fileName)) {
-            this.playFile(msg, vc, fileName, videoID, false);
-        }else{
+            let fileName = videoID + ".mp3";
+
+            if (fs.existsSync(fileName)) {
+                this.addToQ(msg, vc, fileName, videoID, false);
+            }else{
+                msg.channel.send({
+                    "embed": {
+                        "title": "Sťahujem...",
+                        "color": COLORS.BLUE,
+                        "description": `
+                            Sťahuje sa ${song}... **Toto bude trvať pár sekúnd...**
+                        `
+                    }
+                }).then((sentMsg)=>{dlMsg = sentMsg});
+
+                let stream = ytdl(
+                    song, {
+                    audioonly: true
+                });
+                stream.pipe(fs.createWriteStream(fileName))
+                .on('finish', () => {
+                    this.addToQ(msg, vc, fileName, videoID, dlMsg);
+                });
+            }
+        }).catch((err)=>{
             msg.channel.send({
                 "embed": {
-                    "title": "Sťahujem...",
-                    "color": COLORS.BLUE,
+                    "title": "Play",
+                    "color": COLORS.RED,
                     "description": `
-                        Sťahuje sa ${song}... **Toto bude trvať pár sekúnd...**
+                        Vyskytla sa chyba pri zisťovaní dĺžky videa. ERR:${err}
                     `
                 }
-            }).then((sentMsg)=>{dlMsg = sentMsg});
-
-            let stream = ytdl(
-                song, {
-                audioonly: true
-            });
-            stream.pipe(fs.createWriteStream(fileName))
-            .on('finish', () => {
-                this.playFile(msg, vc, fileName, videoID, dlMsg);
-            });
-        }
+            })
+        });
     },
 
-    playFile: function(msg, vc, fileName, vID, dlMsg) {
-        vc.join().then(connection => {
-            console.log('[PLAY_COMM] Down done. Joined a VC.');
+    addToQ: function(msg, vc, fileName, vID, dlMsg) {
+        console.log('[PLAY_COMM] Down done.');
 
-            fetchVideoInfo(vID, (err, info)=> {
-                if (err) throw new Error(err);
-                
-                let playEmbedObj = {
-                    "embed": {
-                        "title": "Hrajem...",
-                        "color": COLORS.GREEN,
-                        "description": `
-                            Hraje sa **${info.title}** od **${info.owner}** (${info.duration}s).
-                        `,
-                        "footer": {
-                            "text": "Music príkazy sú ešte v BETA stave. Možno budú fungovať, možno nie. Stabilita sa zlepši s nasledujúcimi verziami :)"
-                        }
-                    }
-                };
-    
-                if (!dlMsg) {
-                    msg.channel.send(playEmbedObj);
-                }else{
-                    dlMsg.edit(playEmbedObj);
+        fetchVideoInfo(vID, (err, info)=> {
+            if (err) throw new Error(err);
+
+            let guildId = msg.guild.id;
+            let guildMusicConns = globalVariables.get("musicConnections");
+
+            if (!guildMusicConns) { // In the case if the var fails to load from db,
+                guildMusicConns = {} // create it and we will save it later in the code.
+            }
+
+            let guildMusicConn = guildMusicConns[guildId];
+
+            if (!guildMusicConn) {
+                console.log('[PLAY_COMM] GMC DNE. Creating.');
+
+                guildMusicConns[guildId.toString()] = {
+                    test: "dsds",
+                    vc: "",
+                    conn: "",
+                    stream: "",
+                    queue: []
                 }
-    
-                connection.playStream(fs.createReadStream(fileName)).on('end', () => {
-                    console.log('[PLAY_COMM] Song done. Leaving the VC.');
-                    connection.channel.leave();
-                }).catch(console.error);
+
+                console.log("[PLAY_COMM] DEBUG GMCADD GID: " + guildId);
+            }
+
+            console.log("[PLAY_COMM] DEBUG ATQ: " + guildMusicConns[guildId]);
+            guildMusicConns[guildId].vc = vc;
+
+            guildMusicConns[guildId].queue.push({
+                file: fileName,
+                song: info.title,
+                author: info.owner,
+                duration: info.duration
             });
+
+            globalVariables.set("musicConnections", guildMusicConns);
+            
+            let playEmbedObj = {
+                "embed": {
+                    "title": "Pridané do rady.",
+                    "color": COLORS.GREEN,
+                    "description": `
+                        **${info.title}** od **${info.owner}** (${info.duration}s) sa pridala do rady.
+                    `,
+                    "footer": {
+                        "text": "Music príkazy sú ešte v BETA stave. Možno budú fungovať, možno nie. Stabilita sa zlepši s nasledujúcimi verziami :)"
+                    }
+                }
+            };
+    
+            if (!dlMsg) {
+                msg.channel.send(playEmbedObj);
+            }else{
+                dlMsg.edit(playEmbedObj);
+            }
+
+            if (guildMusicConns[guildId].queue.length == 1) {
+                console.log("[PLAY_COMM] First song in queue. Playing.");
+                this.playSong(guildId);
+            }
+        });
+    },
+
+    playSong: function(guildId) {
+        let guildMusicConns = globalVariables.get("musicConnections");
+        let guildMusicConn = guildMusicConns[guildId];
+
+        if (!guildMusicConn) {console.error("[PLAY_COMM] Guild music obj does not exist. Aborting."); return;}
+
+        guildMusicConn.vc.join().then(connection => {
+            console.log("[PLAY_COMM] Joined a VC");
+
+            console.log("[PLAY_COMM] GID: " + guildId);
+            console.log("[PLAY_COMM] QUEUE: " + JSON.stringify(guildMusicConn.queue));
+    
+            let stream = connection.playFile(guildMusicConn.queue[0].file).on('end', () => {
+                console.log('[PLAY_COMM] Song done.');
+                guildMusicConn.queue.shift();
+
+                guildMusicConns[guildId] = guildMusicConn;
+
+                globalVariables.set("musicConnections", guildMusicConns);
+
+                if (guildMusicConn.queue.length == 0) {
+                    console.log('[PLAY_COMM] No more songs in queue. Leaving.');
+                    connection.channel.leave();
+                }else{
+                    console.log('[PLAY_COMM] More songs in queue. Playing.');
+                    this.playSong(guildId);
+                }
+            });
+
+            guildMusicConns[guildId].conn = connection;
+            guildMusicConns[guildId].stream = stream;
+            globalVariables.set("musicConnections", guildMusicConns);
+
         }).catch(console.error);
+    },
+
+    checkMaxLength: function(videoID) {
+        return new Promise((resolve, reject)=> {
+            fetchVideoInfo(videoID, (err, info)=> {
+                if (err) {
+                    reject("video_info_fetch_error");
+                    throw new Error(err);
+                }
+
+                if(info.duration > 15*60) { // If the video is longer than 15*60 seconds
+                    resolve(true); // return true = song won't play
+                }else{
+                    resolve(false); // if it's in the length limit return false
+                }
+            });
+        })
     }
 }

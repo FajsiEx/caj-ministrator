@@ -7,7 +7,9 @@ let global = {
     startTime: 0,
     lastSaveTime: 0,
     modModeOn: false,
-    disableStatus: false // If true auto status will be disabled
+    disableStatus: false, // If true auto status will be disabled
+    vc: false, // will be removed and unused
+    musicConnections: {test: "test"}
 }
 
 let disableAutoSave = false;

@@ -63,6 +63,9 @@ const meirl = require("./commands/jff/meirl");
 const kubko = require("./commands/jff/kubko"); // A.K.A the hentai command
 
 const play = require("./commands/music/play");
+const stop = require("./commands/music/stop");
+const skip = require("./commands/music/skip");
+const queue = require("./commands/music/queue");
 
 const owo = require("./commands/ffiy/owo");
 const uwu = require("./commands/ffiy/uwu");
@@ -193,6 +196,15 @@ let commands = {
 
     // Music
     'play': (msg)=>{play.command(msg);},
+    'hraj': (msg)=>{play.command(msg);},
+
+    'stop': (msg)=>{stop.command(msg);},
+
+    'skip': (msg)=>{skip.command(msg);},
+
+    'queue': (msg)=>{queue.command(msg);},
+    'mq': (msg)=>{queue.command(msg);},
+    'rada': (msg)=>{queue.command(msg);},
 
     // Roll
     'roll': (msg)=>{roll.command(msg);},
@@ -311,6 +323,11 @@ const COMMANDS_ARRAY = Object.keys(commands);
 const ANYCHAN_COMMANDS = [
     "nuke"
 ]
+const NSFW_COMMANDS = [
+    "e621",
+    "kubko",
+    "hentai"
+]
 
 module.exports = {
     handleBotCommand: (msg, discordClient)=>{
@@ -321,6 +338,21 @@ module.exports = {
         let command = commandMessageArray[0].slice(1); // Extracts the command from the message
         command = command.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Get rid of shit in Slovak lang
         command = command.toLocaleLowerCase(); // Ignore the case by converting it to lower
+
+        if (NSFW_COMMANDS.indexOf(command) != -1 && msg.channel.type == 'text') { // If the command is in the NSFW array AND the chan is text-chan
+            if (!msg.channel.nsfw) { // If the chan is not marked as NSFW
+                msg.channel.send({
+                    "embed": {
+                        "title": "Tento príkaz sa môže vykonávať len v NSFW kanáloch alebo v group DM a DMkách.",
+                        "color": COLORS.RED
+                    }
+                }).then((responseMsg)=>{
+                    msg.delete(); // Deletes the user's message
+                    responseMsg.delete(5000); // and deletes this msg after 5 seconds
+                });
+                return; // Don't continue
+            }
+        }
 
         if (msg.channel.type == 'text') { // If the origin  of the msg is from a text channel
             let chan_permitted = false;
