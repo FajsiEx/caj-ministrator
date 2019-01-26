@@ -63,6 +63,8 @@ const meirl = require("./commands/jff/meirl");
 const kubko = require("./commands/jff/kubko"); // A.K.A the hentai command
 
 const play = require("./commands/music/play");
+const stop = require("./commands/music/stop");
+const queue = require("./commands/music/queue");
 
 const owo = require("./commands/ffiy/owo");
 const uwu = require("./commands/ffiy/uwu");
@@ -193,6 +195,13 @@ let commands = {
 
     // Music
     'play': (msg)=>{play.command(msg);},
+    'hraj': (msg)=>{play.command(msg);},
+
+    'stop': (msg)=>{stop.command(msg);},
+
+    'queue': (msg)=>{queue.command(msg);},
+    'mq': (msg)=>{queue.command(msg);},
+    'rada': (msg)=>{queue.command(msg);},
 
     // Roll
     'roll': (msg)=>{roll.command(msg);},
