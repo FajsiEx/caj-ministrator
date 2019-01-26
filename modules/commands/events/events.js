@@ -66,8 +66,11 @@ module.exports = {
             if (e.time < new Date().getTime()) { // If the event is old
                 return;
             }
-            if (e.time > new Date().getTime() + 1209600000) { // If the event is in the futute than 14 days
-                return;
+            
+            if (type == "week") {
+                if (e.time > new Date().getTime() + 604800000) { // If the event is in the futute than 7 days
+                    return; // Don't show it (don't add it to the eventsString)
+                }
             }
     
             let eventDate = new Date(e.time);

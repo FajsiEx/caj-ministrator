@@ -137,6 +137,8 @@ let commands = {
     'today': (msg)=>{events.command(msg, "dnes");},
     'zajtra': (msg)=>{events.command(msg, "zajtra");},
     'tomorrow': (msg)=>{events.command(msg, "zajtra");},
+    'tyzden': (msg)=>{events.command(msg, "week");},
+    'week': (msg)=>{events.command(msg, "week");},
 
     'vymazat': (msg)=>{deleteEvent.command(msg);},
 
