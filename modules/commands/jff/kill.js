@@ -4,6 +4,11 @@ const COLORS = require("../../consts").COLORS;
 module.exports = {
     command: function(msg) {
         let commandMessageArray = msg.content.split(" ");
+
+        if (!commandMessageArray[1]) {
+            msg.channel.send("Koho?");
+            return;
+        }
         
         if (commandMessageArray[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase().indexOf("me") > -1) {
             msg.channel.send({
@@ -21,16 +26,19 @@ module.exports = {
             '305705560966430721': "Nowpe.", // Cody
             '337911105525645316': "Ten by mal byť niečo ako mŕtvy, ale nie.", // bocmangg
             '236189237379072001': "-_-", // Astimos
-            '514499632924065812': "Go fuck yourself.", // Caj-bot
+            '514499632924065812': "Go fuck yourself.", // Tea-bot
             '184405311681986560': "Would like, but we're on the same boat.", // FredBoat
             '294462085000331265': "Pri svojej hyperaktivite sa zabije sám", // Albert
             '514489259290263557': "", // Dan
             '346961640979300356': "He ded. He ghost, you see.", // David
         }
 
-        let customKillMsg = KILL_MSGS[msg.mentions.members.first().id];
-
-        console.log("[KILL] ID:" + msg.mentions.members.first().id + " /// MSG:" + customKillMsg);
+        let mentionList = msg.mentions.users;
+        let customKillMsg = false;
+        if(mentionList.array().length != 0) {
+            customKillMsg = KILL_MSGS[msg.mentions.members.first().id];
+            console.log("[KILL] ID:" + msg.mentions.members.first().id + " /// MSG:" + customKillMsg);
+        }
 
         if (customKillMsg) {
             msg.channel.send({
