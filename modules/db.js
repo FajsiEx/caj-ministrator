@@ -29,6 +29,7 @@ module.exports = {
 
                     console.log("[LOAD] Load finished. Resloving...");
     
+                    //resolve(); // This line disables load for testing the save failcheck
                     resolve(data);
                 });
             });
@@ -36,17 +37,22 @@ module.exports = {
     },
 
     save: (data)=>{
+        if (!data || (Object.keys(data).length <= 0)) {
+            console.warn("[SAVE] Data is false. Aborting save.");
+            return false;
+        }
+
+        if (data.commandsServed < 1) {
+            console.warn("[SAVE] Data is default. Aborting auto-save. To force a save, !fs is your friend.");
+            return false;
+        }
+
         if (process.env.DISABLE_SAVE == "yes") {
             console.log("[SAVE] Disable save is on. Aborting save.");
             return;
         } // for beta
         
         console.log("[SAVE] Saving events...");
-
-        if (!data || (Object.keys(data).length <= 0)) {
-            console.warn("[SAVE] Data is false. Aborting save.");
-            return false;
-        }
         
         MongoClient.connect(DATABASE_URI, (err, client) => {
             if (err) return console.error(err)
