@@ -7,6 +7,7 @@ module.exports = {
     command: function(msg){
         let commandMessageArray = msg.content.split(" ");
         let events = globalVariables.get("events");
+        let eventsCounter = globalVariables.get("eventsCounter");
     
         if (!commandMessageArray[1] || !commandMessageArray[2]) { // If there are missing parameters
             this.missingParametersReply(msg); // Tell them
@@ -36,16 +37,20 @@ module.exports = {
     
         // This is ugly. Yes, I know. Don't judge me. Who reads this code anyways...right?
         let eventName = message.slice(message.indexOf(message.split(" ", 2)[1]) + message.split(" ", 2)[1].length + 1); // This just extracts the rest of the message (!add 21.12 bla bla bla) => (bla bla bla)... I don't even know how it works or how I came up with this but it works so I won't touch it.
-    
+        
+        eventsCounter++;
+
         // We push the event as an object to the events arrat
         events.push({
             time: dateObj.getTime(),
             user_id: author_id,
             user: author,
-            content: eventName
+            content: eventName,
+            eventId: eventsCounter
         });
         
         globalVariables.set("events", events);
+        globalVariables.set("eventsCounter", eventsCounter);
     
         this.successReply(msg, dateObj, eventName); // And finally we reply the user.
     },

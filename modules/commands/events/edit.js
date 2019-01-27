@@ -6,47 +6,39 @@ module.exports = {
     command: function(msg) {
         let events = globalVariables.get("events");
 
-        /*if (!smallFunctions.checkAdmin(msg)) {
-             allowed = false;
-             msg.channel.send({
-                 "embed": {
-                     "title": "Tento príkaz môžu vykonávať len admini lol",
-                     "color": COLORS.RED
-                 }
-             });
-             return;
-         }
-         */
-        
-         // TODO: Improve this.
-
         let commandMessageArray = msg.content.split(" ");
-        let eventIdToDelete = parseInt(commandMessageArray[1]);
+        let eventIdToEdit = parseInt(commandMessageArray[1]);
+        let message = msg.content;
+        let newContent = message.slice(message.indexOf(message.split(" ", 2)[1]) + message.split(" ", 2)[1].length + 1);
 
-        if (!eventIdToDelete) {
+        if (!eventIdToEdit || !newContent) {
             msg.channel.send({
                 "embed": {
-                    "title": "!vymazat/delete <eventId> (!delete 5; !vymazat 12)",
+                    "title": "!edit <eventId> <na čo zmeniť> (!edit 5 niečo iné)",
                     "color": COLORS.RED
                 }
             });
             return;
         }
 
-        let eventToDelete = events.filter((e)=>{
-            return e.eventId == eventIdToDelete;
+        let eventToEdit = events.filter((e)=>{
+            return e.eventId == eventIdToEdit;
         })[0];
 
-        if (eventToDelete) { // If the event that is to be deleted was found
+        if (eventToEdit) { // If the event that is to be deleted was found
             events = events.filter((e)=>{ // Pass all events except the event that we want to delete
-                return e.eventId != eventIdToDelete;
+                return e.eventId != eventIdToEdit;
             });
+
+            eventToEdit.content = newContent;
+
+            events.push(eventToEdit)
 
             globalVariables.set("events", events); // and save those.
 
             msg.channel.send({
                 "embed": {
-                    "title": `Event **[#${eventIdToDelete}] ${eventToDelete.content}** bol vymazaný.`,
+                    "title": `Event **[#${eventIdToEdit}]** bol zmenený na **${eventToEdit.content}**.`,
                     "color": COLORS.GREEN
                 }
             });

@@ -138,8 +138,8 @@ let setStatus = ()=>{
 
 setInterval(setStatus, 15000);
 
-var express = require("express");
-var app = express();
+let express = require("express");
+let app = express();
 
 app.get("/logs", (req, res)=>{
     let logData = globalVariables.get("logData");
@@ -155,7 +155,7 @@ app.get("/logs", (req, res)=>{
 
 globalVariables.set("startTime", new Date().getTime());
 
-var port = process.env.PORT || 3000
+let port = process.env.PORT || 3000
 app.listen(port, function() {
     console.log("[WEB_SERVER] Listening. Port:" + port);
 });

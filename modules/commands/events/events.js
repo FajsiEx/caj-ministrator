@@ -66,8 +66,15 @@ module.exports = {
             if (e.time < new Date().getTime()) { // If the event is old
                 return;
             }
-            if (e.time > new Date().getTime() + 1209600000) { // If the event is in the futute than 14 days
-                return;
+            
+            if (type == "week") {
+                if (e.time > new Date().getTime() + 604800000) { // If the event is in the futute than 7 days
+                    return; // Don't show it (don't add it to the eventsString)
+                }
+            }
+
+            if (!e.eventId) {
+                e.eventId = "-"
             }
     
             let eventDate = new Date(e.time);
@@ -80,7 +87,7 @@ module.exports = {
                 if (eventsFields[0].value.endsWith('Nič')) {
                     eventsFields[0].value = "**Rozvrh: **" + timetableTodayString + "\n";
                 }
-                eventsFields[0].value += `• ${e.content}\n`;
+                eventsFields[0].value += `• [#${e.eventId}] ${e.content}\n`;
     
             }else if (eventDateString == tomorrowDateString) {
                 if (isToday) {return;}
@@ -89,12 +96,12 @@ module.exports = {
                     if (eventsFields[0].value.endsWith('Nič')) {
                         eventsFields[0].value = "**Rozvrh: **" + timetableTomorrowString + "\n";
                     }
-                    eventsFields[0].value += `• ${e.content}\n`;
+                    eventsFields[0].value += `• [#${e.eventId}] ${e.content}\n`;
                 }else{
                     if (eventsFields[1].value.endsWith('Nič')) {
                         eventsFields[1].value = "**Rozvrh: **" + timetableTomorrowString + "\n";
                     }
-                    eventsFields[1].value += `• ${e.content}\n`;
+                    eventsFields[1].value += `• [#${e.eventId}] ${e.content}\n`;
                 }
             }else{
                 if (isToday || isTomorrow) {return;}
@@ -103,7 +110,7 @@ module.exports = {
                 let eventField = eventsFields.find(obj => obj.name == eventFieldDate);
     
                 if (eventField) {
-                    eventField.value += `• ${e.content}\n`;
+                    eventField.value += `• [#${e.eventId}] ${e.content}\n`;
                 }else{
                     eventsFields.push({
                         name: eventFieldDate,

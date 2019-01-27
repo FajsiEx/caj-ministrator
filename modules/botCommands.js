@@ -29,6 +29,7 @@ const holidays = require("./commands/events/holidays");
 const addEvent = require("./commands/events/add");
 const events = require("./commands/events/events");
 const deleteEvent = require("./commands/events/delete");
+const editEvent = require("./commands/events/edit");
 
 const spravnyprikaz = require("./commands/jff/spravnyprikaz");
 const tea = require("./commands/jff/tea");
@@ -137,7 +138,13 @@ let commands = {
     'today': (msg)=>{events.command(msg, "dnes");},
     'zajtra': (msg)=>{events.command(msg, "zajtra");},
     'tomorrow': (msg)=>{events.command(msg, "zajtra");},
+    'tyzden': (msg)=>{events.command(msg, "week");},
+    'week': (msg)=>{events.command(msg, "week");},
 
+    'edit': (msg)=>{editEvent.command(msg);},
+
+    'del': (msg)=>{deleteEvent.command(msg);},
+    'delete': (msg)=>{deleteEvent.command(msg);},
     'vymazat': (msg)=>{deleteEvent.command(msg);},
 
     // Random commands
