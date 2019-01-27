@@ -19,22 +19,34 @@ module.exports = {
          */
         
          // TODO: Improve this.
-        let eventContentToDelete = msg.content.slice(9); // gets rid of the !vymazat
 
-        let eventsDelete = events.filter((e)=>{
-            return e.content == eventContentToDelete;
-        });
+        let commandMessageArray = msg.content.split(" ");
+        let eventIdToDelete = parseInt(commandMessageArray[1]);
 
-        if (eventsDelete.length > 0) { // If the event was found
-            events = events.filter((e)=>{
-                return e.content != eventContentToDelete;
+        if (!eventIdToDelete) {
+            msg.channel.send({
+                "embed": {
+                    "title": "!vymazat/delete <eventId> (!delete 5; !vymazat 12)",
+                    "color": COLORS.RED
+                }
+            });
+            return;
+        }
+
+        let eventToDelete = events.filter((e)=>{
+            return e.eventId == eventIdToDelete;
+        })[0];
+
+        if (eventToDelete) { // If the event that is to be deleted was found
+            events = events.filter((e)=>{ // Pass all events except the event that we want to delete
+                return e.eventId != eventIdToDelete;
             });
 
-            globalVariables.set("events", events);
+            globalVariables.set("events", events); // and save those.
 
             msg.channel.send({
                 "embed": {
-                    "title": `Event **${eventContentToDelete}** bol vymazaný.`,
+                    "title": `Event **[#${eventIdToDelete}] ${eventToDelete.content}** bol vymazaný.`,
                     "color": COLORS.GREEN
                 }
             });

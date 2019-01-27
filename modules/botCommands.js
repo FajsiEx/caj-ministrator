@@ -140,6 +140,8 @@ let commands = {
     'tyzden': (msg)=>{events.command(msg, "week");},
     'week': (msg)=>{events.command(msg, "week");},
 
+    'del': (msg)=>{deleteEvent.command(msg);},
+    'delete': (msg)=>{deleteEvent.command(msg);},
     'vymazat': (msg)=>{deleteEvent.command(msg);},
 
     // Random commands
