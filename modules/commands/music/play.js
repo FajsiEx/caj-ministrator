@@ -2,9 +2,18 @@
 const ytdl = require("ytdl-core");
 const fetchVideoInfo = require('youtube-info');
 const fs = require("fs");
+const YTsearch = require('youtube-search');
+ 
+const YTsearchConfig = {
+    maxResults: 5,
+    key: process.env.GAPI,
+    type: "video"
+};
 
 const globalVariables = require("../../globalVariables");
 const COLORS = require("../../consts").COLORS;
+
+let tempSongList = false;
 
 module.exports = {
     command: function(msg) {
@@ -38,18 +47,54 @@ module.exports = {
             return;
         }
 
+        if (parseInt(song)) { // If the arg was a number, we'll assume the user wanted something played from the search list
+            if (parseInt(song) >= 1 && parseInt(song) <=5) { // and if the arg number is between 1-5 (the search list range)
+                if (!tempSongList) { // If there was nothing to choose from
+                    msg.channel.send({
+                        "embed": {
+                            "title": "Play",
+                            "color": COLORS.RED,
+                            "description": `
+                                Nieje z čoho vyberať (!play niečo)
+                            `
+                        }
+                    });
+                    return;
+                }
+
+                song = tempSongList[parseInt(song) - 1].link // Selects song from the song list with index song and stores into the var song instead of the song index value
+                // Also we must decrement the user index bc arrays start from 0 so user-1=array index (1=0, 2=1, ...)
+                tempSongList = false // and empty the song list.
+            }
+        }
 
         let isValidYTlink = song.startsWith("https://www.youtube.com/watch?v=") || song.startsWith("https://youtube.com/watch?v=")
 
         if (!isValidYTlink) {
-            msg.channel.send({
-                "embed": {
-                    "title": "Play",
-                    "color": COLORS.RED,
-                    "description": `
-                        Prijmam len YT video linky (zatiaľ)
-                    `
-                }
+            YTsearch(song, YTsearchConfig, function(err, results) {
+                if(err) return console.log(err);
+
+                let resultString = "";
+                let i = 1
+
+                results.forEach((v)=>{
+                    resultString += `**${i}.** [${v.channelTitle} - ${v.title}](${v.link})\n`;
+                    i++;
+                })
+
+                msg.channel.send({
+                    "embed": {
+                        "title": "Play",
+                        "color": COLORS.BLUE,
+                        "description": `
+                            ${resultString}
+                        `
+                    }
+                });
+
+                tempSongList = results
+               
+                console.dir(results);
             });
             return;
         }
@@ -71,7 +116,7 @@ module.exports = {
                             Moc dlhé. Maximum 15 minút.
                         `
                     }
-                })
+                });
                 return;
             }
 

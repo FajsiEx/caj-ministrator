@@ -10,7 +10,7 @@ let global = {
     disableStatus: false, // If true auto status will be disabled
     vc: false, // will be removed and unused
     musicConnections: {test: "test"},
-    
+    eventsCounter: 0
 }
 
 let disableAutoSave = false;
