@@ -10,7 +10,7 @@ module.exports = {
             if (!err && res.statusCode == 200) {
                 try{
                     msg.channel.send({
-                        "files": [data[0].data.children[0].data.url]
+                        "files": [data.data.children[0].data.url]
                     });
                 }catch(e){
                     console.error(e);
