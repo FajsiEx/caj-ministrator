@@ -62,6 +62,7 @@ const mtc = require("./commands/lyrics/mtc");
 const meme = require("./commands/jff/meme");
 const meirl = require("./commands/jff/meirl");
 const kubko = require("./commands/jff/kubko"); // A.K.A the hentai command
+const admeme = require("./commands/jff/admeme"); // A.K.A Dan's command
 
 const play = require("./commands/music/play");
 const stop = require("./commands/music/stop");
