@@ -248,6 +248,8 @@ let commands = {
     'kubko': (msg)=>{kubko.command(msg)},
     'hentai': (msg)=>{kubko.command(msg)},
 
+    'admeme':(msg)=>{admeme.command(msg)},
+
     'excuse': (msg)=>{meme.command(msg, "excuse")},
     'excuseme': (msg)=>{meme.command(msg, "excuse")},
     'excusemewtf': (msg)=>{meme.command(msg, "excuse")},
