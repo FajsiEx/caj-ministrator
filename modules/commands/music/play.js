@@ -33,7 +33,8 @@ module.exports = {
             return;
         }
 
-        let song = commandMessageArray[1]
+        let lOfCommand = commandMessageArray[0].length + 1
+        let song = msg.content.slice(lOfCommand);
         if (!song) {
             msg.channel.send({
                 "embed": {

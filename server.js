@@ -9,7 +9,7 @@
 */
 
 // As soon as the bot starts up we print a message so we know at least it's working
-console.log("[BOT] Starting...");
+console.log("BOOT: [BOT] Starting...");
 
 // Import modules
 
@@ -42,7 +42,7 @@ discordClient.on('guildMemberAdd', member => {
 
 // Discord client init
 discordClient.on('ready', ()=>{
-    console.log("[READY] Ready.");
+    console.log("BOOT: [READY] discordClient ready.");
 
     if (process.env.DISABLE_SAVE != "yes") {
         discordClient.fetchUser("342227744513327107").then((user)=>{ // Fetch the admin user
@@ -90,15 +90,15 @@ discordClient.on('presenceUpdate', (oldMember, newMember)=>{
 
 let setStatus = ()=>{
     if (globalVariables.get('disableStatus')) {
-        console.warn("[SET_STATUS] Status disabled. ABORT!");
+        console.warn("/!\\ [SET_STATUS] Status disabled. ABORT!");
         return;
     }
     if (starting) {
-        console.warn("[SET_STATUS] Bot starting. ABORT!");
+        console.warn("/!\\ [SET_STATUS] Bot starting. ABORT!");
         return;
     }
 
-    console.log("[SET_STATUS] Setting activity...");
+    console.log("D: [SET_STATUS] Setting activity...");
     
     let hours = new Date().getHours();
 
@@ -133,7 +133,7 @@ let setStatus = ()=>{
     
     discordClient.user.setActivity(statusText + "| !help | v." + VERSION + " | " + commsServed + " commands served", { type: statusType });
 
-    console.log("[SET_STATUS] Completed");
+    console.log("D: [SET_STATUS] Completed");
 }
 
 setInterval(setStatus, 15000);
@@ -146,7 +146,7 @@ app.get("/logs", (req, res)=>{
     let logString = "";
 
     logData.forEach(e => {
-        console.log("[DEBUG] getLogs route E:" + JSON.stringify(e))
+        console.log("D: [EXPRESS] getLogs route E:" + JSON.stringify(e))
         logString+=`[${new Date(e.time).toString()}] <b>${e.type}</b> - ${e.data} <br>`
     });
 
@@ -157,9 +157,9 @@ globalVariables.set("startTime", new Date().getTime());
 
 let port = process.env.PORT || 3000
 app.listen(port, function() {
-    console.log("[WEB_SERVER] Listening. Port:" + port);
+    console.log("BOOT: [WEB_SERVER] Listening. Port:" + port);
 });
 
 // ED
 discordClient.login(discordBotCongig.token);
-console.log("[BOT] Started.");
+console.log("BOOT: [BOT] Started.");
