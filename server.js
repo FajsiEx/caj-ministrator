@@ -9,10 +9,13 @@
 */
 
 // As soon as the bot starts up we print a message so we know at least it's working
-console.log("BOOT: [BOT] Starting...");
+console.log("Tea-bot project");
+console.log("Copyright 2018-2019 FajsiEx (Licensed under MIT license - see LICENSE.md for more information)");
+console.log("[BOT] Starting...");
 
 // Import modules
 
+const colors = require('colors');
 const discord = require('discord.js');
 const discordClient = new discord.Client(); // Creates a discordClient
 
@@ -20,6 +23,14 @@ const discordClient = new discord.Client(); // Creates a discordClient
 const discordBotCongig = {
     token: process.env.DISCORD_BOT_TOKEN // Gets discord bot token from the enviromental variables
 };
+colors.setTheme({
+    debug: 'grey',
+    info: 'blue',
+    success: 'green',
+    important: 'magenta',
+    warn: ['bgYellow', 'black'],
+    error: 'bgRed'
+});
 
 // Global veriables definition
 let starting = true;
@@ -42,7 +53,7 @@ discordClient.on('guildMemberAdd', member => {
 
 // Discord client init
 discordClient.on('ready', ()=>{
-    console.log("BOOT: [READY] discordClient ready.");
+    console.log("[READY] discordClient ready.".info);
 
     if (process.env.DISABLE_SAVE != "yes") {
         discordClient.fetchUser("342227744513327107").then((user)=>{ // Fetch the admin user
@@ -90,15 +101,15 @@ discordClient.on('presenceUpdate', (oldMember, newMember)=>{
 
 let setStatus = ()=>{
     if (globalVariables.get('disableStatus')) {
-        console.warn("/!\\ [SET_STATUS] Status disabled. ABORT!");
+        console.warn("[SET_STATUS] Status disabled. ABORT!".warn);
         return;
     }
     if (starting) {
-        console.warn("/!\\ [SET_STATUS] Bot starting. ABORT!");
+        console.warn("[SET_STATUS] Bot starting. ABORT!".warn);
         return;
     }
 
-    console.log("D: [SET_STATUS] Setting activity...");
+    console.log("[SET_STATUS] Setting activity...".debug);
     
     let hours = new Date().getHours();
 
@@ -133,7 +144,7 @@ let setStatus = ()=>{
     
     discordClient.user.setActivity(statusText + "| !help | v." + VERSION + " | " + commsServed + " commands served", { type: statusType });
 
-    console.log("D: [SET_STATUS] Completed");
+    console.log("[SET_STATUS] Completed.".success);
 }
 
 setInterval(setStatus, 15000);
@@ -157,9 +168,9 @@ globalVariables.set("startTime", new Date().getTime());
 
 let port = process.env.PORT || 3000
 app.listen(port, function() {
-    console.log("BOOT: [WEB_SERVER] Listening. Port:" + port);
+    console.log(("[WEB_SERVER] Listening. Port:" + port).success);
 });
 
 // ED
 discordClient.login(discordBotCongig.token);
-console.log("BOOT: [BOT] Started.");
+console.log("[BOT] Started.".success);

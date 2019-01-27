@@ -18,12 +18,12 @@ module.exports = (msg, discordClient)=>{
     let events = globalVariables.get("events");
 
     if (msg.author.bot) { // We check if the author of the message isn't a bot
-        console.log("[MSG_HANDLER] REJECTED: Bot message has been ignored.");
+        console.log("[MSG_HANDLER] REJECTED: Bot message has been ignored.".warn);
         return; // If they are, we just ignore them.
     }
 
     if (!msg.channel) { // Because the bot uses the msg.channel.send function to reply in most cases we check if that channel exists
-        console.log("[MSG_HANDLER] REJECTED: No message channel object");
+        console.log("[MSG_HANDLER] REJECTED: No message channel object".warn);
         msg.reply({
             "embed": {
                 "title": "Prosím napíšte mi do nejakého kanálu alebo DM.",
@@ -54,7 +54,7 @@ module.exports = (msg, discordClient)=>{
         globalVariables.set("usersObj", usersObj)
     }
 
-    console.log(`[MSG_HANDLER] MESSAGE: ${author}: "${message}" @ GUILD:${msg.guild.id}`);
+    console.log(`[MSG_HANDLER] MESSAGE: ${author}: "${message}" @ GUILD:${msg.guild.id}`.important);
     
     // Good night wishing thing
     jffModule.goodNightWisher(msg, author_id, discordClient);

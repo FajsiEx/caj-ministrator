@@ -7,6 +7,7 @@
 
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectID;
+const colors = require('colors');
 
 const DATABASE_URI = process.env.DATABASE_URI;
 
@@ -14,20 +15,20 @@ module.exports = {
     load: ()=>{ // Loads data from the DB to the memory
         return new Promise((resolve)=>{
             MongoClient.connect(DATABASE_URI, (err, client) => {
-                console.log("D: [LOAD] Loading data...");
+                console.log("[LOAD] Loading data...".info);
                 if (err) return console.error(err)
                 let database = client.db('caj-ministrator');
                 database.collection("datav2").find({}).toArray((err, docs)=> {
                     if (err) {console.log(err); return;}
     
-                    console.log(`D: [LOAD] Docs loaded`);
+                    console.log(`[LOAD] Docs loaded.`.debug);
     
                     let data = docs[0];
-                    console.log("D: [LOAD] Data loaded.");
+                    console.log("[LOAD] Data loaded.".debug);
     
                     client.close();
 
-                    console.log("D: [LOAD] Load finished. Resloving...");
+                    console.log("[LOAD] Load finished. Resloving...".success);
     
                     //resolve(); // This line disables load for testing the save failcheck
                     resolve(data);
@@ -38,21 +39,21 @@ module.exports = {
 
     save: (data)=>{
         if (!data || (Object.keys(data).length <= 0)) {
-            console.warn("/!\\ [SAVE] Data is false. Aborting save.");
+            console.warn("[SAVE] Data is false. Aborting save.".warn);
             return false;
         }
 
         if (data.commandsServed < 1) {
-            console.warn("/!\\ [SAVE] Data is default. Aborting auto-save. To force a save, !fs is your friend.");
+            console.warn("[SAVE] Data is default. Aborting auto-save. To force a save, !fs is your friend.".bgYellow.black);
             return false;
         }
 
         if (process.env.DISABLE_SAVE == "yes") {
-            console.log("/!\\ [SAVE] Disable save is on. Aborting save.");
+            console.log("[SAVE] Disable save is on. Aborting save.".warn);
             return;
         } // for beta
         
-        console.log("D: [SAVE] Saving events...");
+        console.log("[SAVE] Saving events...".info);
         
         MongoClient.connect(DATABASE_URI, (err, client) => {
             if (err) return console.error(err)
@@ -63,7 +64,7 @@ module.exports = {
                 $set: data
             });
 
-            console.log("D: [SAVE] Everything saved.");
+            console.log("[SAVE] Everything saved.".success);
 
             client.close(); // Dont dos yourself kids
         });
