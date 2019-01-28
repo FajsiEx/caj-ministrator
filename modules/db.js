@@ -53,7 +53,7 @@ module.exports = {
             return;
         } // for beta
         
-        console.log("[SAVE] Saving events...".info);
+        console.log("[SAVE] Saving global object...".info);
         
         MongoClient.connect(DATABASE_URI, (err, client) => {
             if (err) return console.error(err)
