@@ -113,11 +113,11 @@ let setStatus = ()=>{
     
     let hours = new Date().getHours();
 
-    let statusText = "your messages. ";
+    let statusText = "your messages";
     let statusType = "WATCHING";
 
     if (hours < 5) {
-        statusText = "you sleep. ";
+        statusText = "you sleep";
     }
 
     /*
@@ -142,7 +142,7 @@ let setStatus = ()=>{
         commsServed = "loading number of"
     }
     
-    discordClient.user.setActivity(statusText + "| !help | v." + VERSION + " | " + commsServed + " commands served", { type: statusType });
+    discordClient.user.setActivity(statusText + " | !help | v." + VERSION + " | " + commsServed + " commands served", { type: statusType });
 
     console.log("[SET_STATUS] Completed.".success);
 }
