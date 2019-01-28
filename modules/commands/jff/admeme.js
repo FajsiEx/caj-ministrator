@@ -9,8 +9,9 @@ module.exports = {
         }, (err, res, data)=>{
             if (!err && res.statusCode == 200) {
                 try{
+                    let randomIndex = Math.floor(Math.random() * data.data.children.length)
                     msg.channel.send({
-                        "files": [data.data.children[0].data.url]
+                        "files": [data.data.children[randomIndex].data.url]
                     });
                 }catch(e){
                     console.error(e);
