@@ -32,6 +32,11 @@ module.exports = {
     
         let timetableTodayString = timetableTodayArray.join(' | ');
         let timetableTomorrowString = timetableTomorrowArray.join(' | ');
+
+        if (isToday) {
+            this.todayEvents(msg, events);
+            return;
+        }
     
         if (isToday) {
             embedTitle = "Eventy na dnes"
@@ -140,5 +145,44 @@ module.exports = {
                 }
             });
         }
+    },
+
+    todayEvents: function(msg, events) {
+        let eventsFields = [];
+        
+        let todayDateString = `${new Date().getDate()}.${new Date().getMonth()+1}.${new Date().getFullYear()}`;
+
+        let timetableTodayArray = TIMETABLE[new Date().getDay()];
+        let timetableTodayString = timetableTodayArray.join(' | ');
+
+        events.forEach((e)=>{
+            if (!e.eventId) {
+                e.eventId = "?"
+            }
+    
+            let eventDate = new Date(e.time);
+    
+            let eventDateString = `${eventDate.getDate()}.${eventDate.getMonth()+1}.${eventDate.getFullYear()}`; // This will make the date of the event to a format as the xDateString
+    
+            if (eventDateString == todayDateString) {
+                if (eventsFields[0].value.endsWith('Nič')) {
+                    eventsFields[0].value = "**Rozvrh: **" + timetableTodayString + "\n";
+                }
+                eventsFields[0].value += `• [#${e.eventId}] ${e.content}\n`;
+            }
+        });
+
+        eventsFields.push({
+            name: "Today - " + todayDateString,
+            value: todayEventsString
+        });
+
+        msg.channel.send({
+            "embed": {
+                "title": "Events for today",
+                "color": COLORS.BLUE,
+                "fields": eventsFields
+            }
+        });
     }
 }
