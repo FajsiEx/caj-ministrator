@@ -364,7 +364,7 @@ module.exports = {
             }
         }
 
-        if (msg.channel.type == 'text') { // If the origin  of the msg is from a text channel
+        /*if (msg.channel.type == 'text') { // If the origin  of the msg is from a text channel
             let chan_permitted = false;
 
             if (msg.channel.parent) {
@@ -386,7 +386,7 @@ module.exports = {
                 });
                 return; // Don't continue
             }
-        }
+        }*/
         
         let modModeOn = globalVariables.get("modModeOn");
 
