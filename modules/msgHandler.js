@@ -13,17 +13,58 @@ const OWO_DM_REPLY_MSGS = require("./consts").OWO_DM_REPLY_MSGS;
 
 const discordBotConfig = require("./consts").discordBotConfig;
 
+const NPERMIT_WARNING_MSG = {
+    "embed": {
+        "title": "Warning!",
+        "color": COLORS.YELLOW,
+        "description": `
+            Messages outside of bot category channels or DMs will be deleted after 5 minutes.
+        `
+    }
+};
+
+const NPERMIT_WARNING_TIMEOUT = 5 * 60 * 1000; // 5 minutes * 60 seconds * 1000ms
+
+let warnedAboutNPchan = {}; // Stores if the warning was already sent to a channel (<int>chanId: <bool>wasSent)
+
 module.exports = (msg, discordClient)=>{
     let usersObj = globalVariables.get("usersObj");
     let events = globalVariables.get("events");
 
     if (msg.author.bot) { // We check if the author of the message isn't a bot
-        console.log("[MSG_HANDLER] REJECTED: Bot message has been ignored.");
+        if (msg.channel.type == 'text' && msg.author.id == discordClient.user.id) { // If the origin  of the msg is from a text channel and is from tea-bot
+            let chan_permitted = false;
+
+            if (msg.channel.parent) {
+                console.log(`[BOT_COMMANDS] CHAN_CATEGORY ${msg.channel.parent.name}`);
+                if(msg.channel.parent.name == "bot") {
+                    chan_permitted = true;
+                }
+            }
+
+            console.log(`[BOT_MSG_REC] CHAN_PER:${chan_permitted}; CONTENT:${msg.content}`)
+
+            if (!chan_permitted) { // Chan will be permited only when the msg is in a text chan & is in bot category
+                if (!warnedAboutNPchan[msg.channel.id]) {
+                    warnedAboutNPchan[msg.channel.id] = true;
+                    msg.channel.send(NPERMIT_WARNING_MSG);
+                    setTimeout(()=>{
+                        warnedAboutNPchan[msg.channel.id] = false;
+                    }, NPERMIT_WARNING_TIMEOUT)
+                }
+                setTimeout(()=>{
+                    msg.delete().catch((e)=>{console.log("[CH_NP_MSGDELETE] Failed to delete bot msg".error);});
+                }, NPERMIT_WARNING_TIMEOUT)
+                
+            }
+            return;
+        }
+        console.log("[MSG_HANDLER] REJECTED: Bot message has been ignored.".warn);
         return; // If they are, we just ignore them.
     }
 
     if (!msg.channel) { // Because the bot uses the msg.channel.send function to reply in most cases we check if that channel exists
-        console.log("[MSG_HANDLER] REJECTED: No message channel object");
+        console.log("[MSG_HANDLER] REJECTED: No message channel object".warn);
         msg.reply({
             "embed": {
                 "title": "Prosím napíšte mi do nejakého kanálu alebo DM.",
@@ -54,7 +95,7 @@ module.exports = (msg, discordClient)=>{
         globalVariables.set("usersObj", usersObj)
     }
 
-    console.log(`[MSG_HANDLER] MESSAGE: ${author}: "${message}" @ GUILD:${msg.guild.id}`);
+    console.log(`[MSG_HANDLER] MESSAGE: ${author}: "${message}"`.important);
     
     // Good night wishing thing
     jffModule.goodNightWisher(msg, author_id, discordClient);

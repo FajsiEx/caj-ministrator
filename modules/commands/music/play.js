@@ -19,6 +19,19 @@ module.exports = {
     command: function(msg) {
         let commandMessageArray = msg.content.split(" ");
 
+        if (!msg.member) {
+            msg.channel.send({
+                "embed": {
+                    "title": "Play",
+                    "color": COLORS.RED,
+                    "description": `
+                        This can be done only in server text channels.
+                    `
+                }
+            });
+            return;
+        }
+
         let vc = msg.member.voiceChannel;
         if (!vc) {
             msg.channel.send({

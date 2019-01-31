@@ -62,6 +62,7 @@ const mtc = require("./commands/lyrics/mtc");
 const meme = require("./commands/jff/meme");
 const meirl = require("./commands/jff/meirl");
 const kubko = require("./commands/jff/kubko"); // A.K.A the hentai command
+const admeme = require("./commands/jff/admeme"); // A.K.A Dan's command
 
 const play = require("./commands/music/play");
 const stop = require("./commands/music/stop");
@@ -247,6 +248,8 @@ let commands = {
     'kubko': (msg)=>{kubko.command(msg)},
     'hentai': (msg)=>{kubko.command(msg)},
 
+    'admeme':(msg)=>{admeme.command(msg)},
+
     'excuse': (msg)=>{meme.command(msg, "excuse")},
     'excuseme': (msg)=>{meme.command(msg, "excuse")},
     'excusemewtf': (msg)=>{meme.command(msg, "excuse")},
@@ -361,7 +364,7 @@ module.exports = {
             }
         }
 
-        if (msg.channel.type == 'text') { // If the origin  of the msg is from a text channel
+        /*if (msg.channel.type == 'text') { // If the origin  of the msg is from a text channel
             let chan_permitted = false;
 
             if (msg.channel.parent) {
@@ -383,7 +386,7 @@ module.exports = {
                 });
                 return; // Don't continue
             }
-        }
+        }*/
         
         let modModeOn = globalVariables.get("modModeOn");
 

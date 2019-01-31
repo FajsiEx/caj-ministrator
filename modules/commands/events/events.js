@@ -5,6 +5,8 @@ const WEEK_DAYS = require("../../consts").WEEK_DAYS;
 const globalVariables = require("../../globalVariables");
 const smallFunctions = require("../../smallFunctions");
 
+const EMPTY_STRING = "None";
+
 module.exports = {
     command: function(msg, type) {
         let commandMessageArray = msg.content.split(" ");
@@ -32,6 +34,17 @@ module.exports = {
     
         let timetableTodayString = timetableTodayArray.join(' | ');
         let timetableTomorrowString = timetableTomorrowArray.join(' | ');
+
+        if (isToday) {
+            this.todayEvents(msg, events);
+            return;
+        }
+        if (isTomorrow) {
+            this.tomorrowEvents(msg, events);
+            return;
+        }
+
+        // REWORK ALL OF BELLOW
     
         if (isToday) {
             embedTitle = "Eventy na dnes"
@@ -140,5 +153,94 @@ module.exports = {
                 }
             });
         }
+    },
+
+    todayEvents: function(msg, events) {
+        let todayDateString = `${new Date().getDate()}.${new Date().getMonth()+1}.${new Date().getFullYear()}`; // Formats today's date to a xDateString
+        // TODO: Make this in smallFunctions module
+
+        let timetableArray = TIMETABLE[new Date().getDay()];
+        let timetableString = timetableArray.join(' | ');
+
+        let eventsFields = [{
+            name: "**Today - " + todayDateString + "**",
+            value: EMPTY_STRING
+        }]; // Defines the events fields which will be used as field array in the reply embed object
+
+        eventsFields[0].value = "**" + timetableString + "**\n";
+
+        let eventsEmpty = true;
+
+        events.forEach((e)=>{
+            if (!e.eventId) {
+                e.eventId = "?"
+            }
+    
+            let eventDate = new Date(e.time);
+    
+            let eventDateString = `${eventDate.getDate()}.${eventDate.getMonth()+1}.${eventDate.getFullYear()}`; // This will make the date of the event to a format as the xDateString
+    
+            if (eventDateString == todayDateString) {
+                eventsEmpty = false;
+                eventsFields[0].value += `• [#${e.eventId}] ${e.content}\n`;
+            }
+        });
+
+        if (eventsEmpty) {
+            eventsFields[0].value += "None"
+        }
+
+        msg.channel.send({
+            "embed": {
+                "title": "Events",
+                "color": COLORS.BLUE,
+                "fields": eventsFields
+            }
+        });
+    },
+
+    tomorrowEvents: function(msg, events) {
+        let tomorrowDateObj = new Date(new Date().getTime() + 86400000);
+        let tomorrowDateString = `${tomorrowDateObj.getDate()}.${tomorrowDateObj.getMonth()+1}.${tomorrowDateObj.getFullYear()}`; // Formats today's date to a xDateString
+        // TODO: Make this in smallFunctions module
+
+        let timetableArray = TIMETABLE[tomorrowDateObj.getDay()];
+        let timetableString = timetableArray.join(' | ');
+
+        let eventsFields = [{
+            name: "**Tomorrow - " + tomorrowDateString + "**",
+            value: EMPTY_STRING
+        }]; // Defines the events fields which will be used as field array in the reply embed object
+
+        eventsFields[0].value = "**" + timetableString + "**\n";
+
+        let eventsEmpty = true;
+
+        events.forEach((e)=>{
+            if (!e.eventId) {
+                e.eventId = "?"
+            }
+    
+            let eventDate = new Date(e.time);
+    
+            let eventDateString = `${eventDate.getDate()}.${eventDate.getMonth()+1}.${eventDate.getFullYear()}`; // This will make the date of the event to a format as the xDateString
+    
+            if (eventDateString == tomorrowDateString) {
+                eventsEmpty = false;
+                eventsFields[0].value += `• [#${e.eventId}] ${e.content}\n`;
+            }
+        });
+
+        if (eventsEmpty) {
+            eventsFields[0].value += "None"
+        }
+
+        msg.channel.send({
+            "embed": {
+                "title": "Events",
+                "color": COLORS.BLUE,
+                "fields": eventsFields
+            }
+        });
     }
 }
