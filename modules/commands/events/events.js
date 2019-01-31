@@ -5,6 +5,8 @@ const WEEK_DAYS = require("../../consts").WEEK_DAYS;
 const globalVariables = require("../../globalVariables");
 const smallFunctions = require("../../smallFunctions");
 
+const EMPTY_STRING = "None";
+
 module.exports = {
     command: function(msg, type) {
         let commandMessageArray = msg.content.split(" ");
@@ -37,6 +39,8 @@ module.exports = {
             this.todayEvents(msg, events);
             return;
         }
+
+        // REWORK ALL OF BELLOW
     
         if (isToday) {
             embedTitle = "Eventy na dnes"
@@ -148,12 +152,18 @@ module.exports = {
     },
 
     todayEvents: function(msg, events) {
-        let eventsFields = [];
-        
-        let todayDateString = `${new Date().getDate()}.${new Date().getMonth()+1}.${new Date().getFullYear()}`;
+        let todayDateString = `${new Date().getDate()}.${new Date().getMonth()+1}.${new Date().getFullYear()}`; // Formats today's date to a xDateString
+        // TODO: Make this in smallFunctions module
 
-        let timetableTodayArray = TIMETABLE[new Date().getDay()];
-        let timetableTodayString = timetableTodayArray.join(' | ');
+        let timetableArray = TIMETABLE[new Date().getDay()];
+        let timetableString = timetableArray.join(' | ');
+
+        let eventsString = timetableArray.join(' | ');
+
+        let eventsFields = [{
+            name: "Today - " + todayDateString,
+            value: EMPTY_STRING
+        }]; // Defines the events fields which will be used as field array in the reply embed object
 
         events.forEach((e)=>{
             if (!e.eventId) {
@@ -165,16 +175,11 @@ module.exports = {
             let eventDateString = `${eventDate.getDate()}.${eventDate.getMonth()+1}.${eventDate.getFullYear()}`; // This will make the date of the event to a format as the xDateString
     
             if (eventDateString == todayDateString) {
-                if (eventsFields[0].value.endsWith('Nič')) {
-                    eventsFields[0].value = "**Rozvrh: **" + timetableTodayString + "\n";
+                if (eventsFields[0].value.endsWith(EMPTY_STRING)) {
+                    eventsFields[0].value = "**Rozvrh: **" + timetableString + "\n";
                 }
                 eventsFields[0].value += `• [#${e.eventId}] ${e.content}\n`;
             }
-        });
-
-        eventsFields.push({
-            name: "Today - " + todayDateString,
-            value: todayEventsString
         });
 
         msg.channel.send({
