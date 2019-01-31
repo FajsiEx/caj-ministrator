@@ -7,7 +7,6 @@
 
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectID;
-const colors = require('colors');
 
 const DATABASE_URI = process.env.DATABASE_URI;
 
