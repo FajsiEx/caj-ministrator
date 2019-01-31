@@ -14,9 +14,8 @@ module.exports = {
                 "title": "Help",
                 "color": COLORS.BLUE,
                 "description": `
-                    ***Tea-bot project***
+                    ***Tea-bot project*** *v.${VERSION}*
                     Copyright 2018-2019 FajsiEx (Licensed under MIT license)
-                    build ${VERSION}
                     ${branchString}
                     
                     [Všetky príkazy a changelog](https://fajsiex.ml/docs/tea-bot.html)
