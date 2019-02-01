@@ -37,10 +37,6 @@ module.exports = {
 
     HOLIDAYS: [
         {
-            name: "Polročne prázdniny",
-            date: new Date("02/01/2019 00:00:00 GMT+0100")
-        },
-        {
             name: "Jarné prázdniny",
             date: new Date("02/23/2019 00:00:00 GMT+0100")
         },
@@ -49,9 +45,17 @@ module.exports = {
             date: new Date("04/18/2019 00:00:00 GMT+0100")
         },
         {
+            name: "Maturita 2019",
+            date: new Date("03/12/2019 00:00:00 GMT+0100")
+        },
+        {
             name: "Letné prázdniny",
             date: new Date("06/29/2019 00:00:00 GMT+0100")
-        }
+        },
+        {
+            name: "Maturita 2022",
+            date: new Date("03/12/2022 00:00:00 GMT+0100")
+        },
     ],
 
     TIMETABLE: [
