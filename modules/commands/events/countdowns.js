@@ -15,7 +15,7 @@ module.exports = {
 
         msg.channel.send({
             "embed": {
-                "title": "Prázdniny",
+                "title": "Countdowns",
                 "color": COLORS.BLUE,
                 "description": holidaysString
             }

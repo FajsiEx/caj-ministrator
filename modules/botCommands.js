@@ -25,7 +25,7 @@ const mod = require("./commands/mod/mod");
 const help = require("./commands/info/help");
 const faq = require("./commands/info/faq");
 
-const holidays = require("./commands/events/holidays");
+const countdowns = require("./commands/events/countdowns");
 const addEvent = require("./commands/events/add");
 const events = require("./commands/events/events");
 const deleteEvent = require("./commands/events/delete");
@@ -125,9 +125,11 @@ let commands = {
     'faq': (msg)=>{faq.command(msg);},
 
     // Event commands
-    'ho': (msg)=>{holidays.command(msg);},
-    'holidays': (msg)=>{holidays.command(msg);},
-    'prazdniny': (msg)=>{holidays.command(msg);},
+    'ho': (msg)=>{countdowns.command(msg);},
+    'holidays': (msg)=>{countdowns.command(msg);},
+    'prazdniny': (msg)=>{countdowns.command(msg);},
+    'cd': (msg)=>{countdowns.command(msg);},
+    'countdowns': (msg)=>{countdowns.command(msg);},
 
     'add': (msg)=>{addEvent.command(msg);},
     'pridat': (msg)=>{addEvent.command(msg);},
