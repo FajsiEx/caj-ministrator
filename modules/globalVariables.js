@@ -15,7 +15,6 @@ let global = {
 
 let disableAutoSave = false;
 
-const colors = require('colors');
 dbModule = require("./db");
 
 module.exports = {
