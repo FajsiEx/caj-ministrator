@@ -50,6 +50,7 @@ const wfbo = require("./commands/jff/wfbo");
 const crabrave = require("./commands/jff/crabrave");
 const fuckea = require("./commands/jff/fuckea");
 const sleep = require("./commands/jff/sleep");
+const cya = require("./commands/jff/cya");
 
 const roll = require("./commands/random/roll");
 const tf = require("./commands/random/tf");
@@ -182,6 +183,8 @@ let commands = {
 
     'kill': (msg)=>{kill.command(msg);},
     'zabi': (msg)=>{kill.command(msg);},
+
+    'cya': (msg)=>{cya.command(msg);},
 
     'alecau': (msg)=>{alecau.command(msg);},
 
