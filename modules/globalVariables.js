@@ -15,7 +15,6 @@ let global = {
 
 let disableAutoSave = false;
 
-const colors = require('colors');
 dbModule = require("./db");
 
 module.exports = {
@@ -52,13 +51,17 @@ module.exports = {
         });
         console.log(`[GV_INIT] Setting interval...`.debug);
         setInterval(()=>{ // Does this every 10 seconds
+            if ((global.lastSaveTime + 10*1000) - new Date().getTime() > 0) {
+                console.log(`[AUTOSAVE] Autosave save limit protection. ${(global.lastSaveTime + 10*1000) - new Date().getTime()}ms until next autosave can be made. Force-save does not have this limit`.warn);
+                return;
+            }
             if (disableAutoSave) {
                 console.log("[AUTOSAVE] Autosave is disabled for some reason. Most likely it's in the first few lines of logs.".info);
                 return;
             }
             dbModule.save(global);
             global.lastSaveTime = new Date().getTime();
-        }, 10000);
+        }, 10 * 1000);
     },
 
     fLoad: ()=>{
