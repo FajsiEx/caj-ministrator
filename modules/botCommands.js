@@ -330,6 +330,10 @@ let commands = {
 
     'ohfuck': (msg)=>{meme.command(msg, "ohfuck")},
 
+    'butwhy': (msg)=>{meme.command(msg, "ycdtbw")},
+    'ycdtbw': (msg)=>{meme.command(msg, "ycdtbw")},
+    'youcoulddothatbutwhy': (msg)=>{meme.command(msg, "ycdtbw")},
+
     'bye': (msg)=>{meme.command(msg, "bye")},
     'cau': (msg)=>{meme.command(msg, "bye")}
 }
