@@ -127,7 +127,7 @@ module.exports = {
                 }else{
                     eventsFields.push({
                         name: eventFieldDate,
-                        value: `\n**Rozvrh: **${TIMETABLE[eventDate.getDay()].join(' | ')}\n• ${e.content}\n`
+                        value: `\n**Rozvrh: **${TIMETABLE[eventDate.getDay()].join(' | ')}\n• [#${e.eventId}] ${e.content}\n`
                     })
                 }
             }
