@@ -31,7 +31,8 @@ const memeUrls = {
     circles: "https://i.imgur.com/Kmf630n.jpg",
     qi: "https://i.imgur.com/uHPXN9m.jpg",
     nigga: "http://m.memegen.com/v6b7ma.jpg",
-    cheese: "https://i.imgur.com/Pail14R.jpg"
+    cheese: "https://i.imgur.com/Pail14R.jpg",
+    ycdtbw: "https://i.imgur.com/Dv9li1r.jpg"
 }
 
 module.exports = {
