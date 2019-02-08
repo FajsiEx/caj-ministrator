@@ -48,6 +48,7 @@ module.exports = {
         }
 
         // TODO: REWORK ALL OF BELLOW
+        // TODO: Nothing string should be random jff
     
         eventsFields = [ // Default event fields
             {
@@ -61,46 +62,33 @@ module.exports = {
         ];
     
         events.forEach((e)=>{
-            if (e.time < new Date().getTime()) { // If the event is old
+            if (e.time < new Date().getTime() - 24*60*60*1000) { // If the event is in the past more than 24h don't even bother...just don't...why would you waste so much energy on calculating something so unimportant. But you know what? Everything will end one day so why save power? To hell with this world.
                 return;
             }
             
-            if (type == "week") {
+            if (type == "week") { // If the user typed !week
                 if (e.time > new Date().getTime() + 604800000) { // If the event is in the futute than 7 days
                     return; // Don't show it (don't add it to the eventsString)
                 }
             }
 
-            if (!e.eventId) {
-                e.eventId = "?"
+            if (!e.eventId) { // If the event id does not exist
+                e.eventId = "?" // assign "?" to it
             }
     
-            let eventDate = new Date(e.time);
+            let eventDate = new Date(e.time); // Gets date object from the event date
     
-            let eventDateString = `${eventDate.getDate()}.${eventDate.getMonth()+1}.${eventDate.getFullYear()}`;
+            // TODO: replace all of this conversion TECHNOLOGY with a single smallFunction ;)
+            let eventDateString = `${eventDate.getDate()}.${eventDate.getMonth()+1}.${eventDate.getFullYear()}`; // Converts date object to date str
     
-            if (eventDateString == todayDateString) {
-                if (isTomorrow) {return;}
-    
-                if (eventsFields[0].value.endsWith('Nič')) {
-                    eventsFields[0].value = "**Rozvrh: **" + timetableTodayString + "\n";
-                }
+            if (eventDateString == todayDateString) { // If the event is today
+                // TODO: .endsWith() sould be replaced by a bool or smth
+                if (eventsFields[0].value.endsWith('Nothing')) { eventsFields[0].value = ""; } // If there is nothing in the default field value, replace it w/ empty string
                 eventsFields[0].value += `• [#${e.eventId}] ${e.content}\n`;
     
             }else if (eventDateString == tomorrowDateString) {
-                if (isToday) {return;}
-                
-                if (isTomorrow) {
-                    if (eventsFields[0].value.endsWith('Nič')) {
-                        eventsFields[0].value = "**Rozvrh: **" + timetableTomorrowString + "\n";
-                    }
-                    eventsFields[0].value += `• [#${e.eventId}] ${e.content}\n`;
-                }else{
-                    if (eventsFields[1].value.endsWith('Nič')) {
-                        eventsFields[1].value = "**Rozvrh: **" + timetableTomorrowString + "\n";
-                    }
-                    eventsFields[1].value += `• [#${e.eventId}] ${e.content}\n`;
-                }
+                if (eventsFields[1].value.endsWith('Nothing')) { eventsFields[1].value = ""; }
+                eventsFields[1].value += `• [#${e.eventId}] ${e.content}\n`;
             }else{ // If the event is not today or tomorrow
                 let eventFieldDate = `**${WEEK_DAYS[eventDate.getDay()]} ${eventDateString}**`;
 
