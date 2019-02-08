@@ -47,16 +47,16 @@ module.exports = {
             return;
         }
 
-        // REWORK ALL OF BELLOW
+        // TODO: REWORK ALL OF BELLOW
     
-        eventsFields = [
+        eventsFields = [ // Default event fields
             {
-                name: `**Dnes ${todayDateString}**   ${timetableTodayString}`,
-                value: "Nič"
+                name: `**Today ${todayDateString}**   ${timetableTodayString}`,
+                value: "Nothing"
             },
             {
-                name: `**Zajtra ${tomorrowDateString}**   ${timetableTomorrowString}`,
-                value: "Nič"
+                name: `**Tomorrow ${tomorrowDateString}**   ${timetableTomorrowString}`,
+                value: "Nothing"
             }
         ];
     
