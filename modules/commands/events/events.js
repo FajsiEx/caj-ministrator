@@ -32,8 +32,11 @@ module.exports = {
         let timetableTodayArray = TIMETABLE[new Date().getDay()];
         let timetableTomorrowArray = TIMETABLE[tomorrowDateObj.getDay()];
     
-        let timetableTodayString = timetableTodayArray.join(' | ');
-        let timetableTomorrowString = timetableTomorrowArray.join(' | ');
+        let timetableTodayString = timetableTodayArray.join('  ');
+        let timetableTomorrowString = timetableTomorrowArray.join('  ');
+
+        let otherEventsField = {name:"Other events", value:""}
+        let areOtherEvents = false;
 
         if (isToday) {
             this.todayEvents(msg, events);
@@ -46,34 +49,16 @@ module.exports = {
 
         // REWORK ALL OF BELLOW
     
-        if (isToday) {
-            embedTitle = "Eventy na dnes"
-            eventsFields = [
-                {
-                    name: `***${todayDateString}***`,
-                    value: "**Rozvrh: **" + timetableTodayString + "\nNič"
-                }
-            ];
-        }else if (isTomorrow) {
-            embedTitle = "Eventy na zajtra"
-            eventsFields = [
-                {
-                    name: `***${tomorrowDateString}***`,
-                    value: "**Rozvrh: **" + timetableTomorrowString + "\nNič"
-                }
-            ];
-        }else{
-            eventsFields = [
-                {
-                    name: `***Dnes (${todayDateString})***`,
-                    value: "**Rozvrh: **" + timetableTodayString + "\nNič"
-                },
-                {
-                    name: `***Zajtra (${tomorrowDateString})***`,
-                    value: "**Rozvrh: **" + timetableTomorrowString + "\nNič"
-                }
-            ];
-        }
+        eventsFields = [
+            {
+                name: `**Dnes ${todayDateString}**   ${timetableTodayString}`,
+                value: "Nič"
+            },
+            {
+                name: `**Zajtra ${tomorrowDateString}**   ${timetableTomorrowString}`,
+                value: "Nič"
+            }
+        ];
     
         events.forEach((e)=>{
             if (e.time < new Date().getTime()) { // If the event is old
@@ -116,43 +101,29 @@ module.exports = {
                     }
                     eventsFields[1].value += `• [#${e.eventId}] ${e.content}\n`;
                 }
-            }else{
-                if (isToday || isTomorrow) {return;}
-                let eventFieldDate = `***${WEEK_DAYS[eventDate.getDay()]} ${eventDateString}***`;
-    
-                let eventField = eventsFields.find(obj => obj.name == eventFieldDate);
-    
-                if (eventField) {
-                    eventField.value += `• [#${e.eventId}] ${e.content}\n`;
-                }else{
-                    eventsFields.push({
-                        name: eventFieldDate,
-                        value: `\n**Rozvrh: **${TIMETABLE[eventDate.getDay()].join(' | ')}\n• [#${e.eventId}] ${e.content}\n`
-                    })
+            }else{ // If the event is not today or tomorrow
+                let eventFieldDate = `**${WEEK_DAYS[eventDate.getDay()]} ${eventDateString}**`;
+
+                areOtherEvents = true;
+
+                otherEventsField.value += `• [#${e.eventId}] ${eventFieldDate} ${e.content}\n`
+            }
+        });
+
+        if (areOtherEvents) {
+            eventsFields.push(otherEventsField);
+        }
+
+        msg.channel.send({
+            "embed": {
+                "title": embedTitle,
+                "color": COLORS.BLUE,
+                "fields": eventsFields,
+                "footer": {
+                    "text": "BTW: Keď chceš len čo je na zajtra, napíš !zajtra"
                 }
             }
         });
-        
-        if (isToday || isTomorrow) {
-            msg.channel.send({
-                "embed": {
-                    "title": embedTitle,
-                    "color": COLORS.BLUE,
-                    "fields": eventsFields
-                }
-            });
-        }else{ 
-            msg.channel.send({
-                "embed": {
-                    "title": embedTitle,
-                    "color": COLORS.BLUE,
-                    "fields": eventsFields,
-                    "footer": {
-                        "text": "BTW: Keď chceš len čo je na zajtra, napíš !zajtra"
-                    }
-                }
-            });
-        }
     },
 
     todayEvents: function(msg, events) {

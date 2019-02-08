@@ -60,11 +60,11 @@ module.exports = {
 
     TIMETABLE: [
         ['Víkend'],
-        ['Stn', 'Mat', 'Aj / Tsv', 'Zeq', 'ProP / Aj', 'Fyz', 'Sjl'],
-        ['Dej', 'Inf', 'Inf', 'Stn(K) / Aj', 'ZeqC / Mat', 'Obn', 'Aj / Zeq(C)'],
-        ['Nbv', 'Zeq', 'Zer', 'Zer', 'Pro', 'Tsv / Pro(P)', 'Mat / Stn(K)', 'Mech'],
-        ['Prax', 'Prax', 'Prax', 'Mat / Sjl', 'Sjl / Mat', 'Sjl'],
-        ['Stn', 'Zeq', 'Fyz / Tsv', 'Aj', 'Mat', 'Tsv / Fyz', 'Etv'],
+        ['Stn', 'Mat', 'Aj/Tsv', 'Zeq', 'ProP/Aj', 'Fyz', 'Sjl'],
+        ['Dej', 'Inf', 'Inf', 'Stn(K)/Aj', 'ZeqC/Mat', 'Obn', 'Aj/Zeq(C)'],
+        ['Nbv', 'Zeq', 'Zer', 'Zer', 'Pro', 'Tsv/Pro(P)', 'Mat/Stn(K)', 'Mech'],
+        ['Prax', 'Prax', 'Prax', 'Mat/Sjl', 'Sjl/Mat', 'Sjl'],
+        ['Stn', 'Zeq', 'Fyz/Tsv', 'Aj', 'Mat', 'Tsv/Fyz', 'Etv'],
         ['Víkend'],
     ],
 
