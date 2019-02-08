@@ -13,10 +13,6 @@ module.exports = {
         
         let events = globalVariables.get("events");
         events.sort(smallFunctions.compare);
-
-        events = events.filter((e)=>{
-            return e.time > new Date().getTime();
-        });
     
         let todayDateString = `${new Date().getDate()}.${new Date().getMonth()+1}.${new Date().getFullYear()}`;
         
@@ -24,7 +20,6 @@ module.exports = {
         let tomorrowDateString = `${tomorrowDateObj.getDate()}.${tomorrowDateObj.getMonth()+1}.${tomorrowDateObj.getFullYear()}`;
         
         let eventsFields = [];
-        let embedTitle = "Nasledujúce eventy";
     
         let isToday = ((commandMessageArray[1] == 'dnes') || (type == "dnes"));
         let isTomorrow = ((commandMessageArray[1] == 'zajtra') || (type == "zajtra"));
@@ -35,7 +30,7 @@ module.exports = {
         let timetableTodayString = timetableTodayArray.join('  ');
         let timetableTomorrowString = timetableTomorrowArray.join('  ');
 
-        let otherEventsField = {name:"Other events", value:""}
+        let otherEventsField = {name:"**Other events**", value:""}
         let areOtherEvents = false;
 
         if (isToday) {
@@ -85,16 +80,19 @@ module.exports = {
                 // TODO: .endsWith() sould be replaced by a bool or smth
                 if (eventsFields[0].value.endsWith('Nothing')) { eventsFields[0].value = ""; } // If there is nothing in the default field value, replace it w/ empty string
                 eventsFields[0].value += `• [#${e.eventId}] ${e.content}\n`;
-    
             }else if (eventDateString == tomorrowDateString) {
                 if (eventsFields[1].value.endsWith('Nothing')) { eventsFields[1].value = ""; }
                 eventsFields[1].value += `• [#${e.eventId}] ${e.content}\n`;
             }else{ // If the event is not today or tomorrow
                 let eventFieldDate = `**${WEEK_DAYS[eventDate.getDay()]} ${eventDateString}**`;
+                let eventDateStringDateFormat = `${eventDate.getMonth()+1}.${eventDate.getDate()}.${eventDate.getFullYear()}`; // Converts date object to date str that has only the day and moth switched so Date constructor can pick it up correctly
 
                 areOtherEvents = true;
 
-                otherEventsField.value += `• [#${e.eventId}] ${eventFieldDate} ${e.content}\n`
+                let eventDeltaStamp = new Date(eventDateStringDateFormat).getTime() - new Date().getTime();
+                let eventDaysRem = Math.floor(eventDeltaStamp/1000/60/60/24 * 10) / 10; // f(x*10) / 10 results in v.v format
+
+                otherEventsField.value += `• [#${e.eventId}] ${eventDaysRem}d ${eventFieldDate} ${e.content}\n`
             }
         });
 
@@ -104,7 +102,7 @@ module.exports = {
 
         msg.channel.send({
             "embed": {
-                "title": embedTitle,
+                "title": "Events",
                 "color": COLORS.BLUE,
                 "fields": eventsFields,
                 "footer": {
