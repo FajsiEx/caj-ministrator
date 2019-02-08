@@ -72,7 +72,7 @@ module.exports = {
             }
 
             if (!e.eventId) {
-                e.eventId = "-"
+                e.eventId = "?"
             }
     
             let eventDate = new Date(e.time);
