@@ -13,10 +13,6 @@ module.exports = {
         
         let events = globalVariables.get("events");
         events.sort(smallFunctions.compare);
-
-        events = events.filter((e)=>{
-            return e.time > new Date().getTime();
-        });
     
         let todayDateString = `${new Date().getDate()}.${new Date().getMonth()+1}.${new Date().getFullYear()}`;
         
@@ -24,7 +20,6 @@ module.exports = {
         let tomorrowDateString = `${tomorrowDateObj.getDate()}.${tomorrowDateObj.getMonth()+1}.${tomorrowDateObj.getFullYear()}`;
         
         let eventsFields = [];
-        let embedTitle = "Nasledujúce eventy";
     
         let isToday = ((commandMessageArray[1] == 'dnes') || (type == "dnes"));
         let isTomorrow = ((commandMessageArray[1] == 'zajtra') || (type == "zajtra"));
@@ -32,8 +27,11 @@ module.exports = {
         let timetableTodayArray = TIMETABLE[new Date().getDay()];
         let timetableTomorrowArray = TIMETABLE[tomorrowDateObj.getDay()];
     
-        let timetableTodayString = timetableTodayArray.join(' | ');
-        let timetableTomorrowString = timetableTomorrowArray.join(' | ');
+        let timetableTodayString = timetableTodayArray.join('  ');
+        let timetableTomorrowString = timetableTomorrowArray.join('  ');
+
+        let otherEventsField = {name:"**Other events**", value:""}
+        let areOtherEvents = false;
 
         if (isToday) {
             this.todayEvents(msg, events);
@@ -44,115 +42,74 @@ module.exports = {
             return;
         }
 
-        // REWORK ALL OF BELLOW
+        // TODO: REWORK ALL OF BELLOW
+        // TODO: Nothing string should be random jff
     
-        if (isToday) {
-            embedTitle = "Eventy na dnes"
-            eventsFields = [
-                {
-                    name: `***${todayDateString}***`,
-                    value: "**Rozvrh: **" + timetableTodayString + "\nNič"
-                }
-            ];
-        }else if (isTomorrow) {
-            embedTitle = "Eventy na zajtra"
-            eventsFields = [
-                {
-                    name: `***${tomorrowDateString}***`,
-                    value: "**Rozvrh: **" + timetableTomorrowString + "\nNič"
-                }
-            ];
-        }else{
-            eventsFields = [
-                {
-                    name: `***Dnes (${todayDateString})***`,
-                    value: "**Rozvrh: **" + timetableTodayString + "\nNič"
-                },
-                {
-                    name: `***Zajtra (${tomorrowDateString})***`,
-                    value: "**Rozvrh: **" + timetableTomorrowString + "\nNič"
-                }
-            ];
-        }
+        eventsFields = [ // Default event fields
+            {
+                name: `**Today ${todayDateString}**   ${timetableTodayString}`,
+                value: "Nothing"
+            },
+            {
+                name: `**Tomorrow ${tomorrowDateString}**   ${timetableTomorrowString}`,
+                value: "Nothing"
+            }
+        ];
     
         events.forEach((e)=>{
-            if (e.time < new Date().getTime()) { // If the event is old
+            if (e.time < new Date().getTime() - 24*60*60*1000) { // If the event is in the past more than 24h don't even bother...just don't...why would you waste so much energy on calculating something so unimportant. But you know what? Everything will end one day so why save power? To hell with this world.
                 return;
             }
             
-            if (type == "week") {
+            if (type == "week") { // If the user typed !week
                 if (e.time > new Date().getTime() + 604800000) { // If the event is in the futute than 7 days
                     return; // Don't show it (don't add it to the eventsString)
                 }
             }
 
-            if (!e.eventId) {
-                e.eventId = "-"
+            if (!e.eventId) { // If the event id does not exist
+                e.eventId = "?" // assign "?" to it
             }
     
-            let eventDate = new Date(e.time);
+            let eventDate = new Date(e.time); // Gets date object from the event date
     
-            let eventDateString = `${eventDate.getDate()}.${eventDate.getMonth()+1}.${eventDate.getFullYear()}`;
+            // TODO: replace all of this conversion TECHNOLOGY with a single smallFunction ;)
+            let eventDateString = `${eventDate.getDate()}.${eventDate.getMonth()+1}.${eventDate.getFullYear()}`; // Converts date object to date str
     
-            if (eventDateString == todayDateString) {
-                if (isTomorrow) {return;}
-    
-                if (eventsFields[0].value.endsWith('Nič')) {
-                    eventsFields[0].value = "**Rozvrh: **" + timetableTodayString + "\n";
-                }
+            if (eventDateString == todayDateString) { // If the event is today
+                // TODO: .endsWith() sould be replaced by a bool or smth
+                if (eventsFields[0].value.endsWith('Nothing')) { eventsFields[0].value = ""; } // If there is nothing in the default field value, replace it w/ empty string
                 eventsFields[0].value += `• [#${e.eventId}] ${e.content}\n`;
-    
             }else if (eventDateString == tomorrowDateString) {
-                if (isToday) {return;}
-                
-                if (isTomorrow) {
-                    if (eventsFields[0].value.endsWith('Nič')) {
-                        eventsFields[0].value = "**Rozvrh: **" + timetableTomorrowString + "\n";
-                    }
-                    eventsFields[0].value += `• [#${e.eventId}] ${e.content}\n`;
-                }else{
-                    if (eventsFields[1].value.endsWith('Nič')) {
-                        eventsFields[1].value = "**Rozvrh: **" + timetableTomorrowString + "\n";
-                    }
-                    eventsFields[1].value += `• [#${e.eventId}] ${e.content}\n`;
-                }
-            }else{
-                if (isToday || isTomorrow) {return;}
-                let eventFieldDate = `***${WEEK_DAYS[eventDate.getDay()]} ${eventDateString}***`;
-    
-                let eventField = eventsFields.find(obj => obj.name == eventFieldDate);
-    
-                if (eventField) {
-                    eventField.value += `• [#${e.eventId}] ${e.content}\n`;
-                }else{
-                    eventsFields.push({
-                        name: eventFieldDate,
-                        value: `\n**Rozvrh: **${TIMETABLE[eventDate.getDay()].join(' | ')}\n• [#${e.eventId}] ${e.content}\n`
-                    })
+                if (eventsFields[1].value.endsWith('Nothing')) { eventsFields[1].value = ""; }
+                eventsFields[1].value += `• [#${e.eventId}] ${e.content}\n`;
+            }else{ // If the event is not today or tomorrow
+                let eventFieldDate = `**${WEEK_DAYS[eventDate.getDay()]} ${eventDateString}**`;
+                let eventDateStringDateFormat = `${eventDate.getMonth()+1}.${eventDate.getDate()}.${eventDate.getFullYear()}`; // Converts date object to date str that has only the day and moth switched so Date constructor can pick it up correctly
+
+                areOtherEvents = true;
+
+                let eventDeltaStamp = new Date(eventDateStringDateFormat + " 8:00:00").getTime() - new Date().getTime(); // Distance to the event date @ 8am from the current time
+                let eventDaysRem = Math.floor(eventDeltaStamp/1000/60/60/24 * 10) / 10; // f(x*10) / 10 results in v.v format
+
+                otherEventsField.value += `• [#${e.eventId}] ${eventDaysRem}d ${eventFieldDate} ${e.content}\n`
+            }
+        });
+
+        if (areOtherEvents) {
+            eventsFields.push(otherEventsField);
+        }
+
+        msg.channel.send({
+            "embed": {
+                "title": "Events",
+                "color": COLORS.BLUE,
+                "fields": eventsFields,
+                "footer": {
+                    "text": "You can also use: !today/dnes , !tomorrow/zajtra , !week/tyzden"
                 }
             }
         });
-        
-        if (isToday || isTomorrow) {
-            msg.channel.send({
-                "embed": {
-                    "title": embedTitle,
-                    "color": COLORS.BLUE,
-                    "fields": eventsFields
-                }
-            });
-        }else{ 
-            msg.channel.send({
-                "embed": {
-                    "title": embedTitle,
-                    "color": COLORS.BLUE,
-                    "fields": eventsFields,
-                    "footer": {
-                        "text": "BTW: Keď chceš len čo je na zajtra, napíš !zajtra"
-                    }
-                }
-            });
-        }
     },
 
     todayEvents: function(msg, events) {

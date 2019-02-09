@@ -65,7 +65,7 @@ discordClient.on('ready', ()=>{
                         Tea-bot (version ${VERSION}) has been launched and is ready for use.
                     `
                 }
-            })
+            });
         });
     }
     
@@ -139,13 +139,13 @@ let setStatus = ()=>{
     */
     let commsServed = globalVariables.get("commandsServed");
     if (!commsServed) {
-        commsServed = "loading number of"
+        commsServed = "loading number of";
     }
     
     discordClient.user.setActivity(statusText + " | !help | v." + VERSION + " | " + commsServed + " commands served", { type: statusType });
 
     console.log("[SET_STATUS] Completed.".success);
-}
+};
 
 setInterval(setStatus, 15000);
 
@@ -157,16 +157,16 @@ app.get("/logs", (req, res)=>{
     let logString = "";
 
     logData.forEach(e => {
-        console.log("D: [EXPRESS] getLogs route E:" + JSON.stringify(e))
-        logString+=`[${new Date(e.time).toString()}] <b>${e.type}</b> - ${e.data} <br>`
+        console.log("D: [EXPRESS] getLogs route E:" + JSON.stringify(e));
+        logString+=`[${new Date(e.time).toString()}] <b>${e.type}</b> - ${e.data} <br>`;
     });
 
     res.send("<h1>Logs</h1>" + logString);
-})
+});
 
 globalVariables.set("startTime", new Date().getTime());
 
-let port = process.env.PORT || 3000
+let port = process.env.PORT || 3000;
 app.listen(port, function() {
     console.log(("[WEB_SERVER] Listening. Port:" + port).success);
 });

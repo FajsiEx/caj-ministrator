@@ -1,4 +1,4 @@
-# Tea-bot
+# Tea-bot [![CodeFactor](https://www.codefactor.io/repository/github/fajsiex/tea-bot/badge/master)](https://www.codefactor.io/repository/github/fajsiex/tea-bot/overview/master)
 Custom-made discord chat bot that does some shit idk...
 
 ## Can I use it?

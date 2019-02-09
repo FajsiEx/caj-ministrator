@@ -33,7 +33,7 @@ const memeUrls = {
     nigga: "http://m.memegen.com/v6b7ma.jpg",
     cheese: "https://i.imgur.com/Pail14R.jpg",
     ycdtbw: "https://i.imgur.com/Dv9li1r.jpg"
-}
+};
 
 module.exports = {
     command: function(msg, memeName) {
@@ -41,12 +41,14 @@ module.exports = {
             memeName+="2";
         }
 
+        let memeUrl;
+
         try {
-            memeUrls[memeName]
+            memeUrl = memeUrls[memeName];
         }catch(e){console.error(e); return;}
         
         msg.channel.send({
-            "files": [memeUrls[memeName]]
+            "files": memeUrl
         });
     }
-}
+};

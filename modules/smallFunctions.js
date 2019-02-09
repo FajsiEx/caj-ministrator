@@ -26,28 +26,6 @@ module.exports = {
     secondsToTimeString: (seconds)=>{
         minutes = Math.floor(seconds / 60);
         seconds -= minutes * 60;
-        return `${minutes}m ${seconds}s`
+        return `${minutes}m ${seconds}s`;
     }
-}
-
-/*
-
-solveMathProblem = (msg, problem)=>{
-    try {
-        if (Math.random() < 0.01) {
-            msg.channel.send({
-                "files": ["https://i.imgur.com/IBopYGD.png"]
-            });
-        }
-
-        problem = problem.replace(/×/g, '*');
-        problem = problem.replace(/x/g, '*');
-
-        let result = math.eval(problem);
-        
-    }catch(e){
-        
-    }
-}
-
-*/
+};

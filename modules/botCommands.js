@@ -247,106 +247,105 @@ let commands = {
     "mtc": (msg)=>{mtc.command(msg);},
 
     // Memes
-    'meme': (msg)=>{meirl.command(msg)},
-    'meirl': (msg)=>{meirl.command(msg)},
+    'meme': (msg)=>{meirl.command(msg);},
+    'meirl': (msg)=>{meirl.command(msg);},
 
-    'kubko': (msg)=>{kubko.command(msg)},
-    'hentai': (msg)=>{kubko.command(msg)},
+    'kubko': (msg)=>{kubko.command(msg);},
+    'hentai': (msg)=>{kubko.command(msg);},
 
-    'admeme':(msg)=>{admeme.command(msg)},
+    'admeme':(msg)=>{admeme.command(msg);},
 
-    'excuse': (msg)=>{meme.command(msg, "excuse")},
-    'excuseme': (msg)=>{meme.command(msg, "excuse")},
-    'excusemewtf': (msg)=>{meme.command(msg, "excuse")},
-    'wtf': (msg)=>{meme.command(msg, "excuse")},
+    'excuse': (msg)=>{meme.command(msg, "excuse");},
+    'excuseme': (msg)=>{meme.command(msg, "excuse");},
+    'excusemewtf': (msg)=>{meme.command(msg, "excuse");},
+    'wtf': (msg)=>{meme.command(msg, "excuse");},
 
-    'tmyk': (msg)=>{meme.command(msg, "tmyk")},
-    'themoreyouknow': (msg)=>{meme.command(msg, "tmyk")},
+    'tmyk': (msg)=>{meme.command(msg, "tmyk");},
+    'themoreyouknow': (msg)=>{meme.command(msg, "tmyk");},
 
-    'commit': (msg)=>{meme.command(msg, "commit")},
-    'gocommit': (msg)=>{meme.command(msg, "commit")},
+    'commit': (msg)=>{meme.command(msg, "commit");},
+    'gocommit': (msg)=>{meme.command(msg, "commit");},
 
-    'circles': (msg)=>{meme.command(msg, "circles")},
+    'circles': (msg)=>{meme.command(msg, "circles");},
 
-    'qi': (msg)=>{meme.command(msg, "qi")},
-    '400qi': (msg)=>{meme.command(msg, "qi")},
+    'qi': (msg)=>{meme.command(msg, "qi");},
+    '400qi': (msg)=>{meme.command(msg, "qi");},
 
-    'really': (msg)=>{meme.command(msg, "nigga")},
-    'nigga': (msg)=>{meme.command(msg, "nigga")},
+    'really': (msg)=>{meme.command(msg, "nigga");},
+    'nigga': (msg)=>{meme.command(msg, "nigga");},
 
-    'cheese': (msg)=>{meme.command(msg, "cheese")},
+    'cheese': (msg)=>{meme.command(msg, "cheese");},
 
-    'oof': (msg)=>{meme.command(msg, "oof")},
+    'oof': (msg)=>{meme.command(msg, "oof");},
 
-    'doit': (msg)=>{meme.command(msg, "doit")},
+    'doit': (msg)=>{meme.command(msg, "doit");},
 
-    'facepalm': (msg)=>{meme.command(msg, "facepalm")},
+    'facepalm': (msg)=>{meme.command(msg, "facepalm");},
 
-    'forehead': (msg)=>{meme.command(msg, "forehead")},
+    'forehead': (msg)=>{meme.command(msg, "forehead");},
 
-    'flashbang': (msg)=>{meme.command(msg, "flashbang")},
+    'flashbang': (msg)=>{meme.command(msg, "flashbang");},
 
-    'way': (msg)=>{meme.command(msg, "way")},
+    'way': (msg)=>{meme.command(msg, "way");},
 
-    'pika': (msg)=>{meme.command(msg, "pika")},
+    'pika': (msg)=>{meme.command(msg, "pika");},
 
-    'tsj': (msg)=>{meme.command(msg, "tsj")},
+    'tsj': (msg)=>{meme.command(msg, "tsj");},
 
-    'killmeme': (msg)=>{meme.command(msg, "killmeme")},
-    'memereview': (msg)=>{meme.command(msg, "killmeme")},
+    'killmeme': (msg)=>{meme.command(msg, "killmeme");},
+    'memereview': (msg)=>{meme.command(msg, "killmeme");},
 
-    'yeet': (msg)=>{meme.command(msg, "yeet")},
+    'yeet': (msg)=>{meme.command(msg, "yeet");},
 
-    'monkas': (msg)=>{meme.command(msg, "monkas")},
+    'monkas': (msg)=>{meme.command(msg, "monkas");},
 
-    'monkaomega': (msg)=>{meme.command(msg, "monkaomega")},
+    'monkaomega': (msg)=>{meme.command(msg, "monkaomega");},
 
-    'monkagiga': (msg)=>{meme.command(msg, "monkagiga")},
+    'monkagiga': (msg)=>{meme.command(msg, "monkagiga");},
 
-    'wwtf': (msg)=>{meme.command(msg, "wwtf")},
+    'wwtf': (msg)=>{meme.command(msg, "wwtf");},
 
-    'whid': (msg)=>{meme.command(msg, "whid")},
-    'whathaveidone': (msg)=>{meme.command(msg, "whid")},
+    'whid': (msg)=>{meme.command(msg, "whid");},
+    'whathaveidone': (msg)=>{meme.command(msg, "whid");},
 
-    'gj': (msg)=>{meme.command(msg, "gj")},
-    'greatjob': (msg)=>{meme.command(msg, "gj")},
+    'gj': (msg)=>{meme.command(msg, "gj");},
+    'greatjob': (msg)=>{meme.command(msg, "gj");},
 
-    'booty': (msg)=>{meme.command(msg, "booty")},
+    'booty': (msg)=>{meme.command(msg, "booty");},
 
-    'ooth': (msg)=>{meme.command(msg, "ooth")},
+    'ooth': (msg)=>{meme.command(msg, "ooth");},
 
-    'kappa': (msg)=>{meme.command(msg, "kappa")},
+    'kappa': (msg)=>{meme.command(msg, "kappa");},
 
-    'speech': (msg)=>{meme.command(msg, "speech")},
+    'speech': (msg)=>{meme.command(msg, "speech");},
 
-    'lookatthisdude': (msg)=>{meme.command(msg, "lookatthisdude")},
-    'look': (msg)=>{meme.command(msg, "lookatthisdude")},
+    'lookatthisdude': (msg)=>{meme.command(msg, "lookatthisdude");},
+    'look': (msg)=>{meme.command(msg, "lookatthisdude");},
 
-    'holdup': (msg)=>{meme.command(msg, "holdup")},
-    'holdhore': (msg)=>{meme.command(msg, "holdup")},
-    'drzup': (msg)=>{meme.command(msg, "holdup")},
-    'drzhore': (msg)=>{meme.command(msg, "holdup")},
-    'holehore': (msg)=>{meme.command(msg, "holdup")},
+    'holdup': (msg)=>{meme.command(msg, "holdup");},
+    'holdhore': (msg)=>{meme.command(msg, "holdup");},
+    'drzup': (msg)=>{meme.command(msg, "holdup");},
+    'drzhore': (msg)=>{meme.command(msg, "holdup");},
+    'holehore': (msg)=>{meme.command(msg, "holdup");},
 
-    'ohfuck': (msg)=>{meme.command(msg, "ohfuck")},
+    'ohfuck': (msg)=>{meme.command(msg, "ohfuck");},
 
-    'butwhy': (msg)=>{meme.command(msg, "ycdtbw")},
-    'ycdtbw': (msg)=>{meme.command(msg, "ycdtbw")},
-    'youcoulddothatbutwhy': (msg)=>{meme.command(msg, "ycdtbw")},
+    'butwhy': (msg)=>{meme.command(msg, "ycdtbw");},
+    'ycdtbw': (msg)=>{meme.command(msg, "ycdtbw");},
+    'youcoulddothatbutwhy': (msg)=>{meme.command(msg, "ycdtbw");},
 
-    'bye': (msg)=>{meme.command(msg, "bye")},
-    'cau': (msg)=>{meme.command(msg, "bye")}
-}
+    'bye': (msg)=>{meme.command(msg, "bye");},
+    'cau': (msg)=>{meme.command(msg, "bye");}
+};
 
 const COMMANDS_ARRAY = Object.keys(commands);
-const ANYCHAN_COMMANDS = [
-    "nuke"
-]
+
 const NSFW_COMMANDS = [
     "e621",
+    "hell",
     "kubko",
     "hentai"
-]
+];
 
 module.exports = {
     handleBotCommand: (msg, discordClient)=>{
@@ -372,30 +371,6 @@ module.exports = {
                 return; // Don't continue
             }
         }
-
-        /*if (msg.channel.type == 'text') { // If the origin  of the msg is from a text channel
-            let chan_permitted = false;
-
-            if (msg.channel.parent) {
-                console.log(`[BOT_COMMANDS] CHAN_CATEGORY ${msg.channel.parent.name}`);
-                if(msg.channel.parent.name == "bot") {
-                    chan_permitted = true;
-                }
-            }
-
-            if (!chan_permitted && ANYCHAN_COMMANDS.indexOf(command) == -1) { // If the chan is not in bot category AND command is not in the allowed commands array
-                msg.channel.send({
-                    "embed": {
-                        "title": "Príkazy sa môžu vykonávať len v bot channeloch.",
-                        "color": COLORS.RED
-                    }
-                }).then((responseMsg)=>{
-                    msg.delete(); // Deletes the user's message
-                    responseMsg.delete(5000); // and deletes this msg after 5 seconds
-                });
-                return; // Don't continue
-            }
-        }*/
         
         let modModeOn = globalVariables.get("modModeOn");
 
@@ -417,7 +392,7 @@ module.exports = {
 
             let commsServed = globalVariables.get("commandsServed");
             commsServed++;
-            globalVariables.set("commandsServed", commsServed)
+            globalVariables.set("commandsServed", commsServed);
 
             commands[command](msg, discordClient);
         }else{
@@ -434,7 +409,7 @@ module.exports = {
                 }
             });
 
-            let similarityMsg = ""
+            let similarityMsg = "";
             if (mostSimilarCommand) {
                 similarityMsg = `Možno si myslel **!${mostSimilarCommand}**? idk.`;
             }
@@ -452,4 +427,4 @@ module.exports = {
         }
 
     }
-}
+};
