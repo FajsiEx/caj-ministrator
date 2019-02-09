@@ -53,7 +53,7 @@ module.exports = (msg, discordClient)=>{
                     }, NPERMIT_WARNING_TIMEOUT)
                 }
                 setTimeout(()=>{
-                    msg.delete().catch((e)=>{console.log("[CH_NP_MSGDELETE] Failed to delete bot msg".error);});
+                    msg.delete().catch((e)=>{console.log("[CH_NP_MSGDELETE] Failed to delete bot msg".error); console.log(e);});
                 }, NPERMIT_WARNING_TIMEOUT)
                 
             }
