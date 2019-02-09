@@ -15,7 +15,7 @@ module.exports = {
         return new Promise((resolve)=>{
             MongoClient.connect(DATABASE_URI, (err, client) => {
                 console.log("[LOAD] Loading data...".info);
-                if (err) return console.error(err)
+                if (err) return console.error(err);
                 let database = client.db('caj-ministrator');
                 database.collection("datav2").find({}).toArray((err, docs)=> {
                     if (err) {console.log(err); return;}
@@ -55,7 +55,7 @@ module.exports = {
         console.log("[SAVE] Saving global object...".info);
         
         MongoClient.connect(DATABASE_URI, (err, client) => {
-            if (err) return console.error(err)
+            if (err) return console.error(err);
             let database = client.db('caj-ministrator');
 
             // Replace the object with your field objectid...because it won't work otherwise...
@@ -68,4 +68,4 @@ module.exports = {
             client.close(); // Dont dos yourself kids
         });
     }
-}
+};
