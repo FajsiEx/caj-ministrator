@@ -89,7 +89,7 @@ module.exports = {
 
                 areOtherEvents = true;
 
-                let eventDeltaStamp = new Date(eventDateStringDateFormat).getTime() - new Date().getTime();
+                let eventDeltaStamp = new Date(eventDateStringDateFormat + " 8:00:00").getTime() - new Date().getTime(); // Distance to the event date @ 8am from the current time
                 let eventDaysRem = Math.floor(eventDeltaStamp/1000/60/60/24 * 10) / 10; // f(x*10) / 10 results in v.v format
 
                 otherEventsField.value += `• [#${e.eventId}] ${eventDaysRem}d ${eventFieldDate} ${e.content}\n`
@@ -106,7 +106,7 @@ module.exports = {
                 "color": COLORS.BLUE,
                 "fields": eventsFields,
                 "footer": {
-                    "text": "BTW: Keď chceš len čo je na zajtra, napíš !zajtra"
+                    "text": "You can also use: !today/dnes , !tomorrow/zajtra , !week/tyzden"
                 }
             }
         });
