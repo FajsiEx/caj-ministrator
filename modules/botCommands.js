@@ -339,9 +339,7 @@ let commands = {
 }
 
 const COMMANDS_ARRAY = Object.keys(commands);
-const ANYCHAN_COMMANDS = [
-    "nuke"
-]
+
 const NSFW_COMMANDS = [
     "e621",
     "kubko",
@@ -372,30 +370,6 @@ module.exports = {
                 return; // Don't continue
             }
         }
-
-        /*if (msg.channel.type == 'text') { // If the origin  of the msg is from a text channel
-            let chan_permitted = false;
-
-            if (msg.channel.parent) {
-                console.log(`[BOT_COMMANDS] CHAN_CATEGORY ${msg.channel.parent.name}`);
-                if(msg.channel.parent.name == "bot") {
-                    chan_permitted = true;
-                }
-            }
-
-            if (!chan_permitted && ANYCHAN_COMMANDS.indexOf(command) == -1) { // If the chan is not in bot category AND command is not in the allowed commands array
-                msg.channel.send({
-                    "embed": {
-                        "title": "Príkazy sa môžu vykonávať len v bot channeloch.",
-                        "color": COLORS.RED
-                    }
-                }).then((responseMsg)=>{
-                    msg.delete(); // Deletes the user's message
-                    responseMsg.delete(5000); // and deletes this msg after 5 seconds
-                });
-                return; // Don't continue
-            }
-        }*/
         
         let modModeOn = globalVariables.get("modModeOn");
 
