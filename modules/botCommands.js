@@ -342,6 +342,7 @@ const COMMANDS_ARRAY = Object.keys(commands);
 
 const NSFW_COMMANDS = [
     "e621",
+    "hell",
     "kubko",
     "hentai"
 ]
