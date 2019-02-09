@@ -42,7 +42,7 @@ module.exports = (msg, discordClient)=>{
                 }
             }
 
-            console.log(`[BOT_MSG_REC] CHAN_PER:${chan_permitted}; CONTENT:${msg.content}`)
+            console.log(`[BOT_MSG_REC] CHAN_PER:${chan_permitted}; CONTENT:${msg.content}`);
 
             if (!chan_permitted) { // Chan will be permited only when the msg is in a text chan & is in bot category
                 if (!warnedAboutNPchan[msg.channel.id]) {
@@ -50,11 +50,11 @@ module.exports = (msg, discordClient)=>{
                     msg.channel.send(NPERMIT_WARNING_MSG);
                     setTimeout(()=>{
                         warnedAboutNPchan[msg.channel.id] = false;
-                    }, NPERMIT_WARNING_TIMEOUT)
+                    }, NPERMIT_WARNING_TIMEOUT);
                 }
                 setTimeout(()=>{
                     msg.delete().catch((e)=>{console.log("[CH_NP_MSGDELETE] Failed to delete bot msg".error); console.log(e);});
-                }, NPERMIT_WARNING_TIMEOUT)
+                }, NPERMIT_WARNING_TIMEOUT);
                 
             }
             return;
@@ -92,7 +92,7 @@ module.exports = (msg, discordClient)=>{
             muteTimeout: 0, // 0=not timeouted.
             agreedWarning: false // Agreed? Better not.
         };
-        globalVariables.set("usersObj", usersObj)
+        globalVariables.set("usersObj", usersObj);
     }
 
     console.log(`[MSG_HANDLER] MESSAGE: ${author}: "${message}"`.important);
@@ -124,4 +124,4 @@ module.exports = (msg, discordClient)=>{
     console.log(`[MSG_HANDLER] SAVE: Saving global vars. We're done here.`);
     globalVariables.set("usersObj", usersObj);
     globalVariables.set("events", events);
-}
+};
