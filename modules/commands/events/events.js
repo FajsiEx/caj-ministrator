@@ -14,10 +14,10 @@ module.exports = {
         let events = globalVariables.get("events");
         events.sort(smallFunctions.compare);
     
-        let todayDateString = `${new Date().getDate()}.${new Date().getMonth()+1}.${new Date().getFullYear()}`;
+        let todayDateString = smallFunctions.dateToDateString(new Date());
         
         let tomorrowDateObj = new Date(new Date().getTime() + 86400000);
-        let tomorrowDateString = `${tomorrowDateObj.getDate()}.${tomorrowDateObj.getMonth()+1}.${tomorrowDateObj.getFullYear()}`;
+        let tomorrowDateString = smallFunctions.dateToDateString(tomorrowDateObj);
         
         let eventsFields = [];
     
@@ -30,7 +30,7 @@ module.exports = {
         let timetableTodayString = timetableTodayArray.join('  ');
         let timetableTomorrowString = timetableTomorrowArray.join('  ');
 
-        let otherEventsField = {name:"**Other events**", value:""}
+        let otherEventsField = {name:"**Other events**", value:""};
         let areOtherEvents = false;
 
         if (isToday) {
@@ -68,31 +68,37 @@ module.exports = {
             }
 
             if (!e.eventId) { // If the event id does not exist
-                e.eventId = "?" // assign "?" to it
+                e.eventId = "?"; // assign "?" to it
             }
     
             let eventDate = new Date(e.time); // Gets date object from the event date
     
             // TODO: replace all of this conversion TECHNOLOGY with a single smallFunction ;)
-            let eventDateString = `${eventDate.getDate()}.${eventDate.getMonth()+1}.${eventDate.getFullYear()}`; // Converts date object to date str
+            let eventDateString = smallFunctions.dateToDateString(eventDate); // Converts date object to date str
     
             if (eventDateString == todayDateString) { // If the event is today
+
                 // TODO: .endsWith() sould be replaced by a bool or smth
                 if (eventsFields[0].value.endsWith('Nothing')) { eventsFields[0].value = ""; } // If there is nothing in the default field value, replace it w/ empty string
                 eventsFields[0].value += `• [#${e.eventId}] ${e.content}\n`;
+
             }else if (eventDateString == tomorrowDateString) {
+
                 if (eventsFields[1].value.endsWith('Nothing')) { eventsFields[1].value = ""; }
                 eventsFields[1].value += `• [#${e.eventId}] ${e.content}\n`;
+
             }else{ // If the event is not today or tomorrow
+
                 let eventFieldDate = `**${WEEK_DAYS[eventDate.getDay()]} ${eventDateString}**`;
-                let eventDateStringDateFormat = `${eventDate.getMonth()+1}.${eventDate.getDate()}.${eventDate.getFullYear()}`; // Converts date object to date str that has only the day and moth switched so Date constructor can pick it up correctly
+                let eventDateStringDateFormat = smallFunctions.dateToDateString(eventDate, true); // Converts date object to date str that has only the day and moth switched so Date constructor can pick it up correctly
 
                 areOtherEvents = true;
 
                 let eventDeltaStamp = new Date(eventDateStringDateFormat + " 8:00:00").getTime() - new Date().getTime(); // Distance to the event date @ 8am from the current time
                 let eventDaysRem = Math.floor(eventDeltaStamp/1000/60/60/24 * 10) / 10; // f(x*10) / 10 results in v.v format
 
-                otherEventsField.value += `• [#${e.eventId}] ${eventDaysRem}d ${eventFieldDate} ${e.content}\n`
+                otherEventsField.value += `• [#${e.eventId}] ${eventDaysRem}d ${eventFieldDate} ${e.content}\n`;
+
             }
         });
 
@@ -113,8 +119,7 @@ module.exports = {
     },
 
     todayEvents: function(msg, events) {
-        let todayDateString = `${new Date().getDate()}.${new Date().getMonth()+1}.${new Date().getFullYear()}`; // Formats today's date to a xDateString
-        // TODO: Make this in smallFunctions module
+        let todayDateString = smallFunctions.dateToDateString(new Date()); // Formats today's date to a xDateString
 
         let timetableArray = TIMETABLE[new Date().getDay()];
         let timetableString = timetableArray.join(' | ');
@@ -130,12 +135,12 @@ module.exports = {
 
         events.forEach((e)=>{
             if (!e.eventId) {
-                e.eventId = "?"
+                e.eventId = "?";
             }
     
             let eventDate = new Date(e.time);
     
-            let eventDateString = `${eventDate.getDate()}.${eventDate.getMonth()+1}.${eventDate.getFullYear()}`; // This will make the date of the event to a format as the xDateString
+            let eventDateString = smallFunctions.dateToDateString(eventDate); // This will make the date of the event to a format as the xDateString
     
             if (eventDateString == todayDateString) {
                 eventsEmpty = false;
@@ -144,7 +149,7 @@ module.exports = {
         });
 
         if (eventsEmpty) {
-            eventsFields[0].value += "None"
+            eventsFields[0].value += "Nothing";
         }
 
         msg.channel.send({
@@ -158,7 +163,7 @@ module.exports = {
 
     tomorrowEvents: function(msg, events) {
         let tomorrowDateObj = new Date(new Date().getTime() + 86400000);
-        let tomorrowDateString = `${tomorrowDateObj.getDate()}.${tomorrowDateObj.getMonth()+1}.${tomorrowDateObj.getFullYear()}`; // Formats today's date to a xDateString
+        let tomorrowDateString = smallFunctions.dateToDateString(tomorrowDateObj); // Formats today's date to a xDateString
         // TODO: Make this in smallFunctions module
 
         let timetableArray = TIMETABLE[tomorrowDateObj.getDay()];
@@ -175,12 +180,12 @@ module.exports = {
 
         events.forEach((e)=>{
             if (!e.eventId) {
-                e.eventId = "?"
+                e.eventId = "?";
             }
     
             let eventDate = new Date(e.time);
     
-            let eventDateString = `${eventDate.getDate()}.${eventDate.getMonth()+1}.${eventDate.getFullYear()}`; // This will make the date of the event to a format as the xDateString
+            let eventDateString = smallFunctions.dateToDateString(eventDate); // This will make the date of the event to a format as the xDateString
     
             if (eventDateString == tomorrowDateString) {
                 eventsEmpty = false;
@@ -189,7 +194,7 @@ module.exports = {
         });
 
         if (eventsEmpty) {
-            eventsFields[0].value += "None"
+            eventsFields[0].value += "Nothing";
         }
 
         msg.channel.send({
@@ -200,4 +205,4 @@ module.exports = {
             }
         });
     }
-}
+};

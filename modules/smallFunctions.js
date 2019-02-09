@@ -27,5 +27,14 @@ module.exports = {
         minutes = Math.floor(seconds / 60);
         seconds -= minutes * 60;
         return `${minutes}m ${seconds}s`;
+    },
+
+    dateToDateString: (dateObj, dateParserFriendly)=>{
+        if (dateParserFriendly) {
+            return `${dateObj.getMonth()+1}.${dateObj.getDate()}.${dateObj.getFullYear()}`;
+        }else{
+            return `${dateObj.getDate()}.${dateObj.getMonth()+1}.${dateObj.getFullYear()}`;
+        }
+        
     }
 };
