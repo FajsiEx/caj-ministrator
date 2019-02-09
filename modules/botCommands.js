@@ -72,6 +72,7 @@ const queue = require("./commands/music/queue");
 
 const owo = require("./commands/ffiy/owo");
 const uwu = require("./commands/ffiy/uwu");
+const r34 = require("./commands/ffiy/r34");
 const e621 = require("./commands/ffiy/e621");
 const e926 = require("./commands/ffiy/e926");
 const agree = require("./commands/ffiy/agree");
@@ -229,6 +230,8 @@ let commands = {
 
     'uwu': (msg)=>{uwu.command(msg);},
 
+    'r34': (msg)=>{r34.command(msg);},
+
     'e621': (msg)=>{e621.command(msg);},
     'hell': (msg)=>{e621.command(msg);},
 
@@ -341,6 +344,7 @@ let commands = {
 const COMMANDS_ARRAY = Object.keys(commands);
 
 const NSFW_COMMANDS = [
+    "r34",
     "e621",
     "hell",
     "kubko",
