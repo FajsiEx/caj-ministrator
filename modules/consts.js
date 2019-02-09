@@ -7,7 +7,7 @@
 let afterVerString = "";
 
 if (process.env.DISABLE_SAVE == "yes") {
-    afterVerString = " [BETA]"
+    afterVerString = " [BETA]";
 }
 
 module.exports = {
@@ -154,4 +154,4 @@ module.exports = {
             30: "Dávid"
         }
     }
-}
+};
