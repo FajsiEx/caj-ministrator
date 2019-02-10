@@ -82,8 +82,16 @@ module.exports = {
             msg.channel.bulkDelete(limit + 1).then(() => { // +1 because we count the !nuke comm msg too
                 msg.channel.send({
                     "embed": {
-                        "title": "Vymazal som "+ limit + " správ.",
+                        "title": "Deleted "+ limit + " messages.",
                         "color": COLORS.GREEN
+                    }
+                }).then(msg => msg.delete(5000));
+            }).catch((e)=>{
+                console.error(e);
+                msg.channel.send({
+                    "embed": {
+                        "title": "Unable to nuke. Maybe some msgs are older than 14 days?",
+                        "color": COLORS.RED
                     }
                 }).then(msg => msg.delete(5000));
             });
