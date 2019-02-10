@@ -16,7 +16,13 @@ module.exports = {
     },
 
     checkAdmin: (msg)=>{
-        if(msg.member.roles.some(r=>["admin", "Owner"].includes(r.name))) {
+        if(msg.member.roles.some(r=>[
+            "admin",
+            "owner",
+            "mod",
+            "moderator",
+            "hokage"
+        ].includes(r.name.toLowerCase()))) {
             return true;
         }else{
             return false;
