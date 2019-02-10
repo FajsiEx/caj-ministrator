@@ -5,6 +5,17 @@ const smallFunctions = require("../../smallFunctions");
 module.exports = {
     command: function(msg) {
         let commandMessageArray = msg.content.split(" ");
+
+        let limit = parseInt(commandMessageArray[1]);
+        if(!limit) {
+            msg.channel.send({
+                "embed": {
+                    "title": "Chýba koľko správ vymazať",
+                    "color": COLORS.RED
+                }
+            });
+            return;
+        }
         
         if (commandMessageArray[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase().indexOf("me") > -1) {
             msg.channel.send({
@@ -24,17 +35,6 @@ module.exports = {
                     "color": COLORS.RED
                 }
             }).then(msg => msg.delete(5000));
-            return;
-        }
-
-        let limit = parseInt(commandMessageArray[1]);
-        if(!limit) {
-            msg.channel.send({
-                "embed": {
-                    "title": "Chýba koľko správ vymazať",
-                    "color": COLORS.RED
-                }
-            });
             return;
         }
 
