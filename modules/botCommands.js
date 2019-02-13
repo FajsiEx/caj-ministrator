@@ -344,7 +344,7 @@ let commands = {
     'cau': (msg)=>{meme.command(msg, "bye");}
 };
 
-const COMMANDS_ARRAY = Object.keys(commands);
+const COMMANDS_ARRAY = Object.keys(commands); // let me be array, please
 
 const NSFW_COMMANDS = [
     "r34",
