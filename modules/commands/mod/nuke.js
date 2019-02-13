@@ -6,6 +6,16 @@ module.exports = {
     command: function(msg) {
         let commandMessageArray = msg.content.split(" ");
 
+        if (msg.channel.type != 'text') {
+            msg.channel.send({
+                "embed": {
+                    "title": "No nuking in anything other than server text channels lul.",
+                    "color": COLORS.RED
+                }
+            });
+            return;
+        }
+
         let limit = parseInt(commandMessageArray[1]);
         if(!limit) {
             msg.channel.send({

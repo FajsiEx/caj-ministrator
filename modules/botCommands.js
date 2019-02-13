@@ -26,6 +26,7 @@ const help = require("./commands/info/help");
 const faq = require("./commands/info/faq");
 
 const countdowns = require("./commands/events/countdowns");
+const sub = require("./commands/events/sub");
 const addEvent = require("./commands/events/add");
 const events = require("./commands/events/events");
 const deleteEvent = require("./commands/events/delete");
@@ -151,6 +152,8 @@ let commands = {
     'del': (msg)=>{deleteEvent.command(msg);},
     'delete': (msg)=>{deleteEvent.command(msg);},
     'vymazat': (msg)=>{deleteEvent.command(msg);},
+
+    'subtest': (msg)=>{sub.command(msg);},
 
     // Random commands
     'spravnyprikaz': (msg)=>{spravnyprikaz.command(msg);},
