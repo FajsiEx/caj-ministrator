@@ -17,7 +17,19 @@ let tempSongList = false;
 
 module.exports = {
     command: function(msg) {
+        // - https://github.com/maurostorch/nodejs-ffmpeg-buildpack
         let commandMessageArray = msg.content.split(" ");
+
+        msg.channel.send({
+            "embed": {
+                "title": "Play",
+                "color": COLORS.RED,
+                "description": `
+                    Music is disabled until I get ~~paid~~ the FFMPEG buildpack fixed. Sry i guess.
+                `
+            }
+        });
+        return;
 
         if (!msg.member) {
             msg.channel.send({
