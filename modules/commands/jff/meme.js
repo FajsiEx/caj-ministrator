@@ -48,7 +48,7 @@ module.exports = {
         }catch(e){console.error(e); return;}
         
         msg.channel.send({
-            "files": memeUrl
+            "files": [memeUrl]
         });
     }
 };
