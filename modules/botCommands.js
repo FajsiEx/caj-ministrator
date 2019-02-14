@@ -153,7 +153,7 @@ let commands = {
     'delete': (msg)=>{deleteEvent.command(msg);},
     'vymazat': (msg)=>{deleteEvent.command(msg);},
 
-    'subtest': (msg)=>{sub.command(msg);},
+    'sub': (msg)=>{sub.command(msg);},
 
     // Random commands
     'spravnyprikaz': (msg)=>{spravnyprikaz.command(msg);},
