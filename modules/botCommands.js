@@ -26,6 +26,7 @@ const help = require("./commands/info/help");
 const faq = require("./commands/info/faq");
 
 const countdowns = require("./commands/events/countdowns");
+const sub = require("./commands/events/sub");
 const addEvent = require("./commands/events/add");
 const events = require("./commands/events/events");
 const deleteEvent = require("./commands/events/delete");
@@ -72,6 +73,7 @@ const queue = require("./commands/music/queue");
 
 const owo = require("./commands/ffiy/owo");
 const uwu = require("./commands/ffiy/uwu");
+const r34 = require("./commands/ffiy/r34");
 const e621 = require("./commands/ffiy/e621");
 const e926 = require("./commands/ffiy/e926");
 const agree = require("./commands/ffiy/agree");
@@ -151,6 +153,8 @@ let commands = {
     'delete': (msg)=>{deleteEvent.command(msg);},
     'vymazat': (msg)=>{deleteEvent.command(msg);},
 
+    'sub': (msg)=>{sub.command(msg);},
+
     // Random commands
     'spravnyprikaz': (msg)=>{spravnyprikaz.command(msg);},
 
@@ -228,6 +232,8 @@ let commands = {
     'owo': (msg)=>{owo.command(msg);},
 
     'uwu': (msg)=>{uwu.command(msg);},
+
+    'r34': (msg)=>{r34.command(msg);},
 
     'e621': (msg)=>{e621.command(msg);},
     'hell': (msg)=>{e621.command(msg);},
@@ -338,9 +344,10 @@ let commands = {
     'cau': (msg)=>{meme.command(msg, "bye");}
 };
 
-const COMMANDS_ARRAY = Object.keys(commands);
+const COMMANDS_ARRAY = Object.keys(commands); // let me be array, please
 
 const NSFW_COMMANDS = [
+    "r34",
     "e621",
     "hell",
     "kubko",

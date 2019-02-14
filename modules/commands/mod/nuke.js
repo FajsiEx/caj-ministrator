@@ -5,6 +5,27 @@ const smallFunctions = require("../../smallFunctions");
 module.exports = {
     command: function(msg) {
         let commandMessageArray = msg.content.split(" ");
+
+        if (msg.channel.type != 'text') {
+            msg.channel.send({
+                "embed": {
+                    "title": "No nuking in anything other than server text channels lul.",
+                    "color": COLORS.RED
+                }
+            });
+            return;
+        }
+
+        let limit = parseInt(commandMessageArray[1]);
+        if(!limit) {
+            msg.channel.send({
+                "embed": {
+                    "title": "Chýba koľko správ vymazať",
+                    "color": COLORS.RED
+                }
+            });
+            return;
+        }
         
         if (commandMessageArray[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase().indexOf("me") > -1) {
             msg.channel.send({
@@ -24,17 +45,6 @@ module.exports = {
                     "color": COLORS.RED
                 }
             }).then(msg => msg.delete(5000));
-            return;
-        }
-
-        let limit = parseInt(commandMessageArray[1]);
-        if(!limit) {
-            msg.channel.send({
-                "embed": {
-                    "title": "Chýba koľko správ vymazať",
-                    "color": COLORS.RED
-                }
-            });
             return;
         }
 
@@ -82,8 +92,16 @@ module.exports = {
             msg.channel.bulkDelete(limit + 1).then(() => { // +1 because we count the !nuke comm msg too
                 msg.channel.send({
                     "embed": {
-                        "title": "Vymazal som "+ limit + " správ.",
+                        "title": "Deleted "+ limit + " messages.",
                         "color": COLORS.GREEN
+                    }
+                }).then(msg => msg.delete(5000));
+            }).catch((e)=>{
+                console.error(e);
+                msg.channel.send({
+                    "embed": {
+                        "title": "Unable to nuke. Maybe some msgs are older than 14 days?",
+                        "color": COLORS.RED
                     }
                 }).then(msg => msg.delete(5000));
             });
