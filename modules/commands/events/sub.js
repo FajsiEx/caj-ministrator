@@ -54,7 +54,10 @@ module.exports = {
                         "description": `
                             **${todaySub.day}**
                             **Missing teachers:** ${todaySub.teachers}
-                        `
+                        `,
+                        "footer": {
+                            "text": "Sub command is in [BETA] (not finished yet.)"
+                        }
                     }
                 })
             }else{
