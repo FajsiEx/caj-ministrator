@@ -99,6 +99,7 @@ discordClient.on('presenceUpdate', (oldMember, newMember)=>{
     
 });
 
+// TODO: move this to it's own module
 let setStatus = ()=>{
     if (globalVariables.get('disableStatus')) {
         console.warn("[SET_STATUS] Status disabled. ABORT!".warn);
@@ -115,9 +116,17 @@ let setStatus = ()=>{
 
     let statusText = "your messages";
     let statusType = "WATCHING";
+    let statusStatus = "online";
 
     if (hours < 5) {
         statusText = "you sleep";
+    }
+
+    let modModeOn = globalVariables.get("modModeOn");
+
+    if (modModeOn) {
+        statusStatus = "dnd";
+        statusText = "nothing";
     }
 
     /*
@@ -137,14 +146,17 @@ let setStatus = ()=>{
 
     statusText += `${days} dní, ${hours} hodín, ${minutes} minút do konca prázdnin`
     */
+
     let commsServed = globalVariables.get("commandsServed");
     if (!commsServed) {
         commsServed = "loading number of";
     }
     
-    discordClient.user.setActivity(statusText + " | !help | v." + VERSION + " | " + commsServed + " commands served", { type: statusType });
-
-    console.log("[SET_STATUS] Completed.".success);
+    discordClient.user.setStatus(statusStatus).then(()=>{
+        discordClient.user.setActivity(statusText + " | !help | v." + VERSION + " | " + commsServed + " commands served", { type: statusType }).then(()=>{
+            console.log("[SET_STATUS] Completed.".success);
+        });
+    });
 };
 
 setInterval(setStatus, 15000);
