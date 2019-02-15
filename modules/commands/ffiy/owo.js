@@ -1,6 +1,6 @@
 
 module.exports = {
     command: function(msg) {
-        msfdg.channel.send("OwO what's this?");
+        msg.channel.send("OwO what's this?");
     }
 }
