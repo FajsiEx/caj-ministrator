@@ -42,6 +42,12 @@ const globalVariables = require("./modules/globalVariables");
 const COLORS = require("./modules/consts").COLORS;
 const VERSION = require("./modules/consts").VERSION;
 
+const startupTest = require("./modules/tests/startup");
+if (!startupTest()) {
+    console.error("[TEST_FAIL] Startup test failed. Exiting.");
+    process.exit(201);
+}
+
 discordClient.on('error', console.error);
 
 // GREETING
