@@ -60,7 +60,7 @@ module.exports = {
                         **Teas count:** ${teasCount}
                         **Commands served:** ${commsServed}
                         **Server time string:** ${serverTimeString}
-                        **Dev user id [DEPRECATED]:** ${devUserid}
+                        **Dev user id:** ${devUserid}
                         **Message author data string:** ${authorUserData}
                         **Server uptime:** ${uptime}
                         **Time since last data save:** ${timeSinceLastDataSave}
