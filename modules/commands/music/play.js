@@ -20,6 +20,7 @@ module.exports = {
         // - https://github.com/maurostorch/nodejs-ffmpeg-buildpack
         let commandMessageArray = msg.content.split(" ");
 
+        /*
         msg.channel.send({
             "embed": {
                 "title": "Play",
@@ -30,6 +31,7 @@ module.exports = {
             }
         });
         return;
+        */
 
         if (!msg.member) {
             msg.channel.send({
