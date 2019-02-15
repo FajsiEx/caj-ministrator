@@ -22,7 +22,7 @@ module.exports = {
             msg.channel.send({
                 "embed": {
                     "title": "Moderated mode",
-                    "description": "Moderated mode has been disabled.",
+                    "description": "Moderated mode has been **disabled**",
                     "color": COLORS.GREEN
                 }
             });
@@ -31,7 +31,7 @@ module.exports = {
             msg.channel.send({
                 "embed": {
                     "title": "Moderated mode",
-                    "description": "Moderated mode has been enabled.",
+                    "description": "Moderated mode has been **enabled**",
                     "color": COLORS.GREEN
                 }
             });
