@@ -1,6 +1,7 @@
 
 const stringSimilarity = require('string-similarity');
 
+const CONSTS = require("./consts");
 const COLORS = require("./consts").COLORS;
 const globalVariables = require("./globalVariables");
 const smallFunctions = require("./smallFunctions");
@@ -394,14 +395,52 @@ module.exports = {
 
         console.log(`[BOT_COMMANDS] HANDLER: All the shit out of the way. Checking with object literals...`);
 
-        if (commands[command]) {
+        if (commands[command]) { // If the command is found in the commands object
             console.log(`[BOT_COMMANDS] PASS: Command found in the object. Passing control to the actual command module. Done here.`);
 
+            // Increments and stores the number of commands served
             let commsServed = globalVariables.get("commandsServed");
             commsServed++;
             globalVariables.set("commandsServed", commsServed);
 
-            commands[command](msg, discordClient);
+            // Finally calls the command
+            try {
+                commands[command](msg, discordClient);
+            }catch(e){
+                // Log error
+                console.error("[ERR] Command error on command " + command);
+                console.error(e);
+
+                // Report the error to the user
+                msg.channel.send({
+                    "embed": {
+                        "title": "Welp...that's not good...",
+                        "description": `
+                            An error occurred while processing **!${command}** command :(
+                            DW this error has been automatically reported to dev(s) and should be resolved in the future.
+                            For now just don't do what you just did and everything will be ok...ok?
+                        `,
+                        "color": COLORS.RED
+                    }
+                });
+
+                // Report the error to the dev
+                discordClient.fetchUser(CONSTS.DEV_USERID).then((user)=>{
+                    user.send({
+                        "embed": {
+                            "title": "Error",
+                            "description": `
+                                An error occurred while processing **!${command}** command.
+                                Check the logs for moar details.
+                                This is all I know:
+                                **Message** ${e.message}
+                            `,
+                            "color": COLORS.RED
+                        }
+                    });
+                });
+            }
+            
         }else{
             console.log(`[BOT_COMMANDS] HANDLER: Command not found in object. Replying and we're done.`);
 

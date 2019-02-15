@@ -20,7 +20,7 @@ module.exports = {
 
     TEST_CHANNEL_ID: 514873440159793167,
 
-    DEV_USERID: 342227744513327107,
+    DEV_USERID: "342227744513327107",
 
     discordBotConfig: {
         token: process.env.DISCORD_BOT_TOKEN,
