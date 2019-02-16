@@ -7,7 +7,7 @@ module.exports = {
     command: function(msg) {
         let modModeOn = globalVariables.get("modModeOn");
 
-        if(!smallFunctions.checkAdmin(msg)) { // Yes I have allowed this.
+        if(!smallFunctions.checkAdmin(msg)) {
             msg.channel.send({
                 "embed": {
                     "title": "Admin only.",

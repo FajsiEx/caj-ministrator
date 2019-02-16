@@ -1,5 +1,6 @@
 
 const globalVariables = require("../../../globalVariables");
+const smallFunctions = require("../../../smallFunctions");
 const CONSTS = require("../../../consts");
 
 module.exports = {
@@ -19,6 +20,17 @@ module.exports = {
             return;
         }
 
+        if(!smallFunctions.checkAdmin(msg) && msg.author.id != dp.opId) {
+            msg.channel.send({
+                "embed": {
+                    "title": "Only admins or OP can delete the DP",
+                    "color": COLORS.RED
+                }
+            }).then(msg => msg.delete(5000));
+            msg.delete(1000);
+            return;
+        }
+
         dp.msg.delete(); // Delete the original message
 
         globalVariables.set("dp", false);
@@ -32,6 +44,7 @@ module.exports = {
                 `,
                 "color": CONSTS.COLORS.GREEN
             }
-        }); // TODO: Autodelete this
+        }).then(msg => msg.delete(60000));
+        msg.delete(1000);
     }
 };
