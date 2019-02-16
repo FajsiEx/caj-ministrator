@@ -40,6 +40,7 @@ module.exports = {
         let dp = {};
 
         dp.details = dpDetails;
+        dp.votes = {};
 
         msg.channel.send({
             "embed": {
