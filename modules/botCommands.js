@@ -33,6 +33,11 @@ const events = require("./commands/events/events");
 const deleteEvent = require("./commands/events/delete");
 const editEvent = require("./commands/events/edit");
 
+const makeDP = require("./commands/events/dp/makedp");
+const voteDP = require("./commands/events/dp/votedp");
+const statDP = require("./commands/events/dp/statdp");
+const clearDP = require("./commands/events/dp/cleardp");
+
 const spravnyprikaz = require("./commands/jff/spravnyprikaz");
 const tea = require("./commands/jff/tea");
 const gtg = require("./commands/jff/gtg");
@@ -82,7 +87,7 @@ const agree = require("./commands/ffiy/agree");
 let commands = {
     // Dev commands
     'ping': (msg)=>{ping.command(msg);},
-    'dp': (msg)=>{ping.command(msg);},
+    'dp': (msg)=>{ping.command(msg);}, // TODO: remove this
 
     'send': (msg, discordClient)=>{send.command(msg, discordClient);},
 
@@ -155,6 +160,18 @@ let commands = {
     'vymazat': (msg)=>{deleteEvent.command(msg);},
 
     'sub': (msg)=>{sub.command(msg);},
+
+    // DP
+    'makedp': (msg)=>{makeDP.command(msg);},
+
+    'votedp': (msg)=>{voteDP.command(msg);},
+
+    'statdp': (msg)=>{statDP.command(msg);},
+    'listdp': (msg)=>{statDP.command(msg);},
+
+    'cleardp': (msg)=>{clearDP.command(msg);},
+    'deletedp': (msg)=>{clearDP.command(msg);},
+    'removedp': (msg)=>{clearDP.command(msg);},
 
     // Random commands
     'spravnyprikaz': (msg)=>{spravnyprikaz.command(msg);},

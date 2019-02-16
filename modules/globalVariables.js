@@ -1,16 +1,22 @@
 let global = {
     usersObj: {},
     events: [],
+    dp: {},
+
     logData: [],
+
+    eventsCounter: 0,
     teas: 0,
     commandsServed: 0,
+
     startTime: 0,
     lastSaveTime: 0,
+
     modModeOn: false,
     disableStatus: false, // If true auto status will be disabled
+
     vc: false, // will be removed and unused
-    musicConnections: {test: "test"},
-    eventsCounter: 0
+    musicConnections: {test: "test"}
 }
 
 let disableAutoSave = false;
