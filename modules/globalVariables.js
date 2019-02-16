@@ -1,7 +1,7 @@
 let global = {
     usersObj: {},
     events: [],
-    dp: {},
+    dp: false, // dp object - false if no dp
 
     logData: [],
 
@@ -32,6 +32,7 @@ module.exports = {
 
     set: (varName, value)=>{
         console.log(`[GV_SET] Setting [${varName}]`.debug);
+        console.dir(value);
         global[varName] = value;
         return true;
     },

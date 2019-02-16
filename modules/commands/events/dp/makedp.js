@@ -24,7 +24,7 @@ module.exports = {
             return;
         }
 
-        let dp = globalVariables.get("dp");
+        let dp = {};
 
         dp.details = dpDetails;
 
