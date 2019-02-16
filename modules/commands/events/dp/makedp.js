@@ -26,6 +26,8 @@ module.exports = {
 
         let dp = globalVariables.get("dp");
 
+        dp.details = dpDetails;
+
         msg.channel.send({
             "embed": {
                 "title": "DP",
@@ -39,6 +41,8 @@ module.exports = {
         }).then((dpMsg)=>{
             msg.delete(); // Delete the OP msg
             dpMsg.react("✅"); // React to own msg with checkmark
+            dp.msg = dpMsg; // Store this msg
+            globalVariables.set("dp", dp); // And finally save it
         });
     }
 }
