@@ -27,7 +27,8 @@ colors.setTheme({
     debug: 'grey',
     info: 'blue',
     success: 'green',
-    important: 'magenta',
+    interval: 'magenta',
+    event: 'cyan',
     warn: ['bgYellow', 'black'],
     error: 'bgRed'
 });
@@ -59,7 +60,7 @@ discordClient.on('guildMemberAdd', member => {
 
 // Discord client init
 discordClient.on('ready', ()=>{
-    console.log("[READY] discordClient ready.".info);
+    console.log(`[EVENT] Ready`.event);
 
     if (process.env.DISABLE_SAVE != "yes") {
         discordClient.fetchUser("342227744513327107").then((user)=>{ // Fetch the admin user
@@ -93,20 +94,23 @@ discordClient.on('ready', ()=>{
 });
 
 discordClient.on('message', (msg)=>{
+    console.log(`[EVENT] Message: ${msg.author.username + "#" + msg.author.discriminator}: ${msg.content}`.event);
     msgHandler(msg, discordClient);
 });
 
 discordClient.on('presenceUpdate', (oldMember, newMember)=>{
     if (newMember.presence.game) {
-        console.log(`[PRESENCE_UPDATE] ${newMember.user.username}#${newMember.user.discriminator} [${newMember.presence.status}] - Playing ${newMember.presence.game.toString()}`);
+        console.log(`[EVENT] Presence update: ${newMember.user.username}#${newMember.user.discriminator} [${newMember.presence.status}] - Playing ${newMember.presence.game.toString()}`.event);
     }else{
-        console.log(`[PRESENCE_UPDATE] ${newMember.user.username}#${newMember.user.discriminator} [${newMember.presence.status}] - Playing nothing`);
+        console.log(`[EVENT] Presence update: ${newMember.user.username}#${newMember.user.discriminator} [${newMember.presence.status}] - Playing nothing`.event);
     }
     
 });
 
 // TODO: move this to it's own module
 let setStatus = ()=>{
+    console.log("[SET_STATUS] Setting activity...".interval);
+
     if (globalVariables.get('disableStatus')) {
         console.warn("[SET_STATUS] Status disabled. ABORT!".warn);
         return;
@@ -115,8 +119,6 @@ let setStatus = ()=>{
         console.warn("[SET_STATUS] Bot starting. ABORT!".warn);
         return;
     }
-
-    console.log("[SET_STATUS] Setting activity...".debug);
     
     let hours = new Date().getHours();
 

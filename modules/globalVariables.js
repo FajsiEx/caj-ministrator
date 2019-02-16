@@ -51,6 +51,8 @@ module.exports = {
         });
         console.log(`[GV_INIT] Setting interval...`.debug);
         setInterval(()=>{ // Does this every 10 seconds
+            console.log("[AUTOSAVE] Autosaving data...".interval);
+
             if ((global.lastSaveTime + 10*1000) - new Date().getTime() > 0) {
                 console.log(`[AUTOSAVE] Autosave save limit protection. ${(global.lastSaveTime + 10*1000) - new Date().getTime()}ms until next autosave can be made. Force-save does not have this limit`.warn);
                 return;

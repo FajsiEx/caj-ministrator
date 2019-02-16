@@ -94,8 +94,6 @@ module.exports = (msg, discordClient)=>{
         };
         globalVariables.set("usersObj", usersObj);
     }
-
-    console.log(`[MSG_HANDLER] MESSAGE: ${author}: "${message}"`.important);
     
     // Good night wishing thing
     jffModule.goodNightWisher(msg, author_id, discordClient);
