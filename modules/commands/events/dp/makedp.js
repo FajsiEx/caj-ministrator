@@ -6,6 +6,19 @@ module.exports = {
     command: function(msg) {
         let commandMessageArray = msg.content.split(" ");
 
+        if (globalVariables.get("dp")) { // If there is already dp
+            msg.channel.send({
+                "embed": {
+                    "title": "DP already there",
+                    "description": `
+                        If you want to make a DP you must **!cleardp** first
+                    `,
+                    "color": CONSTS.COLORS.RED
+                }
+            });
+            return;
+        }
+
         let lOfCommand = commandMessageArray[0].length + 1;
         let dpDetails = msg.content.slice(lOfCommand);
 
@@ -41,6 +54,7 @@ module.exports = {
         }).then((dpMsg)=>{
             msg.delete(); // Delete the OP msg
             dpMsg.react("✅"); // React to own msg with checkmark
+            dpMsg.pin(); // Pin the msg
             dp.msg = dpMsg; // Store this msg
             globalVariables.set("dp", dp); // And finally save it
         });

@@ -31,6 +31,7 @@ module.exports = {
             let comingNicks = [];
             users.array().forEach(user => {
                 if (user.id == discordClient.user.id) {return false;} // Omit bot's reaction
+
                 // Find user in server members
                 let member = members.filter((e)=>{
                     return (e.id == user.id);
@@ -48,6 +49,10 @@ module.exports = {
             comingNicks.forEach((e)=>{
                 comingPeopleString += e + "\n";
             });
+
+            if (comingNicks.length == 0) {
+                comingPeopleString = "None";
+            }
 
             msg.channel.send({
                 "embed": {
