@@ -25,8 +25,7 @@ module.exports = {
     },
 
     set: (varName, value)=>{
-        console.log(`[GV_SET] Setting [${varName}] to`.debug);
-        console.dir(value);
+        console.log(`[GV_SET] Setting [${varName}]`.debug);
         global[varName] = value;
         return true;
     },
