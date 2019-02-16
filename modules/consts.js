@@ -58,6 +58,8 @@ module.exports = {
         },
     ],
 
+    SUBJECTS: ["STN", "MAT", "AJ", "ZEQ", "PRO", "FYZ", "DEJ", "INF", "OBN", "ZER", "MECH"],
+
     TIMETABLE: [
         ['Víkend'],
         ['Stn', 'Mat', 'Aj/Tsv', 'Zeq', 'ProP/Aj', 'Fyz', 'Sjl'],

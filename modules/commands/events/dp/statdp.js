@@ -17,7 +17,10 @@ module.exports = {
                     `,
                     "color": CONSTS.COLORS.RED
                 }
+            }).then((botMsg)=>{
+                botMsg.delete(60000);
             });
+            msg.delete(1000);
             return;
         }
 
@@ -38,16 +41,16 @@ module.exports = {
                 })[0];
                 
                 if (member.nickname) {
-                    comingNicks.push(member.nickname);
+                    comingNicks.push({nick: member.nickname, vote: dp.votes[user.id] || "?"});
                 }else{
-                    comingNicks.push(user.username);
+                    comingNicks.push({nick: user.username, vote: dp.votes[user.id] || "?"});
                 }
                 
             });
 
             let comingPeopleString = "";
             comingNicks.forEach((e)=>{
-                comingPeopleString += e + "\n";
+                comingPeopleString += `**${e.vote}** - ${e.nick}\n`;
             });
 
             if (comingNicks.length == 0) {
@@ -58,12 +61,16 @@ module.exports = {
                 "embed": {
                     "title": "DP Stats",
                     "description": `
+                        ${dp.details}
                         **List of people coming (${comingNicks.length}):**
                         ${comingPeopleString}
                     `,
                     "color": CONSTS.COLORS.BLUE
                 }
+            }).then((botMsg)=>{
+                botMsg.delete(60000);
             });
+            msg.delete(1000);
         });
     }
 };

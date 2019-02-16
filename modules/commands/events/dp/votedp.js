@@ -18,6 +18,8 @@ module.exports = {
                     `,
                     "color": CONSTS.COLORS.RED
                 }
+            }).then((botMsg)=>{
+                botMsg.delete(60000);
             });
             return;
         }
@@ -38,27 +40,71 @@ module.exports = {
                         `,
                         "color": CONSTS.COLORS.RED
                     }
+                }).then((botMsg)=>{
+                    botMsg.delete(60000);
                 });
                 msg.delete(1000);
                 return;
             }
 
-            if (!commandMessageArray[1]) { // If the object is empty
+            let subjectVoted = commandMessageArray[1];
+
+            if (!subjectVoted) {
                 msg.channel.send({
                     "embed": {
                         "title": "No subject to vote on",
                         "description": `
                             You can't vote nothing...
-                            !votedp ZEQ/STN/MECH/SJL/...
+                            !votedp ${CONSTS.SUBJECTS.join(",")}
 
                             ex. !votedp ZEQ
                         `,
                         "color": CONSTS.COLORS.RED
                     }
+                }).then((botMsg)=>{
+                    botMsg.delete(60000);
                 });
                 msg.delete(1000);
                 return;
             }
+
+            
+            if (CONSTS.SUBJECTS.indexOf(subjectVoted) == -1) {
+                msg.channel.send({
+                    "embed": {
+                        "title": "Invalid subject to vote on",
+                        "description": `
+                            You can't vote on that...
+                            !votedp ${CONSTS.SUBJECTS.join(",")}
+
+                            ex. !votedp ZEQ
+                        `,
+                        "color": CONSTS.COLORS.RED
+                    }
+                }).then((botMsg)=>{
+                    botMsg.delete(60000);
+                });
+                msg.delete(1000);
+                return;
+            }
+
+            // AFTER CHECKS
+            // Vote is now valid so we can store it
+            dp.votes[msg.author.id] = subjectVoted;
+
+            msg.channel.send({
+                "embed": {
+                    "title": "Voted on " + subjectVoted,
+                    "description": `
+                        Great job! Your vote is now counted.
+                        To change it, !votedp again.
+                    `,
+                    "color": CONSTS.COLORS.GREEN
+                }
+            }).then((botMsg)=>{
+                botMsg.delete(60000);
+            });
+            msg.delete(1000);
         });
     }
 };
