@@ -36,6 +36,8 @@ module.exports = {
                 `,
                 "color": CONSTS.COLORS.PINK
             }
+        }).then((dpMsg)=>{
+            dpMsg.react("✅");
         });
     }
 }
