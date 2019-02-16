@@ -37,7 +37,8 @@ module.exports = {
                 "color": CONSTS.COLORS.PINK
             }
         }).then((dpMsg)=>{
-            dpMsg.react("✅");
+            msg.delete(); // Delete the OP msg
+            dpMsg.react("✅"); // React to own msg with checkmark
         });
     }
 }
