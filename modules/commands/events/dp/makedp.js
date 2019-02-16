@@ -6,7 +6,7 @@ module.exports = {
     command: function(msg) {
         let commandMessageArray = msg.content.split(" ");
 
-        let lOfCommand = commandMessageArray[0].length + 1
+        let lOfCommand = commandMessageArray[0].length + 1;
         let dpDetails = msg.content.slice(lOfCommand);
 
         if (!dpDetails) {
