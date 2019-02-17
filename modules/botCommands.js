@@ -436,6 +436,13 @@ module.exports = {
                             An error occurred while processing **!${command}** command :(
                             DW this error has been automatically reported to dev(s) and should be resolved in the future.
                             For now just don't do what you just did and everything will be ok...ok?
+
+                            Debug information:
+                            **Error:** ${e.stack.split("\n")[0]}
+                            **Call stack:**
+                            ${e.stack.split("\n")[1]}
+                            ${e.stack.split("\n")[2]}
+                            ${e.stack.split("\n")[3]}
                         `,
                         "color": COLORS.RED
                     }
@@ -449,8 +456,13 @@ module.exports = {
                             "description": `
                                 An error occurred while processing **!${command}** command.
                                 Check the logs for moar details.
-                                This is all I know:
-                                **Message** ${e.message}
+
+                                Debug information:
+                                **Error:** ${e.stack.split("\n")[0]}
+                                **Call stack:**
+                                ${e.stack.split("\n")[1]}
+                                ${e.stack.split("\n")[2]}
+                                ${e.stack.split("\n")[3]}
                             `,
                             "color": COLORS.RED
                         }
