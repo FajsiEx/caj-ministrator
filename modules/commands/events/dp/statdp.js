@@ -3,7 +3,7 @@ const globalVariables = require("../../../globalVariables");
 const CONSTS = require("../../../consts");
 
 module.exports = {
-    command: function(msg, discordClient) {
+    command: function(msg) {
         let dp = globalVariables.get("dp");
         console.dir(dp);
 
