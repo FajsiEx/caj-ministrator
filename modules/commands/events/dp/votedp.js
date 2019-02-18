@@ -9,12 +9,12 @@ module.exports = {
         let dp = globalVariables.get("dp");
         console.dir(dp);
 
-        if (!dp) { // If the object is empty
+        if (!dp) { // If the DP object is empty
             msg.channel.send({
                 "embed": {
-                    "title": "No DP",
+                    "title": "",
                     "description": `
-                        You can't vote on nothing...
+                        Žiadna doplnková hodina
                     `,
                     "color": CONSTS.COLORS.RED
                 }
@@ -24,87 +24,62 @@ module.exports = {
             return;
         }
 
-        let dpMsg = dp.msg; // Get the dpmsg from dp obj
+        let subjectVoted = commandMessageArray[1];
 
-        dpMsg.reactions.array()[0].fetchUsers().then((users)=>{
-            let usersFound = users.array().filter((e)=>{
-                return (e.id == msg.author.id);
-            });
-
-            if (usersFound.length == 0) {
-                msg.channel.send({
-                    "embed": {
-                        "title": "You aren't going to the DP",
-                        "description": `
-                            You must click on the ✅ on the DP post to register. THEN you can vote.
-                        `,
-                        "color": CONSTS.COLORS.RED
-                    }
-                }).then((botMsg)=>{
-                    botMsg.delete(60000);
-                });
-                msg.delete(1000);
-                return;
-            }
-
-            let subjectVoted = commandMessageArray[1];
-
-            if (!subjectVoted) {
-                msg.channel.send({
-                    "embed": {
-                        "title": "No subject to vote on",
-                        "description": `
-                            You can't vote nothing...
-                            !votedp ${CONSTS.SUBJECTS.join(",")}
-
-                            ex. !votedp ZEQ
-                        `,
-                        "color": CONSTS.COLORS.RED
-                    }
-                }).then((botMsg)=>{
-                    botMsg.delete(60000);
-                });
-                msg.delete(1000);
-                return;
-            }
-
-            
-            if (CONSTS.SUBJECTS.indexOf(subjectVoted) == -1) {
-                msg.channel.send({
-                    "embed": {
-                        "title": "Invalid subject to vote on",
-                        "description": `
-                            You can't vote on that...
-                            !votedp ${CONSTS.SUBJECTS.join(",")}
-
-                            ex. !votedp ZEQ
-                        `,
-                        "color": CONSTS.COLORS.RED
-                    }
-                }).then((botMsg)=>{
-                    botMsg.delete(60000);
-                });
-                msg.delete(1000);
-                return;
-            }
-
-            // AFTER CHECKS
-            // Vote is now valid so we can store it
-            dp.votes[msg.author.id] = subjectVoted;
-
+        if (!subjectVoted) {
             msg.channel.send({
                 "embed": {
-                    "title": "Voted on " + subjectVoted,
+                    "title": "Žiadny predmet",
                     "description": `
-                        Great job! Your vote is now counted.
-                        To change it, !votedp again.
+                        Musíte si zvoliť predmet na DP
+                        !dp ${CONSTS.SUBJECTS.join("-")}
+
+                        napr. !dp ZEQ
                     `,
-                    "color": CONSTS.COLORS.GREEN
+                    "color": CONSTS.COLORS.RED
                 }
             }).then((botMsg)=>{
                 botMsg.delete(60000);
             });
             msg.delete(1000);
+            return;
+        }
+
+        subjectVoted = subjectVoted.toUpperCase();
+        
+        if (CONSTS.SUBJECTS.indexOf(subjectVoted) == -1) {
+            msg.channel.send({
+                "embed": {
+                    "title": "Neplatný predmet",
+                    "description": `
+                        !dp ${CONSTS.SUBJECTS.join(",")}
+
+                        ex. !dp ZEQ
+                    `,
+                    "color": CONSTS.COLORS.RED
+                }
+            }).then((botMsg)=>{
+                botMsg.delete(60000);
+            });
+            msg.delete(1000);
+            return;
+        }
+
+        // AFTER CHECKS
+        // Vote is now valid so we can store it
+        dp.joined[msg.author.id] = {
+            username: msg.author.username,
+            vote: subjectVoted
+        };
+
+        msg.channel.send({
+            "embed": {
+                "title": "Prihlásený na " + subjectVoted,
+                "description": `
+                    Great job!
+                `,
+                "color": CONSTS.COLORS.GREEN
+            }
         });
     }
 };

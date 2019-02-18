@@ -31,7 +31,9 @@ module.exports = {
             return;
         }
 
-        dp.msg.delete(); // Delete the original message
+        dp.msgs.forEach((dpMessage) => {
+            dpMessage.delete(); // Delete original messages
+        });
 
         globalVariables.set("dp", false);
 
@@ -44,7 +46,6 @@ module.exports = {
                 `,
                 "color": CONSTS.COLORS.GREEN
             }
-        }).then(msg => msg.delete(60000));
-        msg.delete(1000);
+        })
     }
 };

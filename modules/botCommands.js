@@ -84,10 +84,10 @@ const e621 = require("./commands/ffiy/e621");
 const e926 = require("./commands/ffiy/e926");
 const agree = require("./commands/ffiy/agree");
 
+// TODO: Move this to another module lol
 let commands = {
     // Dev commands
     'ping': (msg)=>{ping.command(msg);},
-    'dp': (msg)=>{ping.command(msg);}, // TODO: remove this
 
     'send': (msg, discordClient)=>{send.command(msg, discordClient);},
 
@@ -164,7 +164,8 @@ let commands = {
     // DP
     'makedp': (msg)=>{makeDP.command(msg);},
 
-    'votedp': (msg)=>{voteDP.command(msg);},
+    'dp': (msg)=>{voteDP.command(msg);},
+    'votedp': (msg)=>{voteDP.command(msg);}, // /!\ LEGACY
 
     'statdp': (msg, discordClient)=>{statDP.command(msg, discordClient);},
     'listdp': (msg, discordClient)=>{statDP.command(msg, discordClient);},

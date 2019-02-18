@@ -6,6 +6,19 @@ module.exports = {
     command: function(msg) {
         let commandMessageArray = msg.content.split(" ");
 
+        if (msg.channel.type != 'text') {
+            msg.channel.send({
+                "embed": {
+                    "title": "Funguje len v server text kanáloch",
+                    "description": `
+                        Použi ho v text kanále nejakého serveru. lol.
+                    `,
+                    "color": CONSTS.COLORS.RED
+                }
+            });
+            return;
+        }
+
         if (globalVariables.get("dp")) { // If there is already dp
             msg.channel.send({
                 "embed": {
@@ -40,24 +53,39 @@ module.exports = {
         let dp = {};
 
         dp.details = dpDetails;
-        dp.votes = {};
+        dp.guild = msg.guild;
+        dp.msgs = [];
+        dp.joined = [];
+
+        let members = msg.guild.members.array(); // Gets an array of members of guild
+        
+        members.forEach((member)=>{
+            member.send({
+                "embed": {
+                    "title": "Doplnková hodina",
+                    "description": `
+                        ${dpDetails}
+    
+                        **Odpovedz s !dp ${CONSTS.SUBJECTS.join("/")} ak sa chceš prihlásiť**
+                        Napr: !dp ZEQ
+                    `,
+                    "color": CONSTS.COLORS.PINK
+                }
+            });
+        });
 
         msg.channel.send({
             "embed": {
-                "title": "DP",
+                "title": "Doplnková hodina",
                 "description": `
                     ${dpDetails}
 
-                    **If you want to go, click on ✅ and you will be registered**
+                    **Bola vytvorená a správa sa posiela všetkým...**
                 `,
-                "color": CONSTS.COLORS.PINK
+                "color": CONSTS.COLORS.GREEN
             }
-        }).then((dpMsg)=>{
-            msg.delete(); // Delete the OP msg
-            dpMsg.react("✅"); // React to own msg with checkmark
-            dpMsg.pin(); // Pin the msg
-            dp.msg = dpMsg; // Store this msg
-            globalVariables.set("dp", dp); // And finally save it
+        }).then(()=>{
+            globalVariables.set("dp", dp); // Save it
         });
     }
-}
+};
