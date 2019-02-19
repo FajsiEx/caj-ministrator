@@ -1,10 +1,21 @@
 
+const smallFunctions = require("../../../smallFunctions");
 const globalVariables = require("../../../globalVariables");
 const CONSTS = require("../../../consts");
 
 module.exports = {
     command: function(msg) {
         let commandMessageArray = msg.content.split(" ");
+
+        if(!smallFunctions.checkAdmin(msg)) {
+            msg.channel.send({
+                "embed": {
+                    "title": "Iba admin môže vytvárať DP",
+                    "color": COLORS.RED
+                }
+            }).then(msg => msg.delete(10000));
+            return;
+        }
 
         if (msg.channel.type != 'text') {
             msg.channel.send({
