@@ -184,8 +184,6 @@ let setRankNick = ()=>{
         json: true
     }, (err, res, data)=>{
         if (!err && res.statusCode == 200) {
-            console.dir(data);
-
             let rank = data[0].pp_rank;
             if (rank == prevRank) {
                 console.log("[OSU_RANK] Rank same as prevRank. Aborting.".info);
