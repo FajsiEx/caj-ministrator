@@ -7,6 +7,16 @@ module.exports = {
     command: function(msg) {
         let dp = globalVariables.get("dp");
 
+        if(!smallFunctions.checkAdmin(msg)) {
+            msg.channel.send({
+                "embed": {
+                    "title": "Iba admin môže vytvárať DP",
+                    "color": COLORS.RED
+                }
+            }).then(msg => msg.delete(10000));
+            return;
+        }
+
         if (!dp) { // If the object is empty
             msg.channel.send({
                 "embed": {
