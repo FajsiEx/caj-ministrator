@@ -1,6 +1,6 @@
 
 module.exports = {
     command: function(msg) {
-        msg.channel.send("OwO what's this?");
+        msgds.channel.send("OwO what's this?");
     }
 };

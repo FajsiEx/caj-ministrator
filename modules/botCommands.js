@@ -432,21 +432,23 @@ module.exports = {
                 console.error("[ERR] Command error on command " + command);
                 console.error(e);
 
+                let debugInfo = `
+                    **Error &  Call stack:**
+                    ${e.stack.split("\n")[0]}
+                    ${e.stack.split("\n")[1]}
+                    ${e.stack.split("\n")[2]}
+                    ${e.stack.split("\n")[3]}
+                `;
+
                 // Report the error to the user
                 msg.channel.send({
                     "embed": {
-                        "title": "Welp...that's not good...",
+                        "title": "Ale do piči...",
                         "description": `
-                            An error occurred while processing **!${command}** command :(
-                            DW this error has been automatically reported to dev(s) and should be resolved in the future.
-                            For now just don't do what you just did and everything will be ok...ok?
-
-                            Debug information:
-                            **Error:** ${e.stack.split("\n")[0]}
-                            **Call stack:**
-                            ${e.stack.split("\n")[1]}
-                            ${e.stack.split("\n")[2]}
-                            ${e.stack.split("\n")[3]}
+                            Necrashol som...ale nepodarilo sa mi vykonať príkaz **!${command}** >_< *nyaa...*
+                            No nič no... poslal som error log developerovi a teraz len čakaj v priemere 3 roky kým sa to opraví.
+                            To by bolo všetko.
+                            ${debugInfo}
                         `,
                         "color": COLORS.RED
                     }
@@ -460,13 +462,7 @@ module.exports = {
                             "description": `
                                 An error occurred while processing **!${command}** command.
                                 Check the logs for moar details.
-
-                                Debug information:
-                                **Error:** ${e.stack.split("\n")[0]}
-                                **Call stack:**
-                                ${e.stack.split("\n")[1]}
-                                ${e.stack.split("\n")[2]}
-                                ${e.stack.split("\n")[3]}
+                                ${debugInfo}
                             `,
                             "color": COLORS.RED
                         }
