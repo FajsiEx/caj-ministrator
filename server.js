@@ -171,6 +171,8 @@ let request = require("request");
 let prevRank = 0;
 
 let setRankNick = ()=>{
+    console.log("[OSU_RANK] Setting osu rank nicknames...".info);
+
     let osuRankMember = globalVariables.get('osuRankMember');
     if (!osuRankMember) {
         console.log("[OSU_RANK] No member. Aborting.".warn);
