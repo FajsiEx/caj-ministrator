@@ -168,7 +168,7 @@ let setStatus = ()=>{
 };
 
 let request = require("request");
-let prevLvl = 0;
+let prevRank = 0;
 
 let setRankNick = ()=>{
     let osuRankMember = globalVariables.get('osuRankMember');
@@ -184,14 +184,18 @@ let setRankNick = ()=>{
         if (!err && res.statusCode == 200) {
             console.dir(data);
 
-            let lvl = Math.round(data[0].level * 1000) / 1000;
-            if (lvl == prevLvl) {
-                console.log("[OSU_RANK] Lvl same as prevLvl. Aborting.".info);
+            let rank = data[0].pp_rank;
+            if (rank == prevRank) {
+                console.log("[OSU_RANK] Rank same as prevRank. Aborting.".info);
                 return;
             }
-            prevLvl = lvl;
+            prevRank = rank;
+            
+            let nf = new Intl.NumberFormat();
 
-            let nick = `FajsiEx [lvl.${lvl} osu! boss]`;
+            rank = nf.format(rank);
+
+            let nick = `Martin Brázda [#${rank}]`;
             console.log(`[OSU_RANK] Set nick to "${nick}"`.success);
 
             osuRankMember.setNickname(nick);
