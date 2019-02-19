@@ -17,6 +17,7 @@ const sd = require("./commands/dev/sd");
 const forceload = require("./commands/dev/forceload");
 const forcesave = require("./commands/dev/forcesave");
 const forceinit = require("./commands/dev/forceinit");
+const setOsuMember = require("./commands/dev/setosumember");
 
 const mute = require("./commands/mod/mute");
 const unmute = require("./commands/mod/unmute");
@@ -111,6 +112,8 @@ let commands = {
 
     'forceinit': (msg)=>{forceinit.command(msg);},
     'fi': (msg)=>{forceinit.command(msg);},
+
+    'sosum': (msg)=>{setOsuMember.command(msg);},
     
 
     // Mod commands

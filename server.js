@@ -167,7 +167,42 @@ let setStatus = ()=>{
     });
 };
 
+let request = require("request");
+let prevLvl = 0;
+
+let setRankNick = ()=>{
+    let osuRankMember = globalVariables.get('osuRankMember');
+    if (!osuRankMember) {
+        console.log("[OSU_RANK] No member. Aborting.".warn);
+        return;
+    }
+
+    request({
+        url: `https://osu.ppy.sh/api/get_user?k=${process.env.OSUAPI}&u=fajsiex`,
+        json: true
+    }, (err, res, data)=>{
+        if (!err && res.statusCode == 200) {
+            console.dir(data);
+
+            let lvl = Math.round(data[0].level * 1000) / 1000;
+            if (lvl == prevLvl) {
+                console.log("[OSU_RANK] Lvl same as prevLvl. Aborting.".info);
+                return;
+            }
+            prevLvl = lvl;
+
+            let nick = `FajsiEx [lvl.${lvl} osu! boss]`;
+            console.log(`[OSU_RANK] Set nick to "${nick}"`.success);
+
+            osuRankMember.setNickname(nick);
+        }else{
+            console.log("[OSU_RANK] Failed to connect to Bancho.".warn);
+        }
+    });
+};
+
 setInterval(setStatus, 15000);
+setInterval(setRankNick, 15000);
 
 let express = require("express");
 let app = express();
