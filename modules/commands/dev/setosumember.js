@@ -12,7 +12,7 @@ module.exports = {
                     "color": COLORS.RED
                 }
             });
-            //return;
+            return;
         }
 
         msg.channel.send({
