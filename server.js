@@ -27,7 +27,8 @@ colors.setTheme({
     debug: 'grey',
     info: 'blue',
     success: 'green',
-    important: 'magenta',
+    interval: 'magenta',
+    event: 'cyan',
     warn: ['bgYellow', 'black'],
     error: 'bgRed'
 });
@@ -42,6 +43,12 @@ const globalVariables = require("./modules/globalVariables");
 const COLORS = require("./modules/consts").COLORS;
 const VERSION = require("./modules/consts").VERSION;
 
+const startupTest = require("./modules/tests/startup");
+if (!startupTest()) {
+    console.error("[TEST_FAIL] Startup test failed. Exiting.");
+    process.exit(201);
+}
+
 discordClient.on('error', console.error);
 
 // GREETING
@@ -53,7 +60,7 @@ discordClient.on('guildMemberAdd', member => {
 
 // Discord client init
 discordClient.on('ready', ()=>{
-    console.log("[READY] discordClient ready.".info);
+    console.log(`[EVENT] Ready`.event);
 
     if (process.env.DISABLE_SAVE != "yes") {
         discordClient.fetchUser("342227744513327107").then((user)=>{ // Fetch the admin user
@@ -87,19 +94,23 @@ discordClient.on('ready', ()=>{
 });
 
 discordClient.on('message', (msg)=>{
+    console.log(`[EVENT] Message: ${msg.author.username + "#" + msg.author.discriminator}: ${msg.content}`.event);
     msgHandler(msg, discordClient);
 });
 
 discordClient.on('presenceUpdate', (oldMember, newMember)=>{
     if (newMember.presence.game) {
-        console.log(`[PRESENCE_UPDATE] ${newMember.user.username}#${newMember.user.discriminator} [${newMember.presence.status}] - Playing ${newMember.presence.game.toString()}`);
+        console.log(`[EVENT] Presence update: ${newMember.user.username}#${newMember.user.discriminator} [${newMember.presence.status}] - Playing ${newMember.presence.game.toString()}`.event);
     }else{
-        console.log(`[PRESENCE_UPDATE] ${newMember.user.username}#${newMember.user.discriminator} [${newMember.presence.status}] - Playing nothing`);
+        console.log(`[EVENT] Presence update: ${newMember.user.username}#${newMember.user.discriminator} [${newMember.presence.status}] - Playing nothing`.event);
     }
     
 });
 
+// TODO: move this to it's own module
 let setStatus = ()=>{
+    console.log("[SET_STATUS] Setting activity...".interval);
+
     if (globalVariables.get('disableStatus')) {
         console.warn("[SET_STATUS] Status disabled. ABORT!".warn);
         return;
@@ -108,16 +119,22 @@ let setStatus = ()=>{
         console.warn("[SET_STATUS] Bot starting. ABORT!".warn);
         return;
     }
-
-    console.log("[SET_STATUS] Setting activity...".debug);
     
     let hours = new Date().getHours();
 
     let statusText = "your messages";
     let statusType = "WATCHING";
+    let statusStatus = "online";
 
     if (hours < 5) {
         statusText = "you sleep";
+    }
+
+    let modModeOn = globalVariables.get("modModeOn");
+
+    if (modModeOn) {
+        statusStatus = "dnd";
+        statusText = "nothing";
     }
 
     /*
@@ -137,17 +154,59 @@ let setStatus = ()=>{
 
     statusText += `${days} dní, ${hours} hodín, ${minutes} minút do konca prázdnin`
     */
+
     let commsServed = globalVariables.get("commandsServed");
     if (!commsServed) {
         commsServed = "loading number of";
     }
     
-    discordClient.user.setActivity(statusText + " | !help | v." + VERSION + " | " + commsServed + " commands served", { type: statusType });
+    discordClient.user.setStatus(statusStatus).then(()=>{
+        discordClient.user.setActivity(statusText + " | !help | v." + VERSION + " | " + commsServed + " commands served", { type: statusType }).then(()=>{
+            console.log("[SET_STATUS] Completed.".success);
+        });
+    });
+};
 
-    console.log("[SET_STATUS] Completed.".success);
+let request = require("request");
+let prevRank = 0;
+
+let setRankNick = ()=>{
+    console.log("[OSU_RANK] Setting osu rank nicknames...".info);
+
+    let osuRankMember = globalVariables.get('osuRankMember');
+    if (!osuRankMember) {
+        console.log("[OSU_RANK] No member. Aborting.".warn);
+        return;
+    }
+
+    request({
+        url: `https://osu.ppy.sh/api/get_user?k=${process.env.OSUAPI}&u=fajsiex`,
+        json: true
+    }, (err, res, data)=>{
+        if (!err && res.statusCode == 200) {
+            let rank = data[0].pp_rank;
+            if (rank == prevRank) {
+                console.log("[OSU_RANK] Rank same as prevRank. Aborting.".info);
+                return;
+            }
+            prevRank = rank;
+            
+            let nf = new Intl.NumberFormat();
+
+            rank = nf.format(rank);
+
+            let nick = `Martin Brázda [#${rank}]`;
+            console.log(`[OSU_RANK] Set nick to "${nick}"`.success);
+
+            osuRankMember.setNickname(nick);
+        }else{
+            console.log("[OSU_RANK] Failed to connect to Bancho.".warn);
+        }
+    });
 };
 
 setInterval(setStatus, 15000);
+setInterval(setRankNick, 15000);
 
 let express = require("express");
 let app = express();

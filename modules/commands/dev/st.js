@@ -19,7 +19,6 @@ module.exports = {
             let teasCount;
             let commsServed;
             let serverTimeString;
-            let adminUserid;
             let devUserid;
             let authorUserData;
             let uptime;
@@ -38,7 +37,6 @@ module.exports = {
             commsServed = globalVariables.get("commandsServed");
 
             serverTimeString = new Date().toString();
-            adminUserid = process.env.ADMIN_USERID;
             devUserid = DEV_USERID;
             authorUserData = msg.author.id + " / " + msg.author.username + "#" + msg.author.discriminator;
 
@@ -62,8 +60,7 @@ module.exports = {
                         **Teas count:** ${teasCount}
                         **Commands served:** ${commsServed}
                         **Server time string:** ${serverTimeString}
-                        **Admin user id [DEPRECATED]:** ${adminUserid}
-                        **Dev user id [DEPRECATED]:** ${devUserid}
+                        **Dev user id:** ${devUserid}
                         **Message author data string:** ${authorUserData}
                         **Server uptime:** ${uptime}
                         **Time since last data save:** ${timeSinceLastDataSave}

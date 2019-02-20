@@ -1,16 +1,22 @@
 let global = {
     usersObj: {},
     events: [],
+    dp: false, // dp object - false if no dp
+
     logData: [],
+
+    eventsCounter: 0,
     teas: 0,
     commandsServed: 0,
+
     startTime: 0,
     lastSaveTime: 0,
+
     modModeOn: false,
     disableStatus: false, // If true auto status will be disabled
+
     vc: false, // will be removed and unused
-    musicConnections: {test: "test"},
-    eventsCounter: 0
+    musicConnections: {test: "test"}
 }
 
 let disableAutoSave = false;
@@ -25,7 +31,7 @@ module.exports = {
     },
 
     set: (varName, value)=>{
-        console.log(`[GV_SET] Setting [${varName}] to`.debug);
+        console.log(`[GV_SET] Setting [${varName}]`.debug);
         console.dir(value);
         global[varName] = value;
         return true;
@@ -51,6 +57,8 @@ module.exports = {
         });
         console.log(`[GV_INIT] Setting interval...`.debug);
         setInterval(()=>{ // Does this every 10 seconds
+            console.log("[AUTOSAVE] Autosaving data...".interval);
+
             if ((global.lastSaveTime + 10*1000) - new Date().getTime() > 0) {
                 console.log(`[AUTOSAVE] Autosave save limit protection. ${(global.lastSaveTime + 10*1000) - new Date().getTime()}ms until next autosave can be made. Force-save does not have this limit`.warn);
                 return;

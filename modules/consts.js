@@ -11,7 +11,7 @@ if (process.env.DISABLE_SAVE == "yes") {
 }
 
 module.exports = {
-    VERSION: "19.2.5" + afterVerString,
+    VERSION: "19.2.6" + afterVerString,
 
     WEEK_DAYS: ["Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota"],
     WEEK_DAYS_SHORT: ["Ne", "Po", "Ut", "St", "Št", "Pi", "So"],
@@ -20,7 +20,7 @@ module.exports = {
 
     TEST_CHANNEL_ID: 514873440159793167,
 
-    DEV_USERID: 342227744513327107,
+    DEV_USERID: "342227744513327107",
 
     discordBotConfig: {
         token: process.env.DISCORD_BOT_TOKEN,
@@ -57,6 +57,8 @@ module.exports = {
             date: new Date("03/12/2022 00:00:00 GMT+0100")
         },
     ],
+
+    SUBJECTS: ["STN", "MAT", "AJ", "ZEQ", "PRO", "FYZ", "DEJ", "INF", "OBN", "ZER", "MECH"],
 
     TIMETABLE: [
         ['Víkend'],

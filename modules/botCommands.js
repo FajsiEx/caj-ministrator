@@ -1,6 +1,7 @@
 
 const stringSimilarity = require('string-similarity');
 
+const CONSTS = require("./consts");
 const COLORS = require("./consts").COLORS;
 const globalVariables = require("./globalVariables");
 const smallFunctions = require("./smallFunctions");
@@ -16,6 +17,7 @@ const sd = require("./commands/dev/sd");
 const forceload = require("./commands/dev/forceload");
 const forcesave = require("./commands/dev/forcesave");
 const forceinit = require("./commands/dev/forceinit");
+const setOsuMember = require("./commands/dev/setosumember");
 
 const mute = require("./commands/mod/mute");
 const unmute = require("./commands/mod/unmute");
@@ -31,6 +33,11 @@ const addEvent = require("./commands/events/add");
 const events = require("./commands/events/events");
 const deleteEvent = require("./commands/events/delete");
 const editEvent = require("./commands/events/edit");
+
+const makeDP = require("./commands/events/dp/makedp");
+const voteDP = require("./commands/events/dp/votedp");
+const statDP = require("./commands/events/dp/statdp");
+const clearDP = require("./commands/events/dp/cleardp");
 
 const spravnyprikaz = require("./commands/jff/spravnyprikaz");
 const tea = require("./commands/jff/tea");
@@ -78,10 +85,10 @@ const e621 = require("./commands/ffiy/e621");
 const e926 = require("./commands/ffiy/e926");
 const agree = require("./commands/ffiy/agree");
 
+// TODO: Move this to another module lol
 let commands = {
     // Dev commands
     'ping': (msg)=>{ping.command(msg);},
-    'dp': (msg)=>{ping.command(msg);},
 
     'send': (msg, discordClient)=>{send.command(msg, discordClient);},
 
@@ -105,6 +112,8 @@ let commands = {
 
     'forceinit': (msg)=>{forceinit.command(msg);},
     'fi': (msg)=>{forceinit.command(msg);},
+
+    'sosum': (msg)=>{setOsuMember.command(msg);},
     
 
     // Mod commands
@@ -154,6 +163,19 @@ let commands = {
     'vymazat': (msg)=>{deleteEvent.command(msg);},
 
     'sub': (msg)=>{sub.command(msg);},
+
+    // DP
+    'makedp': (msg)=>{makeDP.command(msg);},
+
+    'dp': (msg)=>{voteDP.command(msg);},
+    'votedp': (msg)=>{voteDP.command(msg);}, // /!\ LEGACY
+
+    'statdp': (msg)=>{statDP.command(msg);},
+    'listdp': (msg)=>{statDP.command(msg);},
+
+    'cleardp': (msg)=>{clearDP.command(msg);},
+    'deletedp': (msg)=>{clearDP.command(msg);},
+    'removedp': (msg)=>{clearDP.command(msg);},
 
     // Random commands
     'spravnyprikaz': (msg)=>{spravnyprikaz.command(msg);},
@@ -394,14 +416,60 @@ module.exports = {
 
         console.log(`[BOT_COMMANDS] HANDLER: All the shit out of the way. Checking with object literals...`);
 
-        if (commands[command]) {
+        if (commands[command]) { // If the command is found in the commands object
             console.log(`[BOT_COMMANDS] PASS: Command found in the object. Passing control to the actual command module. Done here.`);
 
+            // Increments and stores the number of commands served
             let commsServed = globalVariables.get("commandsServed");
             commsServed++;
             globalVariables.set("commandsServed", commsServed);
 
-            commands[command](msg, discordClient);
+            // Finally calls the command
+            try {
+                commands[command](msg, discordClient);
+            }catch(e){
+                // Log error
+                console.error("[ERR] Command error on command " + command);
+                console.error(e);
+
+                let debugInfo = `
+                    **Error &  Call stack:**
+                    ${e.stack.split("\n")[0]}
+                    ${e.stack.split("\n")[1]}
+                    ${e.stack.split("\n")[2]}
+                    ${e.stack.split("\n")[3]}
+                `;
+
+                // Report the error to the user
+                msg.channel.send({
+                    "embed": {
+                        "title": "Ale do piči...",
+                        "description": `
+                            Necrashol som...ale nepodarilo sa mi vykonať príkaz **!${command}** >_< *nyaa...*
+                            No nič no... poslal som error log developerovi a teraz len čakaj v priemere 3 roky kým sa to opraví.
+                            To by bolo všetko.
+                            ${debugInfo}
+                        `,
+                        "color": COLORS.RED
+                    }
+                });
+
+                // Report the error to the dev
+                discordClient.fetchUser(CONSTS.DEV_USERID).then((user)=>{
+                    user.send({
+                        "embed": {
+                            "title": "Error",
+                            "description": `
+                                An error occurred while processing **!${command}** command.
+                                Check the logs for moar details.
+                                ${debugInfo}
+                            `,
+                            "color": COLORS.RED
+                        }
+                    });
+                });
+            }
+            
         }else{
             console.log(`[BOT_COMMANDS] HANDLER: Command not found in object. Replying and we're done.`);
 

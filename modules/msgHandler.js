@@ -28,6 +28,10 @@ const NPERMIT_WARNING_TIMEOUT = 5 * 60 * 1000; // 5 minutes * 60 seconds * 1000m
 let warnedAboutNPchan = {}; // Stores if the warning was already sent to a channel (<int>chanId: <bool>wasSent)
 
 module.exports = (msg, discordClient)=>{
+    if (msg.author.id == process.env.ID_TO_BLOCK) { // Anon request ;)
+        return "Chod do pici"; // This is beautiful
+    }
+
     let usersObj = globalVariables.get("usersObj");
     let events = globalVariables.get("events");
 
@@ -94,8 +98,6 @@ module.exports = (msg, discordClient)=>{
         };
         globalVariables.set("usersObj", usersObj);
     }
-
-    console.log(`[MSG_HANDLER] MESSAGE: ${author}: "${message}"`.important);
     
     // Good night wishing thing
     jffModule.goodNightWisher(msg, author_id, discordClient);
