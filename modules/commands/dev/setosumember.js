@@ -37,11 +37,11 @@ module.exports = {
 
         switch (commandMessageArray[1]) {
             case "12300759":
-                globalVariables.set("osuRankMemberFx", msg.member);
+                globalVariables.set("osuRankMemberFx", {member: msg.member, osuID: commandMessageArray[1]});
                 break;
                 
             case "12180632":
-                globalVariables.set("osuRankMemberCody", msg.member);
+                globalVariables.set("osuRankMemberCody", {member: msg.member, osuID: commandMessageArray[1]});
                 break;
             
             default:

@@ -168,41 +168,80 @@ let setStatus = ()=>{
 };
 
 let request = require("request");
-let prevRank = 0;
+let prevRankFx = 0;
+let prevRankCody = 0;
 
 let setRankNick = ()=>{
     console.log("[OSU_RANK] Setting osu rank nicknames...".info);
 
-    let osuRankMember = globalVariables.get('osuRankMember');
-    if (!osuRankMember) {
-        console.log("[OSU_RANK] No member. Aborting.".warn);
-        return;
+    console.log("[OSU_RANK] Setting osu rank for FajsiEx...".info);
+    let osuRankMemberFxObj = globalVariables.get('osuRankMemberFx');
+    let osuRankMemberFx = osuRankMemberFxObj.member;
+
+    if (osuRankMemberFx) {
+        request({
+            url: `https://osu.ppy.sh/api/get_user?k=${process.env.OSUAPI}&u=${osuRankMemberFxObj.osuID}`,
+            json: true
+        }, (err, res, data)=>{
+            if (!err && res.statusCode == 200) {
+                let rank = data[0].pp_rank;
+                if (rank == prevRankFx) {
+                    console.log("[OSU_RANK] FX rank same as prevRank. Aborting.".info);
+                    return;
+                }
+                prevRankFx = rank;
+                
+                let nf = new Intl.NumberFormat();
+    
+                rank = nf.format(rank);
+    
+                let nick = `Martin Brázda [#${rank}]`;
+                console.log(`[OSU_RANK] Set FajsiEx nick to "${nick}"`.success);
+    
+                osuRankMemberFx.setNickname(nick);
+            }else{
+                console.log("[OSU_RANK] Failed to connect to Bancho.".warn);
+            }
+        });
+    }else{
+        console.log("[OSU_RANK] No member FajsiEx. Aborting.".warn);
     }
 
-    request({
-        url: `https://osu.ppy.sh/api/get_user?k=${process.env.OSUAPI}&u=fajsiex`,
-        json: true
-    }, (err, res, data)=>{
-        if (!err && res.statusCode == 200) {
-            let rank = data[0].pp_rank;
-            if (rank == prevRank) {
-                console.log("[OSU_RANK] Rank same as prevRank. Aborting.".info);
-                return;
+
+    ////////////////////////// TODO: Make this expandable.
+
+
+    console.log("[OSU_RANK] Setting osu rank for Cody...".info);
+    let osuRankMemberCodyObj = globalVariables.get('osuRankMemberCody');
+    let osuRankMemberCody = osuRankMemberCodyObj.member;
+    if (osuRankMemberCody) {
+        request({
+            url: `https://osu.ppy.sh/api/get_user?k=${process.env.OSUAPI}&u=${osuRankMemberCodyObj.osuID}`,
+            json: true
+        }, (err, res, data)=>{
+            if (!err && res.statusCode == 200) {
+                let rank = data[0].pp_rank;
+                if (rank == prevRankCody) {
+                    console.log("[OSU_RANK] Cody rank same as prevRank. Aborting.".info);
+                    return;
+                }
+                prevRankCody = rank;
+                
+                let nf = new Intl.NumberFormat();
+    
+                rank = nf.format(rank);
+    
+                let nick = `Matej Holárek [#${rank}]`;
+                console.log(`[OSU_RANK] Set Cody nick to "${nick}"`.success);
+    
+                osuRankMemberCody.setNickname(nick);
+            }else{
+                console.log("[OSU_RANK] Failed to connect to Bancho.".warn);
             }
-            prevRank = rank;
-            
-            let nf = new Intl.NumberFormat();
-
-            rank = nf.format(rank);
-
-            let nick = `Martin Brázda [#${rank}]`;
-            console.log(`[OSU_RANK] Set nick to "${nick}"`.success);
-
-            osuRankMember.setNickname(nick);
-        }else{
-            console.log("[OSU_RANK] Failed to connect to Bancho.".warn);
-        }
-    });
+        });
+    }else{
+        console.log("[OSU_RANK] No member Cody. Aborting.".warn);
+    }
 };
 
 setInterval(setStatus, 15000);
