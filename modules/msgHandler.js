@@ -78,7 +78,6 @@ module.exports = (msg, discordClient)=>{
     let author_id = msg.author.id; // Discord user ID of the author user
     let author = msg.author.username + "#" + msg.author.discriminator; // User#1337
     let message = msg.content; // Actual content of the message
-
     if(!usersObj[author_id]) {
         usersObj[author_id] = {
             username: author,
