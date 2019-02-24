@@ -176,7 +176,8 @@ let setRankNick = ()=>{
 
     console.log("[OSU_RANK] Getting guild...".info);
     let guilds = discordClient.guilds.array();
-    console.log(guilds.length);
+    console.log("Bot in " + guilds.length + " guilds.");
+
     let homeGuild = guilds[0];
     if (!homeGuild) {
         console.log("[OSU_RANK] No guild. Aborting.".warn);
