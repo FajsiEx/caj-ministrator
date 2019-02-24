@@ -6,24 +6,16 @@ const DEV_USERID = require("../../consts").DEV_USERID;
 module.exports = {
     command: function(msg) {
         let commandMessageArray = msg.content.split(" ");
-        
 
-        if (msg.author.id != DEV_USERID && msg.author.id != 305705560966430721) {
+        if (msg.author.id != DEV_USERID) {
             msg.channel.send({
                 "embed": {
-                    "title": "Devs only. For now. If you also want this just DM @FajsiEx.",
+                    "title": "Devs only. For now. If you also want this just DM @FajsiEx. Also this no longer works.",
                     "color": COLORS.RED
                 }
             });
             return;
         }
-
-        msg.channel.send({
-            "embed": {
-                "title": "You have been set as osu member",
-                "color": COLORS.BLUE
-            }
-        });
 
         if (!commandMessageArray[1]) {
             msg.channel.send({
@@ -35,30 +27,43 @@ module.exports = {
             return;
         }
 
-        switch (commandMessageArray[1]) {
-            case "12300759":
-                globalVariables.set("osuRankMemberFx", {member: msg.member, osuID: commandMessageArray[1]});
-                break;
-                
-            case "12180632":
-                globalVariables.set("osuRankMemberCody", {member: msg.member, osuID: commandMessageArray[1]});
-                break;
-            
-            default:
-                msg.channel.send({
-                    "embed": {
-                        "title": `Osu! user id is not approved :/ DM @FajsiEx if you want have your osu! id added`,
-                        "color": COLORS.RED
-                    }
-                });
-                return;
+        if (!commandMessageArray[2]) {
+            msg.channel.send({
+                "embed": {
+                    "title": `No prefix for your nickname specified. **!sosum *osuID* Your name** => **Your name [#1,273]**`,
+                    "color": COLORS.RED
+                }
+            });
+            return;
         }
+
+        //let commandLength = commandMessageArray[0].length;
+        //let firstParamLength = commandMessageArray[1].length;
+        let indexOfSecondParam = msg.content.indexOf(commandMessageArray[2]);
+        let nicknamePrefix = msg.content.slice(indexOfSecondParam);
+
+        let dynamicNickUpdates = globalVariables.get("dynamicNickUpdates");
+        if (!dynamicNickUpdates) {
+            dynamicNickUpdates = [];
+        }
+
+        dynamicNickUpdates.push({
+            userID: msg.author.id,
+            guild: msg.guild,
+            prefix: nicknamePrefix,
+            type: "osu",
+            data: {
+                osuID: commandMessageArray[1]
+            }
+        });
+
+        globalVariables.set("dynamicNickUpdates", dynamicNickUpdates);
 
         msg.channel.send({
             "embed": {
-                "title": `Osu! user id set. Nicknames can take up to 30 seconds to take changes.`,
+                "title": `Dynamic nickname set. Nicknames can take up to 30 seconds to take changes.`,
                 "color": COLORS.GREEN
             }
         });
     }
-}
+};

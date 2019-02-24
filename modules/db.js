@@ -37,6 +37,9 @@ module.exports = {
     },
 
     save: (data)=>{
+        
+        console.log(JSON.stringify(data));
+
         if (!data || (Object.keys(data).length <= 0)) {
             console.warn("[SAVE] Data is false. Aborting save.".warn);
             return false;
@@ -48,8 +51,8 @@ module.exports = {
         }
 
         if (process.env.DISABLE_SAVE == "yes") {
-            console.log("[SAVE] Disable save is on. Aborting save.".warn);
-            return;
+            //console.log("[SAVE] Disable save is on. Aborting save.".warn);
+            //return; // temp disable
         } // for beta
         
         console.log("[SAVE] Saving global object...".info);
@@ -59,7 +62,7 @@ module.exports = {
             let database = client.db('caj-ministrator');
 
             // Replace the object with your field objectid...because it won't work otherwise...
-            database.collection("datav2").update({"_id" : ObjectId("5c2ceed4f25f7b062cd2e038")}, {
+            database.collection("datav2").updateOne({"_id" : ObjectId("5c2ceed4f25f7b062cd2e038")}, {
                 $set: data
             });
 

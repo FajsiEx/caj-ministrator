@@ -64,12 +64,12 @@ module.exports = {
         let dp = {};
 
         dp.details = dpDetails;
-        dp.guild = msg.guild;
+        dp.guild = JSON.stringify(msg.guild); // Stringify it so it doesn't crash bson on save
         dp.msgs = [];
         dp.joined = [];
 
         let members = msg.guild.members.array(); // Gets an array of members of guild
-        
+        /* 
         members.forEach((member)=>{
             member.send({
                 "embed": {
@@ -84,7 +84,7 @@ module.exports = {
                 }
             });
         });
-
+ */
         msg.channel.send({
             "embed": {
                 "title": "Doplnková hodina",

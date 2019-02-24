@@ -16,8 +16,10 @@ let global = {
     disableStatus: false, // If true auto status will be disabled
 
     vc: false, // will be removed and unused
-    musicConnections: {test: "test"}
-}
+    musicConnections: {test: "test"},
+
+    dynamicNickUpdates: false
+};
 
 let disableAutoSave = false;
 
@@ -89,4 +91,4 @@ module.exports = {
         console.log(`[GV_DUMP] Dumping...`.debug);
         return JSON.stringify(global);
     }
-}
+};

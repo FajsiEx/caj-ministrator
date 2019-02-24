@@ -174,8 +174,92 @@ let prevRankCody = 0;
 let setRankNick = ()=>{
     console.log("[OSU_RANK] Setting osu rank nicknames...".info);
 
-    console.log("[OSU_RANK] Setting osu rank for FajsiEx...".info);
-    let osuRankMemberFxObj = globalVariables.get('osuRankMemberFx');
+    console.log("[OSU_RANK] Getting guild...".info);
+    let guilds = discordClient.guilds.array();
+    console.log("Bot in " + guilds.length + " guilds.");
+
+    let homeGuild = guilds[0];
+    if (!homeGuild) {
+        console.log("[OSU_RANK] No guild. Aborting.".warn);
+    }
+
+    /*let dynamicNickUpdates = globalVariables.get('dynamicNickUpdates');
+
+    if (!dynamicNickUpdates) {
+        console.log("[OSU_RANK] dnu object is false. Aborting.".warn);
+        return;
+    }
+
+    dynamicNickUpdates.forEach((nickUpdate)=>{
+        let member = false;
+    });*/
+
+    guilds.forEach((guild)=>{
+        let memberFx = guild.members.array().filter((e)=>{
+            return (e.id == 342227744513327107);
+        })[0];
+        let memberCody = guild.members.array().filter((e)=>{
+            return (e.id == 305705560966430721);
+        })[0];
+
+        if (memberFx) {
+            request({
+                url: `https://osu.ppy.sh/api/get_user?k=${process.env.OSUAPI}&u=fajsiex`,
+                json: true
+            }, (err, res, data)=>{
+                if (!err && res.statusCode == 200) {
+                    let rank = data[0].pp_rank;
+                    if (rank == prevRankFx) {
+                        console.log("[OSU_RANK] FX rank same as prevRank. Aborting.".info);
+                        return;
+                    }
+                    prevRankFx = rank;
+                    
+                    let nf = new Intl.NumberFormat();
+        
+                    rank = nf.format(rank);
+        
+                    let nick = `Martin Brázda [#${rank}]`;
+                    console.log(`[OSU_RANK] Set FajsiEx nick to "${nick}"`.success);
+        
+                    memberFx.setNickname(nick);
+                }else{
+                    console.log("[OSU_RANK] Failed to connect to Bancho.".warn);
+                }
+            });
+        }else{
+            console.log("Fx member not in this guild.".warn);
+        }
+
+        if (memberCody) {
+            request({
+                url: `https://osu.ppy.sh/api/get_user?k=${process.env.OSUAPI}&u=12180632`,
+                json: true
+            }, (err, res, data)=>{
+                if (!err && res.statusCode == 200) {
+                    let rank = data[0].pp_rank;
+                    if (rank == prevRankCody) {
+                        console.log("[OSU_RANK] Cody rank same as prevRank. Aborting.".info);
+                        return;
+                    }
+                    prevRankCody = rank;
+                    
+                    let nf = new Intl.NumberFormat();
+        
+                    rank = nf.format(rank);
+        
+                    let nick = `Matej Holárek [#${rank}]`;
+                    console.log(`[OSU_RANK] Set Cody nick to "${nick}"`.success);
+        
+                    memberCody.setNickname(nick);
+                }else{
+                    console.log("[OSU_RANK] Failed to connect to Bancho.".warn);
+                }
+            });
+        }
+    });
+
+    /*let osuRankMemberFxObj = globalVariables.get('osuRankMemberFx');
     let osuRankMemberFx = osuRankMemberFxObj.member;
 
     if (osuRankMemberFx) {
@@ -241,7 +325,7 @@ let setRankNick = ()=>{
         });
     }else{
         console.log("[OSU_RANK] No member Cody. Aborting.".warn);
-    }
+    }*/
 };
 
 setInterval(setStatus, 15000);
