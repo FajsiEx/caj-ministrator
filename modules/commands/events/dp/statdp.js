@@ -24,7 +24,7 @@ module.exports = {
             return;
         }
 
-        let dpGuild = dp.guild; // Get the dpmsg from dp obj
+        let dpGuild = JSON.parse(dp.guild); // Get the dpmsg from dp obj and parse it from a string (prevents bson save crash)
 
         let members = dpGuild.members.array();
 
