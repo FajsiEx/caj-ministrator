@@ -3,7 +3,7 @@ const globalVariables = require("../../../globalVariables");
 const CONSTS = require("../../../consts");
 
 module.exports = {
-    command: function(msg) {
+    command: function(msg, discordClient) {
         let dp = globalVariables.get("dp");
         console.dir(dp);
 
@@ -24,7 +24,25 @@ module.exports = {
             return;
         }
 
-        let dpGuild = JSON.parse(dp.guild); // Get the dpmsg from dp obj and parse it from a string (prevents bson save crash)
+        let guilds = discordClient.guilds.array();
+        console.log("[STAT_DP] Bot in " + guilds.length + " guilds.");
+
+        let homeGuild = guilds[0];
+        if (!homeGuild) {
+            console.log("[STAT_DP] No guild. Abort.".warn);
+            msg.channel.send({
+                "embed": {
+                    "title": "No guild",
+                    "description": `
+                        Bot isn't in any guild.
+                    `,
+                    "color": CONSTS.COLORS.RED
+                }
+            });
+            return;
+        }
+
+        let dpGuild = homeGuild;
 
         let members = dpGuild.members.array();
 

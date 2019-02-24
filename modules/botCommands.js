@@ -170,8 +170,8 @@ let commands = {
     'dp': (msg)=>{voteDP.command(msg);},
     'votedp': (msg)=>{voteDP.command(msg);}, // /!\ LEGACY
 
-    'statdp': (msg)=>{statDP.command(msg);},
-    'listdp': (msg)=>{statDP.command(msg);},
+    'statdp': (msg, discordClient)=>{statDP.command(msg, discordClient);},
+    'listdp': (msg, discordClient)=>{statDP.command(msg, discordClient);},
 
     'cleardp': (msg)=>{clearDP.command(msg);},
     'deletedp': (msg)=>{clearDP.command(msg);},
