@@ -69,7 +69,7 @@ module.exports = {
         dp.joined = [];
 
         let members = msg.guild.members.array(); // Gets an array of members of guild
-        /* 
+        
         members.forEach((member)=>{
             member.send({
                 "embed": {
@@ -84,7 +84,7 @@ module.exports = {
                 }
             });
         });
- */
+
         msg.channel.send({
             "embed": {
                 "title": "Doplnková hodina",
