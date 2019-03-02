@@ -71,6 +71,7 @@ module.exports = {
         let members = msg.guild.members.array(); // Gets an array of members of guild
         
         members.forEach((member)=>{
+            console.log("[MAKE_DP] Sending dp message...");
             member.send({
                 "embed": {
                     "title": "Doplnková hodina",
@@ -82,6 +83,8 @@ module.exports = {
                     `,
                     "color": CONSTS.COLORS.PINK
                 }
+            }).then(()=>{
+                console.log("[MAKE_DP] Sent dp message.");
             });
         });
 
