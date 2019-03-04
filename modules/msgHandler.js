@@ -8,6 +8,7 @@ const jffModule = require("./jffModule");
 const globalVariables = require("./globalVariables");
 const botCommands = require("./botCommands");
 
+const CONSTS = require("./consts");
 const COLORS = require("./consts").COLORS;
 const OWO_DM_REPLY_MSGS = require("./consts").OWO_DM_REPLY_MSGS;
 
@@ -23,7 +24,7 @@ const NPERMIT_WARNING_MSG = {
     }
 };
 
-const NPERMIT_WARNING_TIMEOUT = 5 * 60 * 1000; // 5 minutes * 60 seconds * 1000ms
+const NPERMIT_WARNING_TIMEOUT = 1 * 5 * 1000; // 5 minutes * 60 seconds * 1000ms
 
 let warnedAboutNPchan = {}; // Stores if the warning was already sent to a channel (<int>chanId: <bool>wasSent)
 
@@ -61,6 +62,8 @@ module.exports = (msg, discordClient)=>{
         }
         console.log("[MSG_HANDLER] REJECTED: Bot message has been ignored.".warn);
         return; // If they are, we just ignore them.
+    }else if (msg.content.startsWith(CONSTS.discordBotConfig.prefix) || msg.channel.type == 'text') { // If the messages starts with prefix - we treat it like og msg
+        msg.delete(NPERMIT_WARNING_TIMEOUT);  // and delete it after timeout
     }
 
     if (!msg.channel) { // Because the bot uses the msg.channel.send function to reply in most cases we check if that channel exists
