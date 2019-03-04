@@ -171,6 +171,7 @@ let request = require("request");
 let prevRankFx = 0;
 let prevRankCody = 0;
 
+// Sets dynamic rank
 let setRankNick = ()=>{
     console.log("[OSU_RANK] Setting osu rank nicknames...".info);
 
@@ -258,82 +259,17 @@ let setRankNick = ()=>{
             });
         }
     });
-
-    /*let osuRankMemberFxObj = globalVariables.get('osuRankMemberFx');
-    let osuRankMemberFx = osuRankMemberFxObj.member;
-
-    if (osuRankMemberFx) {
-        request({
-            url: `https://osu.ppy.sh/api/get_user?k=${process.env.OSUAPI}&u=${osuRankMemberFxObj.osuID}`,
-            json: true
-        }, (err, res, data)=>{
-            if (!err && res.statusCode == 200) {
-                let rank = data[0].pp_rank;
-                if (rank == prevRankFx) {
-                    console.log("[OSU_RANK] FX rank same as prevRank. Aborting.".info);
-                    return;
-                }
-                prevRankFx = rank;
-                
-                let nf = new Intl.NumberFormat();
-    
-                rank = nf.format(rank);
-    
-                let nick = `Martin Brázda [#${rank}]`;
-                console.log(`[OSU_RANK] Set FajsiEx nick to "${nick}"`.success);
-    
-                osuRankMemberFx.setNickname(nick);
-            }else{
-                console.log("[OSU_RANK] Failed to connect to Bancho.".warn);
-            }
-        });
-    }else{
-        console.log("[OSU_RANK] No member FajsiEx. Aborting.".warn);
-    }
-
-
-    ////////////////////////// TODO: Make this expandable.
-
-
-    console.log("[OSU_RANK] Setting osu rank for Cody...".info);
-    let osuRankMemberCodyObj = globalVariables.get('osuRankMemberCody');
-    let osuRankMemberCody = osuRankMemberCodyObj.member;
-    if (osuRankMemberCody) {
-        request({
-            url: `https://osu.ppy.sh/api/get_user?k=${process.env.OSUAPI}&u=${osuRankMemberCodyObj.osuID}`,
-            json: true
-        }, (err, res, data)=>{
-            if (!err && res.statusCode == 200) {
-                let rank = data[0].pp_rank;
-                if (rank == prevRankCody) {
-                    console.log("[OSU_RANK] Cody rank same as prevRank. Aborting.".info);
-                    return;
-                }
-                prevRankCody = rank;
-                
-                let nf = new Intl.NumberFormat();
-    
-                rank = nf.format(rank);
-    
-                let nick = `Matej Holárek [#${rank}]`;
-                console.log(`[OSU_RANK] Set Cody nick to "${nick}"`.success);
-    
-                osuRankMemberCody.setNickname(nick);
-            }else{
-                console.log("[OSU_RANK] Failed to connect to Bancho.".warn);
-            }
-        });
-    }else{
-        console.log("[OSU_RANK] No member Cody. Aborting.".warn);
-    }*/
 };
 
+// Set intervals
 setInterval(setStatus, 15000);
 setInterval(setRankNick, 15000);
 
+// Init the web server
 let express = require("express");
 let app = express();
 
+// Test route for logs (not working)
 app.get("/logs", (req, res)=>{
     let logData = globalVariables.get("logData");
     let logString = "";
@@ -346,13 +282,42 @@ app.get("/logs", (req, res)=>{
     res.send("<h1>Logs</h1>" + logString);
 });
 
+// osu! API routes
+app.get("/osu/fx", (req, res)=>{
+    request({
+        url: `https://osu.ppy.sh/api/get_user?k=${process.env.OSUAPI}&u=fajsiex`,
+        json: true
+    }, (err, res, data)=>{
+        if (!err && res.statusCode == 200) {
+            res.send(data);
+        }else{
+            console.log("[OSU_RANK_SRVR] Failed to connect to Bancho.".warn);
+        }
+    });
+});
+app.get("/osu/cody", (req, res)=>{
+    request({
+        url: `https://osu.ppy.sh/api/get_user?k=${process.env.OSUAPI}&u=12180632`,
+        json: true
+    }, (err, res, data)=>{
+        if (!err && res.statusCode == 200) {
+            res.send(data);
+        }else{
+            console.log("[OSU_RANK_SRVR] Failed to connect to Bancho.".warn);
+        }
+    });
+});
+
+// Sets startup time
 globalVariables.set("startTime", new Date().getTime());
 
+// Start the web api server
 let port = process.env.PORT || 3000;
 app.listen(port, function() {
     console.log(("[WEB_SERVER] Listening. Port:" + port).success);
 });
 
-// ED
+// Login to discord
 discordClient.login(discordBotCongig.token);
+
 console.log("[BOT] Started.".success);
