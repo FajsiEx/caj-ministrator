@@ -195,6 +195,8 @@ let setRankNick = ()=>{
         let member = false;
     });*/
 
+    let bestRanks = globalVariables.get("bestRanks");
+
     guilds.forEach((guild)=>{
         let memberFx = guild.members.array().filter((e)=>{
             return (e.id == 342227744513327107);
@@ -215,12 +217,19 @@ let setRankNick = ()=>{
                         return;
                     }
                     prevRankFx = rank;
+
+                    let fxArrow = "⬇";
+                    if (rank < bestRanks.fx) {
+                        fxArrow = "⬆";
+                        bestRanks.fx = rank;
+                        globalVariables.set("bestRanks", bestRanks);
+                    }
                     
                     let nf = new Intl.NumberFormat();
         
                     rank = nf.format(rank);
         
-                    let nick = `Martin Brázda [#${rank}]`;
+                    let nick = `Martin Brázda [${fxArrow}#${rank}]`;
                     console.log(`[OSU_RANK] Set FajsiEx nick to "${nick}"`.success);
         
                     memberFx.setNickname(nick);
@@ -244,12 +253,19 @@ let setRankNick = ()=>{
                         return;
                     }
                     prevRankCody = rank;
+
+                    let codyArrow = "⬇";
+                    if (rank < bestRanks.cody) {
+                        codyArrow = "⬆";
+                        bestRanks.fx = rank;
+                        globalVariables.set("bestRanks", bestRanks);
+                    }
                     
                     let nf = new Intl.NumberFormat();
         
                     rank = nf.format(rank);
         
-                    let nick = `Matej Holárek [#${rank}]`;
+                    let nick = `Matej Holárek [${codyArrow}#${rank}]`;
                     console.log(`[OSU_RANK] Set Cody nick to "${nick}"`.success);
         
                     memberCody.setNickname(nick);

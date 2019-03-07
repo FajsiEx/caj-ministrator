@@ -1,4 +1,4 @@
-let global = {
+let globalTemplate = {
     usersObj: {},
     events: [],
     dp: false, // dp object - false if no dp
@@ -18,8 +18,14 @@ let global = {
     vc: false, // will be removed and unused
     musicConnections: {test: "test"},
 
-    dynamicNickUpdates: false
+    dynamicNickUpdates: false,
+    bestRanks: {
+        fx:     false,
+        cody:   false
+    }
 };
+
+let global = {};
 
 let disableAutoSave = false;
 
@@ -28,7 +34,14 @@ dbModule = require("./db");
 module.exports = {
     get: (varName)=>{
         console.log(`[GV_GET] Getting [${varName}]`.debug);
-        if (!global[varName]) {return false;}
+        if (!global[varName]) {
+            if (globalTemplate[varName]) {
+                console.log(`Var [${varName}] found in template. Returning that.`.info);
+                return globalTemplate[varName];
+            }
+            console.log(`Var [${varName}] is false and not found in template. You should add it.`.warn);
+            return false;
+        }
         return global[varName];
     },
 
