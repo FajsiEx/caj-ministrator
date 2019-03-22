@@ -20,18 +20,18 @@ module.exports = {
         // - https://github.com/maurostorch/nodejs-ffmpeg-buildpack
         let commandMessageArray = msg.content.split(" ");
 
-        /*
+        
         msg.channel.send({
             "embed": {
                 "title": "Play",
                 "color": COLORS.RED,
                 "description": `
-                    Music is disabled until I get ~~paid~~ the FFMPEG buildpack fixed. Sry i guess.
+                    Music commands are not available due to lack of stability. Please check back like a month or two later, when the rework will be done.
                 `
             }
         });
         return;
-        */
+        
 
         if (!msg.member) {
             msg.channel.send({
