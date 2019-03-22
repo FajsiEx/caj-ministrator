@@ -31,7 +31,7 @@ let warnedAboutNPchan = {}; // Stores if the warning was already sent to a chann
 module.exports = (msg, discordClient)=>{
     let usersObj = globalVariables.get("usersObj");
     let events = globalVariables.get("events");
-
+    /*
     if (msg.author.bot || (msg.content.startsWith(CONSTS.discordBotConfig.prefix) || msg.channel.type == 'text')) { // We check if the author of the message isn't a bot or op with msg with ! prefix
         if (msg.channel.type == 'text' && msg.author.id == discordClient.user.id) { // If the origin  of the msg is from a text channel and is from tea-bot
             let chan_permitted = false;
@@ -62,7 +62,7 @@ module.exports = (msg, discordClient)=>{
         }
         console.log("[MSG_HANDLER] REJECTED: Bot message has been ignored.".warn);
         return; // If they are, we just ignore them.
-    }
+    }*/
 
     if (!msg.channel) { // Because the bot uses the msg.channel.send function to reply in most cases we check if that channel exists
         console.log("[MSG_HANDLER] REJECTED: No message channel object".warn);
