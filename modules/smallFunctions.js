@@ -16,6 +16,7 @@ module.exports = {
     },
 
     checkAdmin: (msg)=>{
+        return false;
         if(msg.member.roles.some(r=>[
             "admin",
             "owner",

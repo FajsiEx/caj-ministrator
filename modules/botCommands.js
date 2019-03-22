@@ -376,6 +376,34 @@ const NSFW_COMMANDS = [
     "hentai"
 ];
 
+const DEV_COMMANDS = [
+    "send",
+    "testread",
+    "dtr",
+    "testpp",
+    "dtp",
+    "snap",
+    "sd",
+    "forceload",
+    "fl",
+    "forcesave",
+    "fs",
+    "forceinit",
+    "fi"
+];
+const ADMIN_COMMANDS = [
+    "mute",
+    "silence",
+    "unmute",
+    "unsilence",
+    "nuke",
+    "mod",
+    "makedp",
+    "cleardp",
+    "deletedp",
+    "removedp"
+];
+
 module.exports = {
     handleBotCommand: (msg, discordClient)=>{
         console.log(`[BOT_COMMANDS] HANDLER: Called. Processing the msg...`);
@@ -418,7 +446,7 @@ module.exports = {
 
         if (commands[command]) { // If the command is found in the commands object
             console.log(`[BOT_COMMANDS] PASS: Command found in the object. Passing control to the actual command module. Done here.`);
-
+            
             // Increments and stores the number of commands served
             let commsServed = globalVariables.get("commandsServed");
             commsServed++;
@@ -426,6 +454,29 @@ module.exports = {
 
             // Finally calls the command
             try {
+                if (DEV_COMMANDS.indexOf(command) > -1) {
+                    if (msg.author.id != DEV_USERID) {
+                        msg.channel.send({
+                            "embed": {
+                                "title": "Dev only.",
+                                "color": COLORS.RED
+                            }
+                        });
+                        return;
+                    }
+                }
+                if (ADMIN_COMMANDS.indexOf(command) > -1) {
+                    if (!smallFunctions.checkAdmin(msg)) {
+                        msg.channel.send({
+                            "embed": {
+                                "title": "Admin only.",
+                                "color": COLORS.RED
+                            }
+                        });
+                        return;
+                    }
+                }
+
                 commands[command](msg, discordClient);
             }catch(e){
                 // Log error

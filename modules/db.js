@@ -37,8 +37,7 @@ module.exports = {
     },
 
     save: (data)=>{
-        
-        console.log(JSON.stringify(data));
+        JSON.stringify(data); // Fails to save if the save object is circular. Rather crash than go weeks unnoticed
 
         if (!data || (Object.keys(data).length <= 0)) {
             console.warn("[SAVE] Data is false. Aborting save.".warn);

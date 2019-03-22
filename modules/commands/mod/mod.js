@@ -7,16 +7,6 @@ module.exports = {
     command: function(msg) {
         let modModeOn = globalVariables.get("modModeOn");
 
-        if(!smallFunctions.checkAdmin(msg)) {
-            msg.channel.send({
-                "embed": {
-                    "title": "Admin only.",
-                    "color": COLORS.RED
-                }
-            }).then(msg => msg.delete(5000));
-            return;
-        }
-
         if (modModeOn) {
             modModeOn = false;
             msg.channel.send({
