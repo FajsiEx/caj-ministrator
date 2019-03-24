@@ -53,7 +53,7 @@ module.exports = {
             date: new Date("06/29/2019 00:00:00 GMT+0100")
         },
         {
-            name: "Maturita 2022",
+            name: "Maturita 2022 (our death)",
             date: new Date("03/12/2022 00:00:00 GMT+0100")
         },
     ],
