@@ -9,7 +9,7 @@ const COLORS = require("./consts").COLORS;
 
 module.exports = {
     msgEaterEggReply: (msg, message)=> {
-        if(message.length > 64) {return;}
+        /*if(message.length > 64) {return;}
 
         message = message.toLocaleLowerCase();
 
@@ -25,22 +25,22 @@ module.exports = {
         }else if (message.indexOf('no u') > -1) {
             msg.reply(`no u`);
             return;
-        }
+        }*/
     },
 
     goodNightWisher: (msg, author_id, discordClient)=>{
-        let message = msg.content;
+        /*let message = msg.content;
 
         if ((message.indexOf('idem spat') > -1) || (message.indexOf('idem spať') > -1)) {
             let sleeperEmoji = discordClient.emojis.find(emoji => emoji.name == "Sleeper")
             msg.reply(`Dobrú noc! ${sleeperEmoji} ${sleeperEmoji} ${sleeperEmoji} ${sleeperEmoji} ${sleeperEmoji}`);
             usersObj[author_id].alreadyWishedGN = 15
             return;
-        }
+        }*/
     },
 
     owoReplier: (msg, discordClient)=>{
-        let message = msg.content;
+        /*let message = msg.content;
 
         const owoReplies = {
             'owo': 'UwU',
@@ -100,6 +100,6 @@ module.exports = {
             });
         }else{
             console.warn("[WIP_REPLY] Unknown reply type.")
-        }
+        } */
     }   
-}
+};

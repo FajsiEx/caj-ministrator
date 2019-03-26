@@ -8,6 +8,7 @@ const smallFunctions = require("./smallFunctions");
 const mathHandler = require("./mathHandler");
 
 const ping = require("./commands/dev/ping");
+const turnoff = require("./commands/dev/turnoff");
 const send = require("./commands/dev/send");
 const st = require("./commands/dev/st");
 const testread = require("./commands/dev/testread");
@@ -89,6 +90,9 @@ const agree = require("./commands/ffiy/agree");
 let commands = {
     // Dev commands
     'ping': (msg)=>{ping.command(msg);},
+
+    'turnoff': (msg, discordClient)=>{turnoff.command(msg, discordClient);},
+    'skapnadruhulomenohned': (msg, discordClient)=>{turnoff.command(msg, discordClient);},
 
     'send': (msg, discordClient)=>{send.command(msg, discordClient);},
 
