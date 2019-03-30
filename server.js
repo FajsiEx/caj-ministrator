@@ -1,7 +1,7 @@
 /*
 
     Tea-bot
-    © Fajsiex 2018-2019
+    © FajsiEx 2018-2019
     Licensed under MIT license
     For a full license, go to LICENSE file.
     TL;DR of license: use this as you want just include the license somewhere.
@@ -161,7 +161,7 @@ let setStatus = ()=>{
     }
     
     discordClient.user.setStatus(statusStatus).then(()=>{
-        discordClient.user.setActivity(statusText + " | !help | v." + VERSION + " | " + commsServed + " commands served", { type: statusType }).then(()=>{
+        discordClient.user.setActivity("myself die in a few months" + " | !help | v." + VERSION + " | " + commsServed + " commands served", { type: statusType }).then(()=>{
             console.log("[SET_STATUS] Completed.".success);
         });
     });
