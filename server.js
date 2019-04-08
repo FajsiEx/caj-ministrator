@@ -137,8 +137,8 @@ let setStatus = ()=>{
         statusText = "nothing";
     }
 
-    /*
-    endStamp = new Date("Sun Jan 08 2019 08:00:00 GMT+0100").getTime();
+    
+    endStamp = new Date("Sun Jun 31 2019 12:00:00 GMT+0100").getTime();
     nowStamp = new Date().getTime();
     deltaStamp = endStamp - nowStamp;
 
@@ -152,8 +152,12 @@ let setStatus = ()=>{
 
     seconds = Math.floor(deltaStamp / 1000);
 
-    statusText += `${days} dní, ${hours} hodín, ${minutes} minút do konca prázdnin`
-    */
+    if (days < 1) {
+        statusText = `myself die very soon`;
+    }else{
+        statusText = `${days} days until my deadline`;
+    }
+    statusType = "PLAYING";
 
     let commsServed = globalVariables.get("commandsServed");
     if (!commsServed) {
@@ -161,7 +165,7 @@ let setStatus = ()=>{
     }
     
     discordClient.user.setStatus(statusStatus).then(()=>{
-        discordClient.user.setActivity("myself die in a few months" + " | !help | v." + VERSION + " | " + commsServed + " commands served", { type: statusType }).then(()=>{
+        discordClient.user.setActivity(statusText + " | !help | v." + VERSION + " | " + commsServed + " commands served", { type: statusType }).then(()=>{
             console.log("[SET_STATUS] Completed.".success);
         });
     });
