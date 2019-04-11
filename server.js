@@ -168,7 +168,7 @@ let setStatus = ()=>{
     }
     
     discordClient.user.setStatus(statusStatus).then(()=>{
-        discordClient.user.setActivity(statusText + " | !help | v." + VERSION + " | " + commsServed + " commands served", { type: statusType }).then(()=>{
+        discordClient.user.setActivity(statusText + " | !help | v." + VERSION + " | " + commsServed + " commands served | ST: " + `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`, { type: statusType }).then(()=>{
             console.log("[SET_STATUS] Completed.".success);
         });
     });
