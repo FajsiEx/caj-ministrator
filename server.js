@@ -155,6 +155,9 @@ let setStatus = ()=>{
     if (days < 1) {
         statusText = `myself die very soon`;
     }else{
+        if (days == 69) {
+            days = "69 ( ͡° ͜ʖ ͡°) ";
+        }
         statusText = `${days} days until my deadline`;
     }
     statusType = "PLAYING";
