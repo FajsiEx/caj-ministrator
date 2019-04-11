@@ -75,7 +75,7 @@ discordClient.on('ready', ()=>{
             });
         });
     }
-    
+    /*
     if (process.env.DISABLE_SAVE == "yes") {
         discordClient.channels.get("527170494613422092").send({
             "embed": {
@@ -87,7 +87,7 @@ discordClient.on('ready', ()=>{
                 `
             }
         });
-    }
+    }*/
 
     starting = false;
     setStatus();
@@ -138,10 +138,22 @@ let setStatus = ()=>{
     }
 
     
-    endStamp = new Date("Sun Jun 31 2019 12:00:00 GMT+0100").getTime();
+    //nowStamp = new Date("Sun Apr 11 2019 10:00:00 GMT+0100").getTime();
+    endStamp = new Date("Sun Apr 11 2019 22:36:00").getTime();
+    //endStamp = new Date("Sun Jun 31 2019 12:00:00 GMT+0100").getTime();
     nowStamp = new Date().getTime();
     deltaStamp = endStamp - nowStamp;
 
+    deltaDate = new Date(deltaStamp);
+    console.log(deltaDate);
+    console.log(deltaDate.getDate() - 1);
+    console.log(deltaDate.getHours() - 1);
+    console.log(deltaDate.getMinutes());
+
+    l_days = deltaDate.getDate() - 1;
+    l_hours = deltaDate.getHours() - 1;
+    l_minutes = deltaDate.getMinutes();
+/*
     days = Math.floor(deltaStamp / 86400000);
     deltaStamp -= days * 86400000;
 
@@ -151,15 +163,39 @@ let setStatus = ()=>{
     deltaStamp -= minutes * 60000;
 
     seconds = Math.floor(deltaStamp / 1000);
-
-    if (days < 1) {
-        statusText = `myself die very soon`;
-    }else{
-        if (days == 69) {
-            days = "69 ( ͡° ͜ʖ ͡°) ";
+*/
+    if (l_days < 1) {
+        if (l_hours < 1) {
+            statusText = `${l_minutes} minutes until my deadline`;
+            if (l_minutes == 1) {
+                statusText = `1 minute until my deadline`;
+            }
+            if (l_minutes == 0) {
+                statusText = `a few seconds until my deadline`;
+            }
+        }else{
+            statusText = `${l_hours} hours until my deadline`;
+            if (l_hours == 1) {
+                statusText = `${l_hours} hour until my deadline`;
+            }
         }
-        statusText = `${days} days until my deadline`;
+    }else{
+        if (l_days == 69) {
+            l_days = "69 ( ͡° ͜ʖ ͡°) ";
+        }
+        statusText = `${l_days} days until my deadline`;
+        if (l_minutes == 1) {
+            statusText = `${l_days} day until my deadline`;
+        }
     }
+
+    if (nowStamp > endStamp) {
+        statusText = "Congratulations on ending the year";
+    }
+
+    console.log(nowStamp);
+    console.log(endStamp);
+
     statusType = "PLAYING";
 
     let commsServed = globalVariables.get("commandsServed");
