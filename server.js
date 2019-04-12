@@ -139,7 +139,7 @@ let setStatus = ()=>{
 
     
     //nowStamp = new Date("Sun Apr 11 2019 10:00:00 GMT+0100").getTime();
-    endStamp = new Date("Sun Apr 11 2019 22:36:00").getTime();
+    endStamp = new Date("Sun Jul 21 2019 15:00:00").getTime();
     //endStamp = new Date("Sun Jun 31 2019 12:00:00 GMT+0100").getTime();
     nowStamp = new Date().getTime();
     deltaStamp = endStamp - nowStamp;
@@ -150,7 +150,8 @@ let setStatus = ()=>{
     console.log(deltaDate.getHours() - 1);
     console.log(deltaDate.getMinutes());
 
-    l_days = deltaDate.getDate() - 1;
+    l_months = deltaDate.getMonth() - 1;
+    l_days = deltaDate.getDate() - 1 + (l_months*30);
     l_hours = deltaDate.getHours() - 1;
     l_minutes = deltaDate.getMinutes();
 /*
