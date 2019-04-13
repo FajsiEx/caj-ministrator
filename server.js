@@ -216,57 +216,8 @@ let request = require("request");
 // Set intervals
 setInterval(setStatus, 15000);
 
-// Init the web server
-let express = require("express");
-let app = express();
-
-// Test route for logs (not working)
-app.get("/logs", (req, res)=>{
-    let logData = globalVariables.get("logData");
-    let logString = "";
-
-    logData.forEach(e => {
-        console.log("D: [EXPRESS] getLogs route E:" + JSON.stringify(e));
-        logString+=`[${new Date(e.time).toString()}] <b>${e.type}</b> - ${e.data} <br>`;
-    });
-
-    res.send("<h1>Logs</h1>" + logString);
-});
-
-// osu! API routes
-app.get("/osu/fx", (req, res)=>{
-    request({
-        url: `https://osu.ppy.sh/api/get_user?k=${process.env.OSUAPI}&u=fajsiex`,
-        json: true
-    }, (err, res, data)=>{
-        if (!err && res.statusCode == 200) {
-            res.send(data);
-        }else{
-            console.log("[OSU_RANK_SRVR] Failed to connect to Bancho.".warn);
-        }
-    });
-});
-app.get("/osu/cody", (req, res)=>{
-    request({
-        url: `https://osu.ppy.sh/api/get_user?k=${process.env.OSUAPI}&u=12180632`,
-        json: true
-    }, (err, res, data)=>{
-        if (!err && res.statusCode == 200) {
-            res.send(data);
-        }else{
-            console.log("[OSU_RANK_SRVR] Failed to connect to Bancho.".warn);
-        }
-    });
-});
-
 // Sets startup time
 globalVariables.set("startTime", new Date().getTime());
-
-// Start the web api server
-let port = process.env.PORT || 3000;
-app.listen(port, function() {
-    console.log(("[WEB_SERVER] Listening. Port:" + port).success);
-});
 
 // Login to discord
 discordClient.login(discordBotCongig.token);
