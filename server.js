@@ -75,19 +75,6 @@ discordClient.on('ready', ()=>{
             });
         });
     }
-    /*
-    if (process.env.DISABLE_SAVE == "yes") {
-        discordClient.channels.get("527170494613422092").send({
-            "embed": {
-                "title": "Bot launched",
-                "color": COLORS.YELLOW,
-                "description": `
-                    Tea-bot launched in beta mode.
-                    Saving is therefore disabled.
-                `
-            }
-        });
-    }*/
 
     starting = false;
     setStatus();
