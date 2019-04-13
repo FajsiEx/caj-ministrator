@@ -11,7 +11,7 @@ if (process.env.DISABLE_SAVE == "yes") {
 }
 
 module.exports = {
-    VERSION: "19.4.2" + afterVerString,
+    VERSION: "19.final" + afterVerString,
 
     WEEK_DAYS: ["Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota"],
     WEEK_DAYS_SHORT: ["Ne", "Po", "Ut", "St", "Št", "Pi", "So"],
