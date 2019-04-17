@@ -126,7 +126,7 @@ let setStatus = ()=>{
 
     
     //nowStamp = new Date("Sun Apr 11 2019 10:00:00 GMT+0100").getTime();
-    endStamp = new Date("Sun Jul 31 2019 15:00:00").getTime();
+    endStamp = new Date("Sun Jul 30 2019 15:00:00").getTime();
     //endStamp = new Date("Sun Jun 31 2019 12:00:00 GMT+0100").getTime();
     nowStamp = new Date().getTime();
     deltaStamp = endStamp - nowStamp;
