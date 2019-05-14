@@ -259,14 +259,14 @@ let commands = {
 
     'uwu': (msg)=>{uwu.command(msg);},
 
-    'r34': (msg)=>{r34.command(msg);},
+    //'r34': (msg)=>{r34.command(msg);},
 
-    'e621': (msg)=>{e621.command(msg);},
-    'hell': (msg)=>{e621.command(msg);},
+    //'e621': (msg)=>{e621.command(msg);},
+    //'hell': (msg)=>{e621.command(msg);},
 
-    'e926': (msg)=>{e926.command(msg);},
+    //'e926': (msg)=>{e926.command(msg);},
 
-    'agree': (msg)=>{agree.command(msg);},
+    //'agree': (msg)=>{agree.command(msg);},
 
     // Lyrics
     'technokitty': (msg)=>{technokitty.command(msg);},
@@ -282,8 +282,8 @@ let commands = {
     'meme': (msg)=>{meirl.command(msg);},
     'meirl': (msg)=>{meirl.command(msg);},
 
-    'kubko': (msg)=>{kubko.command(msg);},
-    'hentai': (msg)=>{kubko.command(msg);},
+    //'kubko': (msg)=>{kubko.command(msg);},
+    //'hentai': (msg)=>{kubko.command(msg);},
 
     'admeme':(msg)=>{admeme.command(msg);},
 
