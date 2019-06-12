@@ -172,7 +172,7 @@ let setStatus = ()=>{
             l_days = "69 ( ͡° ͜ʖ ͡°) ";
         }
         statusText = `${l_days} days until my deadline`;
-        if (l_minutes == 1) {
+        if (l_days == 1) {
             statusText = `${l_days} day until my deadline`;
         }
     }
